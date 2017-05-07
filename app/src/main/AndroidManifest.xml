@@ -46,6 +46,11 @@
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="${CRASHLYTICS_API_KEY}" />
+        <!--
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="3ae52fb280f95974b3077c69e6e5d73d417ffd01" />
+            -->
 
         <activity
             android:name=".ui.activities.MainActivity"
