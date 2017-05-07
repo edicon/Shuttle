@@ -77,14 +77,16 @@ public class ShuttleApplication extends Application {
     private static Logger jaudioTaggerLogger1 = Logger.getLogger("org.jaudiotagger.audio");
     private static Logger jaudioTaggerLogger2 = Logger.getLogger("org.jaudiotagger");
 
+    public static boolean HI_RES = true;
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
 
         if (BuildConfig.MULTIDEX_ENABLED) {
-            MultiDex.install(base);
-        }
+        MultiDex.install(base);
     }
+}
 
     @Override
     public void onCreate() {

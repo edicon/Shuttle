@@ -34,6 +34,8 @@ import com.simplecity.amp_library.utils.DrawableUtils;
 import com.simplecity.amp_library.utils.MusicServiceConnectionUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class MiniPlayerFragment extends BaseFragment implements PlayerView {
 
     private static final String TAG = "MiniPlayerFragment";
@@ -281,7 +283,10 @@ public class MiniPlayerFragment extends BaseFragment implements PlayerView {
 
         if (song == null) return;
 
-        ((MainActivity) getActivity()).togglePanelVisibility(true);
+        if( HI_RES )
+            ((com.simplecity.amp_library.ui.hires.MainActivity) getActivity()).togglePanelVisibility(true);
+        else
+            ((com.simplecity.amp_library.ui.activities.MainActivity) getActivity()).togglePanelVisibility(true);
 
         trackName.setText(song.name);
         artistName.setText(String.format("%s | %s", song.artistName, song.albumName));

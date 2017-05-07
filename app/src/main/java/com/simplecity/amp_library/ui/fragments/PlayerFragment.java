@@ -46,6 +46,8 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subscriptions.CompositeSubscription;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class PlayerFragment extends BaseFragment implements PlayerView {
 
     private final String TAG = ((Object) this).getClass().getSimpleName();
@@ -390,7 +392,10 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
     public void setDragView(View view) {
         dragView = view;
-        ((MainActivity) getActivity()).setDragView(view, true);
+        if( HI_RES )
+            ((com.simplecity.amp_library.ui.hires.MainActivity) getActivity()).setDragView(view, true);
+        else
+            ((com.simplecity.amp_library.ui.activities.MainActivity) getActivity()).setDragView(view, true);
     }
 
     public View getDragView() {

@@ -1,55 +1,197 @@
 {
   "project_info": {
-    "project_number": "0"
+    "project_number": "920615510991",
+    "firebase_url": "https://vivid-torch-3052.firebaseio.com",
+    "project_id": "vivid-torch-3052",
+    "storage_bucket": "vivid-torch-3052.appspot.com"
   },
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:920615510991:android:6e1a59d928ecd5d8",
         "android_client_info": {
-          "package_name": "another.music.player"
+          "package_name": "com.maxk.notebook.maxkgoc"
         }
       },
+      "oauth_client": [
+        {
+          "client_id": "920615510991-8b1t31lao4pblbag0996helto0c9oj0g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": ""
+          "current_key": "AIzaSyC0kE8_aWaEB3O1wni5tv4Oxkm1s4A5ry0"
         }
-      ]
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:920615510991:android:192973ec9806eae2",
         "android_client_info": {
-          "package_name": "com.simplecity.amp_pro"
+          "package_name": "com.edicon.firebase.devs.firepix"
         }
       },
+      "oauth_client": [
+        {
+          "client_id": "920615510991-61qvpehh8kb9ks4ndivcauuqvuedcaoj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.edicon.firebase.devs.firepix",
+            "certificate_hash": "979cb234e23aed8a017af9a59d774de8226e10d2"
+          }
+        },
+        {
+          "client_id": "920615510991-eff62m22f3svf3q1h78p24fhcecgr66v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.edicon.firebase.devs.firepix",
+            "certificate_hash": "591035595bc6cea26e85e6705bf5c4bf63939373"
+          }
+        },
+        {
+          "client_id": "920615510991-e8k78ledamut53c3v5uem4mh8j11gqi0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.edicon.firebase.devs.firepix",
+            "certificate_hash": "25e876cdf10d750b2d2b0ce817e6fa897af8e515"
+          }
+        },
+        {
+          "client_id": "920615510991-8b1t31lao4pblbag0996helto0c9oj0g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": ""
+          "current_key": "AIzaSyC0kE8_aWaEB3O1wni5tv4Oxkm1s4A5ry0"
         }
-      ]
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920615510991-8b1t31lao4pblbag0996helto0c9oj0g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:920615510991:android:c10577259a62ece8",
+        "android_client_info": {
+          "package_name": "com.edicon.firebase.devs.fireui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920615510991-m1pkjirl9vj16h99gl4kmhf0q0bhskrf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.edicon.firebase.devs.fireui",
+            "certificate_hash": "591035595bc6cea26e85e6705bf5c4bf63939373"
+          }
+        },
+        {
+          "client_id": "920615510991-mq71eev7p3dvi9h07mnhcr8q681318ne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.edicon.firebase.devs.fireui",
+            "certificate_hash": "25e876cdf10d750b2d2b0ce817e6fa897af8e515"
+          }
+        },
+        {
+          "client_id": "920615510991-8b1t31lao4pblbag0996helto0c9oj0g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0kE8_aWaEB3O1wni5tv4Oxkm1s4A5ry0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920615510991-8b1t31lao4pblbag0996helto0c9oj0g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920615510991:android:b36e5cbfb3fd08a4",
         "android_client_info": {
           "package_name": "com.simplecity.amp_pro.debug"
         }
       },
+      "oauth_client": [
+        {
+          "client_id": "920615510991-fi930km76be8cr8lh1kqdhj7p7d2gsri.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.simplecity.amp_pro.debug",
+            "certificate_hash": "81fadff354bd8408222516f5ea2b4774874c9ab3"
+          }
+        },
+        {
+          "client_id": "920615510991-8b1t31lao4pblbag0996helto0c9oj0g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": ""
+          "current_key": "AIzaSyC0kE8_aWaEB3O1wni5tv4Oxkm1s4A5ry0"
         }
-      ]
-    },
-    {
-      "client_info": {
-        "android_client_info": {
-          "package_name": "another.music.player.debug"
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920615510991-8b1t31lao4pblbag0996helto0c9oj0g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
         }
-      },
-      "api_key": [
-        {
-          "current_key": ""
-        }
-      ]
+      }
     }
   ],
   "configuration_version": "1"

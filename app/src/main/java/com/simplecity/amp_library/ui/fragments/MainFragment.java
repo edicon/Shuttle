@@ -21,6 +21,8 @@ import com.simplecity.amp_library.utils.DialogUtils;
 import com.simplecity.amp_library.utils.ShuttleUtils;
 import com.simplecity.amp_library.utils.ThemeUtils;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class MainFragment extends BaseFragment {
 
     private static final String TAG = "MainFragment";
@@ -68,7 +70,10 @@ public class MainFragment extends BaseFragment {
     public void onAttach(Context context) {
 
         super.onAttach(context);
-        ((MainActivity) context).onSectionAttached(getString(R.string.library_title));
+        if( HI_RES )
+            ((com.simplecity.amp_library.ui.hires.MainActivity) context).onSectionAttached(getString(R.string.library_title));
+        else
+            ((com.simplecity.amp_library.ui.activities.MainActivity) context).onSectionAttached(getString(R.string.library_title));
     }
 
     @Override
