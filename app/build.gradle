@@ -177,13 +177,13 @@ android {
             buildConfigField "boolean", "MULTIDEX_ENABLED", "true"
         }
 
-        paid.applicationId "com.simplecity.amp_pro"
+        // paid.applicationId "com.simplecity.amp_pro"
 
         free.applicationId "another.music.player"
 
-        amazonPaid.applicationId "com.simplecity.amp_pro"
+        // amazonPaid.applicationId "com.simplecity.amp_pro"
 
-        amazonFree.applicationId "another.music.player"
+        // amazonFree.applicationId "another.music.player"
     }
 
     sourceSets {
