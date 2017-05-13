@@ -98,6 +98,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class DetailFragment extends BaseFragment implements
         MusicUtils.Defs,
         RecyclerView.RecyclerListener,
@@ -373,8 +375,14 @@ public class DetailFragment extends BaseFragment implements
                 //dragged. Workaround for issue where the action bar ends up being transparent
                 //when recreating this fragment.
                 if (getActivity() != null) {
-                    if (((MainActivity) getActivity()).canSetAlpha()) {
-                        ((MainActivity) getActivity()).setActionBarAlpha(ratio, true);
+                    if( HI_RES ) {
+                        if (((com.simplecity.amp_library.ui.hires.MainActivity) getActivity()).canSetAlpha()) {
+                            ((com.simplecity.amp_library.ui.hires.MainActivity) getActivity()).setActionBarAlpha(ratio, true);
+                        }
+                    } else {
+                        if (((MainActivity) getActivity()).canSetAlpha()) {
+                            ((MainActivity) getActivity()).setActionBarAlpha(ratio, true);
+                        }
                     }
                 }
             }
