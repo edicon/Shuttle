@@ -163,6 +163,9 @@ public class MainActivity extends BaseCastActivity implements
 
     private float mAlpha;
 
+    // HI_RES
+    private MainFragment mainFragment;
+
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -345,9 +348,10 @@ public class MainActivity extends BaseCastActivity implements
 
         if (savedInstanceState == null) {
 
+            mainFragment = MainFragment.newInstance();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.main_container, MainFragment.newInstance())
+                    .add(R.id.main_container, mainFragment)
                     .commit();
 
             if( HI_RES ) {
@@ -912,6 +916,16 @@ public class MainActivity extends BaseCastActivity implements
     }
 
     @Override
+    public void onItemClicked(Serializable item, View transitionView) {
+        mTitle = getString(R.string.library_title);
+        if (transitionView != null) {
+            swapFragments(item, transitionView);
+        } else {
+            swapFragments(DetailFragment.newInstance(item), true);
+        }
+    }
+
+    @Override
     public void onClickListener(View v) {
         switch (v.getId()) {
             case R.id.btn_drawer_dummy:
@@ -924,17 +938,8 @@ public class MainActivity extends BaseCastActivity implements
     }
 
     @Override
-    public void onItemClicked(Serializable item, View transitionView) {
-        mTitle = getString(R.string.library_title);
-        if (transitionView != null) {
-            swapFragments(item, transitionView);
-        } else {
-            swapFragments(DetailFragment.newInstance(item), true);
-        }
-    }
-
-    @Override
     public void onItemClicked(DrawerGroupItem drawerGroupItem) {
+        int itemIndex = 0;
         switch (drawerGroupItem.type) {
             case DrawerGroupItem.Type.LIBRARY:
                 if (getCurrentFragment() instanceof MainFragment) {
@@ -969,6 +974,31 @@ public class MainActivity extends BaseCastActivity implements
                     });
                 }
                 break;
+
+            // HI_RES
+            case DrawerGroupItem.Type.GENRES:
+                itemIndex = 0;
+                mTitle = getString(R.string.genre_title);
+                mainFragment.setPagerItem(itemIndex);
+                break;
+            case DrawerGroupItem.Type.ARTISTS:
+                itemIndex = 2;
+                mTitle = getString(R.string.genre_title);
+                mainFragment.setPagerItem(itemIndex);
+                break;
+            case DrawerGroupItem.Type.ALBUMS:
+                itemIndex = 3;
+                mTitle = getString(R.string.genre_title);
+                mainFragment.setPagerItem(itemIndex);
+                break;
+            case DrawerGroupItem.Type.SONGS:
+                itemIndex = 4;
+                mTitle = getString(R.string.genre_title);
+                mainFragment.setPagerItem(itemIndex);
+                // swapFragments(DetailFragment.newInstance(genre), true);
+                // swapFragments(albumArtist, transitionView);
+                break;
+            // END HI_RES
 
             case DrawerGroupItem.Type.SETTINGS:
                 startActivity(new Intent(this, SettingsActivity.class));

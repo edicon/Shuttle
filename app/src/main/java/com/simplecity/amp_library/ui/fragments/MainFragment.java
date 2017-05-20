@@ -89,11 +89,11 @@ public class MainFragment extends BaseFragment {
         boolean showArtists = prefs.getBoolean(SHOW_ARTISTS, true);
         boolean showAlbums = prefs.getBoolean(SHOW_ALBUMS, true);
         boolean showSongs = prefs.getBoolean(SHOW_SONGS, true);
-        boolean showFolders = prefs.getBoolean(SHOW_FOLDERS, false);
+        boolean showFolders = prefs.getBoolean(SHOW_FOLDERS, true); // HI_RES: false
         if (!ShuttleUtils.isUpgraded()) {
-            showFolders = false;
+            showFolders = true; // HI_RES: false;
         }
-        boolean showPlaylists = prefs.getBoolean(SHOW_PLAYLISTS, false);
+        boolean showPlaylists = prefs.getBoolean(SHOW_PLAYLISTS, true); // HI_RES: false
 
         int genresOrder = prefs.getInt(GENRES_ORDER, 0);
         int suggestedOrder = prefs.getInt(SUGGESTED_ORDER, 1);
@@ -237,4 +237,7 @@ public class MainFragment extends BaseFragment {
         return TAG;
     }
 
+    public void setPagerItem( int item ) {
+        pager.setCurrentItem( item );
+    }
 }
