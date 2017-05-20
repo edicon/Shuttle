@@ -553,7 +553,7 @@
     <!-- Album (singular) -->
     <string name="album_title">Album</string>
     <!-- Title (singular) -->
-    <string name="song_title">Title</string>
+    <string name="song_title">Song</string> <!-- HI_RES: Title -->
     <!-- Year (singular)-->
     <string name="year_title">Year</string>
     <!-- Genre (singular)-->
@@ -746,6 +746,8 @@
     <string name="btn_now_playing">Now playing %1$s by %2$s</string>
     <!-- Accessibility 'show lyrics' -->
     <string name="btn_show_lyrics">Show lyrics</string>
+    <string name="btn_drawer">Drawer Menu</string>
+    <string name="btn_favor">Favorite</string>
 
     <string name="pref_summary_restore_purchases">If you\'ve already upgraded Shuttle, but it\'s still showing up as the free version, press this.</string>
     <string name="pref_title_restore_purchases">Restore Purchases</string>
@@ -829,5 +831,8 @@
     <string name="no_lyrics">No embedded lyrics found.</string>
     <!-- QuickLyric info dialog message-->
     <string name="quicklyric_info">QuickLyric is an open-source lyric fetcher on the Google Play Store.\n\nOnce installed, QuickLyric will be opened from Shuttle whenever you hit the \'QuickLyric\' menu button.</string>
+
+    <!-- HI_RES -->
+    <string name="not_implemented">Not Yet Implementated</string>
 
 </resources>

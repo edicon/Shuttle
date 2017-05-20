@@ -12,7 +12,9 @@
         android:layout_height="@dimen/drawer_header_height"
         android:background="?attr/bg_drawer"/>
 
-    <!-- ToDo: Dummy for HI_RES -->
+    <!-- ToDo: Dummy for HI_RES
+        android:background="@android:color/transparent"
+    -->
     <ImageButton
         android:id="@+id/btn_drawer_dummy"
         android:layout_width="40dp"
@@ -20,9 +22,8 @@
         android:layout_alignParentLeft="true"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
-        android:background="@android:color/transparent"
+        android:layout_marginTop="3dp"
+        android:background="@color/amber_300"
         android:src="@drawable/ic_settings_help"/>
 
     <com.simplecity.amp_library.ui.views.AnimatedExpandableListView

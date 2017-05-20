@@ -27,21 +27,23 @@ public class MainFragment extends BaseFragment {
 
     private static final String TAG = "MainFragment";
 
-    private static final String GENRES_ORDER = "genres_order";
+    private static final String GENRES_ORDER    = "genres_order";
     private static final String SUGGESTED_ORDER = "suggested_order";
-    private static final String ARTISTS_ORDER = "artists_order";
-    private static final String ALBUMS_ORDER = "albums_order";
-    private static final String SONGS_ORDER = "songs_order";
-    private static final String FOLDERS_ORDER = "folders_order";
+    private static final String ARTISTS_ORDER   = "artists_order";
+    private static final String ALBUMS_ORDER    = "albums_order";
+    private static final String SONGS_ORDER     = "songs_order";
+    private static final String FOLDERS_ORDER   = "folders_order";
     private static final String PLAYLISTS_ORDER = "playlists_order";
+    private static final String FAVORITES_ORDER = "favorites_order";
 
-    private static final String SHOW_GENRES = "show_genres";
-    private static final String SHOW_SUGGESTED = "show_suggested";
-    private static final String SHOW_ARTISTS = "show_artists";
-    private static final String SHOW_ALBUMS = "show_albums";
-    private static final String SHOW_SONGS = "show_songs";
-    private static final String SHOW_FOLDERS = "show_folders";
-    private static final String SHOW_PLAYLISTS = "show_playlists";
+    private static final String SHOW_GENRES     = "show_genres";
+    private static final String SHOW_SUGGESTED  = "show_suggested";
+    private static final String SHOW_ARTISTS    = "show_artists";
+    private static final String SHOW_ALBUMS     = "show_albums";
+    private static final String SHOW_SONGS      = "show_songs";
+    private static final String SHOW_FOLDERS    = "show_folders";
+    private static final String SHOW_PLAYLISTS  = "show_playlists";
+    private static final String SHOW_FAVORITES  = "show_favorites";
 
     private View dummyToolbar;
     private View dummyStatusBar;
@@ -84,28 +86,31 @@ public class MainFragment extends BaseFragment {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
 
-        boolean showGenres = prefs.getBoolean(SHOW_GENRES, true);
-        boolean showSuggested = prefs.getBoolean(SHOW_SUGGESTED, true);
-        boolean showArtists = prefs.getBoolean(SHOW_ARTISTS, true);
-        boolean showAlbums = prefs.getBoolean(SHOW_ALBUMS, true);
-        boolean showSongs = prefs.getBoolean(SHOW_SONGS, true);
-        boolean showFolders = prefs.getBoolean(SHOW_FOLDERS, true); // HI_RES: false
+        boolean showGenres      = prefs.getBoolean(SHOW_GENRES,     true);
+        boolean showSuggested   = prefs.getBoolean(SHOW_SUGGESTED,  true);
+        boolean showArtists     = prefs.getBoolean(SHOW_ARTISTS,    true);
+        boolean showAlbums      = prefs.getBoolean(SHOW_ALBUMS,     true);
+        boolean showSongs       = prefs.getBoolean(SHOW_SONGS,      true);
+        boolean showFolders     = prefs.getBoolean(SHOW_FOLDERS,    true);  // HI_RES: false
+        boolean showFavorites   = prefs.getBoolean(SHOW_FAVORITES,    true);  // HI_RES: false
         if (!ShuttleUtils.isUpgraded()) {
             showFolders = true; // HI_RES: false;
         }
-        boolean showPlaylists = prefs.getBoolean(SHOW_PLAYLISTS, true); // HI_RES: false
+        boolean showPlaylists   = prefs.getBoolean(SHOW_PLAYLISTS,  true);  // HI_RES: false
 
-        int genresOrder = prefs.getInt(GENRES_ORDER, 0);
-        int suggestedOrder = prefs.getInt(SUGGESTED_ORDER, 1);
-        int artistsOrder = prefs.getInt(ARTISTS_ORDER, 2);
-        int albumsOrder = prefs.getInt(ALBUMS_ORDER, 3);
-        int songsOrder = prefs.getInt(SONGS_ORDER, 4);
-        int foldersOrder = prefs.getInt(FOLDERS_ORDER, 5);
-        int playlistsOrder = prefs.getInt(PLAYLISTS_ORDER, 6);
+        int songsOrder      = prefs.getInt(SONGS_ORDER,     getResources().getInteger(R.integer.SONGS_ORDER));
+        int albumsOrder     = prefs.getInt(ALBUMS_ORDER,    getResources().getInteger(R.integer.ALBUMS_ORDER));
+        int artistsOrder    = prefs.getInt(ARTISTS_ORDER,   getResources().getInteger(R.integer.ARTISTS_ORDER));
+        int genresOrder     = prefs.getInt(GENRES_ORDER,    getResources().getInteger(R.integer.GENRES_ORDER));
+        int foldersOrder    = prefs.getInt(FOLDERS_ORDER,   getResources().getInteger(R.integer.FOLDERS_ORDER));
+        int playlistsOrder  = prefs.getInt(PLAYLISTS_ORDER, getResources().getInteger(R.integer.PLAYLISTS_ORDER));
+        int favoritesOrder  = prefs.getInt(FAVORITES_ORDER, getResources().getInteger(R.integer.FAVORITES_ORDER));
+        int suggestedOrder  = prefs.getInt(SUGGESTED_ORDER, getResources().getInteger(R.integer.SUGGESTED_ORDER));
 
         adapter = new PagerAdapter(getChildFragmentManager());
 
-        for (int i = 0; i < 8; i++) {
+        int maxOrder = getResources().getInteger(R.integer.MAX_ORDER);
+        for (int i = 0; i < maxOrder; i++) {
             if (genresOrder == i) {
                 if (showGenres) {
                     adapter.addFragment(GenreFragment.newInstance(getString(R.string.genres_title)));
@@ -134,10 +139,15 @@ public class MainFragment extends BaseFragment {
                 if (showPlaylists) {
                     adapter.addFragment(PlaylistFragment.newInstance(getString(R.string.playlists_title)));
                 }
+            } else if (favoritesOrder == i) {
+                // ToDo: Favorites List 구현
+                if (showFavorites) {
+                    adapter.addFragment(PlaylistFragment.newInstance(getString(R.string.fav_title)));
+                }
             }
         }
 
-        defaultPage = 2;
+        defaultPage = getResources().getInteger(R.integer.DEFAULT_ORDER);
 
         String defaultPage = prefs.getString("pref_default_page", null);
         for (int i = 0; i < adapter.getCount(); i++) {

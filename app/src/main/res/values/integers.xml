@@ -4,4 +4,15 @@
 
     <integer name="list_num_columns">1</integer>
 
+    <integer name="SONGS_ORDER">0</integer>
+    <integer name="ALBUMS_ORDER">1</integer>
+    <integer name="ARTISTS_ORDER">2</integer>
+    <integer name="GENRES_ORDER">3</integer>
+    <integer name="FOLDERS_ORDER">4</integer>
+    <integer name="PLAYLISTS_ORDER">5</integer>
+    <integer name="FAVORITES_ORDER">6</integer>
+    <integer name="SUGGESTED_ORDER">7</integer>
+    <integer name="MAX_ORDER">8</integer>
+    <integer name="DEFAULT_ORDER">0</integer>
+
 </resources>

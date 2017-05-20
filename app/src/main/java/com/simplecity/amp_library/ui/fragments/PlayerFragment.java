@@ -59,6 +59,10 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
     private ImageButton shuffleButton;
     private ImageButton repeatButton;
+    private ImageButton drawerButton;
+    private ImageButton favorButton;
+    private ImageButton subRepeatBtn, subSuffleBtn, subPlaylistBtn, subLylicBtn, subFileBtn, subDeleteBtn;
+
 
     private RepeatingImageButton nextButton;
     private RepeatingImageButton prevButton;
@@ -72,7 +76,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     private TextView totalTime;
     private TextView queuePosition;
 
-    private View textViewContainer;
+    private View textViewContainer, seekinfoContainer;
     private View buttonContainer;
 
     private View bottomView;
@@ -122,6 +126,10 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_player, container, false);
+        if( HI_RES ) {
+            rootView = inflater.inflate(R.layout.fragment_player_hires, container, false);
+            seekinfoContainer = rootView.findViewById(R.id.seekBarContainer);
+        }
 
         bottomView = rootView.findViewById(R.id.bottom_view);
 
@@ -130,6 +138,34 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
             playPauseView.toggle();
             playPauseView.postDelayed(() -> presenter.togglePlayback(), 200);
         });
+
+        if( HI_RES ) {
+            favorButton = (ImageButton) rootView.findViewById(R.id.favor);
+            favorButton.setOnClickListener(v -> presenter.toggleFavorite( getActivity() ));
+
+            drawerButton = (ImageButton) rootView.findViewById(R.id.drawer);
+            drawerButton.setOnClickListener(v -> presenter.toggleDrawerMenu());
+
+
+            subRepeatBtn = (ImageButton) rootView.findViewById(R.id.sub_repeat);
+            subRepeatBtn.setOnClickListener(v -> presenter.toggleRepeat());
+
+            subSuffleBtn = (ImageButton) rootView.findViewById(R.id.sub_shuffle);
+            subSuffleBtn.setOnClickListener(v -> presenter.toggleShuffle());
+
+            subPlaylistBtn = (ImageButton) rootView.findViewById(R.id.sub_playlist);
+            subPlaylistBtn.setOnClickListener(v -> presenter.togglePlaylist(getActivity()));
+
+            subLylicBtn = (ImageButton) rootView.findViewById(R.id.sub_lylic);
+            subLylicBtn.setOnClickListener(v -> presenter.toggleLylic(getActivity()));
+
+            subFileBtn = (ImageButton) rootView.findViewById(R.id.sub_file);
+            subFileBtn.setOnClickListener(v -> presenter.toggleFile(getActivity()));
+
+            subDeleteBtn = (ImageButton) rootView.findViewById(R.id.sub_delete);
+            subDeleteBtn.setOnClickListener(v -> presenter.toggleDelete(getActivity()));
+
+        }
 
         repeatButton = (ImageButton) rootView.findViewById(R.id.repeat);
         repeatButton.setOnClickListener(v -> presenter.toggleRepeat());
@@ -208,6 +244,11 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
     public void themeUIComponents() {
 
+        if ( HI_RES ) {
+            if (seekinfoContainer != null) {
+                seekinfoContainer.setBackgroundColor(ColorUtils.getPrimaryColorDark(getActivity()));
+            }
+        }
         if (nextButton != null) {
             nextButton.setImageDrawable(DrawableUtils.getColoredStateListDrawableWithThemeColor(getActivity(), nextButton.getDrawable(), ThemeUtils.WHITE));
         }

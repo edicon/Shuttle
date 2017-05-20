@@ -956,6 +956,28 @@ public class MainActivity extends BaseCastActivity implements
                     mTitle = getString(R.string.library_title);
                 }
                 break;
+            // HI_RES
+            case DrawerGroupItem.Type.SONGS:
+                itemIndex = getResources().getInteger(R.integer.SONGS_ORDER);
+                mTitle = getString(R.string.tracks_title);
+                mainFragment.setPagerItem(itemIndex);
+                break;
+            case DrawerGroupItem.Type.ALBUMS:
+                itemIndex = getResources().getInteger(R.integer.ALBUMS_ORDER);
+                mTitle = getString(R.string.albums_title);
+                mainFragment.setPagerItem(itemIndex);
+                break;
+            case DrawerGroupItem.Type.ARTISTS:
+                itemIndex = getResources().getInteger(R.integer.ARTISTS_ORDER);
+                mTitle = getString(R.string.artists_title);
+                mainFragment.setPagerItem(itemIndex);
+                break;
+            case DrawerGroupItem.Type.GENRES:
+                itemIndex = getResources().getInteger(R.integer.GENRES_ORDER);
+                mTitle = getString(R.string.genre_title);
+                mainFragment.setPagerItem(itemIndex);
+                break;
+            // END HI_RES
             case DrawerGroupItem.Type.FOLDERS:
                 if (getCurrentFragment() instanceof FolderFragment) {
                     return;
@@ -974,36 +996,16 @@ public class MainActivity extends BaseCastActivity implements
                     });
                 }
                 break;
-
+            case DrawerGroupItem.Type.FAVORLISTS:
+                itemIndex = getResources().getInteger(R.integer.FAVORITES_ORDER);
+                mTitle = getString(R.string.fav_title);
+                mainFragment.setPagerItem(itemIndex);
+                break;
             // HI_RES
-            case DrawerGroupItem.Type.GENRES:
-                itemIndex = 0;
-                mTitle = getString(R.string.genre_title);
-                mainFragment.setPagerItem(itemIndex);
-                break;
-            case DrawerGroupItem.Type.ARTISTS:
-                itemIndex = 2;
-                mTitle = getString(R.string.genre_title);
-                mainFragment.setPagerItem(itemIndex);
-                break;
-            case DrawerGroupItem.Type.ALBUMS:
-                itemIndex = 3;
-                mTitle = getString(R.string.genre_title);
-                mainFragment.setPagerItem(itemIndex);
-                break;
-            case DrawerGroupItem.Type.SONGS:
-                itemIndex = 4;
-                mTitle = getString(R.string.genre_title);
-                mainFragment.setPagerItem(itemIndex);
-                // swapFragments(DetailFragment.newInstance(genre), true);
-                // swapFragments(albumArtist, transitionView);
-                break;
-            // END HI_RES
 
             case DrawerGroupItem.Type.SETTINGS:
                 startActivity(new Intent(this, SettingsActivity.class));
                 break;
-
             case DrawerGroupItem.Type.SUPPORT:
                 Intent intent = new Intent(this, SettingsActivity.class);
                 intent.putExtra(SettingsActivity.EXTRA_SUPPORT, true);

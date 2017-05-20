@@ -26,12 +26,12 @@
             android:layout_height="@dimen/mini_player_height"
             android:fitsSystemWindows="true" />
 
+        <!-- android:background="@color/amber_300" -->
         <FrameLayout
             android:id="@+id/player_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/amber_300"
             android:clickable="true" />
     </LinearLayout>
 

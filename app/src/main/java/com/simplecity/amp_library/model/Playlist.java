@@ -34,12 +34,12 @@ public class Playlist implements Serializable {
     private static final String TAG = "Playlist";
 
     public @interface Type {
-        int PODCAST = 0;
-        int RECENTLY_ADDED = 1;
-        int MOST_PLAYED = 2;
+        int PODCAST         = 0;
+        int RECENTLY_ADDED  = 1;
+        int MOST_PLAYED     = 2;
         int RECENTLY_PLAYED = 3;
-        int FAVORITES = 4;
-        int USER_CREATED = 5;
+        int FAVORITES       = 4;
+        int USER_CREATED    = 5;
     }
 
     @Type

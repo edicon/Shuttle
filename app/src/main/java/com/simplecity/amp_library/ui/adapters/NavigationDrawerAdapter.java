@@ -38,33 +38,35 @@ public class NavigationDrawerAdapter extends AnimatedExpandableListView.Animated
     private Playlist mSelectedPlaylist;
 
     public NavigationDrawerAdapter() {
-        DrawerGroupItem library = new DrawerGroupItem(DrawerGroupItem.Type.LIBRARY, R.string.library_title, R.drawable.ic_library_white);
-        DrawerGroupItem folders = new DrawerGroupItem(DrawerGroupItem.Type.FOLDERS, R.string.folders_title, R.drawable.ic_folders_many_white);
-        DrawerGroupItem playlists = new DrawerGroupItem(DrawerGroupItem.Type.PLAYLISTS, R.string.playlists_title, R.drawable.ic_action_toggle_queue);
-        DrawerGroupItem settings = new DrawerGroupItem(DrawerGroupItem.Type.SETTINGS, R.string.settings, R.drawable.ic_action_settings);
-        DrawerGroupItem support = new DrawerGroupItem(DrawerGroupItem.Type.SUPPORT, R.string.pref_title_support, R.drawable.ic_settings_help);
-        DrawerGroupItem divider = new DrawerGroupItem(DrawerGroupItem.Type.DIVIDER, -1, -1);
-
         // if( HI_RES ) {
-        DrawerGroupItem genres = new DrawerGroupItem(DrawerGroupItem.Type.GENRES, R.string.genre_title,  R.drawable.ic_library_white);
-        DrawerGroupItem artists = new DrawerGroupItem(DrawerGroupItem.Type.ARTISTS, R.string.artist_title,  R.drawable.ic_action_toggle_queue);
-        DrawerGroupItem albums = new DrawerGroupItem(DrawerGroupItem.Type.ALBUMS, R.string.album_title,  R.drawable.ic_library_white);
-        DrawerGroupItem songs = new DrawerGroupItem(DrawerGroupItem.Type.SONGS, R.string.song_title,  R.drawable.ic_action_toggle_queue);
+        DrawerGroupItem songs       = new DrawerGroupItem(DrawerGroupItem.Type.SONGS,   R.string.song_title,    R.drawable.ic_action_toggle_queue);
+        DrawerGroupItem albums      = new DrawerGroupItem(DrawerGroupItem.Type.ALBUMS,  R.string.album_title,   R.drawable.ic_library_white);
+        DrawerGroupItem artists     = new DrawerGroupItem(DrawerGroupItem.Type.ARTISTS, R.string.artist_title,  R.drawable.ic_action_toggle_queue);
+        DrawerGroupItem genres      = new DrawerGroupItem(DrawerGroupItem.Type.GENRES,  R.string.genre_title,   R.drawable.ic_library_white);
         // }
+        DrawerGroupItem folders     = new DrawerGroupItem(DrawerGroupItem.Type.FOLDERS, R.string.folders_title, R.drawable.ic_folders_many_white);
+        DrawerGroupItem playlists   = new DrawerGroupItem(DrawerGroupItem.Type.PLAYLISTS,R.string.playlists_title, R.drawable.ic_action_toggle_queue);
+        DrawerGroupItem favorlists  = new DrawerGroupItem(DrawerGroupItem.Type.FAVORLISTS,R.string.fav_title,   R.drawable.ic_action_toggle_queue);
+        DrawerGroupItem settings    = new DrawerGroupItem(DrawerGroupItem.Type.SETTINGS,R.string.settings,      R.drawable.ic_action_settings);
+        DrawerGroupItem support     = new DrawerGroupItem(DrawerGroupItem.Type.SUPPORT, R.string.pref_title_support, R.drawable.ic_settings_help);
+        DrawerGroupItem library     = new DrawerGroupItem(DrawerGroupItem.Type.LIBRARY, R.string.library_title, R.drawable.ic_library_white);
+        DrawerGroupItem divider     = new DrawerGroupItem(DrawerGroupItem.Type.DIVIDER, -1, -1);
 
-        mDrawerGroupItems.add(library);
-        mDrawerGroupItems.add(folders);
-        mDrawerGroupItems.add(playlists);
-        mDrawerGroupItems.add(divider);
         if( HI_RES ) {
-            mDrawerGroupItems.add(genres);
-            mDrawerGroupItems.add(artists);
-            mDrawerGroupItems.add(albums);
             mDrawerGroupItems.add(songs);
+            mDrawerGroupItems.add(albums);
+            mDrawerGroupItems.add(artists);
+            mDrawerGroupItems.add(genres);
             mDrawerGroupItems.add(divider);
         }
+        mDrawerGroupItems.add(folders);
+        mDrawerGroupItems.add(playlists);
+        mDrawerGroupItems.add(favorlists);
+        mDrawerGroupItems.add(divider);
+
         mDrawerGroupItems.add(settings);
-        mDrawerGroupItems.add(support);
+        mDrawerGroupItems.add(library);
+        // mDrawerGroupItems.add(support);
 
         mSelectedDrawerGroupItem = library;
         // mSelectedDrawerGroupItem = folders;

@@ -1,14 +1,18 @@
 package com.simplecity.amp_library.ui.presenters;
 
+import android.app.Activity;
 import android.content.IntentFilter;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.f2prateek.rx.receivers.RxBroadcastReceiver;
+import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.ShuttleApplication;
 import com.simplecity.amp_library.playback.MusicService;
 import com.simplecity.amp_library.playback.PlaybackMonitor;
 import com.simplecity.amp_library.ui.views.PlayerView;
 import com.simplecity.amp_library.utils.MusicUtils;
+import com.simplecity.amp_library.utils.PlaylistUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -166,6 +170,31 @@ public class PlayerPresenter extends Presenter<PlayerView> {
     public void toggleRepeat() {
         MusicUtils.cycleRepeat();
         updateRepeatMode();
+    }
+
+    // ToDo: HI_RES
+    public void toggleDrawerMenu() {
+        MusicUtils.cycleRepeat();
+    }
+
+    public void toggleFavorite( Activity cx ) {
+        PlaylistUtils.toggleFavorite( cx );
+    }
+
+    public void togglePlaylist( Activity cx ) {
+        Toast.makeText(cx, cx.getString(R.string.not_implemented), Toast.LENGTH_LONG);
+    }
+
+    public void toggleLylic( Activity cx ) {
+        Toast.makeText(cx, cx.getString(R.string.not_implemented), Toast.LENGTH_LONG);
+    }
+
+    public void toggleFile( Activity cx ) {
+        Toast.makeText(cx, cx.getString(R.string.not_implemented), Toast.LENGTH_LONG);
+    }
+
+    public void toggleDelete( Activity cx ) {
+        Toast.makeText(cx, cx.getString(R.string.not_implemented), Toast.LENGTH_LONG);
     }
 
     public void seekTo(int progress) {
