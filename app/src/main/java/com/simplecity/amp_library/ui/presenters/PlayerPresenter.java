@@ -182,19 +182,19 @@ public class PlayerPresenter extends Presenter<PlayerView> {
     }
 
     public void togglePlaylist( Activity cx ) {
-        Toast.makeText(cx, cx.getString(R.string.not_implemented), Toast.LENGTH_LONG);
+        Toast.makeText(cx, "PLAY LIST: " + cx.getString(R.string.not_implemented), Toast.LENGTH_SHORT).show();
     }
 
     public void toggleLylic( Activity cx ) {
-        Toast.makeText(cx, cx.getString(R.string.not_implemented), Toast.LENGTH_LONG);
+        Toast.makeText(cx, "LYLIC: " + cx.getString(R.string.not_implemented), Toast.LENGTH_SHORT).show();
     }
 
     public void toggleFile( Activity cx ) {
-        Toast.makeText(cx, cx.getString(R.string.not_implemented), Toast.LENGTH_LONG);
+        Toast.makeText(cx, "FILE: " + cx.getString(R.string.not_implemented), Toast.LENGTH_SHORT).show();
     }
 
     public void toggleDelete( Activity cx ) {
-        Toast.makeText(cx, cx.getString(R.string.not_implemented), Toast.LENGTH_LONG);
+        Toast.makeText(cx, "DEL: " + cx.getString(R.string.not_implemented), Toast.LENGTH_SHORT).show();
     }
 
     public void seekTo(int progress) {
