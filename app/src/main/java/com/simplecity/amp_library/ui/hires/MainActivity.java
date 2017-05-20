@@ -108,6 +108,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
 @SuppressWarnings("ResourceAsColor")
 public class MainActivity extends BaseCastActivity implements
@@ -349,10 +350,12 @@ public class MainActivity extends BaseCastActivity implements
                     .add(R.id.main_container, MainFragment.newInstance())
                     .commit();
 
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.mini_player_container, MiniPlayerFragment.newInstance())
-                    .commit();
+            if( HI_RES ) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.mini_player_container, MiniPlayerFragment.newInstance())
+                        .commit();
+            }
 
             if (mIsSlidingEnabled) {
                 getSupportFragmentManager()
@@ -906,6 +909,18 @@ public class MainActivity extends BaseCastActivity implements
     public void onItemClicked(Playlist playlist) {
         mTitle = getString(R.string.library_title);
         swapFragments(DetailFragment.newInstance(playlist), true);
+    }
+
+    @Override
+    public void onClickListener(View v) {
+        switch (v.getId()) {
+            case R.id.btn_drawer_dummy:
+                // swapFragments(DetailFragment.newInstance(playlist), true);
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

@@ -919,6 +919,18 @@ public class MainActivity extends BaseCastActivity implements
     }
 
     @Override
+    public void onClickListener(View v) {
+        switch (v.getId()) {
+            case R.id.btn_drawer_dummy:
+                // swapFragments(DetailFragment.newInstance(playlist), true);
+                startActivity(new Intent(this, com.simplecity.amp_library.ui.hires.SettingsActivity.class));
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
     public void onItemClicked(DrawerGroupItem drawerGroupItem) {
         switch (drawerGroupItem.type) {
             case DrawerGroupItem.Type.LIBRARY:

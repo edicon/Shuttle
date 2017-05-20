@@ -23,6 +23,8 @@ import com.simplecity.amp_library.utils.TypefaceManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class NavigationDrawerAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
     private static final String TAG = "NavigationDrawerAdapter";
@@ -43,14 +45,29 @@ public class NavigationDrawerAdapter extends AnimatedExpandableListView.Animated
         DrawerGroupItem support = new DrawerGroupItem(DrawerGroupItem.Type.SUPPORT, R.string.pref_title_support, R.drawable.ic_settings_help);
         DrawerGroupItem divider = new DrawerGroupItem(DrawerGroupItem.Type.DIVIDER, -1, -1);
 
+        // if( HI_RES ) {
+        DrawerGroupItem genres = new DrawerGroupItem(DrawerGroupItem.Type.GENRES, R.string.genre_title,  R.drawable.ic_library_white);
+        DrawerGroupItem artists = new DrawerGroupItem(DrawerGroupItem.Type.ARTISTS, R.string.artist_title,  R.drawable.ic_action_toggle_queue);
+        DrawerGroupItem albums = new DrawerGroupItem(DrawerGroupItem.Type.ALBUMS, R.string.album_title,  R.drawable.ic_library_white);
+        DrawerGroupItem songs = new DrawerGroupItem(DrawerGroupItem.Type.SONGS, R.string.song_title,  R.drawable.ic_action_toggle_queue);
+        // }
+
         mDrawerGroupItems.add(library);
         mDrawerGroupItems.add(folders);
         mDrawerGroupItems.add(playlists);
         mDrawerGroupItems.add(divider);
+        if( HI_RES ) {
+            mDrawerGroupItems.add(genres);
+            mDrawerGroupItems.add(artists);
+            mDrawerGroupItems.add(albums);
+            mDrawerGroupItems.add(songs);
+            mDrawerGroupItems.add(divider);
+        }
         mDrawerGroupItems.add(settings);
         mDrawerGroupItems.add(support);
 
         mSelectedDrawerGroupItem = library;
+        // mSelectedDrawerGroupItem = folders;
     }
 
     public void setListCallbacks(DrawerListCallbacks drawerListCallbacks) {

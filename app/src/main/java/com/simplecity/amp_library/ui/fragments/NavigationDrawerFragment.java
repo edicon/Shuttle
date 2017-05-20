@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.simplecity.amp_library.R;
@@ -42,6 +43,8 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class NavigationDrawerFragment extends BaseFragment implements
         MusicUtils.Defs,
         View.OnCreateContextMenuListener,
@@ -52,6 +55,9 @@ public class NavigationDrawerFragment extends BaseFragment implements
         void onItemClicked(DrawerGroupItem drawerGroupItem);
 
         void onItemClicked(Playlist playlist);
+
+        // HI_RES
+        void onClickListener( View v );
     }
 
     private static final String TAG = "DrawerFragment";
@@ -165,6 +171,19 @@ public class NavigationDrawerFragment extends BaseFragment implements
                     .beginTransaction()
                     .replace(R.id.drawer_header_container, DrawerHeaderFragment.newInstance())
                     .commit();
+
+            if( HI_RES ) {
+                ImageButton dummyBtn = (ImageButton)mRootView.findViewById(R.id.btn_drawer_dummy);
+                // dummyBtn.setOnClickListener( onDummyClickListener );
+                dummyBtn.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v ) {
+                        mDrawerLayout.closeDrawer(GravityCompat.START);
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> drawerClickListener.onClickListener( v ), 200);
+                    }
+                });
+            }
 
             themeUIComponents();
         }
@@ -423,6 +442,14 @@ public class NavigationDrawerFragment extends BaseFragment implements
         Handler handler = new Handler();
         handler.postDelayed(() -> drawerClickListener.onItemClicked(playlist), 200);
     }
+
+    // HI_RES
+    /* public void View.DialogInterface.OnClickListener onDummyClickListener(View v ){
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        Handler handler = new Handler();
+        handler.postDelayed(() -> drawerClickListener.onClickListener( v ), 200);
+    };
+    */
 
     @Override
     public void onOverflowButtonClick(View v, final Playlist playlist) {

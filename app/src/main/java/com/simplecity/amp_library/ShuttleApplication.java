@@ -100,21 +100,23 @@ public class ShuttleApplication extends Application {
             enableStrictMode();
         }
 
-        //Crashlytics
-        CrashlyticsCore core = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
-        Fabric.with(this, new Crashlytics.Builder().core(core).answers(new Answers()).build(), new Crashlytics());
+        if( !HI_RES ) {
+            //Crashlytics
+            CrashlyticsCore core = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
+            Fabric.with(this, new Crashlytics.Builder().core(core).answers(new Answers()).build(), new Crashlytics());
 
-        //Firebase Analytics
-        FirebaseAnalytics.getInstance(this);
+            //Firebase Analytics
+            FirebaseAnalytics.getInstance(this); // ToDo: ANR
 
-        //Possible fix for ClipboardUIManager leak.
-        //See https://gist.github.com/pepyakin/8d2221501fd572d4a61c and
-        //https://github.com/square/leakcanary/blob/master/leakcanary-android/src/main/java/com/squareup/leakcanary/AndroidExcludedRefs.java
-        try {
-            Class<?> cls = Class.forName("android.sec.clipboard.ClipboardUIManager");
-            Method m = cls.getDeclaredMethod("getInstance", Context.class);
-            Object o = m.invoke(null, this);
-        } catch (Exception ignored) {
+            //Possible fix for ClipboardUIManager leak.
+            //See https://gist.github.com/pepyakin/8d2221501fd572d4a61c and
+            //https://github.com/square/leakcanary/blob/master/leakcanary-android/src/main/java/com/squareup/leakcanary/AndroidExcludedRefs.java
+            try {
+                Class<?> cls = Class.forName("android.sec.clipboard.ClipboardUIManager");
+                Method m = cls.getDeclaredMethod("getInstance", Context.class);
+                Object o = m.invoke(null, this);
+            } catch (Exception ignored) {
+            }
         }
 
         VideoCastManager.initialize(this,

@@ -49,6 +49,8 @@ import com.simplecity.amp_library.utils.SettingsManager;
 import com.simplecity.amp_library.utils.ShuttleUtils;
 import com.simplecity.amp_library.utils.ThemeUtils;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class SettingsFragment extends PreferenceFragment {
 
@@ -547,8 +549,14 @@ public class SettingsFragment extends PreferenceFragment {
     public void onResume() {
         super.onResume();
 
-        if (getActivity() != null && ((SettingsActivity) getActivity()).getSupportActionBar() != null) {
-            ((SettingsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if( HI_RES ) {
+            if (getActivity() != null && ((com.simplecity.amp_library.ui.hires.SettingsActivity) getActivity()).getSupportActionBar() != null) {
+                ((com.simplecity.amp_library.ui.hires.SettingsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
+        } else {
+            if (getActivity() != null && ((SettingsActivity) getActivity()).getSupportActionBar() != null) {
+                ((SettingsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            }
         }
     }
 }

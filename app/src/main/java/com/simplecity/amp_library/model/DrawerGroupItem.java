@@ -10,7 +10,10 @@ import java.util.List;
 
 public class DrawerGroupItem implements Serializable {
 
-    @IntDef({Type.LIBRARY, Type.FOLDERS, Type.PLAYLISTS, Type.SETTINGS, Type.SUPPORT, Type.DIVIDER})
+    @IntDef(
+    {   Type.LIBRARY, Type.FOLDERS, Type.PLAYLISTS, Type.SETTINGS, Type.SUPPORT, Type.DIVIDER,
+        Type.GENRES, Type.ARTISTS, Type.ALBUMS, Type.SONGS
+    })
     public @interface Type {
         int LIBRARY = 0;
         int FOLDERS = 1;
@@ -18,6 +21,10 @@ public class DrawerGroupItem implements Serializable {
         int SETTINGS = 3;
         int SUPPORT = 4;
         int DIVIDER = 5;
+        int GENRES  = 6;
+        int ARTISTS = 7;
+        int ALBUMS = 8;
+        int SONGS = 9;
     }
 
     @Type
