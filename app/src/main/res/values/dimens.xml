@@ -10,7 +10,8 @@
     <dimen name="drawer_horizontal_margin">16dp</dimen>
     <dimen name="drawer_header_height">172dp</dimen>
 
-    <dimen name="navigation_drawer_width">304dp</dimen>
+    <!-- HI_REA <dimen name="navigation_drawer_width">304dp</dimen> -->
+    <dimen name="navigation_drawer_width">100dp</dimen>
 
     <dimen name="equalizer_activity_edge_padding">16dp</dimen>
     <dimen name="equalizer_activity_top_padding">16dp</dimen>

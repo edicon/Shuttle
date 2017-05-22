@@ -41,13 +41,13 @@ public class NavigationDrawerAdapter extends AnimatedExpandableListView.Animated
         // if( HI_RES ) {
         DrawerGroupItem songs       = new DrawerGroupItem(DrawerGroupItem.Type.SONGS,   R.string.song_title,    R.drawable.ic_action_toggle_queue);
         DrawerGroupItem albums      = new DrawerGroupItem(DrawerGroupItem.Type.ALBUMS,  R.string.album_title,   R.drawable.ic_library_white);
-        DrawerGroupItem artists     = new DrawerGroupItem(DrawerGroupItem.Type.ARTISTS, R.string.artist_title,  R.drawable.ic_action_toggle_queue);
-        DrawerGroupItem genres      = new DrawerGroupItem(DrawerGroupItem.Type.GENRES,  R.string.genre_title,   R.drawable.ic_library_white);
+        DrawerGroupItem artists     = new DrawerGroupItem(DrawerGroupItem.Type.ARTISTS, R.string.artist_title,  R.drawable.ic_queue_music_24dp);
+        DrawerGroupItem genres      = new DrawerGroupItem(DrawerGroupItem.Type.GENRES,  R.string.genre_title,   R.drawable.ic_action_lyrics_light_24dp);
         // }
-        DrawerGroupItem folders     = new DrawerGroupItem(DrawerGroupItem.Type.FOLDERS, R.string.folders_title, R.drawable.ic_folders_many_white);
-        DrawerGroupItem playlists   = new DrawerGroupItem(DrawerGroupItem.Type.PLAYLISTS,R.string.playlists_title, R.drawable.ic_action_toggle_queue);
-        DrawerGroupItem favorlists  = new DrawerGroupItem(DrawerGroupItem.Type.FAVORLISTS,R.string.fav_title,   R.drawable.ic_action_toggle_queue);
-        DrawerGroupItem settings    = new DrawerGroupItem(DrawerGroupItem.Type.SETTINGS,R.string.settings,      R.drawable.ic_action_settings);
+        DrawerGroupItem folders     = new DrawerGroupItem(DrawerGroupItem.Type.FOLDERS, R.string.folders_title, R.drawable.ic_folder_closed_white);
+        DrawerGroupItem playlists   = new DrawerGroupItem(DrawerGroupItem.Type.PLAYLISTS,R.string.playlists_title, R.drawable.ic_playlist_white_24dp);
+        DrawerGroupItem favorlists  = new DrawerGroupItem(DrawerGroupItem.Type.FAVORLISTS,R.string.fav_title,R.drawable.ic_fav);
+        DrawerGroupItem settings    = new DrawerGroupItem(DrawerGroupItem.Type.SETTINGS,R.string.settings,   R.drawable.ic_action_settings);
         DrawerGroupItem support     = new DrawerGroupItem(DrawerGroupItem.Type.SUPPORT, R.string.pref_title_support, R.drawable.ic_settings_help);
         DrawerGroupItem library     = new DrawerGroupItem(DrawerGroupItem.Type.LIBRARY, R.string.library_title, R.drawable.ic_library_white);
         DrawerGroupItem divider     = new DrawerGroupItem(DrawerGroupItem.Type.DIVIDER, -1, -1);

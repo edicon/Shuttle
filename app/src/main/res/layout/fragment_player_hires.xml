@@ -376,7 +376,7 @@
                         android:background="?attr/circular_ripple"
                         android:contentDescription="@string/btn_drawer"
                         android:padding="12dp"
-                        android:src="@drawable/ic_shuffle_white"/>
+                        android:src="@drawable/ic_action_toggle_queue" />
                     <ImageButton
                         android:id="@+id/shuffle"
                         android:layout_width="wrap_content"

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -12,12 +13,15 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding.widget.RxSeekBar;
 import com.jakewharton.rxbinding.widget.SeekBarChangeEvent;
@@ -26,6 +30,7 @@ import com.jakewharton.rxbinding.widget.SeekBarStartChangeEvent;
 import com.jakewharton.rxbinding.widget.SeekBarStopChangeEvent;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.lyrics.LyricsFragment;
+import com.simplecity.amp_library.model.Playlist;
 import com.simplecity.amp_library.model.Song;
 import com.simplecity.amp_library.playback.MusicService;
 import com.simplecity.amp_library.ui.activities.MainActivity;
@@ -35,11 +40,16 @@ import com.simplecity.amp_library.ui.views.PlayerView;
 import com.simplecity.amp_library.ui.views.RepeatingImageButton;
 import com.simplecity.amp_library.ui.views.SizableSeekBar;
 import com.simplecity.amp_library.utils.ColorUtils;
+import com.simplecity.amp_library.utils.DialogUtils;
 import com.simplecity.amp_library.utils.DrawableUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
+import com.simplecity.amp_library.utils.PlaylistUtils;
+import com.simplecity.amp_library.utils.ShuttleUtils;
 import com.simplecity.amp_library.utils.StringUtils;
 import com.simplecity.amp_library.utils.ThemeUtils;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -47,6 +57,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.subscriptions.CompositeSubscription;
 
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+import static com.simplecity.amp_library.ui.hires.MainActivity.mDrawerLayout;
+import static com.simplecity.amp_library.ui.hires.MainActivity.playlistId;
 
 public class PlayerFragment extends BaseFragment implements PlayerView {
 
@@ -141,10 +153,10 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
         if( HI_RES ) {
             favorButton = (ImageButton) rootView.findViewById(R.id.favor);
-            favorButton.setOnClickListener(v -> presenter.toggleFavorite( getActivity() ));
+            favorButton.setOnClickListener(v -> toggleFavorite( getActivity() ));
 
             drawerButton = (ImageButton) rootView.findViewById(R.id.drawer);
-            drawerButton.setOnClickListener(v -> presenter.toggleDrawerMenu());
+            drawerButton.setOnClickListener(v -> toggleDrawerMenu());
 
 
             subRepeatBtn = (ImageButton) rootView.findViewById(R.id.sub_repeat);
@@ -154,16 +166,16 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
             subSuffleBtn.setOnClickListener(v -> presenter.toggleShuffle());
 
             subPlaylistBtn = (ImageButton) rootView.findViewById(R.id.sub_playlist);
-            subPlaylistBtn.setOnClickListener(v -> presenter.togglePlaylist(getActivity()));
+            subPlaylistBtn.setOnClickListener(v -> togglePlaylist(getActivity()));
 
             subLylicBtn = (ImageButton) rootView.findViewById(R.id.sub_lylic);
-            subLylicBtn.setOnClickListener(v -> presenter.toggleLylic(getActivity()));
+            subLylicBtn.setOnClickListener(v -> toggleLylic((AppCompatActivity)getActivity()));
 
             subFileBtn = (ImageButton) rootView.findViewById(R.id.sub_file);
-            subFileBtn.setOnClickListener(v -> presenter.toggleFile(getActivity()));
+            subFileBtn.setOnClickListener(v -> toggleFile(getActivity()));
 
             subDeleteBtn = (ImageButton) rootView.findViewById(R.id.sub_delete);
-            subDeleteBtn.setOnClickListener(v -> presenter.toggleDelete(getActivity()));
+            subDeleteBtn.setOnClickListener(v -> toggleDelete(getActivity()));
 
         }
 
@@ -543,5 +555,57 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
         track.setText(song.name);
         track.setSelected(true);
         album.setText(String.format("%s | %s", song.artistName, song.albumName));
+    }
+
+    // ToDo: HI_RES
+    public void toggleDrawerMenu() {
+        // MusicUtils.cycleRepeat();
+        if (com.simplecity.amp_library.ui.hires.MainActivity.mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            // close
+            mDrawerLayout.closeDrawers();
+        } else {
+            // open
+            mDrawerLayout.openDrawer(Gravity.LEFT);
+        }
+    }
+
+    public void toggleFavorite( Activity cx ) {
+        PlaylistUtils.toggleFavorite( cx );
+    }
+
+    public void togglePlaylist( Activity cx ) {
+        // https://stackoverflow.com/questions/3720804/android-open-menu-from-a-button
+        // https://stackoverflow.com/questions/16938522/how-to-get-the-android-id-for-a-menu-item-in-android
+        // ToDo: Color dimmed
+        cx.openOptionsMenu(); // activity's onCreateOptionsMenu gets called
+        com.simplecity.amp_library.ui.hires.MainActivity.optionMenu.performIdentifierAction( playlistId /* R.id.menu_lyrics*/ , 0);
+        cx.closeOptionsMenu();
+    }
+
+    public void toggleLylic(AppCompatActivity cx ) {
+        Fragment playingFragment  = cx.getSupportFragmentManager().findFragmentById(R.id.player_container);
+        if (playingFragment != null) {
+            Fragment fragment = playingFragment.getChildFragmentManager().findFragmentById(R.id.main_container);
+            if (fragment instanceof LyricsFragment)
+                ((LyricsFragment) fragment).remove();
+            else
+                ((PlayerFragment) playingFragment).toggleLyrics();
+
+        }
+    }
+
+    public void toggleFile( Activity cx ) {
+        DialogUtils.showSongInfoDialog( cx, MusicUtils.getSong());
+    }
+
+    public void toggleDelete( Activity cx ) {
+        new DialogUtils.DeleteDialogBuilder()
+                .context(cx)
+                .singleMessageId(R.string.delete_song_desc)
+                .multipleMessage(R.string.delete_song_desc_multiple)
+                .itemNames(Collections.singletonList(MusicUtils.getSongName()))
+                .songsToDelete(Observable.just(Collections.singletonList(MusicUtils.getSong())))
+                .build()
+                .show();
     }
 }

@@ -82,6 +82,7 @@ import com.simplecity.amp_library.ui.fragments.PlaylistFragment;
 import com.simplecity.amp_library.ui.fragments.QueueFragment;
 import com.simplecity.amp_library.ui.fragments.QueuePagerFragment;
 import com.simplecity.amp_library.ui.fragments.SuggestedFragment;
+import com.simplecity.amp_library.ui.presenters.PlayerPresenter;
 import com.simplecity.amp_library.ui.views.CustomDrawerLayout;
 import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.AnalyticsManager;
@@ -118,7 +119,9 @@ public class MainActivity extends BaseCastActivity implements
         PlaylistFragment.PlaylistClickListener,
         NavigationDrawerFragment.DrawerClickListener,
         SuggestedFragment.SuggestedClickListener,
-        MusicUtils.Defs {
+        // PlayerPresenter.PresenterClickListener,
+        MusicUtils.Defs
+{
 
     private static final String TAG = "MainActivity";
 
@@ -134,7 +137,7 @@ public class MainActivity extends BaseCastActivity implements
     private WeakReference<BackPressListener> mBackPressListenerReference;
     private SlidingUpPanelLayout mSlidingUpPanelLayout;
 
-    private CustomDrawerLayout mDrawerLayout;
+    public static CustomDrawerLayout mDrawerLayout;
 
     //Request code for the purchase flow
     static final int RC_REQUEST = 300;
@@ -507,8 +510,11 @@ public class MainActivity extends BaseCastActivity implements
         super.onSaveInstanceState(savedInstanceState);
     }
 
+    public static Menu optionMenu;
+    public static int playlistId;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        optionMenu = menu;
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
 
             getMenuInflater().inflate(R.menu.menu_main_activity, menu);
@@ -563,6 +569,7 @@ public class MainActivity extends BaseCastActivity implements
 
                 SubMenu sub = menu.addSubMenu(0, ADD_TO_PLAYLIST, 4, R.string.save_as_playlist);
                 PlaylistUtils.makePlaylistMenu(this, sub, 0);
+                playlistId = sub.getItem().getItemId();
 
                 menu.add(0, CLEAR_QUEUE, 5, R.string.clear_queue);
 
