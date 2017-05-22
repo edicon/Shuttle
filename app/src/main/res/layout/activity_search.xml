@@ -34,16 +34,17 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
         android:clipToPadding="false"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         app:fastScrollAutoHide="true"
         app:fastScrollAutoHideDelay="1500"
-        tools:listitem="@layout/list_item_image"/>
+        tools:listitem="@layout/list_item_image"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/viewStub" />
 
     <ViewStub
-        android:id="@android:id/empty"
+        android:id="@+id/viewStub"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
