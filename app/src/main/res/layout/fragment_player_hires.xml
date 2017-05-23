@@ -474,13 +474,13 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_view"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="-46dp"
+        android:layout_marginBottom="-128dp"
         android:contentDescription="@string/btn_show_queue"
         android:src="@drawable/ic_queue_music_24dp"
         app:fabSize="normal"
         app:useCompatPadding="true"
         tools:tint="#fff"
-        tools:visibility="gone"/>
+        tools:visibility="visible" />
 
 
     <!--HI_RES
