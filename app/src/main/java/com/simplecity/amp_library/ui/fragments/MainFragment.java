@@ -143,9 +143,8 @@ public class MainFragment extends BaseFragment {
             } else if (favoritesOrder == i) {
                 // ToDo: Favorites List 구현
                 if (showFavorites) {
-                    DetailFragment recentlyPlayedFragment = DetailFragment.newInstance(Playlist.recentlyPlayedPlaylist());
                     // DetailFragment favoriteFragment = DetailFragment.newInstance(Playlist.favoritesPlaylist());
-                    // adapter.addFragment(recentlyPlayedFragment);
+                    // adapter.addFragment(favoriteFragment);
                     adapter.addFragment(PlaylistFragment.newInstance(getString(R.string.fav_title)));
                 }
             }
