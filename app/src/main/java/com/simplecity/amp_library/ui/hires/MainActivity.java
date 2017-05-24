@@ -900,25 +900,25 @@ public class MainActivity extends BaseCastActivity implements
 
     @Override
     public void onItemClicked(AlbumArtist albumArtist, View transitionView) {
-        mTitle = getString(R.string.library_title);
+        mTitle = getString(R.string.artists_title);
         swapFragments(albumArtist, transitionView);
     }
 
     @Override
     public void onItemClicked(Album album, View transitionView) {
-        mTitle = getString(R.string.library_title);
+        mTitle = getString(R.string.album_title);
         swapFragments(album, transitionView);
     }
 
     @Override
     public void onItemClicked(Genre genre) {
-        mTitle = getString(R.string.library_title);
+        mTitle = getString(R.string.genre_title);
         swapFragments(DetailFragment.newInstance(genre), true);
     }
 
     @Override
     public void onItemClicked(Playlist playlist) {
-        mTitle = getString(R.string.library_title);
+        mTitle = getString(R.string.playlists_title);
         swapFragments(DetailFragment.newInstance(playlist), true);
     }
 

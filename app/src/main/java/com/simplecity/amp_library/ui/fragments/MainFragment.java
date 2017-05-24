@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.simplecity.amp_library.R;
+import com.simplecity.amp_library.model.Playlist;
 import com.simplecity.amp_library.ui.activities.MainActivity;
 import com.simplecity.amp_library.ui.adapters.PagerAdapter;
 import com.simplecity.amp_library.ui.views.SlidingTabLayout;
@@ -142,6 +143,9 @@ public class MainFragment extends BaseFragment {
             } else if (favoritesOrder == i) {
                 // ToDo: Favorites List 구현
                 if (showFavorites) {
+                    DetailFragment recentlyPlayedFragment = DetailFragment.newInstance(Playlist.recentlyPlayedPlaylist());
+                    // DetailFragment favoriteFragment = DetailFragment.newInstance(Playlist.favoritesPlaylist());
+                    // adapter.addFragment(recentlyPlayedFragment);
                     adapter.addFragment(PlaylistFragment.newInstance(getString(R.string.fav_title)));
                 }
             }
