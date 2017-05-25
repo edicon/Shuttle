@@ -68,6 +68,7 @@ public class SearchAdapter extends ItemAdapter {
                             break;
                         case ViewType.SUGGESTED_SONG:
                         case ViewType.SONG:
+                        case ViewType.FAVORITE_SONG:
                             listener.onItemClick(((SuggestedSongView) items.get(viewHolder.getAdapterPosition())).song, Stream.of(items)
                                     .filter(adaptableItem -> adaptableItem instanceof SongView)
                                     .map(adaptableItem -> ((SongView) adaptableItem).getItem())
@@ -91,6 +92,7 @@ public class SearchAdapter extends ItemAdapter {
                             listener.onOverflowClick(v, ((AlbumView) items.get(viewHolder.getAdapterPosition())).album);
                             break;
                         case ViewType.SUGGESTED_SONG:
+                        case ViewType.FAVORITE_SONG:
                             listener.onOverflowClick(v, ((SuggestedSongView) items.get(viewHolder.getAdapterPosition())).song);
                             break;
                     }

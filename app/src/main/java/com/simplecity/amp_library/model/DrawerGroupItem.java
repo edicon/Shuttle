@@ -13,7 +13,7 @@ public class DrawerGroupItem implements Serializable {
     @IntDef(
     {
         Type.LIBRARY,   Type.FOLDERS, Type.PLAYLISTS,   Type.SETTINGS,  Type.SUPPORT,   Type.DIVIDER,
-        Type.GENRES,    Type.ARTISTS, Type.ALBUMS,      Type.SONGS,     Type.FAVORLISTS
+        Type.GENRES,    Type.ARTISTS, Type.ALBUMS,      Type.SONGS,     Type.FAVORLISTS, Type.PLAYLIST
     })
     public @interface Type {
         int LIBRARY     = 0;
@@ -27,6 +27,7 @@ public class DrawerGroupItem implements Serializable {
         int ALBUMS      = 8;
         int SONGS       = 9;
         int FAVORLISTS  = 10;
+        int PLAYLIST    = 11;
     }
 
     @Type

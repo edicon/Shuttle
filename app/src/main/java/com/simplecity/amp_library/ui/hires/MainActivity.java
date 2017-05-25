@@ -72,6 +72,7 @@ import com.simplecity.amp_library.tagger.TaggerDialog;
 import com.simplecity.amp_library.ui.fragments.AlbumArtistFragment;
 import com.simplecity.amp_library.ui.fragments.AlbumFragment;
 import com.simplecity.amp_library.ui.fragments.DetailFragment;
+import com.simplecity.amp_library.ui.fragments.FavoriteFragment;
 import com.simplecity.amp_library.ui.fragments.FolderFragment;
 import com.simplecity.amp_library.ui.fragments.GenreFragment;
 import com.simplecity.amp_library.ui.fragments.MainFragment;
@@ -119,6 +120,7 @@ public class MainActivity extends BaseCastActivity implements
         PlaylistFragment.PlaylistClickListener,
         NavigationDrawerFragment.DrawerClickListener,
         SuggestedFragment.SuggestedClickListener,
+        FavoriteFragment.FavoriteClickListener,
         // PlayerPresenter.PresenterClickListener,
         MusicUtils.Defs
 {
@@ -984,10 +986,21 @@ public class MainActivity extends BaseCastActivity implements
                 mTitle = getString(R.string.genre_title);
                 mainFragment.setPagerItem(itemIndex);
                 break;
+            case DrawerGroupItem.Type.PLAYLIST:
+                itemIndex = getResources().getInteger(R.integer.PLAYLISTS_ORDER);
+                mTitle = getString(R.string.playlists_title);
+                mainFragment.setPagerItem(itemIndex);
+                break;
             // END HI_RES
             case DrawerGroupItem.Type.FOLDERS:
                 if (getCurrentFragment() instanceof FolderFragment) {
                     return;
+                }
+                if( HI_RES ) {
+                    itemIndex = getResources().getInteger(R.integer.FOLDERS_ORDER);
+                    mTitle = getString(R.string.folders_title);
+                    mainFragment.setPagerItem(itemIndex);
+                    break;
                 }
                 if (ShuttleUtils.isUpgraded()) {
                     //Folder

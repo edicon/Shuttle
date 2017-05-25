@@ -46,6 +46,7 @@ public class NavigationDrawerAdapter extends AnimatedExpandableListView.Animated
         // }
         DrawerGroupItem folders     = new DrawerGroupItem(DrawerGroupItem.Type.FOLDERS, R.string.folders_title, R.drawable.ic_folder_closed_white);
         DrawerGroupItem playlists   = new DrawerGroupItem(DrawerGroupItem.Type.PLAYLISTS,R.string.playlists_title, R.drawable.ic_playlist_white_24dp);
+        DrawerGroupItem playlist    = new DrawerGroupItem(DrawerGroupItem.Type.PLAYLIST,R.string.playlists_title, R.drawable.ic_playlist_white_24dp);
         DrawerGroupItem favorlists  = new DrawerGroupItem(DrawerGroupItem.Type.FAVORLISTS,R.string.fav_title,R.drawable.ic_fav);
         DrawerGroupItem settings    = new DrawerGroupItem(DrawerGroupItem.Type.SETTINGS,R.string.settings,   R.drawable.ic_action_settings);
         DrawerGroupItem support     = new DrawerGroupItem(DrawerGroupItem.Type.SUPPORT, R.string.pref_title_support, R.drawable.ic_settings_help);
@@ -60,15 +61,16 @@ public class NavigationDrawerAdapter extends AnimatedExpandableListView.Animated
             mDrawerGroupItems.add(divider);
         }
         mDrawerGroupItems.add(folders);
-        mDrawerGroupItems.add(playlists);
+        // mDrawerGroupItems.add(playlists);
+        mDrawerGroupItems.add(playlist);
         mDrawerGroupItems.add(favorlists);
         mDrawerGroupItems.add(divider);
 
         mDrawerGroupItems.add(settings);
-        mDrawerGroupItems.add(library);
+        // mDrawerGroupItems.add(library);
         // mDrawerGroupItems.add(support);
 
-        mSelectedDrawerGroupItem = library;
+        mSelectedDrawerGroupItem = songs;
         // mSelectedDrawerGroupItem = folders;
     }
 
@@ -78,10 +80,12 @@ public class NavigationDrawerAdapter extends AnimatedExpandableListView.Animated
 
     public void setPlaylistData(List<Playlist> playlists) {
         for (DrawerGroupItem groupItem : mDrawerGroupItems) {
-            if (groupItem.type == DrawerGroupItem.Type.PLAYLISTS) {
-                groupItem.children.clear();
-                groupItem.addChildren(playlists);
-                break;
+            if( HI_RES ) {
+                if (groupItem.type == DrawerGroupItem.Type.PLAYLISTS) {
+                    groupItem.children.clear();
+                    groupItem.addChildren(playlists);
+                    break;
+                }
             }
         }
         notifyDataSetChanged();

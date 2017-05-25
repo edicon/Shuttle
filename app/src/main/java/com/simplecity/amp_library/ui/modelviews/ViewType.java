@@ -50,4 +50,8 @@ public @interface ViewType {
     int SONG_EDITABLE = 30;
 
     int DISC_NUMBER = 31;
+
+    // HI_RES
+    int FAVORITE_SONG = 32;
+    int FAVORITE_HEADER = 33;
 }

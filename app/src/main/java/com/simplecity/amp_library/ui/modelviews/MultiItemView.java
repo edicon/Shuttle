@@ -29,6 +29,7 @@ public abstract class MultiItemView<T> extends BaseAdaptableItem<T, MultiItemVie
             case ViewType.ALBUM_CARD:
             case ViewType.ALBUM_CARD_LARGE:
             case ViewType.SUGGESTED_SONG:
+            case ViewType.FAVORITE_SONG:
                 return R.layout.grid_item_card;
             case ViewType.ARTIST_PALETTE:
             case ViewType.ALBUM_PALETTE:
@@ -79,7 +80,8 @@ public abstract class MultiItemView<T> extends BaseAdaptableItem<T, MultiItemVie
                     || viewType == ViewType.ALBUM_LIST
                     || viewType == ViewType.ARTIST_LIST_SMALL
                     || viewType == ViewType.ALBUM_LIST_SMALL
-                    || viewType == ViewType.SUGGESTED_SONG) {
+                    || viewType == ViewType.SUGGESTED_SONG
+                    || viewType == ViewType.FAVORITE_SONG ) {
                 overflowButton.setImageDrawable(DrawableUtils.getBaseDrawable(itemView.getContext(), R.drawable.ic_overflow_white));
             } else {
                 overflowButton.setImageDrawable(DrawableUtils.getWhiteDrawable(itemView.getContext(), R.drawable.ic_overflow_white));

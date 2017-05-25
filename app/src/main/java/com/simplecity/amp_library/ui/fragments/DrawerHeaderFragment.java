@@ -26,6 +26,8 @@ import com.simplecity.amp_library.ui.views.CircleImageView;
 import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class DrawerHeaderFragment extends BaseFragment {
 
     private static final String TAG = "DrawerHeaderFragment";
@@ -81,6 +83,10 @@ public class DrawerHeaderFragment extends BaseFragment {
             mBackgroundImage = (ImageView) mRootView.findViewById(R.id.background_image);
             mBackgroundImage.setImageDrawable(mBackgroundDrawable);
             mArtistImage = (CircleImageView) mRootView.findViewById(R.id.artist_image);
+            if( HI_RES ) {
+                // mBackgroundImage.setVisibility(View.GONE);
+                mArtistImage.setVisibility(View.GONE);
+            }
         }
         return mRootView;
     }

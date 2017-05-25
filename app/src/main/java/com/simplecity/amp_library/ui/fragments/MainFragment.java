@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.simplecity.amp_library.R;
-import com.simplecity.amp_library.model.Playlist;
-import com.simplecity.amp_library.ui.activities.MainActivity;
 import com.simplecity.amp_library.ui.adapters.PagerAdapter;
 import com.simplecity.amp_library.ui.views.SlidingTabLayout;
 import com.simplecity.amp_library.utils.ActionBarUtils;
@@ -145,7 +143,8 @@ public class MainFragment extends BaseFragment {
                 if (showFavorites) {
                     // DetailFragment favoriteFragment = DetailFragment.newInstance(Playlist.favoritesPlaylist());
                     // adapter.addFragment(favoriteFragment);
-                    adapter.addFragment(PlaylistFragment.newInstance(getString(R.string.fav_title)));
+                    // adapter.addFragment(PlaylistFragment.newInstance(getString(R.string.fav_title)));
+                    adapter.addFragment(FavoriteFragment.newInstance(getString(R.string.fav_title)));
                 }
             }
         }
