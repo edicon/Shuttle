@@ -1131,7 +1131,10 @@ public class DetailFragment extends BaseFragment implements
             }
         }
 
-        ((MainActivity) getActivity()).swapFragments((Album) item, v.findViewById(R.id.image));
+        if( HI_RES )
+            ((com.simplecity.amp_library.ui.hires.MainActivity) getActivity()).swapFragments((Album) item, v.findViewById(R.id.image));
+        else
+            ((MainActivity) getActivity()).swapFragments((Album) item, v.findViewById(R.id.image));
     }
 
     @Override
