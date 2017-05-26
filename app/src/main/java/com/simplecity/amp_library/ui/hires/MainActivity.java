@@ -82,6 +82,7 @@ import com.simplecity.amp_library.ui.fragments.PlayerFragment;
 import com.simplecity.amp_library.ui.fragments.PlaylistFragment;
 import com.simplecity.amp_library.ui.fragments.QueueFragment;
 import com.simplecity.amp_library.ui.fragments.QueuePagerFragment;
+import com.simplecity.amp_library.ui.fragments.SongFragment;
 import com.simplecity.amp_library.ui.fragments.SuggestedFragment;
 import com.simplecity.amp_library.ui.presenters.PlayerPresenter;
 import com.simplecity.amp_library.ui.views.CustomDrawerLayout;
@@ -354,12 +355,24 @@ public class MainActivity extends BaseCastActivity implements
         if (savedInstanceState == null) {
 
             mainFragment = MainFragment.newInstance();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.main_container, mainFragment)
-                    .commit();
-
             if( HI_RES ) {
+                // PlayerFragment(player) <--> MainFragment(pager) swap
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.main_container, PlayerFragment.newInstance())
+                        .commit();
+                // Hide mini_player_container
+                findViewById(R.id.slider_container).setVisibility(View.GONE);
+            } else {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.main_container, mainFragment)
+                        .commit();
+            }
+
+            if( HI_RES )
+                findViewById(R.id.slider_container).setVisibility(View.GONE);
+            else {
                 getSupportFragmentManager()
                         .beginTransaction()
                         .add(R.id.mini_player_container, MiniPlayerFragment.newInstance())
@@ -369,7 +382,8 @@ public class MainActivity extends BaseCastActivity implements
             if (mIsSlidingEnabled) {
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.player_container, PlayerFragment.newInstance())
+                        // .add(R.id.player_container, PlayerFragment.newInstance())
+                        .add(R.id.player_container, mainFragment)
                         .commit();
             }
         }
@@ -773,20 +787,24 @@ public class MainActivity extends BaseCastActivity implements
         supportInvalidateOptionsMenu();
 
         if (mIsSlidingEnabled) {
-            PlayerFragment playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentById(R.id.player_container);
+            if( HI_RES ) {
+               // ToDo:
+            } else {
+                PlayerFragment playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentById(R.id.player_container);
 
-            if (playerFragment != null) {
+                if (playerFragment != null) {
 
-                playerFragment.update();
+                    playerFragment.update();
 
-                // If the QueuePagerFragment's adapter is empty, it's because it was created before the service
-                // was connected. We need to recreate it now that we know the service is connected.
-                Fragment fragment = playerFragment.getChildFragmentManager().findFragmentById(R.id.main_container);
-                if (fragment instanceof QueueFragment) {
-                    ((QueueFragment) fragment).scrollToCurrentItem();
-                } else if (fragment instanceof QueuePagerFragment) {
-                    ((QueuePagerFragment) fragment).resetAdapter();
-                    ((QueuePagerFragment) fragment).updateQueuePosition();
+                    // If the QueuePagerFragment's adapter is empty, it's because it was created before the service
+                    // was connected. We need to recreate it now that we know the service is connected.
+                    Fragment fragment = playerFragment.getChildFragmentManager().findFragmentById(R.id.main_container);
+                    if (fragment instanceof QueueFragment) {
+                        ((QueueFragment) fragment).scrollToCurrentItem();
+                    } else if (fragment instanceof QueuePagerFragment) {
+                        ((QueuePagerFragment) fragment).resetAdapter();
+                        ((QueuePagerFragment) fragment).updateQueuePosition();
+                    }
                 }
             }
         }
@@ -804,6 +822,7 @@ public class MainActivity extends BaseCastActivity implements
     @Override
     public void onBackPressed() {
 
+        // ToDo: Check play/main Fragment swap
         Fragment playingFragment = getSupportFragmentManager().findFragmentById(R.id.player_container);
         if (playingFragment != null) {
             Fragment childFragment = playingFragment.getChildFragmentManager().findFragmentById(R.id.queue_container);
@@ -967,44 +986,69 @@ public class MainActivity extends BaseCastActivity implements
                 break;
             // HI_RES
             case DrawerGroupItem.Type.SONGS:
-                itemIndex = getResources().getInteger(R.integer.SONGS_ORDER);
-                mTitle = getString(R.string.tracks_title);
-                mainFragment.setPagerItem(itemIndex);
+                if( mIsSlidingEnabled ) {
+                    itemIndex = getResources().getInteger(R.integer.SONGS_ORDER);
+                    mTitle = getString(R.string.tracks_title);
+                    mainFragment.setPagerItem(itemIndex);
+                } else {
+                    Fragment fragment = SongFragment.newInstance(getString(R.string.tracks_title));
+                    swapFragments(fragment, true);
+                }
                 break;
             case DrawerGroupItem.Type.ALBUMS:
-                itemIndex = getResources().getInteger(R.integer.ALBUMS_ORDER);
-                mTitle = getString(R.string.albums_title);
-                mainFragment.setPagerItem(itemIndex);
+                if( mIsSlidingEnabled ) {
+                    itemIndex = getResources().getInteger(R.integer.ALBUMS_ORDER);
+                    mTitle = getString(R.string.albums_title);
+                    mainFragment.setPagerItem(itemIndex);
+                } else {
+                    Fragment fragment = AlbumFragment.newInstance(getString(R.string.albums_title));
+                    swapFragments(fragment, true);
+                }
                 break;
             case DrawerGroupItem.Type.ARTISTS:
-                itemIndex = getResources().getInteger(R.integer.ARTISTS_ORDER);
-                mTitle = getString(R.string.artists_title);
-                mainFragment.setPagerItem(itemIndex);
+                if( mIsSlidingEnabled ) {
+                    itemIndex = getResources().getInteger(R.integer.ARTISTS_ORDER);
+                    mTitle = getString(R.string.artists_title);
+                    mainFragment.setPagerItem(itemIndex);
+                } else {
+                    Fragment fragment = AlbumArtistFragment.newInstance(getString(R.string.artists_title));
+                    swapFragments(fragment, true);
+                }
                 break;
             case DrawerGroupItem.Type.GENRES:
-                itemIndex = getResources().getInteger(R.integer.GENRES_ORDER);
-                mTitle = getString(R.string.genre_title);
-                mainFragment.setPagerItem(itemIndex);
+                if( mIsSlidingEnabled ) {
+                    itemIndex = getResources().getInteger(R.integer.GENRES_ORDER);
+                    mTitle = getString(R.string.genre_title);
+                    mainFragment.setPagerItem(itemIndex);
+                } else {
+                    Fragment fragment = GenreFragment.newInstance(getString(R.string.genres_title));
+                    swapFragments(fragment, true);
+                }
                 break;
             case DrawerGroupItem.Type.PLAYLIST:
-                itemIndex = getResources().getInteger(R.integer.PLAYLISTS_ORDER);
-                mTitle = getString(R.string.playlists_title);
-                mainFragment.setPagerItem(itemIndex);
+                if( mIsSlidingEnabled ) {
+                    itemIndex = getResources().getInteger(R.integer.PLAYLISTS_ORDER);
+                    mTitle = getString(R.string.playlists_title);
+                    mainFragment.setPagerItem(itemIndex);
+                } else {
+                    Fragment fragment = PlaylistFragment.newInstance(getString(R.string.tracks_title));
+                    swapFragments(fragment, true);
+                }
                 break;
             // END HI_RES
             case DrawerGroupItem.Type.FOLDERS:
                 if (getCurrentFragment() instanceof FolderFragment) {
                     return;
                 }
-                if( HI_RES ) {
+                if( mIsSlidingEnabled ) {
                     itemIndex = getResources().getInteger(R.integer.FOLDERS_ORDER);
                     mTitle = getString(R.string.folders_title);
                     mainFragment.setPagerItem(itemIndex);
                     break;
                 }
-                if (ShuttleUtils.isUpgraded()) {
+                if ( HI_RES || ShuttleUtils.isUpgraded()) {
                     //Folder
-                    swapFragments(FolderFragment.newInstance(null), true);
+                    swapFragments(FolderFragment.newInstance(getString(R.string.folders_title)), true);
                 } else {
                     DialogUtils.showUpgradeDialog(this, (materialDialog, dialogAction) -> {
                         if (ShuttleUtils.isAmazonBuild()) {
@@ -1017,9 +1061,14 @@ public class MainActivity extends BaseCastActivity implements
                 }
                 break;
             case DrawerGroupItem.Type.FAVORLISTS:
-                itemIndex = getResources().getInteger(R.integer.FAVORITES_ORDER);
-                mTitle = getString(R.string.fav_title);
-                mainFragment.setPagerItem(itemIndex);
+                if( mIsSlidingEnabled ) {
+                    itemIndex = getResources().getInteger(R.integer.FAVORITES_ORDER);
+                    mTitle = getString(R.string.fav_title);
+                    mainFragment.setPagerItem(itemIndex);
+                } else {
+                    Fragment fragment = FavoriteFragment.newInstance(getString(R.string.fav_title));
+                    swapFragments(fragment, true);
+                }
                 break;
             // HI_RES
 
