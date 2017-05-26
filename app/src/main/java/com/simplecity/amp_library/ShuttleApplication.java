@@ -127,7 +127,10 @@ public class ShuttleApplication extends Application {
         );
 
         final SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-        setIsUpgraded(mPrefs.getBoolean("pref_theme_gold", false));
+        if( HI_RES )
+            setIsUpgraded(mPrefs.getBoolean("pref_theme_gold", true));
+        else
+            setIsUpgraded(mPrefs.getBoolean("pref_theme_gold", false));
 
         // we cannot call setDefaultValues for multiple fragment based XML preference
         // files with readAgain flag set to false, so always check KEY_HAS_SET_DEFAULT_VALUES
