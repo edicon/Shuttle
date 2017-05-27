@@ -1383,6 +1383,7 @@ public class MainActivity extends BaseCastActivity implements
         return TAG;
     }
 
+    // HI_RES
     private void setBackStackListener() {
         getSupportFragmentManager().addOnBackStackChangedListener(
             new FragmentManager.OnBackStackChangedListener() {
