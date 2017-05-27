@@ -7,7 +7,8 @@ buildscript {
     dependencies {
         classpath gradlePlugins.android
         classpath gradlePlugins.dexcount
-        classpath gradlePlugins.fabric
+        // classpath gradlePlugins.fabric
+        classpath 'io.fabric.tools:gradle:1.+'
     }
 }
 
@@ -67,8 +68,8 @@ android {
         // This API key is provided for convenience. Please go to https://www.last.fm/api/account/create and create your own.
         buildConfigField("String", "LASTFM_API_KEY", "\"${getProperty(getProperties('../public.properties'), 'LASTFM_API_KEY')}\"")
 
-        // manifestPlaceholders = [CRASHLYTICS_API_KEY: "3ae52fb280f95974b3077c69e6e5d73d417ffd01"]
-        manifestPlaceholders = [CRASHLYTICS_API_KEY: ""]
+        manifestPlaceholders = [CRASHLYTICS_API_KEY: "3ae52fb280f95974b3077c69e6e5d73d417ffd01"]
+        // manifestPlaceholders = [CRASHLYTICS_API_KEY: ""]
     }
 
     signingConfigs {
@@ -268,9 +269,9 @@ dependencies {
     compile libs.rxReceivers
     compile libs.slidingUpPanel
     compile libs.streams
-    compile(libs.crashlytics) {
-        transitive = true;
-    }
+    // compile(libs.crashlytics) {
+    //     transitive = true;
+    // }
     compile(libs.materialDialogs) {
         transitive = true;
     }
@@ -292,6 +293,9 @@ dependencies {
     testCompile libs.assertj
     androidTestCompile(libs.espresso) {
         exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+        transitive = true;
     }
 }
 

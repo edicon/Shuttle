@@ -189,7 +189,7 @@ public class FolderFragment extends BaseFragment implements
             dummyStatusBar.setVisibility(View.GONE);
         }
 
-        if (getParentFragment() == null || !(getParentFragment() instanceof MainFragment)) {
+        if (getParentFragment() == null || !(getParentFragment() instanceof PlayerFragment /*MainFragment*/)) {
             showBreadcrumbsInList = false;
             breadcrumb = (Breadcrumb) rootView.findViewById(R.id.breadcrumb_view);
             breadcrumb.setTextColor(Color.WHITE);

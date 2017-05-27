@@ -18,6 +18,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- ## End 'Special' permissions ##-->
 
+    <!-- landroid:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" -->
+    <!-- android:theme="@style/Theme.Launch" -->
     <application
         android:name="com.simplecity.amp_library.ShuttleApplication"
         android:allowBackup="true"
@@ -27,7 +29,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:theme="@style/Theme.Launch">
+        android:theme="@style/Theme.Launch"
+        >
 
         <meta-data android:name="android.max_aspect" android:value="2.1" />
 

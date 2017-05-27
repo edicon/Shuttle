@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,8 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +22,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.annimon.stream.Collectors;
@@ -26,14 +30,17 @@ import com.annimon.stream.Stream;
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback;
 import com.bignerdranch.android.multiselector.MultiSelector;
 import com.simplecity.amp_library.R;
+import com.simplecity.amp_library.interfaces.Breadcrumb;
 import com.simplecity.amp_library.model.AdaptableItem;
 import com.simplecity.amp_library.model.Playlist;
 import com.simplecity.amp_library.model.Song;
 import com.simplecity.amp_library.sql.databases.BlacklistHelper;
+import com.simplecity.amp_library.ui.adapters.FolderAdapter;
 import com.simplecity.amp_library.ui.adapters.SongAdapter;
 import com.simplecity.amp_library.ui.modelviews.EmptyView;
 import com.simplecity.amp_library.ui.modelviews.ShuffleView;
 import com.simplecity.amp_library.ui.modelviews.SongView;
+import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.DataManager;
 import com.simplecity.amp_library.utils.DialogUtils;
@@ -52,6 +59,8 @@ import java.util.List;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
 public class SongFragment extends BaseFragment implements
         MusicUtils.Defs,
@@ -83,6 +92,11 @@ public class SongFragment extends BaseFragment implements
     private Subscription subscription;
 
     private ShuffleView shuffleView;
+
+    // HI_RES
+    private Toolbar toolbar;
+    private View dummyToolbar;
+    private View dummyStatusBar;
 
     public SongFragment() {
 
@@ -150,9 +164,41 @@ public class SongFragment extends BaseFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        // ToDo: HI_RES
+        View rootView = inflater.inflate(R.layout.fragment_recycler_hires, container, false);
+
+        toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        dummyToolbar = rootView.findViewById(R.id.dummyToolbar);
+        dummyStatusBar = rootView.findViewById(R.id.dummyStatusBar);
+
+        //We need to set the dummy status bar height.
+        if (ShuttleUtils.hasKitKat()) {
+            LinearLayout.LayoutParams statusBarParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) ActionBarUtils.getStatusBarHeight(getActivity()));
+            dummyStatusBar.setLayoutParams(statusBarParams);
+        } else {
+            dummyStatusBar.setVisibility(View.GONE);
+        }
+
+        if (getParentFragment() == null || !(getParentFragment() instanceof PlayerFragment /*MainFragment*/)) {
+            if (ShuttleUtils.hasKitKat()) {
+                dummyStatusBar.setVisibility(View.VISIBLE);
+            }
+            dummyToolbar.setVisibility(View.VISIBLE);
+        } else {
+            toolbar.setVisibility(View.GONE);
+            if (ShuttleUtils.hasKitKat()) {
+                dummyStatusBar.setVisibility(View.GONE);
+            }
+            dummyToolbar.setVisibility(View.GONE);
+        }
+        // ToDo: END HI_RES
+
         if (mRecyclerView == null) {
 
-            mRecyclerView = (FastScrollRecyclerView) inflater.inflate(R.layout.fragment_recycler, container, false);
+            if( HI_RES )
+                mRecyclerView = (FastScrollRecyclerView) rootView.findViewById(R.id.fragment_recycler);
+            else
+                mRecyclerView = (FastScrollRecyclerView) inflater.inflate(R.layout.fragment_recycler, container, false);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mRecyclerView.setRecyclerListener(this);
             mRecyclerView.setAdapter(songsAdapter);
@@ -160,6 +206,8 @@ public class SongFragment extends BaseFragment implements
             themeUIComponents();
         }
 
+        if( HI_RES )
+            return rootView;
         return mRecyclerView;
     }
 

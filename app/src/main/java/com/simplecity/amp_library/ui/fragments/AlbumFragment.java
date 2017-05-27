@@ -13,6 +13,7 @@ import android.support.v7.view.ActionMode;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
@@ -37,6 +39,7 @@ import com.simplecity.amp_library.ui.modelviews.AlbumView;
 import com.simplecity.amp_library.ui.modelviews.EmptyView;
 import com.simplecity.amp_library.ui.modelviews.ViewType;
 import com.simplecity.amp_library.ui.recyclerview.GridDividerDecoration;
+import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.DataManager;
 import com.simplecity.amp_library.utils.DialogUtils;
@@ -56,6 +59,8 @@ import java.util.List;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
 public class AlbumFragment extends BaseFragment implements
         MusicUtils.Defs,
@@ -99,6 +104,10 @@ public class AlbumFragment extends BaseFragment implements
     private Subscription subscription;
 
     private RequestManager requestManager;
+    // HI_RES
+    private Toolbar toolbar;
+    private View dummyToolbar;
+    private View dummyStatusBar;
 
     public AlbumFragment() {
 
@@ -175,6 +184,35 @@ public class AlbumFragment extends BaseFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        // ToDo: HI_RES
+        View rootView = inflater.inflate(R.layout.fragment_recycler_hires, container, false);
+
+        toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        dummyToolbar = rootView.findViewById(R.id.dummyToolbar);
+        dummyStatusBar = rootView.findViewById(R.id.dummyStatusBar);
+
+        //We need to set the dummy status bar height.
+        if (ShuttleUtils.hasKitKat()) {
+            LinearLayout.LayoutParams statusBarParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) ActionBarUtils.getStatusBarHeight(getActivity()));
+            dummyStatusBar.setLayoutParams(statusBarParams);
+        } else {
+            dummyStatusBar.setVisibility(View.GONE);
+        }
+
+        if (getParentFragment() == null || !(getParentFragment() instanceof PlayerFragment /*MainFragment*/)) {
+            if (ShuttleUtils.hasKitKat()) {
+                dummyStatusBar.setVisibility(View.VISIBLE);
+            }
+            dummyToolbar.setVisibility(View.VISIBLE);
+        } else {
+            toolbar.setVisibility(View.GONE);
+            if (ShuttleUtils.hasKitKat()) {
+                dummyStatusBar.setVisibility(View.GONE);
+            }
+            dummyToolbar.setVisibility(View.GONE);
+        }
+        // ToDo: END HI_RES
+
         if (recyclerView == null) {
 
             int spanCount = SettingsManager.getInstance().getAlbumColumnCount(getResources());
@@ -189,7 +227,10 @@ public class AlbumFragment extends BaseFragment implements
                 }
             });
 
-            recyclerView = (FastScrollRecyclerView) inflater.inflate(R.layout.fragment_recycler, container, false);
+            if( HI_RES )
+                recyclerView = (FastScrollRecyclerView) rootView.findViewById(R.id.fragment_recycler);
+            else
+                recyclerView = (FastScrollRecyclerView) inflater.inflate(R.layout.fragment_recycler, container, false);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.addItemDecoration(new GridDividerDecoration(getResources(), 4, true));
             recyclerView.setRecyclerListener(this);
@@ -200,6 +241,8 @@ public class AlbumFragment extends BaseFragment implements
             themeUIComponents();
         }
 
+        if( HI_RES )
+            return rootView;
         return recyclerView;
     }
 

@@ -52,7 +52,7 @@ ext.versions = [
         // /////////////////////////////////////////////////////////////////////////
 
         nanoHttp               : "2.3.1",
-        crashlytics            : "2.6.4@aar",
+        crashlytics            : "2.6.8@aar",
         dashClockApi           : "2.0.0",
         fastScroll             : "1.0.14",
         glide                  : "3.8.0-SNAPSHOT",

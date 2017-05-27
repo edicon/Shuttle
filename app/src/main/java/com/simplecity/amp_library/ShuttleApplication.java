@@ -100,10 +100,12 @@ public class ShuttleApplication extends Application {
             enableStrictMode();
         }
 
-        if( !HI_RES ) {
-            //Crashlytics
-            CrashlyticsCore core = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
-            Fabric.with(this, new Crashlytics.Builder().core(core).answers(new Answers()).build(), new Crashlytics());
+        if( HI_RES ) {
+            Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                    .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                    .build();
+            // Initialize Fabric with the debug-disabled crashlytics.
+            Fabric.with(this, crashlyticsKit);
 
             //Firebase Analytics
             FirebaseAnalytics.getInstance(this); // ToDo: ANR

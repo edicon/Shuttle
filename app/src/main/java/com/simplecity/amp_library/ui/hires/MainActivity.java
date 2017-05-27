@@ -41,6 +41,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -212,6 +213,11 @@ public class MainActivity extends BaseCastActivity implements
         if (SettingsManager.getInstance().canTintNavBar()) {
             getWindow().setNavigationBarColor(ColorUtils.getPrimaryColorDark(this));
         }
+        // Hide Status Bar: https://developer.android.com/training/system-ui/status.html
+        if (HI_RES && Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
 
         supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 
@@ -225,14 +231,24 @@ public class MainActivity extends BaseCastActivity implements
         mIsSlidingEnabled = getResources().getBoolean(R.bool.isSlidingEnabled);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
         mDummyStatusBar = (FrameLayout) findViewById(R.id.dummyStatusBar);
 
-        if (ShuttleUtils.hasKitKat()) {
+        if( ShuttleUtils.hasKitKat()) {
             mDummyStatusBar.setVisibility(View.VISIBLE);
             mDummyStatusBar.setBackgroundColor(ColorUtils.getPrimaryColorDark(this));
             LinearLayout.LayoutParams statusBarParams = new LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) ActionBarUtils.getStatusBarHeight(this));
             mDummyStatusBar.setLayoutParams(statusBarParams);
+        }
+        // ToDo: Status Bar가 사라지나 Noti 후 다시 나타남, dummyStatusBar에 넣고 transparent를 black로
+        if( !HI_RES ) {
+            View decorView = getWindow().getDecorView();
+            // Hide the status bar.
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+            // Remember that you should never show the action bar if the
+            // status bar is hidden, so hide that too if necessary.
+            // ActionBar actionBar = getSupportActionBar(); // getActionBar
+            // actionBar.hide();
         }
 
         setSupportActionBar(mToolbar);
@@ -382,6 +398,7 @@ public class MainActivity extends BaseCastActivity implements
             if (mIsSlidingEnabled) {
                 getSupportFragmentManager()
                         .beginTransaction()
+                        // PlayerFragment(player) <--> MainFragment(pager) swap
                         // .add(R.id.player_container, PlayerFragment.newInstance())
                         .add(R.id.player_container, mainFragment)
                         .commit();
