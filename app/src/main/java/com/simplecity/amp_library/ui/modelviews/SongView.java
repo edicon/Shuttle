@@ -23,6 +23,8 @@ import com.simplecity.amp_library.utils.SettingsManager;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class SongView extends BaseAdaptableItem<Song, SongView.ViewHolder> {
 
     private static final String TAG = "SongView";
@@ -41,6 +43,11 @@ public class SongView extends BaseAdaptableItem<Song, SongView.ViewHolder> {
         this.song = song;
         this.multiSelector = multiSelector;
         this.requestManager = requestManager;
+        // ToDo: Move to SongFragment: refreshAdapterItems: .map
+        if( HI_RES ) {
+            if (requestManager != null)
+                setShowAlbumArt(true);
+        }
     }
 
     public void setPrefix(PrefixHighlighter prefixHighlighter, char[] prefix) {
@@ -50,7 +57,7 @@ public class SongView extends BaseAdaptableItem<Song, SongView.ViewHolder> {
 
     private boolean editable;
 
-    private boolean showAlbumArt;
+    private boolean showAlbumArt = false;
 
     public void setEditable(boolean editable) {
         this.editable = editable;

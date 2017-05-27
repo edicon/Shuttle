@@ -410,7 +410,7 @@ public class MainActivity extends BaseCastActivity implements
 
         handleIntent(getIntent());
 
-        if( HI_RES )
+        if( !HI_RES )
             showChangelogDialog();
     }
 

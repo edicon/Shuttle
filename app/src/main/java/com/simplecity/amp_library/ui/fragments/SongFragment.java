@@ -29,6 +29,8 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback;
 import com.bignerdranch.android.multiselector.MultiSelector;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.interfaces.Breadcrumb;
 import com.simplecity.amp_library.model.AdaptableItem;
@@ -97,6 +99,7 @@ public class SongFragment extends BaseFragment implements
     private Toolbar toolbar;
     private View dummyToolbar;
     private View dummyStatusBar;
+    private RequestManager requestManager;
 
     public SongFragment() {
 
@@ -144,6 +147,12 @@ public class SongFragment extends BaseFragment implements
         mPrefs.registerOnSharedPreferenceChangeListener(mSharedPreferenceChangeListener);
 
         shuffleView = new ShuffleView();
+
+        if( HI_RES ) {
+            if (requestManager == null) {
+                requestManager = Glide.with(this);
+            }
+        }
     }
 
     private void themeUIComponents() {
@@ -235,9 +244,17 @@ public class SongFragment extends BaseFragment implements
                                     if (!ascending) {
                                         Collections.reverse(songs);
                                     }
+
+                                    if( !HI_RES )
+                                       requestManager = null;
                                     return Observable.from(songs)
-                                            .map(song -> (AdaptableItem) new SongView(song, multiSelector, null))
+                                            .map(song -> (AdaptableItem) new SongView(song, multiSelector, requestManager))
+                                            // ToDo:  HI_RES
+                                            // SongView songView = new SongView(song, multiSelector, requestManager);
+                                            // songView.setShowAlbumArt(true);
+                                            // return songView;
                                             .toList();
+
                                 })
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(items -> {
@@ -245,7 +262,8 @@ public class SongFragment extends BaseFragment implements
                                     if (items.isEmpty()) {
                                         songsAdapter.setEmpty(new EmptyView(R.string.empty_songlist));
                                     } else {
-                                        items.add(0, shuffleView);
+                                        if( !HI_RES )
+                                            items.add(0, shuffleView);
                                         songsAdapter.setItems(items);
                                     }
 
