@@ -11,9 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.annimon.stream.Collectors;
@@ -41,12 +43,15 @@ import com.simplecity.amp_library.ui.views.FavoriteDividerDecoration;
 // import com.simplecity.amp_library.ui.modelviews.SuggestedSongView;
 // import com.simplecity.amp_library.ui.views.SuggestedDividerDecoration;
 import com.simplecity.amp_library.ui.modelviews.ViewType;
+import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.ComparisonUtils;
 import com.simplecity.amp_library.utils.MenuUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.Operators;
 import com.simplecity.amp_library.utils.PermissionUtils;
+import com.simplecity.amp_library.utils.ShuttleUtils;
 import com.simplecity.amp_library.utils.ThemeUtils;
+import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -94,6 +99,11 @@ public class FavoriteFragment extends BaseFragment implements
     private HorizontalRecyclerView mostPlayedRecyclerView;
 
     private FavoriteClickListener favoriteClickListener;
+
+    // HI_RES
+    private Toolbar toolbar;
+    private View dummyToolbar;
+    private View dummyStatusBar;
 
     public FavoriteFragment() {
     }
@@ -162,9 +172,41 @@ public class FavoriteFragment extends BaseFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        // ToDo: HI_RES
+        View rootView = inflater.inflate(R.layout.fragment_recycler_hires, container, false);
+
+        toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        dummyToolbar = rootView.findViewById(R.id.dummyToolbar);
+        dummyStatusBar = rootView.findViewById(R.id.dummyStatusBar);
+
+        //We need to set the dummy status bar height.
+        if (ShuttleUtils.hasKitKat()) {
+            LinearLayout.LayoutParams statusBarParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) ActionBarUtils.getStatusBarHeight(getActivity()));
+            dummyStatusBar.setLayoutParams(statusBarParams);
+        } else {
+            dummyStatusBar.setVisibility(View.GONE);
+        }
+
+        if (getParentFragment() == null || !(getParentFragment() instanceof PlayerFragment /*MainFragment*/)) {
+            if (ShuttleUtils.hasKitKat()) {
+                dummyStatusBar.setVisibility(View.VISIBLE);
+            }
+            dummyToolbar.setVisibility(View.VISIBLE);
+        } else {
+            toolbar.setVisibility(View.GONE);
+            if (ShuttleUtils.hasKitKat()) {
+                dummyStatusBar.setVisibility(View.GONE);
+            }
+            dummyToolbar.setVisibility(View.GONE);
+        }
+        // ToDo: END HI_RES
+
         if (recyclerView == null) {
 
-            recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_favorite, container, false);
+            if( HI_RES )
+                recyclerView = (FastScrollRecyclerView) rootView.findViewById(R.id.fragment_recycler);
+            else
+                recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_favorite, container, false);
             recyclerView.addItemDecoration(new FavoriteDividerDecoration(getResources()));
             recyclerView.setAdapter(favoriteAdapter);
             recyclerView.setRecyclerListener(this);
@@ -191,11 +233,14 @@ public class FavoriteFragment extends BaseFragment implements
                 }
             });
 
+            // ToDo: Check Linear/Grid Layout and Menu
             recyclerView.setLayoutManager(gridLayoutManager);
 
             themeUIComponents();
         }
 
+        if( HI_RES )
+            return rootView;
         return recyclerView;
     }
 
