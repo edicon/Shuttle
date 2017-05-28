@@ -553,7 +553,14 @@ public class MainActivity extends BaseCastActivity implements
         boolean isDrawerOpen = mNavigationDrawerFragment.isDrawerOpen();
         if (!isDrawerOpen) {
 
-            getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+            if( HI_RES ) {
+                // Default Menu
+                getMenuInflater().inflate(R.menu.menu_main_activity_hires, menu);
+                menu.findItem(R.id.action_search).setVisible(false);
+                return true;
+            } else {
+                getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+            }
 
             restoreActionBar();
 
@@ -1281,11 +1288,11 @@ public class MainActivity extends BaseCastActivity implements
         if (show) {
             mToolbar.setNavigationIcon(R.drawable.ic_action_navigation_close);
             // mTitle = getString(R.string.up_next_title);
-            // mToolbar.setTitle(mTitle);
+            mToolbar.setTitle(mTitle);
             animateElevationChange(4, 0);
         } else {
             mToolbar.setNavigationIcon(mActionBarBackButton);
-            // mToolbar.setTitle(mTitle);
+            mToolbar.setTitle(mTitle);
             animateElevationChange(0, 4);
         }
     }

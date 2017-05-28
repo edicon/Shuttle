@@ -30,5 +30,11 @@
             </group>
         </menu>
     </item>
-
+    <!-- HI_RES
+    <item
+        android:id="@+id/action_setting"
+        android:icon="?attr/btn_settings"
+        android:title="@string/settings"
+        app:showAsAction="always"/>
+    -->
 </menu>

@@ -381,6 +381,23 @@ public class SongFragment extends BaseFragment implements
                 SortManager.getInstance().setSongsAscending(!item.isChecked());
                 sortOrderChanged = true;
                 break;
+            // HI_RES
+            case R.id.action_setting:
+                if (inActionMode) {
+                    break;
+                }
+
+                if (multiSelector.getSelectedPositions().size() == 0) {
+                    actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
+                    inActionMode = true;
+                }
+
+                // Do Not Select Default
+                // int position = 0;
+                // multiSelector.setSelected(position, songsAdapter.getItemId(position), !multiSelector.isSelected(position, songsAdapter.getItemId(position)));
+                updateActionModeSelectionCount();
+                break;
+            // END HI_RES
         }
 
         if (sortOrderChanged) {
@@ -390,6 +407,7 @@ public class SongFragment extends BaseFragment implements
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onItemClick(View v, int position, Song song) {

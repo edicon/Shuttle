@@ -72,6 +72,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class FolderFragment extends BaseFragment implements
         MusicUtils.Defs,
         BreadcrumbListener,
@@ -319,6 +321,10 @@ public class FolderFragment extends BaseFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_sort_folders, menu);
+        if( HI_RES ) {
+           menu.findItem(R.id.whitelist).setVisible(false);
+           menu.findItem(R.id.show_filenames).setVisible(false);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 

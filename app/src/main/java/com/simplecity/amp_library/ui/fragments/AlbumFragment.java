@@ -435,6 +435,23 @@ public class AlbumFragment extends BaseFragment implements
                 albumAdapter.updateItemViewType();
                 albumAdapter.notifyItemRangeChanged(0, albumAdapter.getItemCount());
                 break;
+            // HI_RES
+            case R.id.action_setting:
+                if (inActionMode) {
+                    break;
+                }
+
+                if (multiSelector.getSelectedPositions().size() == 0) {
+                    actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
+                    inActionMode = true;
+                }
+
+                // Do Not Select Default
+                // int position = 0;
+                // multiSelector.setSelected(position, albumAdapter.getItemId(position), !multiSelector.isSelected(position, albumAdapter.getItemId(position)));
+                updateActionModeSelectionCount();
+                break;
+            // END HI_RES
         }
 
         if (item.getGroupId() == MENU_GROUP_GRID) {
