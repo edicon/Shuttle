@@ -9,6 +9,8 @@ import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.ShuttleApplication;
 import com.simplecity.amp_library.ui.modelviews.ViewType;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class SettingsManager {
 
     private static final String TAG = "SettingsManager";
@@ -235,6 +237,8 @@ public class SettingsManager {
     }
 
     public boolean getFolderBrowserShowFileNames() {
+        if( HI_RES )
+            return getBooleanValue(KEY_FOLDER_BROWSER_SHOW_FILENAMES, true);
         return getBooleanValue(KEY_FOLDER_BROWSER_SHOW_FILENAMES, false);
     }
 

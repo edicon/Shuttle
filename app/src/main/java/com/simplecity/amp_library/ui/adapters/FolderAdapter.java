@@ -16,7 +16,12 @@ public class FolderAdapter extends ItemAdapter {
 
         void onOverflowClick(View v, int position, BaseFileObject fileObject);
 
+        // HI_RES
+        void onLongClick(View v, int position, BaseFileObject file);
+
         void onBreadcrumbItemClick(BreadcrumbItem item);
+
+        void onStartDrag(RecyclerView.ViewHolder viewHolder);
 
         void onCheckedChange(FolderView folderView, boolean isChecked);
     }

@@ -7,12 +7,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,6 +29,8 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback;
+import com.bignerdranch.android.multiselector.MultiSelector;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.interfaces.BackPressListener;
 import com.simplecity.amp_library.interfaces.Breadcrumb;
@@ -78,6 +81,7 @@ public class FolderFragment extends BaseFragment implements
         MusicUtils.Defs,
         BreadcrumbListener,
         BackPressListener,
+        RecyclerView.RecyclerListener,
         FolderAdapter.Listener {
 
     private static final String TAG = "FolderFragment";
@@ -118,6 +122,10 @@ public class FolderFragment extends BaseFragment implements
     private ActionMode actionMode;
 
     ActionMode.Callback actionModeCallback;
+
+    // HI_RES
+    boolean inActionMode = false;
+    MultiSelector multiSelector = new MultiSelector();
 
     private CompositeSubscription subscriptions;
 
@@ -422,7 +430,11 @@ public class FolderFragment extends BaseFragment implements
                 return true;
 
             case R.id.whitelist:
-                actionMode = recyclerView.startActionMode(getActionModeCallback());
+                if( HI_RES )
+                    actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(getActionModeCallback());
+                else
+                    actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(getActionModeCallback());
+                    // ToDo: ERROR: actionMode = recyclerView.startActionMode(getActionModeCallback());
                 isInActionMode = true;
                 updateWhitelist();
                 showCheckboxes(true);
@@ -432,6 +444,23 @@ public class FolderFragment extends BaseFragment implements
                 SettingsManager.getInstance().setFolderBrowserShowFileNames(!item.isChecked());
                 adapter.notifyItemRangeChanged(0, adapter.getItemCount());
                 break;
+            // HI_RES
+            case R.id.action_setting:
+                if (inActionMode) {
+                    break;
+                }
+
+                if (multiSelector.getSelectedPositions().size() == 0) {
+                    actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
+                    inActionMode = true;
+                }
+
+                // Do Not Select Default
+                // int position = 0;
+                // multiSelector.setSelected(position, songsAdapter.getItemId(position), !multiSelector.isSelected(position, songsAdapter.getItemId(position)));
+                updateActionModeSelectionCount();
+                break;
+            // END HI_RES
 
         }
         return super.onOptionsItemSelected(item);
@@ -838,6 +867,118 @@ public class FolderFragment extends BaseFragment implements
         return actionModeCallback;
     }
 
+    // HI_RES
+    @Override
+    public void onLongClick(View v, int position, BaseFileObject file) {
+        if (inActionMode) {
+            return;
+        }
+
+        if (multiSelector.getSelectedPositions().size() == 0) {
+            actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
+            inActionMode = true;
+        }
+
+        multiSelector.setSelected(position, adapter.getItemId(position), !multiSelector.isSelected(position, adapter.getItemId(position)));
+
+        updateActionModeSelectionCount();
+    }
+
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        //Nothing to do.
+    }
+
+    private void updateActionModeSelectionCount() {
+        if (actionMode != null && multiSelector != null) {
+            actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
+        }
+    }
+
+    // HI_RES
+    private ActionMode.Callback mActionModeCallback = new ModalMultiSelectorCallback(multiSelector) {
+
+        @Override
+        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+            ThemeUtils.themeContextualActionBar(getActivity());
+            inActionMode = true;
+            getActivity().getMenuInflater().inflate(R.menu.context_menu_songs, menu);
+            SubMenu sub = menu.getItem(0).getSubMenu();
+            PlaylistUtils.makePlaylistMenu(getActivity(), sub, SONG_FRAGMENT_GROUP_ID);
+            return true;
+        }
+
+        @Override
+        public boolean onActionItemClicked(final android.support.v7.view.ActionMode mode, MenuItem item) {
+
+            final List<BaseFileObject> checkedFiles = getCheckedFiles();
+
+            if (checkedFiles == null || checkedFiles.size() == 0) {
+                return true;
+            }
+
+            // ToDo: PLAYLIST/DELETE/... 모든 파일에 대해서 삭제 해야 함
+            switch (item.getItemId()) {
+                case NEW_PLAYLIST:
+                    if( HI_RES ) {
+                        List<BaseFileObject> fileObjects = new ArrayList<>();
+                        fileObjects = checkedFiles; // fileObjects.add(fileObject);
+                        PlaylistUtils.createFileObjectPlaylistDialog(getActivity(), fileObjects);
+                    } else
+                        ; // PlaylistUtils.createPlaylistDialog(getActivity(), checkedFiles);
+                    break;
+                case PLAYLIST_SELECTED:
+                    // ToDo: PLAYLIST/DELETE/... 모든 파일에 대해서 삭제 해야 함
+                    BaseFileObject fileObject = checkedFiles.get(0);
+                    if( HI_RES ) {
+                        final Playlist playlist = (Playlist) item.getIntent().getSerializableExtra(ShuttleUtils.ARG_PLAYLIST);
+                        subscriptions.add(FileHelper.getSongList(new File(fileObject.path), true, false)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(songs -> PlaylistUtils.addToPlaylist(getContext(), playlist, songs)));
+
+                    } else {
+                        ;
+                    }
+                    break;
+                case R.id.delete:
+                    // ToDo: PLAYLIST/DELETE/... 모든 파일에 대해서 삭제 해야 함
+                    /*
+                    new DialogUtils.DeleteDialogBuilder()
+                            .context(getContext())
+                            .singleMessageId(R.string.delete_song_desc)
+                            .multipleMessage(R.string.delete_song_desc_multiple)
+                            .itemNames(Stream.of(checkedFiles)
+                                    .map(song -> song.name)
+                                    .collect(Collectors.toList()))
+                            .songsToDelete(Observable.just(checkedFiles))
+                            .build()
+                            .show();
+                    mode.finish();
+                    */
+                    break;
+                case R.id.menu_add_to_queue:
+                    if( HI_RES ) {
+                        // ToDo: PLAYLIST/DELETE/... 모든 파일에 대해서 삭제 해야 함
+                        subscriptions.add(FileHelper.getSongList(new File(checkedFiles.get(0).path), true, false)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(songs -> MusicUtils.addToQueue(getActivity(), songs)));
+                        return true;
+                    } else
+                        ; // MusicUtils.addToQueue(FolderFragment.this.getActivity(), checkedFiles);
+                    break;
+            }
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(android.support.v7.view.ActionMode actionMode) {
+            super.onDestroyActionMode(actionMode);
+            inActionMode = false;
+            FolderFragment.this.actionMode = null;
+            multiSelector.clearSelections();
+        }
+    };
+
     public void showCheckboxes(boolean show) {
 
         showCheckboxes = show;
@@ -882,6 +1023,22 @@ public class FolderFragment extends BaseFragment implements
                     }
                 });
     }
+
+    // HI_RES
+    List<BaseFileObject> getCheckedFiles() {
+        return Stream.of(multiSelector.getSelectedPositions())
+                .map(i -> adapter.getFileObject(i))
+                .collect(Collectors.toList());
+    }
+    // ToDo: Check: RecycleListener
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        if (holder.getAdapterPosition() != -1) {
+            adapter.items.get(holder.getAdapterPosition()).recycle(holder);
+        }
+    }
+    // END HI_RES
+
 
     @Override
     protected String screenName() {

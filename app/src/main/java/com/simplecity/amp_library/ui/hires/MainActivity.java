@@ -652,7 +652,8 @@ public class MainActivity extends BaseCastActivity implements
 
         if (mSlidingUpPanelLayout == null || !mIsSlidingEnabled || mSlidingUpPanelLayout.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
             if (whiteListItem != null) {
-                whiteListItem.setVisible(true);
+                if( !HI_RES )
+                    whiteListItem.setVisible(true);
             }
             if (sortingItem != null) {
                 sortingItem.setVisible(true);
