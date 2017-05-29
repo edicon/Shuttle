@@ -554,8 +554,21 @@ public class FolderFragment extends BaseFragment implements
     @Override
     public void onItemClick(View v, int position, BaseFileObject fileObject) {
 
-        if (!isInActionMode) {
+        // HI_RES
+        if (isInActionMode || inActionMode ) {
+            if (fileObject.fileType == FileType.FILE) {
+                multiSelector.setSelected(position, adapter.getItemId(position), !multiSelector.isSelected(position, adapter.getItemId(position)));
 
+                if (multiSelector.getSelectedPositions().size() == 0) {
+                    if (actionMode != null) {
+                        actionMode.finish();
+                    }
+                }
+            } else {
+                changeDir(new File(fileObject.path));
+            }
+        // END HI_RES
+        } else {
             if (fileObject.fileType == FileType.FILE) {
                 FileHelper.getSongList(new File(fileObject.path), false, true)
                         .observeOn(AndroidSchedulers.mainThread())
@@ -578,8 +591,6 @@ public class FolderFragment extends BaseFragment implements
             } else {
                 changeDir(new File(fileObject.path));
             }
-        } else if (fileObject.fileType != FileType.FILE) {
-            changeDir(new File(fileObject.path));
         }
     }
 
