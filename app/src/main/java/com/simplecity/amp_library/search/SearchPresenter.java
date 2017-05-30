@@ -52,6 +52,8 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 class SearchPresenter extends Presenter<SearchView> implements
         SearchAdapter.SearchListener,
         Toolbar.OnMenuItemClickListener {
@@ -390,7 +392,8 @@ class SearchPresenter extends Presenter<SearchView> implements
 
         PopupMenu menu = new PopupMenu(v.getContext(), v);
         menu.getMenu().add(0, MusicUtils.Defs.PLAY_NEXT, 0, R.string.play_next);
-        menu.getMenu().add(0, MusicUtils.Defs.USE_AS_RINGTONE, 4, R.string.ringtone_menu);
+        if( !HI_RES )
+            menu.getMenu().add(0, MusicUtils.Defs.USE_AS_RINGTONE, 4, R.string.ringtone_menu);
         SubMenu sub = menu.getMenu().addSubMenu(0, MusicUtils.Defs.ADD_TO_PLAYLIST, 1, R.string.add_to_playlist);
 
         PlaylistUtils.makePlaylistMenu(v.getContext(), sub, 0);

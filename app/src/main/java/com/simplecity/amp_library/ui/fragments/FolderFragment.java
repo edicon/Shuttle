@@ -504,7 +504,11 @@ public class FolderFragment extends BaseFragment implements
                 .map(baseFileObjects -> {
                     List<AdaptableItem> items = Stream.of(baseFileObjects)
                             .map(baseFileObject -> {
-                                FolderView folderView = new FolderView(baseFileObject);
+                                FolderView folderView;
+                                if( HI_RES )
+                                    folderView = new FolderView(baseFileObject, multiSelector);
+                                else
+                                    folderView = new FolderView(baseFileObject);
                                 folderView.setChecked(showCheckboxes);
                                 return folderView;
                             })
@@ -564,8 +568,11 @@ public class FolderFragment extends BaseFragment implements
                         actionMode.finish();
                     }
                 }
+                updateActionModeSelectionCount();
             } else {
                 changeDir(new File(fileObject.path));
+                // ToDo: Folder에 적용할 지 검토
+                // updateActionModeSelectionCount();
             }
         // END HI_RES
         } else {
@@ -610,7 +617,8 @@ public class FolderFragment extends BaseFragment implements
             }
 
             //Set this song as the ringtone
-            menu.getMenu().add(FRAGMENT_GROUPID, USE_AS_RINGTONE, 6, R.string.ringtone_menu);
+            if( !HI_RES )
+                menu.getMenu().add(FRAGMENT_GROUPID, USE_AS_RINGTONE, 6, R.string.ringtone_menu);
 
 
             if (FileHelper.canReadWrite(new File(fileObject.path))) {
@@ -913,9 +921,12 @@ public class FolderFragment extends BaseFragment implements
         public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
             ThemeUtils.themeContextualActionBar(getActivity());
             inActionMode = true;
-            getActivity().getMenuInflater().inflate(R.menu.context_menu_songs, menu);
+            if( HI_RES )
+                getActivity().getMenuInflater().inflate(R.menu.context_menu_folder, menu);
+            else
+                getActivity().getMenuInflater().inflate(R.menu.context_menu_songs, menu);
             SubMenu sub = menu.getItem(0).getSubMenu();
-            PlaylistUtils.makePlaylistMenu(getActivity(), sub, SONG_FRAGMENT_GROUP_ID);
+            PlaylistUtils.makePlaylistMenu(getActivity(), sub, FOLDER_FRAGMENT_GROUP_ID);
             return true;
         }
 
@@ -928,54 +939,55 @@ public class FolderFragment extends BaseFragment implements
                 return true;
             }
 
-            // ToDo: PLAYLIST/DELETE/... 모든 파일에 대해서 삭제 해야 함
+            // ToDo: Folder 경우에도 적용 할지? 현재는 파일만 적용
             switch (item.getItemId()) {
                 case NEW_PLAYLIST:
-                    if( HI_RES ) {
-                        List<BaseFileObject> fileObjects = new ArrayList<>();
-                        fileObjects = checkedFiles; // fileObjects.add(fileObject);
-                        PlaylistUtils.createFileObjectPlaylistDialog(getActivity(), fileObjects);
-                    } else
-                        ; // PlaylistUtils.createPlaylistDialog(getActivity(), checkedFiles);
+                    PlaylistUtils.createFileObjectPlaylistDialog(getActivity(), checkedFiles);
                     break;
                 case PLAYLIST_SELECTED:
-                    // ToDo: PLAYLIST/DELETE/... 모든 파일에 대해서 삭제 해야 함
-                    BaseFileObject fileObject = checkedFiles.get(0);
-                    if( HI_RES ) {
+                    for( BaseFileObject fileObject : checkedFiles) {
                         final Playlist playlist = (Playlist) item.getIntent().getSerializableExtra(ShuttleUtils.ARG_PLAYLIST);
                         subscriptions.add(FileHelper.getSongList(new File(fileObject.path), true, false)
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(songs -> PlaylistUtils.addToPlaylist(getContext(), playlist, songs)));
-
-                    } else {
-                        ;
                     }
                     break;
                 case R.id.delete:
-                    // ToDo: PLAYLIST/DELETE/... 모든 파일에 대해서 삭제 해야 함
-                    /*
-                    new DialogUtils.DeleteDialogBuilder()
-                            .context(getContext())
-                            .singleMessageId(R.string.delete_song_desc)
-                            .multipleMessage(R.string.delete_song_desc_multiple)
-                            .itemNames(Stream.of(checkedFiles)
-                                    .map(song -> song.name)
-                                    .collect(Collectors.toList()))
-                            .songsToDelete(Observable.just(checkedFiles))
-                            .build()
-                            .show();
-                    mode.finish();
-                    */
+                    for( BaseFileObject fileObject : checkedFiles) {
+                        MaterialDialog.Builder builder = DialogUtils.getBuilder(getActivity())
+                                .title(R.string.delete_item)
+                                .icon(DrawableUtils.getBlackDrawable(getActivity(), R.drawable.ic_dialog_alert));
+
+                        if (fileObject.fileType == FileType.FILE) {
+                            builder.content(String.format(getResources().getString(
+                                    R.string.delete_file_confirmation_dialog), fileObject.name));
+                        } else {
+                            builder.content(String.format(getResources().getString(
+                                    R.string.delete_folder_confirmation_dialog), fileObject.path));
+                        }
+                        builder.positiveText(R.string.button_ok)
+                                .onPositive((materialDialog, dialogAction) -> {
+                                    if (FileHelper.deleteFile(new File(fileObject.path))) {
+                                        // ToDo: check notifyDataChanged
+                                        // adapter.removeItem(position);
+                                        adapter.notifyDataSetChanged();
+                                        CustomMediaScanner.scanFiles(Collections.singletonList(fileObject.path), null);
+                                    } else {
+                                        Toast.makeText(getActivity(),
+                                                fileObject.fileType == FileType.FOLDER ? R.string.delete_folder_failed : R.string.delete_file_failed,
+                                                Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                        builder.negativeText(R.string.cancel)
+                                .show();
+                    }
                     break;
                 case R.id.menu_add_to_queue:
-                    if( HI_RES ) {
-                        // ToDo: PLAYLIST/DELETE/... 모든 파일에 대해서 삭제 해야 함
-                        subscriptions.add(FileHelper.getSongList(new File(checkedFiles.get(0).path), true, false)
+                    for( BaseFileObject fileObject : checkedFiles) {
+                        subscriptions.add(FileHelper.getSongList(new File(fileObject.path), true, false)
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(songs -> MusicUtils.addToQueue(getActivity(), songs)));
-                        return true;
-                    } else
-                        ; // MusicUtils.addToQueue(FolderFragment.this.getActivity(), checkedFiles);
+                    }
                     break;
             }
             return true;
@@ -1041,6 +1053,7 @@ public class FolderFragment extends BaseFragment implements
                 .map(i -> adapter.getFileObject(i))
                 .collect(Collectors.toList());
     }
+
     // ToDo: Check: RecycleListener
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder) {

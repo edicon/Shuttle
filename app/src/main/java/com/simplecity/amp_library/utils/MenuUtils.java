@@ -22,6 +22,8 @@ import java.util.List;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class MenuUtils implements MusicUtils.Defs {
 
     public static void addSongMenuOptions(final Context context, final PopupMenu menu) {
@@ -32,7 +34,8 @@ public class MenuUtils implements MusicUtils.Defs {
         if (ShuttleUtils.isUpgraded()) {
             menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, TAGGER, 3, R.string.edit_tags);
         }
-        menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, USE_AS_RINGTONE, 5, R.string.ringtone_menu);
+        if( !HI_RES )
+            menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, USE_AS_RINGTONE, 5, R.string.ringtone_menu);
 
         menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, VIEW_INFO, 6, R.string.song_info);
 
@@ -104,7 +107,8 @@ public class MenuUtils implements MusicUtils.Defs {
         if (ShuttleUtils.isUpgraded()) {
             menu.getMenu().add(QUEUE_FRAGMENT_GROUP_ID, TAGGER, 3, R.string.edit_tags);
         }
-        menu.getMenu().add(QUEUE_FRAGMENT_GROUP_ID, USE_AS_RINGTONE, 5, R.string.ringtone_menu);
+        if( !HI_RES )
+            menu.getMenu().add(QUEUE_FRAGMENT_GROUP_ID, USE_AS_RINGTONE, 5, R.string.ringtone_menu);
 
         menu.getMenu().add(QUEUE_FRAGMENT_GROUP_ID, REMOVE, 6, R.string.remove_from_queue);
 

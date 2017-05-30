@@ -1,7 +1,6 @@
 package com.simplecity.amp_library.ui.modelviews;
 
 import android.os.AsyncTask;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,8 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.bignerdranch.android.multiselector.MultiSelector;
+import com.bignerdranch.android.multiselector.SwappingHolder;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.interfaces.FileType;
 import com.simplecity.amp_library.model.BaseFileObject;
@@ -22,9 +23,13 @@ import com.simplecity.amp_library.utils.StringUtils;
 
 import java.lang.ref.WeakReference;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class FolderView extends BaseAdaptableItem<BaseFileObject, FolderView.ViewHolder> {
 
     public BaseFileObject baseFileObject;
+
+    private MultiSelector multiSelector;
 
     private boolean mShowCheckboxes;
 
@@ -32,6 +37,11 @@ public class FolderView extends BaseAdaptableItem<BaseFileObject, FolderView.Vie
 
     public FolderView(BaseFileObject baseFileObject) {
         this.baseFileObject = baseFileObject;
+    }
+    // HI_RES
+    public FolderView(BaseFileObject baseFileObject, MultiSelector multiSelector) {
+        this.baseFileObject = baseFileObject;
+        this.multiSelector = multiSelector;
     }
 
     public void setShowCheckboxes(boolean show) {
@@ -110,16 +120,59 @@ public class FolderView extends BaseAdaptableItem<BaseFileObject, FolderView.Vie
         holder.checkBox.setChecked(mIsChecked);
     }
 
+    // HI_RES
     @Override
     public ViewHolder getViewHolder(ViewGroup parent) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false), multiSelector);
+    }
+    /*
+    @Override
+    public ViewHolder getViewHolder(ViewGroup parent) {
+        if( HI_RES )
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false));
     }
+    */
 
     @Override
     public BaseFileObject getItem() {
         return baseFileObject;
     }
 
+    // HI_RES
+    public static class ViewHolder extends SwappingHolder {
+
+        public View itemView;
+        public TextView lineOne;
+        public TextView lineTwo;
+        public TextView lineThree;
+        public TextView lineFour;
+        public View textContainer;
+        public CircleImageView imageView;
+        public ImageButton overflow;
+        public CheckBox checkBox;
+
+        public ViewHolder(final View itemView, MultiSelector multiSelector) {
+            super(itemView, multiSelector);
+
+            this.itemView = itemView;
+            lineOne = (TextView) itemView.findViewById(R.id.line_one);
+            lineTwo = (TextView) itemView.findViewById(R.id.line_two);
+            lineThree = (TextView) itemView.findViewById(R.id.line_three);
+            lineFour = (TextView) itemView.findViewById(R.id.line_four);
+            textContainer = itemView.findViewById(R.id.textContainer);
+            imageView = (CircleImageView) itemView.findViewById(R.id.image);
+            overflow = (ImageButton) itemView.findViewById(R.id.btn_overflow);
+            overflow.setImageDrawable(DrawableUtils.getColoredStateListDrawable(itemView.getContext(), R.drawable.ic_overflow_white));
+            checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);
+        }
+
+        @Override
+        public String toString() {
+            return "FolderView.ViewHolder";
+        }
+    }
+
+    /*
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public View itemView;
@@ -152,6 +205,8 @@ public class FolderView extends BaseAdaptableItem<BaseFileObject, FolderView.Vie
             return "FolderView.ViewHolder";
         }
     }
+    */
+
 
     private static class DurationTask extends AsyncTask<Void, Void, String> {
 
