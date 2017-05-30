@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bignerdranch.android.multiselector.MultiSelector;
+import com.bignerdranch.android.multiselector.SwappingHolder;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.model.Playlist;
 import com.simplecity.amp_library.ui.views.NonScrollImageButton;
@@ -14,9 +16,15 @@ import com.simplecity.amp_library.utils.DrawableUtils;
 public class PlaylistView extends BaseAdaptableItem<Playlist, PlaylistView.ViewHolder> {
 
     public Playlist playlist;
+    private MultiSelector multiSelector;
 
     public PlaylistView(Playlist playlist) {
         this.playlist = playlist;
+    }
+
+    public PlaylistView(Playlist playlist, MultiSelector multiSelector) {
+        this.playlist = playlist;
+        this.multiSelector = multiSelector;
     }
 
     @Override
@@ -37,7 +45,8 @@ public class PlaylistView extends BaseAdaptableItem<Playlist, PlaylistView.ViewH
 
     @Override
     public ViewHolder getViewHolder(ViewGroup parent) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false));
+        // return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(getLayoutResId(), parent, false), multiSelector);
     }
 
     @Override
@@ -45,13 +54,18 @@ public class PlaylistView extends BaseAdaptableItem<Playlist, PlaylistView.ViewH
         return playlist;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    // HI_RES
+    public static class ViewHolder extends SwappingHolder {
+    // public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView lineOne;
         public NonScrollImageButton overflowButton;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
+        public ViewHolder(View itemView,  MultiSelector multiSelector) {
+            super(itemView, multiSelector);
+
+        // public ViewHolder(View itemView) {
+        //     super(itemView);
 
             lineOne = (TextView) itemView.findViewById(R.id.line_one);
             overflowButton = (NonScrollImageButton) itemView.findViewById(R.id.btn_overflow);

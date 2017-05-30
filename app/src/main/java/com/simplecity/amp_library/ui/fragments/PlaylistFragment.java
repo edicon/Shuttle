@@ -3,20 +3,32 @@ package com.simplecity.amp_library.ui.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback;
+import com.bignerdranch.android.multiselector.MultiSelector;
 import com.simplecity.amp_library.R;
+import com.simplecity.amp_library.interfaces.FileType;
 import com.simplecity.amp_library.model.AdaptableItem;
+import com.simplecity.amp_library.model.BaseFileObject;
 import com.simplecity.amp_library.model.Playlist;
+import com.simplecity.amp_library.model.Song;
 import com.simplecity.amp_library.ui.adapters.PlaylistAdapter;
 import com.simplecity.amp_library.ui.modelviews.EmptyView;
 import com.simplecity.amp_library.ui.modelviews.PlaylistView;
@@ -24,13 +36,17 @@ import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.ComparisonUtils;
 import com.simplecity.amp_library.utils.DataManager;
+import com.simplecity.amp_library.utils.DialogUtils;
 import com.simplecity.amp_library.utils.MenuUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.PermissionUtils;
+import com.simplecity.amp_library.utils.PlaylistUtils;
 import com.simplecity.amp_library.utils.ShuttleUtils;
+import com.simplecity.amp_library.utils.SortManager;
 import com.simplecity.amp_library.utils.ThemeUtils;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,6 +78,11 @@ public class PlaylistFragment extends BaseFragment implements
     private PlaylistClickListener playlistClickListener;
 
     private Subscription subscription;
+
+    // HI_RES
+    MultiSelector multiSelector = new MultiSelector();
+    ActionMode actionMode;
+    boolean inActionMode = false;
 
     // HI_RES
     private Toolbar toolbar;
@@ -97,6 +118,9 @@ public class PlaylistFragment extends BaseFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if( HI_RES )
+            setHasOptionsMenu(true);
 
         mPlaylistAdapter = new PlaylistAdapter();
         mPlaylistAdapter.setListener(this);
@@ -209,7 +233,8 @@ public class PlaylistFragment extends BaseFragment implements
                         .map(playlists -> Stream.of(playlists)
                                 .sorted((a, b) -> ComparisonUtils.compare(a.name, b.name))
                                 .sorted((a, b) -> ComparisonUtils.compareInt(a.type, b.type))
-                                .map(playlist -> (AdaptableItem) new PlaylistView(playlist))
+                                // HI_RES .map(playlist -> (AdaptableItem) new PlaylistView(playlist))
+                                .map(playlist -> (AdaptableItem) new PlaylistView(playlist, multiSelector))
                                 .collect(Collectors.toList()))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(items -> {
@@ -221,6 +246,48 @@ public class PlaylistFragment extends BaseFragment implements
                         });
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.context_menu_playlists, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.sort:
+                break;
+            case R.id.action_setting:
+                if (inActionMode) {
+                    break;
+                }
+
+                if (multiSelector.getSelectedPositions().size() == 0) {
+                    actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
+                    inActionMode = true;
+                }
+
+                // Do Not Select Default
+                // int position = 0;
+                // multiSelector.setSelected(position, songsAdapter.getItemId(position), !multiSelector.isSelected(position, songsAdapter.getItemId(position)));
+                updateActionModeSelectionCount();
+                break;
+        }
+        return true;
     }
 
     private void themeUIComponents() {
@@ -240,7 +307,18 @@ public class PlaylistFragment extends BaseFragment implements
 
     @Override
     public void onItemClick(View v, int position, Playlist playlist) {
-        playlistClickListener.onItemClicked(playlist);
+        if ( inActionMode ) {
+            multiSelector.setSelected(position, mPlaylistAdapter.getItemId(position), !multiSelector.isSelected(position, mPlaylistAdapter.getItemId(position)));
+
+            if (multiSelector.getSelectedPositions().size() == 0) {
+                if (actionMode != null) {
+                    actionMode.finish();
+                }
+            }
+            updateActionModeSelectionCount();
+        } else {
+            playlistClickListener.onItemClicked(playlist);
+        }
     }
 
     @Override
@@ -250,6 +328,75 @@ public class PlaylistFragment extends BaseFragment implements
         MenuUtils.addClickHandler(getContext(), menu, playlist, null, null);
         menu.show();
     }
+
+    // HI_RES
+    private void updateActionModeSelectionCount() {
+        if (actionMode != null && multiSelector != null) {
+            actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
+        }
+    }
+
+    private ActionMode.Callback mActionModeCallback = new ModalMultiSelectorCallback(multiSelector) {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            ThemeUtils.themeContextualActionBar(getActivity());
+            inActionMode = true;
+            getActivity().getMenuInflater().inflate(R.menu.action_menu_playlists, menu);
+            // SubMenu sub = menu.getItem(0).getSubMenu();
+            // PlaylistUtils.makePlaylistMenu(getActivity(), sub, PLAYLIST_FRAGMENT_GROUP_ID);
+            return true;
+        }
+
+        @Override
+        public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
+
+            final List<Playlist> checkedPlaylists = getCheckedPlaylists();
+
+            if (checkedPlaylists == null || checkedPlaylists.size() == 0) {
+                return true;
+            }
+            Context context = getContext();
+
+            // ToDo: rename: SingleSelector 적용
+            switch (item.getItemId()) {
+                case R.id.rename:
+                    for( Playlist playlist : checkedPlaylists) {
+                    // PlaylistUtils.renamePlaylistDialog(getContext(), playlist, renameListener);
+                    }
+                    break;
+                case R.id.add:
+                    // ToDo: Check null value of songs
+                    List<Song> songs = new ArrayList<>();
+                    // songs.add(song);
+                    PlaylistUtils.createPlaylistDialog(getActivity(), songs);
+                    break;
+                case R.id.delete:
+                    for( Playlist playlist : checkedPlaylists) {
+                        playlist.delete(context);
+                        Toast.makeText(context, R.string.playlist_deleted_message, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+            mPlaylistAdapter.notifyDataSetChanged();
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+            super.onDestroyActionMode(actionMode);
+            inActionMode = false;
+            PlaylistFragment.this.actionMode = null;
+            multiSelector.clearSelections();
+        }
+    };
+
+    List<Playlist> getCheckedPlaylists() {
+        return Stream.of(multiSelector.getSelectedPositions())
+                .map(i -> mPlaylistAdapter.getPlaylist(i))
+                .collect(Collectors.toList());
+    }
+    // END HI_RES
 
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder) {
