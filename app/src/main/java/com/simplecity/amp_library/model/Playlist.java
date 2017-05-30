@@ -153,6 +153,17 @@ public class Playlist implements Serializable {
         return playlist;
     }
 
+    // HI_RES
+    public static Query getFavQuery() {
+        Query query = new Query.Builder()
+                .uri(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI)
+                .projection(new String[]{BaseColumns._ID})
+                .selection(MediaStore.Audio.PlaylistsColumns.NAME + "='" + ShuttleApplication.getInstance().getResources().getString(R.string.fav_title) + "'")
+                .build();
+        return query;
+    }
+    // END HI_RES
+
     public void delete(Context context) {
         Uri uri = ContentUris.withAppendedId(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, id);
         if (uri != null) {

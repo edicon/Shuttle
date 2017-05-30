@@ -175,9 +175,11 @@ public class PlaylistFragment extends BaseFragment implements
                                 {
                                     List<Playlist> playlists = new ArrayList<>();
 
-                                    Playlist podcastPlaylist = Playlist.podcastPlaylist();
-                                    if (podcastPlaylist != null) {
-                                        playlists.add(podcastPlaylist);
+                                    if( !HI_RES ) {
+                                        Playlist podcastPlaylist = Playlist.podcastPlaylist();
+                                        if (podcastPlaylist != null) {
+                                            playlists.add(podcastPlaylist);
+                                        }
                                     }
 
                                     playlists.add(Playlist.recentlyAddedPlaylist());
@@ -192,7 +194,15 @@ public class PlaylistFragment extends BaseFragment implements
                         defaultPlaylistsObservable, playlistsObservable, (defaultPlaylists, playlists) -> {
                             List<Playlist> list = new ArrayList<>();
                             list.addAll(defaultPlaylists);
-                            list.addAll(playlists);
+                            // Skip Favorite
+                            if( HI_RES ) {
+                                for( Playlist playlist : playlists ) {
+                                    if( !"Favorites".equals(playlist.name))
+                                        list.add(playlist);
+                                }
+                            } else {
+                                list.addAll(playlists);
+                            }
                             return list;
                         })
                         .subscribeOn(Schedulers.io())
