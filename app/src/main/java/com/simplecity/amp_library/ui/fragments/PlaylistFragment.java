@@ -362,14 +362,14 @@ public class PlaylistFragment extends BaseFragment implements
             switch (item.getItemId()) {
                 case R.id.rename:
                     for( Playlist playlist : checkedPlaylists) {
-                    // PlaylistUtils.renamePlaylistDialog(getContext(), playlist, renameListener);
+                        PlaylistUtils.renamePlaylistDialog(getContext(), playlist, null );
                     }
                     break;
                 case R.id.add:
-                    // ToDo: Check null value of songs
+                    // ToDo: Check listener
                     List<Song> songs = new ArrayList<>();
                     // songs.add(song);
-                    PlaylistUtils.createPlaylistDialog(getActivity(), songs);
+                    PlaylistUtils.createPlaylistDialog(getActivity(), songs /* (OnSavePlaylistListener)getActivity() or null*/);
                     break;
                 case R.id.delete:
                     for( Playlist playlist : checkedPlaylists) {

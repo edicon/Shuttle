@@ -306,7 +306,9 @@ public class MenuUtils implements MusicUtils.Defs {
 
     }
 
-    public static void addClickHandler(final Context context, final PopupMenu menu, final Playlist playlist, final MaterialDialog.SingleButtonCallback renameListener, final MaterialDialog.SingleButtonCallback editListener) {
+    public static void addClickHandler(final Context context, final PopupMenu menu, final Playlist playlist,
+                                       final MaterialDialog.SingleButtonCallback renameListener,
+                                       final MaterialDialog.SingleButtonCallback editListener) {
         final PopupMenu.OnMenuItemClickListener listener = item -> {
             switch (item.getItemId()) {
                 case PLAY_SELECTION:

@@ -74,6 +74,7 @@ import com.simplecity.amp_library.ui.fragments.AlbumArtistFragment;
 import com.simplecity.amp_library.ui.fragments.AlbumFragment;
 import com.simplecity.amp_library.ui.fragments.DetailFragment;
 import com.simplecity.amp_library.ui.fragments.FavoriteFragment;
+import com.simplecity.amp_library.ui.fragments.FavoriteSuggestFragment;
 import com.simplecity.amp_library.ui.fragments.FolderFragment;
 import com.simplecity.amp_library.ui.fragments.GenreFragment;
 import com.simplecity.amp_library.ui.fragments.MainFragment;
@@ -85,7 +86,6 @@ import com.simplecity.amp_library.ui.fragments.QueueFragment;
 import com.simplecity.amp_library.ui.fragments.QueuePagerFragment;
 import com.simplecity.amp_library.ui.fragments.SongFragment;
 import com.simplecity.amp_library.ui.fragments.SuggestedFragment;
-import com.simplecity.amp_library.ui.presenters.PlayerPresenter;
 import com.simplecity.amp_library.ui.views.CustomDrawerLayout;
 import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.AnalyticsManager;
@@ -122,7 +122,8 @@ public class MainActivity extends BaseCastActivity implements
         PlaylistFragment.PlaylistClickListener,
         NavigationDrawerFragment.DrawerClickListener,
         SuggestedFragment.SuggestedClickListener,
-        FavoriteFragment.FavoriteClickListener,
+        // FavoriteFragment.FavoriteClickListener,
+        // FavoriteSuggestFragment.FavoriteClickListener,
         // PlayerPresenter.PresenterClickListener,
         MusicUtils.Defs
 {
@@ -1109,6 +1110,7 @@ public class MainActivity extends BaseCastActivity implements
                     mainFragment.setPagerItem(itemIndex);
                 } else {
                     toggleNavigation( true );
+                    // Fragment fragment = FavoriteSuggestFragment.newInstance(getString(R.string.fav_title));
                     Fragment fragment = FavoriteFragment.newInstance(getString(R.string.fav_title));
                     swapFragments(fragment, true);
                 }
