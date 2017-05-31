@@ -14,6 +14,7 @@ import com.simplecity.amp_library.utils.SortManager;
 import com.simplecity.amp_library.utils.StringUtils;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
+// HI_RES : From SongAdaptor
 public class FavoriteAdapter extends ItemAdapter implements FastScrollRecyclerView.SectionedAdapter {
 
     private static final String TAG = "FavoriteAdapter";

@@ -31,12 +31,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.model.AdaptableItem;
+import com.simplecity.amp_library.model.FavoriteHeader;
 import com.simplecity.amp_library.model.Playlist;
 import com.simplecity.amp_library.model.Song;
 import com.simplecity.amp_library.sql.databases.BlacklistHelper;
 import com.simplecity.amp_library.ui.adapters.FavoriteAdapter;
 import com.simplecity.amp_library.ui.adapters.SongAdapter;
 import com.simplecity.amp_library.ui.modelviews.EmptyView;
+import com.simplecity.amp_library.ui.modelviews.FavoriteHeaderView;
+import com.simplecity.amp_library.ui.modelviews.FavoriteSongView;
 import com.simplecity.amp_library.ui.modelviews.ShuffleView;
 import com.simplecity.amp_library.ui.modelviews.SongView;
 import com.simplecity.amp_library.utils.ActionBarUtils;
@@ -52,15 +55,19 @@ import com.simplecity.amp_library.utils.SortManager;
 import com.simplecity.amp_library.utils.ThemeUtils;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
+// HI_RES : From SongFragment
 public class FavoriteFragment extends BaseFragment implements
         MusicUtils.Defs,
         RecyclerView.RecyclerListener,
@@ -89,6 +96,7 @@ public class FavoriteFragment extends BaseFragment implements
     private boolean sortOrderChanged = false;
 
     private Subscription subscription;
+    private CompositeSubscription comSubscription;
 
     private ShuffleView shuffleView;
 
@@ -233,6 +241,7 @@ public class FavoriteFragment extends BaseFragment implements
 
                         boolean ascending = SortManager.getInstance().getSongsAscending();
 
+                        /*
                         subscription = DataManager.getInstance().getSongsRelay()
                                 .flatMap(songs -> {
                                     //Sort
@@ -271,6 +280,50 @@ public class FavoriteFragment extends BaseFragment implements
 
                                     sortOrderChanged = false;
                                 });
+
+                        */
+
+                        // From SuggestFragment
+                        comSubscription = new CompositeSubscription();
+                        Observable<Playlist> favouritesPlaylistObservable = Observable.fromCallable(Playlist::favoritesPlaylist)
+                                .subscribeOn(Schedulers.io())
+                                .cache();
+
+                        Observable<List<Song>> favouritesSongsObservable = favouritesPlaylistObservable
+                                .filter(playlist -> playlist != null)
+                                .flatMap(playlist -> playlist.getSongsObservable(getContext()))
+                                .cache();
+
+                        /*
+                        Observable<List<AdaptableItem>> favoriteSongsItemsObservable = favouritesPlaylistObservable
+                                .flatMap(playlist -> {
+
+                                    FavoriteHeader favoriteHeader = new FavoriteHeader(getString(R.string.fav_title), getString(R.string.suggested_favorite_subtitle), playlist);
+                                    FavoriteHeaderView favoriteHeaderView = new FavoriteHeaderView(favoriteHeader);
+
+                                    return favouritesSongsObservable
+                                            .map(songs -> {
+                                                List<AdaptableItem> items = new ArrayList<>();
+                                                if (!songs.isEmpty()) {
+                                                    // items.add(favoriteHeaderView);
+                                                    // items.add(favoriteRecyclerView);
+                                                }
+                                                return items;
+                                            });
+                                })
+                                .switchIfEmpty(Observable.just(Collections.emptyList()));
+                        */
+                        comSubscription.add(favouritesSongsObservable
+                                .map(songs -> Stream.of(songs)
+                                        // HI_RES .map(song -> (AdaptableItem) new FavoriteSongView(song, requestManager))
+                                        .map(song -> (AdaptableItem) new SongView(song, multiSelector, requestManager))
+                                        .limit(20)
+                                        .collect(Collectors.toList()))
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(adaptableItems -> {
+                                    // HI_RES favoriteRecyclerView.itemAdapter.setItems(adaptableItems);
+                                    favoriteAdapter.setItems(adaptableItems);
+                                }));
                     }
                 }
         );
@@ -284,6 +337,9 @@ public class FavoriteFragment extends BaseFragment implements
 
         if (subscription != null) {
             subscription.unsubscribe();
+        }
+        if (comSubscription != null) {
+            comSubscription.unsubscribe();
         }
 
         super.onPause();

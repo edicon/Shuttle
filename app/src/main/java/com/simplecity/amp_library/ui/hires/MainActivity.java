@@ -123,7 +123,7 @@ public class MainActivity extends BaseCastActivity implements
         NavigationDrawerFragment.DrawerClickListener,
         SuggestedFragment.SuggestedClickListener,
         // FavoriteFragment.FavoriteClickListener,
-        // FavoriteSuggestFragment.FavoriteClickListener,
+        FavoriteSuggestFragment.FavoriteClickListener,
         // PlayerPresenter.PresenterClickListener,
         MusicUtils.Defs
 {
