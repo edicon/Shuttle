@@ -374,6 +374,10 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
         if (fab == null) {
             return;
         }
+        if( HI_RES ) {
+            fab.setVisibility(View.GONE);
+            return;
+        }
 
         if (show && fab.getVisibility() == View.VISIBLE) {
             return;
