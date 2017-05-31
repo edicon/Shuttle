@@ -140,6 +140,7 @@ public class DetailFragment extends BaseFragment implements
     private BroadcastReceiver receiver;
 
     ImageView headerImageView;
+    ImageView detailImageView;
 
     private SharedPreferences prefs;
 
@@ -293,6 +294,8 @@ public class DetailFragment extends BaseFragment implements
 
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(this);
+        if( HI_RES )
+            fab.setVisibility(View.GONE);
 
         lineOne = (TextView) rootView.findViewById(R.id.line_one);
         lineTwo = (TextView) rootView.findViewById(R.id.line_two);
@@ -316,6 +319,10 @@ public class DetailFragment extends BaseFragment implements
         textProtectionScrim = rootView.findViewById(R.id.textProtectionScrim);
 
         headerImageView = (ImageView) rootView.findViewById(R.id.background);
+        if( HI_RES ) {
+            headerImageView.setVisibility(View.GONE);
+            detailImageView = (ImageView) rootView.findViewById(R.id.image);
+        }
         String transitionName = getArguments().getString(ARG_TRANSITION_NAME);
         ViewCompat.setTransitionName(headerImageView, transitionName);
         if (transitionName != null) {
@@ -327,6 +334,7 @@ public class DetailFragment extends BaseFragment implements
         int height = getResources().getDimensionPixelSize(R.dimen.header_view_height);
 
         if (albumArtist != null || album != null) {
+            if( !HI_RES )
             requestManager
                     .load(albumArtist == null ? album : albumArtist)
                     //Need to override the height/width, as the shared element transition tricks Glide into thinking this ImageView has
@@ -339,6 +347,18 @@ public class DetailFragment extends BaseFragment implements
                     .centerCrop()
                     .animate(new AlwaysCrossFade(false))
                     .into(headerImageView);
+            requestManager
+                    .load(albumArtist == null ? album : albumArtist)
+                    //Need to override the height/width, as the shared element transition tricks Glide into thinking this ImageView has
+                    //the same dimensions as the ImageView that the transition starts with.
+                    //So we'll set it to screen width (plus a little extra, which might fix an issue on some devices..)
+                    .override(width, height)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .priority(Priority.HIGH)
+                    .placeholder(GlideUtils.getPlaceHolderDrawable(albumArtist == null ? album.name : albumArtist.name, false))
+                    .centerCrop()
+                    .animate(new AlwaysCrossFade(false))
+                    .into(detailImageView);
         }
         actionMode = null;
 
@@ -1261,7 +1281,8 @@ public class DetailFragment extends BaseFragment implements
 
                         //Fade & grow the FAB
                         fab.setAlpha(0f);
-                        fab.setVisibility(View.VISIBLE);
+                        if( !HI_RES )
+                            fab.setVisibility(View.VISIBLE);
 
                         fadeAnimator = ObjectAnimator.ofFloat(fab, View.ALPHA, 0.5f, 1f);
                         ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(fab, View.SCALE_X, 0f, 1f);
