@@ -787,6 +787,9 @@ public class MainActivity extends BaseCastActivity implements
 
                 }
                 return true;
+            case R.id.action_drawer:
+                PlayerFragment.newInstance().toggleDrawerMenu();
+                break;
             case android.R.id.home:
                 if( HI_RES ) {
                     if (getSupportFragmentManager().getBackStackEntryCount() != 0) {

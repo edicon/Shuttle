@@ -7,4 +7,16 @@
         android:icon="?attr/btn_search"
         android:title="@string/search_title"
         app:showAsAction="always"/>
+    <!--HI_RES -->
+    <item
+        android:id="@+id/action_drawer"
+        android:icon="?attr/btn_sort"
+        android:title="@string/search_title"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_setting"
+        android:icon="?attr/btn_settings"
+        android:title="@string/settings"
+        app:showAsAction="always"/>
+
 </menu>
