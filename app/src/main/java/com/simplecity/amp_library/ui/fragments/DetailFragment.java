@@ -254,7 +254,10 @@ public class DetailFragment extends BaseFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+        if( HI_RES )
+            rootView = inflater.inflate(R.layout.fragment_detail_hires, container, false);
+        else
+            rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -321,6 +324,7 @@ public class DetailFragment extends BaseFragment implements
         headerImageView = (ImageView) rootView.findViewById(R.id.background);
         if( HI_RES ) {
             headerImageView.setVisibility(View.GONE);
+            textProtectionScrim.setVisibility(View.GONE);
             detailImageView = (ImageView) rootView.findViewById(R.id.image);
         }
         String transitionName = getArguments().getString(ARG_TRANSITION_NAME);
@@ -1274,7 +1278,10 @@ public class DetailFragment extends BaseFragment implements
 
                         //Fade in the text protection scrim
                         textProtectionScrim.setAlpha(0f);
-                        textProtectionScrim.setVisibility(View.VISIBLE);
+                        if( HI_RES )
+                            textProtectionScrim.setVisibility(View.GONE);
+                        else
+                            textProtectionScrim.setVisibility(View.VISIBLE);
                         ObjectAnimator fadeAnimator = ObjectAnimator.ofFloat(textProtectionScrim, View.ALPHA, 0f, 1f);
                         fadeAnimator.setDuration(800);
                         fadeAnimator.start();

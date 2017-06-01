@@ -934,7 +934,9 @@ public class MainActivity extends BaseCastActivity implements
 
         getSupportFragmentManager().beginTransaction()
                 .addSharedElement(transitionView, transitionName)
-                .replace(R.id.main_container, detailFragment)
+                // HI_RES For 2nd Stack
+                // .replace(R.id.main_container, detailFragment)
+                .add(R.id.main_container, detailFragment)
                 .addToBackStack(null)
                 .commit();
     }
