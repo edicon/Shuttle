@@ -581,7 +581,8 @@ public class DetailFragment extends BaseFragment implements
                             }
 
                             List<AdaptableItem> adaptableItems = new ArrayList<>();
-                            adaptableItems.add(headerItem);
+                            if( !HI_RES )
+                                adaptableItems.add(headerItem);
                             if (album == null) {
                                 adaptableItems.add(horizontalRecyclerView);
                             }
