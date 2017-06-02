@@ -355,12 +355,17 @@ public class FavoriteFragment extends BaseFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        inflater.inflate(R.menu.menu_sort_songs, menu);
+        if( !HI_RES ) {
+            inflater.inflate(R.menu.menu_sort_songs, menu);
+        }
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+
+        if( HI_RES )
+            return;
 
         int sortOrder = SortManager.getInstance().getSongsSortOrder();
 

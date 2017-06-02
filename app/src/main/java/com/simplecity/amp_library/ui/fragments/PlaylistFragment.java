@@ -257,7 +257,8 @@ public class PlaylistFragment extends BaseFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        inflater.inflate(R.menu.context_menu_playlists, menu);
+        if( !HI_RES )
+            inflater.inflate(R.menu.context_menu_playlists, menu);
     }
 
     @Override

@@ -328,10 +328,12 @@ public class FolderFragment extends BaseFragment implements
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_sort_folders, menu);
-        if( HI_RES ) {
-           menu.findItem(R.id.whitelist).setVisible(false);
-           menu.findItem(R.id.show_filenames).setVisible(false);
+        if( !HI_RES ) {
+            inflater.inflate(R.menu.menu_sort_folders, menu);
+            if (HI_RES) {
+                menu.findItem(R.id.whitelist).setVisible(false);
+                menu.findItem(R.id.show_filenames).setVisible(false);
+            }
         }
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -339,6 +341,9 @@ public class FolderFragment extends BaseFragment implements
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+
+        if( HI_RES )
+            return;
 
         switch (SettingsManager.getInstance().getFolderBrowserFilesSortOrder()) {
             case SortManager.SortFiles.DEFAULT:

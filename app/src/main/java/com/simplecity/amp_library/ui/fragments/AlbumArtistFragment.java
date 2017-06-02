@@ -317,21 +317,26 @@ public class AlbumArtistFragment extends BaseFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-        inflater.inflate(R.menu.menu_sort_artists, menu);
-        inflater.inflate(R.menu.menu_view_as, menu);
+        if( !HI_RES ) {
+            inflater.inflate(R.menu.menu_sort_artists, menu);
+            inflater.inflate(R.menu.menu_view_as, menu);
 
-        menu.addSubMenu(0, MENU_GRID_SIZE, 0, R.string.menu_grid_size);
-        SubMenu subMenu = menu.findItem(MENU_GRID_SIZE).getSubMenu();
-        int[] columnRange = getResources().getIntArray(R.array.column_range);
-        for (int i = 0; i < columnRange.length; i++) {
-            subMenu.add(MENU_GROUP_GRID, columnRange[i] + 1000, i, String.valueOf(columnRange[i]));
+            menu.addSubMenu(0, MENU_GRID_SIZE, 0, R.string.menu_grid_size);
+            SubMenu subMenu = menu.findItem(MENU_GRID_SIZE).getSubMenu();
+            int[] columnRange = getResources().getIntArray(R.array.column_range);
+            for (int i = 0; i < columnRange.length; i++) {
+                subMenu.add(MENU_GROUP_GRID, columnRange[i] + 1000, i, String.valueOf(columnRange[i]));
+            }
+            subMenu.setGroupCheckable(MENU_GROUP_GRID, true, true);
         }
-        subMenu.setGroupCheckable(MENU_GROUP_GRID, true, true);
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+
+        if( HI_RES )
+            return;
 
         //Strip the 'asc' or 'desc' flag, we just want to know the sort type
         int sortOrder = SortManager.getInstance().getArtistsSortOrder();

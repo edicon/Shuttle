@@ -303,7 +303,7 @@ public class SongFragment extends BaseFragment implements
         super.onCreateOptionsMenu(menu, inflater);
 
         if( !HI_RES )
-        inflater.inflate(R.menu.menu_sort_songs, menu);
+            inflater.inflate(R.menu.menu_sort_songs, menu);
     }
 
     @Override

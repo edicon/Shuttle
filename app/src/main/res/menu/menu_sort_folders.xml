@@ -72,10 +72,11 @@
         android:id="@+id/show_filenames"
         android:checkable="true"
         android:title="@string/show_filenames" />
-    <!-- HI_RES -->
+    <!-- HI_RES
     <item
         android:id="@+id/action_setting"
         android:icon="?attr/btn_settings"
         android:title="@string/settings"
         app:showAsAction="always"/>
+    -->
 </menu>
