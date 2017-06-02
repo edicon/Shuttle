@@ -99,6 +99,8 @@ import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 @SuppressLint("InlinedApi")
 public class MusicService extends Service {
 
@@ -593,9 +595,12 @@ public class MusicService extends Service {
         mPlaybackLocation = LOCAL;
 
         if (ShuttleUtils.isUpgraded()) {
-            mCastManager = VideoCastManager.getInstance();
-            setupCastListener();
-            mCastManager.addVideoCastConsumer(mCastConsumer);
+            // Disable ChromeCast
+            if( !HI_RES ) {
+                mCastManager = VideoCastManager.getInstance();
+                setupCastListener();
+                mCastManager.addVideoCastConsumer(mCastConsumer);
+            }
         }
 
         if (mCastManager != null && mCastManager.isConnected()) {

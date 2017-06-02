@@ -11,6 +11,8 @@ import com.google.android.libraries.cast.companionlibrary.cast.callbacks.VideoCa
 import com.simplecity.amp_library.ShuttleApplication;
 import com.simplecity.amp_library.utils.ShuttleUtils;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public abstract class BaseCastActivity extends BaseActivity {
 
     private static final String TAG = "BaseCastActivity";
@@ -23,7 +25,8 @@ public abstract class BaseCastActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         if (ShuttleUtils.isUpgraded()) {
-            mCastManager = VideoCastManager.getInstance();
+            if( !HI_RES )
+                mCastManager = VideoCastManager.getInstance();
         }
 
         mCastConsumer = new VideoCastConsumerImpl() {
@@ -59,8 +62,10 @@ public abstract class BaseCastActivity extends BaseActivity {
         super.onResume();
 
         if (ShuttleUtils.isUpgraded()) {
-            mCastManager = VideoCastManager.getInstance();
-            mCastManager.addVideoCastConsumer(mCastConsumer);
+            if( !HI_RES ) {
+                mCastManager = VideoCastManager.getInstance();
+                mCastManager.addVideoCastConsumer(mCastConsumer);
+            }
         }
     }
 

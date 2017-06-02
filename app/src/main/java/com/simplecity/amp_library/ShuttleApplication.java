@@ -121,6 +121,7 @@ public class ShuttleApplication extends Application {
             }
         }
 
+        if( !HI_RES )
         VideoCastManager.initialize(this,
                 new CastConfiguration.Builder(Config.CHROMECAST_APP_ID)
                         .enableLockScreen()
