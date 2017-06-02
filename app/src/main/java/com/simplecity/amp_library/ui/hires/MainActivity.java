@@ -788,7 +788,7 @@ public class MainActivity extends BaseCastActivity implements
                 }
                 return true;
             case R.id.action_drawer:
-                PlayerFragment.newInstance().toggleDrawerMenu();
+                PlayerFragment.newInstance().toggleDrawerMenu( true );
                 break;
             case android.R.id.home:
                 if( HI_RES ) {
@@ -1007,6 +1007,20 @@ public class MainActivity extends BaseCastActivity implements
 
     @Override
     public void onItemClicked(DrawerGroupItem drawerGroupItem) {
+        // HI_RES
+        // Pop backStacki Fragment from ActionMenu
+        if( HI_RES ) {
+            int count = getSupportFragmentManager().getBackStackEntryCount();
+            if( count == 1 && PlayerFragment.actionDrawer) {
+                try {
+                    getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                } catch (IllegalStateException e) {
+                    Log.e(TAG, "Error popping backstack: " + e);
+                    CrashlyticsCore.getInstance().logException(e);
+                }
+            }
+        }
+
         int itemIndex = 0;
         switch (drawerGroupItem.type) {
             case DrawerGroupItem.Type.LIBRARY:

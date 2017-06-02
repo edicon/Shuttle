@@ -156,7 +156,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
             favorButton.setOnClickListener(v -> toggleFavorite( getActivity() ));
 
             drawerButton = (ImageButton) rootView.findViewById(R.id.drawer);
-            drawerButton.setOnClickListener(v -> toggleDrawerMenu());
+            drawerButton.setOnClickListener(v -> toggleDrawerMenu( false ));
 
 
             subRepeatBtn = (ImageButton) rootView.findViewById(R.id.sub_repeat);
@@ -562,8 +562,10 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     }
 
     // ToDo: HI_RES
-    public void toggleDrawerMenu() {
+    public static boolean actionDrawer;
+    public void toggleDrawerMenu( boolean actionDrawer) {
         // MusicUtils.cycleRepeat();
+        this.actionDrawer = actionDrawer;
         if (com.simplecity.amp_library.ui.hires.MainActivity.mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
             // close
             mDrawerLayout.closeDrawers();
