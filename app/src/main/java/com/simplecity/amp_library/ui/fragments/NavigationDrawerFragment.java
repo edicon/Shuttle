@@ -173,14 +173,63 @@ public class NavigationDrawerFragment extends BaseFragment implements
                     .commit();
 
             if( HI_RES ) {
-                ImageButton dummyBtn = (ImageButton)mRootView.findViewById(R.id.btn_drawer_dummy);
-                // dummyBtn.setOnClickListener( onDummyClickListener );
-                dummyBtn.setOnClickListener(new View.OnClickListener(){
+                mListView.setVisibility(View.GONE);
+
+                ImageButton btnDummy = (ImageButton)mRootView.findViewById(R.id.btn_drawer_dummy);
+                ImageButton btnSong = (ImageButton)mRootView.findViewById(R.id.btn_drawer_song);
+                ImageButton btnAlbum = (ImageButton)mRootView.findViewById(R.id.btn_drawer_albums);
+                ImageButton btnArtist = (ImageButton)mRootView.findViewById(R.id.btn_drawer_artist);
+                ImageButton btnGenres = (ImageButton)mRootView.findViewById(R.id.btn_drawer_genres);
+                ImageButton btnPlaylist = (ImageButton)mRootView.findViewById(R.id.btn_drawer_playlist);
+                ImageButton btnFolders = (ImageButton)mRootView.findViewById(R.id.btn_drawer_folders);
+                ImageButton btnFavorite = (ImageButton)mRootView.findViewById(R.id.btn_drawer_favorites);
+
+                btnDummy.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v ) {
-                        mDrawerLayout.closeDrawer(GravityCompat.START);
-                        Handler handler = new Handler();
-                        handler.postDelayed(() -> drawerClickListener.onClickListener( v ), 200);
+                        callDrawerClickListener( v );
+                    }
+                });
+                btnSong.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v ) {
+                        callDrawerClickListener( v );
+                    }
+                });
+                btnAlbum.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v ) {
+                        callDrawerClickListener( v );
+                    }
+                });
+                btnArtist.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v ) {
+                        callDrawerClickListener( v );
+                    }
+                });
+                btnGenres.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v ) {
+                        callDrawerClickListener( v );
+                    }
+                });
+                btnPlaylist.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v ) {
+                        callDrawerClickListener( v );
+                    }
+                });
+                btnFolders.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v ) {
+                        callDrawerClickListener( v );
+                    }
+                });
+                btnFavorite.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v ) {
+                        callDrawerClickListener( v );
                     }
                 });
             }
@@ -189,6 +238,13 @@ public class NavigationDrawerFragment extends BaseFragment implements
         }
         return mRootView;
     }
+
+    private void callDrawerClickListener( View v ) {
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        Handler handler = new Handler();
+        handler.postDelayed(() -> drawerClickListener.onClickListener( v ), 200);
+    }
+
 
     @Override
     public void onPause() {
@@ -442,14 +498,6 @@ public class NavigationDrawerFragment extends BaseFragment implements
         Handler handler = new Handler();
         handler.postDelayed(() -> drawerClickListener.onItemClicked(playlist), 200);
     }
-
-    // HI_RES
-    /* public void View.DialogInterface.OnClickListener onDummyClickListener(View v ){
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        Handler handler = new Handler();
-        handler.postDelayed(() -> drawerClickListener.onClickListener( v ), 200);
-    };
-    */
 
     @Override
     public void onOverflowButtonClick(View v, final Playlist playlist) {

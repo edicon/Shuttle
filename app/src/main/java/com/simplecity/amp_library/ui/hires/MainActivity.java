@@ -993,17 +993,70 @@ public class MainActivity extends BaseCastActivity implements
         }
     }
 
+    // HI_RES
     @Override
     public void onClickListener(View v) {
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if( count == 1 && PlayerFragment.actionDrawer) {
+            try {
+                getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            } catch (IllegalStateException e) {
+                Log.e(TAG, "Error popping backstack: " + e);
+                CrashlyticsCore.getInstance().logException(e);
+            }
+        }
+
+        Fragment fragment;
         switch (v.getId()) {
-            case R.id.btn_drawer_dummy:
-                // swapFragments(DetailFragment.newInstance(playlist), true);
-                startActivity(new Intent(this, SettingsActivity.class));
+            case R.id.btn_drawer_song:
+                mTitle = getString(R.string.tracks_title);
+                toggleNavigation(true);
+                fragment = SongFragment.newInstance(getString(R.string.tracks_title));
+                swapFragments(fragment, true);
+                break;
+            case R.id.btn_drawer_albums:
+                mTitle = getString(R.string.albums_title);
+                toggleNavigation( true );
+                getSupportActionBar().setTitle(getString(R.string.albums_title));
+                fragment = AlbumFragment.newInstance(getString(R.string.albums_title));
+                swapFragments(fragment, true);
+                break;
+            case R.id.btn_drawer_artist:
+                mTitle = getString(R.string.artists_title);
+                toggleNavigation( true );
+                fragment = AlbumArtistFragment.newInstance(getString(R.string.artists_title));
+                swapFragments(fragment, true);
+                break;
+            case R.id.btn_drawer_genres:
+                mTitle = getString(R.string.genre_title);
+                toggleNavigation( true );
+                fragment = GenreFragment.newInstance(getString(R.string.genres_title));
+                swapFragments(fragment, true);
+                break;
+            case R.id.btn_drawer_playlist:
+                mTitle = getString(R.string.playlists_title);
+                toggleNavigation( true );
+                fragment = PlaylistFragment.newInstance(getString(R.string.tracks_title));
+                swapFragments(fragment, true);
+                break;
+            case R.id.btn_drawer_folders:
+                mTitle = getString(R.string.folders_title);
+                toggleNavigation( true );
+                fragment = FolderFragment.newInstance(getString(R.string.folders_title));
+                swapFragments(fragment, true);
+                break;
+            case R.id.btn_drawer_favorites:
+                mTitle = getString(R.string.fav_title);
+                toggleNavigation( true );
+                fragment = FavoriteFragment.newInstance(getString(R.string.fav_title));
+                swapFragments(fragment, true);
                 break;
             default:
                 break;
         }
     }
+    // END
 
     @Override
     public void onItemClicked(DrawerGroupItem drawerGroupItem) {
@@ -1057,7 +1110,6 @@ public class MainActivity extends BaseCastActivity implements
                     mainFragment.setPagerItem(itemIndex);
                 } else {
                     toggleNavigation( true );
-                    getSupportActionBar().setTitle(getString(R.string.albums_title));
                     Fragment fragment = AlbumFragment.newInstance(getString(R.string.albums_title));
                     swapFragments(fragment, true);
                 }
