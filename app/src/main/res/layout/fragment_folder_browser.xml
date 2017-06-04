@@ -37,10 +37,51 @@
         app:popupTheme="?attr/toolbar_popup_theme"
         app:theme="?attr/toolbar_theme">
 
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/sd_card"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:visibility="visible"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/sd_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentLeft="true"
+                android:text="SD Card"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="20sp" />
+            <ImageButton
+                android:id="@+id/btn_sd_in"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_toLeftOf="@+id/btn_sd_ex0"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/ic_sd_storage_white_24dp" />
+            <ImageButton
+                android:id="@+id/btn_sd_ex0"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_toLeftOf="@+id/btn_sd_ex1"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/ic_sd_storage_white_24dp" />
+            <ImageButton
+                android:id="@+id/btn_sd_ex1"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ic_sd_storage_white_24dp" />
+        </RelativeLayout>
+
         <com.simplecity.amp_library.ui.views.BreadcrumbView
             android:id="@+id/breadcrumb_view"
             android:layout_width="match_parent"
-            android:layout_height="36dp" />
+            android:visibility="visible"
+            android:layout_height="36dp" >
+        </com.simplecity.amp_library.ui.views.BreadcrumbView>
 
     </android.support.v7.widget.Toolbar>
 

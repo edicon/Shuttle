@@ -5,8 +5,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.os.EnvironmentCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +18,8 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Config;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +27,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,6 +38,7 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback;
 import com.bignerdranch.android.multiselector.MultiSelector;
+import com.simplecity.amp_library.BuildConfig;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.interfaces.BackPressListener;
 import com.simplecity.amp_library.interfaces.Breadcrumb;
@@ -38,6 +46,7 @@ import com.simplecity.amp_library.interfaces.BreadcrumbListener;
 import com.simplecity.amp_library.interfaces.FileType;
 import com.simplecity.amp_library.model.AdaptableItem;
 import com.simplecity.amp_library.model.BaseFileObject;
+import com.simplecity.amp_library.model.DrawerGroupItem;
 import com.simplecity.amp_library.model.FileObject;
 import com.simplecity.amp_library.model.FolderObject;
 import com.simplecity.amp_library.model.Playlist;
@@ -75,6 +84,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
+import static com.simplecity.amp_library.R.styleable.Android;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
 public class FolderFragment extends BaseFragment implements
@@ -82,7 +92,9 @@ public class FolderFragment extends BaseFragment implements
         BreadcrumbListener,
         BackPressListener,
         RecyclerView.RecyclerListener,
-        FolderAdapter.Listener {
+        FolderAdapter.Listener,
+        View.OnClickListener
+{
 
     private static final String TAG = "FolderFragment";
 
@@ -122,6 +134,8 @@ public class FolderFragment extends BaseFragment implements
     private ActionMode actionMode;
 
     ActionMode.Callback actionModeCallback;
+    private TextView sdInfo;
+    private ImageButton sdIn, sdEx0, sdEx1;
 
     // HI_RES
     boolean inActionMode = false;
@@ -151,6 +165,7 @@ public class FolderFragment extends BaseFragment implements
                 ((MainActivity) context).onSectionAttached(getString(R.string.folders_title));
             }
         }
+        // sdCardClickListener = (SdCardClickListener) getActivity();
     }
 
     @Override
@@ -191,6 +206,12 @@ public class FolderFragment extends BaseFragment implements
         dummyToolbar = rootView.findViewById(R.id.dummyToolbar);
         dummyStatusBar = rootView.findViewById(R.id.dummyStatusBar);
 
+        sdInfo = (TextView)rootView.findViewById(R.id.sd_info);
+        View sdCard = (View)rootView.findViewById(R.id.sd_card);
+        sdIn = (ImageButton)rootView.findViewById(R.id.btn_sd_in);
+        sdEx0 = (ImageButton)rootView.findViewById(R.id.btn_sd_ex0);
+        sdEx1 = (ImageButton)rootView.findViewById(R.id.btn_sd_ex1);
+
         //We need to set the dummy status bar height.
         if (ShuttleUtils.hasKitKat()) {
             LinearLayout.LayoutParams statusBarParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) ActionBarUtils.getStatusBarHeight(getActivity()));
@@ -225,9 +246,19 @@ public class FolderFragment extends BaseFragment implements
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
 
+        // sdCard.setOnClickListener( this );
+        sdIn.setOnClickListener( this );
+        sdEx0.setOnClickListener( this );
+        sdEx1.setOnClickListener( this );
+
         themeUIComponents();
 
         return rootView;
+    }
+
+    public static boolean isSdPresent() {
+        return android.os.Environment.getExternalStorageState().equals(
+                android.os.Environment.MEDIA_MOUNTED);
     }
 
     @Override
@@ -244,6 +275,27 @@ public class FolderFragment extends BaseFragment implements
             }).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(this::changeDir));
+        }
+    }
+
+    private void dispSdcard( File currFile ) {
+
+        sdIn.setImageResource(R.drawable.ic_sd_storage_black_24dp);
+        sdEx0.setImageResource(R.drawable.ic_sd_storage_black_24dp);
+        sdEx1.setImageResource(R.drawable.ic_sd_storage_black_24dp);
+
+        if( currFile != null ) {
+            if( currFile.exists() ) {
+                String path = currFile.getAbsolutePath();
+                if( BuildConfig.DEBUG)
+                    Log.d("PATH", "currPath: " + path);
+                if( path.contains("0") )
+                    sdEx0.setImageResource(R.drawable.ic_sd_storage_white_24dp);
+                else if( path.contains("1"))
+                    sdEx1.setImageResource(R.drawable.ic_sd_storage_white_24dp);
+                else
+                    sdIn.setImageResource(R.drawable.ic_sd_storage_white_24dp);
+            }
         }
     }
 
@@ -494,6 +546,9 @@ public class FolderFragment extends BaseFragment implements
 
     public void changeDir(File newDir) {
 
+        if( HI_RES )
+            dispSdcard( newDir );
+
         subscriptions.add(Observable.fromCallable(() -> {
 
             final String path = FileHelper.getPath(newDir);
@@ -618,7 +673,8 @@ public class FolderFragment extends BaseFragment implements
 
             //Tag editor
             if (ShuttleUtils.isUpgraded()) {
-                menu.getMenu().add(FRAGMENT_GROUPID, TAGGER, 5, R.string.edit_tags);
+                if( !HI_RES )
+                    menu.getMenu().add(FRAGMENT_GROUPID, TAGGER, 5, R.string.edit_tags);
             }
 
             //Set this song as the ringtone
@@ -892,6 +948,39 @@ public class FolderFragment extends BaseFragment implements
     }
 
     // HI_RES
+    // onClick inside fragment called on Activity
+    // -https://stackoverflow.com/questions/6091194/how-to-handle-button-clicks-using-the-xml-onclick-within-fragments
+    // -https://stackoverflow.com/questions/7570575/onclick-inside-fragment-called-on-activity
+    @Override
+    public void onClick(View v) {
+        File musicFolder; //  = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+        switch (v.getId()) {
+            case R.id.btn_sd_in:
+                musicFolder = new File(com.simplecity.amp_library.constants.Config.SD_IN);
+                if( BuildConfig.DEBUG )
+                    Log.d("FOLDER", "SD1: " + musicFolder.getAbsolutePath());
+                if( musicFolder.exists())
+                    changeDir(musicFolder);
+                break;
+            case R.id.btn_sd_ex0:
+                musicFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+                // musicFolder = new File(com.simplecity.amp_library.constants.Config.SD_EX0);
+                if( BuildConfig.DEBUG )
+                    Log.d("FOLDER", "SD1: " + musicFolder.getAbsolutePath());
+                if( musicFolder.exists())
+                    changeDir(musicFolder);
+                break;
+            case R.id.btn_sd_ex1:
+                musicFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+                // musicFolder = new File(com.simplecity.amp_library.constants.Config.SD_EX1);
+                if( BuildConfig.DEBUG )
+                    Log.d("FOLDER", "SD1: " + musicFolder.getAbsolutePath());
+                if( musicFolder.exists())
+                    changeDir(musicFolder);
+                break;
+        }
+    }
+
     @Override
     public void onLongClick(View v, int position, BaseFileObject file) {
         if (inActionMode) {
@@ -915,7 +1004,8 @@ public class FolderFragment extends BaseFragment implements
 
     private void updateActionModeSelectionCount() {
         if (actionMode != null && multiSelector != null) {
-            actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
+            if( !HI_RES )
+                actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
         }
     }
 
@@ -923,7 +1013,7 @@ public class FolderFragment extends BaseFragment implements
     private ActionMode.Callback mActionModeCallback = new ModalMultiSelectorCallback(multiSelector) {
 
         @Override
-        public boolean onCreateActionMode(android.support.v7.view.ActionMode mode, Menu menu) {
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             ThemeUtils.themeContextualActionBar(getActivity());
             inActionMode = true;
             if( HI_RES )
@@ -936,11 +1026,17 @@ public class FolderFragment extends BaseFragment implements
         }
 
         @Override
-        public boolean onActionItemClicked(final android.support.v7.view.ActionMode mode, MenuItem item) {
+        public boolean onActionItemClicked(final ActionMode mode, MenuItem item) {
 
             final List<BaseFileObject> checkedFiles = getCheckedFiles();
 
             if (checkedFiles == null || checkedFiles.size() == 0) {
+                if(item.getItemId() == R.id.menu_folder) {
+                    goToParent();
+                } else if(item.getItemId() == R.id.menu_cancel) {
+                    if (actionMode != null)
+                        actionMode.finish();
+                }
                 return true;
             }
 
@@ -994,6 +1090,13 @@ public class FolderFragment extends BaseFragment implements
                                 .subscribe(songs -> MusicUtils.addToQueue(getActivity(), songs)));
                     }
                     break;
+                case R.id.menu_cancel:
+                    if (actionMode != null)
+                        actionMode.finish();
+                    break;
+                case R.id.menu_folder:
+                    goToParent();
+                    break;
             }
             return true;
         }
@@ -1006,6 +1109,13 @@ public class FolderFragment extends BaseFragment implements
             multiSelector.clearSelections();
         }
     };
+
+    private void goToParent() {
+        if (fileBrowser.getCurrentDir() != null && fileBrowser.getRootDir() != null && fileBrowser.getCurrentDir().compareTo(fileBrowser.getRootDir()) != 0) {
+            File parent = fileBrowser.getCurrentDir().getParentFile();
+            changeDir(parent);
+        }
+    }
 
     public void showCheckboxes(boolean show) {
 
@@ -1067,7 +1177,6 @@ public class FolderFragment extends BaseFragment implements
         }
     }
     // END HI_RES
-
 
     @Override
     protected String screenName() {

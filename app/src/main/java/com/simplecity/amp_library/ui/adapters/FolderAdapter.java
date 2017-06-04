@@ -2,7 +2,9 @@ package com.simplecity.amp_library.ui.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageButton;
 
+import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.model.BaseFileObject;
 import com.simplecity.amp_library.ui.modelviews.BreadcrumbsView;
 import com.simplecity.amp_library.ui.modelviews.FolderView;
@@ -17,6 +19,8 @@ public class FolderAdapter extends ItemAdapter {
         void onOverflowClick(View v, int position, BaseFileObject fileObject);
 
         // HI_RES
+        void onClick(View v); // ToDo: Check Listener
+
         void onLongClick(View v, int position, BaseFileObject file);
 
         void onBreadcrumbItemClick(BreadcrumbItem item);
