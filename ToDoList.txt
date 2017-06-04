@@ -2,3 +2,6 @@ ToDo:
 1. FavoriteFragment --> DrawerMenu의 Fragment처럼 직접 구현, 현재는 SuggestFragment를 복사하여 구현함.
 2. SdCard 구현 보류 SdCardView.java/sdcard_item.xml
    ActionMenu로 구현하고, 향후..fragment listener debugging으로 마무리
+
+3. DetailFragment: horizontalRecyclerView <-- Album 동적 List, Playlist에 Album넣을지 결정
+4. FavoriteFragment: List?CardView: Holding
