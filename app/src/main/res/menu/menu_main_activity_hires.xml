@@ -10,8 +10,8 @@
     <!--HI_RES -->
     <item
         android:id="@+id/action_drawer"
-        android:icon="?attr/btn_sort"
-        android:title="@string/search_title"
+        android:icon="?attr/btn_drawer"
+        android:title="@string/btn_drawer"
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_setting"
