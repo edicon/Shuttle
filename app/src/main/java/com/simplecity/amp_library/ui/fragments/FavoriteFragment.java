@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,6 +44,7 @@ import com.simplecity.amp_library.ui.modelviews.FavoriteHeaderView;
 import com.simplecity.amp_library.ui.modelviews.FavoriteSongView;
 import com.simplecity.amp_library.ui.modelviews.ShuffleView;
 import com.simplecity.amp_library.ui.modelviews.SongView;
+import com.simplecity.amp_library.ui.modelviews.ViewType;
 import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.DataManager;
@@ -50,6 +53,7 @@ import com.simplecity.amp_library.utils.MenuUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.PermissionUtils;
 import com.simplecity.amp_library.utils.PlaylistUtils;
+import com.simplecity.amp_library.utils.SettingsManager;
 import com.simplecity.amp_library.utils.ShuttleUtils;
 import com.simplecity.amp_library.utils.SortManager;
 import com.simplecity.amp_library.utils.ThemeUtils;
@@ -80,6 +84,8 @@ public class FavoriteFragment extends BaseFragment implements
     private SharedPreferences mPrefs;
 
     private FastScrollRecyclerView mRecyclerView;
+
+    private GridLayoutManager layoutManager;
 
     private FavoriteAdapter favoriteAdapter;
 
@@ -208,6 +214,18 @@ public class FavoriteFragment extends BaseFragment implements
         // ToDo: END HI_RES
 
         if (mRecyclerView == null) {
+
+            int spanCount = SettingsManager.getInstance().getFavoriteColumnCount(getResources());
+            layoutManager = new GridLayoutManager(getContext(), spanCount);
+            layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if (favoriteAdapter.items.get(position) instanceof EmptyView) {
+                        return spanCount;
+                    }
+                    return 1;
+                }
+            });
 
             if( HI_RES )
                 mRecyclerView = (FastScrollRecyclerView) rootView.findViewById(R.id.fragment_recycler);
@@ -538,7 +556,8 @@ public class FavoriteFragment extends BaseFragment implements
 
     private void updateActionModeSelectionCount() {
         if (actionMode != null && multiSelector != null) {
-            actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
+            if( !HI_RES )
+                actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
         }
     }
 
@@ -548,7 +567,7 @@ public class FavoriteFragment extends BaseFragment implements
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             ThemeUtils.themeContextualActionBar(getActivity());
             inActionMode = true;
-            getActivity().getMenuInflater().inflate(R.menu.context_menu_songs, menu);
+            getActivity().getMenuInflater().inflate(R.menu.context_menu_favor, menu);
             SubMenu sub = menu.getItem(0).getSubMenu();
             PlaylistUtils.makePlaylistMenu(getActivity(), sub, SONG_FRAGMENT_GROUP_ID);
             return true;
@@ -560,6 +579,12 @@ public class FavoriteFragment extends BaseFragment implements
             final List<Song> checkedSongs = getCheckedSongs();
 
             if (checkedSongs == null || checkedSongs.size() == 0) {
+                if(item.getItemId() == R.id.menu_view_as) {
+                    toggleViewAs();
+                } else if(item.getItemId() == R.id.menu_cancel) {
+                    if( actionMode != null )
+                        actionMode.finish();
+                }
                 return true;
             }
 
@@ -587,6 +612,13 @@ public class FavoriteFragment extends BaseFragment implements
                 case R.id.menu_add_to_queue:
                     MusicUtils.addToQueue(FavoriteFragment.this.getActivity(), checkedSongs);
                     break;
+                case R.id.menu_cancel:
+                    if (actionMode != null)
+                        actionMode.finish();
+                    break;
+                case R.id.menu_view_as:
+                    toggleViewAs();
+                    break;
             }
             return true;
         }
@@ -599,6 +631,24 @@ public class FavoriteFragment extends BaseFragment implements
             multiSelector.clearSelections();
         }
     };
+
+    private void toggleViewAs() {
+        int viewType = SettingsManager.getInstance().getFavoriteDisplayType();
+        if( viewType == ViewType.FAVORITE_CARD ) {
+            SettingsManager.getInstance().setFavoriteDisplayType(ViewType.FAVORITE_LIST);
+            layoutManager.setSpanCount(getResources().getInteger(R.integer.list_num_columns));
+            favoriteAdapter.updateItemViewType();
+            favoriteAdapter.notifyItemRangeChanged(0, favoriteAdapter.getItemCount());
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_view_list_white_24dp);
+        } else {
+            SettingsManager.getInstance().setFavoriteDisplayType(ViewType.FAVORITE_CARD);
+            layoutManager.setSpanCount(SettingsManager.getInstance().getFavoriteColumnCount(getResources()));
+            favoriteAdapter.updateItemViewType();
+            favoriteAdapter.notifyItemRangeChanged(0, favoriteAdapter.getItemCount());
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_grid_on_white_24dp);
+        }
+        Log.d("toggleViewAs", "viewType" + viewType );
+    }
 
     List<Song> getCheckedSongs() {
         return Stream.of(multiSelector.getSelectedPositions())

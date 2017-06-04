@@ -106,6 +106,16 @@ public class SettingsManager {
         return getIntValue(KEY_ARTIST_DISPLAY_TYPE, ViewType.ARTIST_PALETTE);
     }
 
+    private static final String KEY_FAVORITE_DISPLAY_TYPE = "favorite_display_type_new";
+    public void setFavoriteDisplayType(int type) {
+        setIntValue(KEY_FAVORITE_DISPLAY_TYPE, type);
+    }
+
+    @ViewType
+    public int getFavoriteDisplayType() {
+        return getIntValue(KEY_FAVORITE_DISPLAY_TYPE, ViewType.FAVORITE_LIST);
+    }
+
     private static final String KEY_ARTIST_COLUMN_COUNT = "artist_column_count";
     private static final String KEY_ARTIST_COLUMN_COUNT_LAND = "artist_column_count_land";
     private static final String KEY_ARTIST_COLUMN_COUNT_TABLET = "artist_column_count_tablet";
@@ -164,6 +174,36 @@ public class SettingsManager {
             return 1;
         }
         return getIntValue(getAlbumColumnCountKey(), defaultSpanCount);
+    }
+
+    private static final String KEY_FAVORITE_COLUMN_COUNT = "favorite_column_count";
+    private static final String KEY_FAVORITE_COLUMN_COUNT_LAND = "favorite_column_count_land";
+    private static final String KEY_FAVORITE_COLUMN_COUNT_TABLET = "favorite_column_count_tablet";
+    private static final String KEY_FAVORITE_COLUMN_COUNT_TABLET_LAND = "favoritem_column_count_tablet_land";
+
+    private String getFavoriteColumnCountKey() {
+        String key = KEY_FAVORITE_COLUMN_COUNT;
+
+        if (ShuttleUtils.isLandscape()) {
+            key = ShuttleUtils.isTablet() ? KEY_FAVORITE_COLUMN_COUNT_TABLET_LAND : KEY_FAVORITE_COLUMN_COUNT_LAND;
+        } else {
+            if (ShuttleUtils.isTablet()) key = KEY_FAVORITE_COLUMN_COUNT_TABLET;
+        }
+
+        return key;
+    }
+
+    public void setFavoriteColumnCount(int count) {
+        setIntValue(getAlbumColumnCountKey(), count);
+    }
+
+    public int getFavoriteColumnCount(Resources res) {
+        int favoriteDisplayType = getAlbumDisplayType();
+        int defaultSpanCount = favoriteDisplayType == ViewType.FAVORITE_LIST ? res.getInteger(R.integer.list_num_columns) : res.getInteger(R.integer.grid_num_columns);
+        if (favoriteDisplayType == ViewType.FAVORITE_LIST && defaultSpanCount == 1) {
+            return 1;
+        }
+        return getIntValue(getFavoriteColumnCountKey(), defaultSpanCount);
     }
 
     public boolean getEqualizerEnabled() {

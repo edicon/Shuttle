@@ -11,6 +11,7 @@ import com.bignerdranch.android.multiselector.SwappingHolder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.github.florent37.glidepalette.GlidePalette;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.format.PrefixHighlighter;
 import com.simplecity.amp_library.glide.utils.GlideUtils;
@@ -30,6 +31,8 @@ public class SongView extends BaseAdaptableItem<Song, SongView.ViewHolder> {
     private static final String TAG = "SongView";
 
     public Song song;
+
+    private int viewType;
 
     private MultiSelector multiSelector;
 
@@ -55,6 +58,12 @@ public class SongView extends BaseAdaptableItem<Song, SongView.ViewHolder> {
         this.prefix = prefix;
     }
 
+    //HI_RES
+    public int position;
+    public void setPosition( int p ) {
+        position = p;
+    }
+
     private boolean editable;
 
     private boolean showAlbumArt = false;
@@ -76,6 +85,10 @@ public class SongView extends BaseAdaptableItem<Song, SongView.ViewHolder> {
     @Override
     public int getViewType() {
         return editable ? ViewType.SONG_EDITABLE : ViewType.SONG;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
     }
 
     @Override
@@ -108,10 +121,21 @@ public class SongView extends BaseAdaptableItem<Song, SongView.ViewHolder> {
             }
         }
 
+        if (getViewType() == ViewType.ALBUM_PALETTE) {
+            // holder.bottomContainer.setBackgroundColor(0x20000000);
+        }
         if (holder.artwork != null) {
             if (showAlbumArt && SettingsManager.getInstance().showArtworkInQueue()) {
+                // HI_RES
                 holder.artwork.setVisibility(View.VISIBLE);
                 requestManager.load(song)
+                        // HI_RES: CARD
+                        .listener(getViewType() == ViewType.ALBUM_PALETTE ? GlidePalette.with(song.getArtworkKey())
+                                .use(GlidePalette.Profile.MUTED_DARK)
+                                // .intoBackground(holder.bottomContainer)
+                                .crossfade(true)
+                                : null)
+                        //
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(GlideUtils.getPlaceHolderDrawable(song.albumName, false))
                         .into(holder.artwork);
@@ -134,7 +158,11 @@ public class SongView extends BaseAdaptableItem<Song, SongView.ViewHolder> {
         if (holder.trackNumber != null) {
             if (showTrackNumber) {
                 holder.trackNumber.setVisibility(View.VISIBLE);
-                holder.trackNumber.setText(String.valueOf(song.track));
+                if( HI_RES ) {
+                    holder.trackNumber.setText(String.valueOf(position));
+                } else {
+                    holder.trackNumber.setText(String.valueOf(song.track));
+                }
             } else {
                 holder.trackNumber.setVisibility(View.GONE);
             }
@@ -145,6 +173,7 @@ public class SongView extends BaseAdaptableItem<Song, SongView.ViewHolder> {
     public void bindView(ViewHolder holder, int position, List payloads) {
         //A partial bind. Due to the areContentsEqual implementation, the only reason this is called
         //is because the prefix changed. Update accordingly.
+        // holder.trackNumber.setText(""+position);
         if (prefixHighlighter != null) {
             prefixHighlighter.setText(holder.lineOne, prefix);
             prefixHighlighter.setText(holder.lineTwo, prefix);
@@ -177,6 +206,7 @@ public class SongView extends BaseAdaptableItem<Song, SongView.ViewHolder> {
         public TextView playCount;
         public NonScrollImageButton overflowButton;
         public ImageView dragHandle;
+        // HI_RES
         public ImageView artwork;
 
         public ViewHolder(View itemView, MultiSelector multiSelector) {

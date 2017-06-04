@@ -7,9 +7,12 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.annimon.stream.Stream;
 import com.simplecity.amp_library.model.Song;
+import com.simplecity.amp_library.ui.modelviews.AlbumView;
 import com.simplecity.amp_library.ui.modelviews.ShuffleView;
 import com.simplecity.amp_library.ui.modelviews.SongView;
+import com.simplecity.amp_library.utils.SettingsManager;
 import com.simplecity.amp_library.utils.SortManager;
 import com.simplecity.amp_library.utils.StringUtils;
 import com.simplecityapps.recyclerview_fastscroll.views.FastScrollRecyclerView;
@@ -81,6 +84,16 @@ public class FavoriteAdapter extends ItemAdapter implements FastScrollRecyclerVi
                 }
             });
         }
+    }
+
+    public void updateItemViewType() {
+        int viewType = SettingsManager.getInstance().getFavoriteDisplayType();
+
+        Stream.of(items)
+                .filter(adaptableItem ->
+                        adaptableItem instanceof SongView)
+                .forEach(adaptableItem ->
+                        ((SongView) adaptableItem).setViewType(viewType));
     }
 
     @NonNull
