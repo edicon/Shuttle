@@ -13,9 +13,9 @@
     </item>
 
     <item
-        android:id="@+id/menu_folder"
-        android:icon="?attr/btn_folder"
-        android:title="@string/folders_title"
+        android:id="@+id/menu_view_as"
+        android:icon="?attr/btn_view_as_list"
+        android:title="@string/menu_grid_size"
         app:showAsAction="always"/>
 
     <item
