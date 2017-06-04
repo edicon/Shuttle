@@ -42,6 +42,7 @@ public class FolderView extends BaseAdaptableItem<BaseFileObject, FolderView.Vie
     public FolderView(BaseFileObject baseFileObject, MultiSelector multiSelector) {
         this.baseFileObject = baseFileObject;
         this.multiSelector = multiSelector;
+        SettingsManager.getInstance().setFolderBrowserShowFileNames(true);
     }
 
     public void setShowCheckboxes(boolean show) {
