@@ -54,4 +54,6 @@ public @interface ViewType {
     // HI_RES
     int FAVORITE_SONG = 32;
     int FAVORITE_HEADER = 33;
+    int FAVORITE_LIST = 34;
+    int FAVORITE_CARD = 35;
 }
