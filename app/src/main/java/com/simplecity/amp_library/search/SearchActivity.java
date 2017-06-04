@@ -9,6 +9,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -39,6 +41,8 @@ import java.util.concurrent.TimeUnit;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
+
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
 public class SearchActivity extends BaseActivity implements
         com.simplecity.amp_library.search.SearchView {
@@ -155,6 +159,20 @@ public class SearchActivity extends BaseActivity implements
 
         compositeSubscription.unsubscribe();
         searchPresenter.unbindView(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // getMenuInflater().inflate(R.menu.menu_search_activity, menu);
+        menu.findItem(R.id.search_fuzzy).setVisible(false);
+        // invalidateOptionsMenu();
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
