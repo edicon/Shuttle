@@ -18,4 +18,9 @@ public final class Config {
     // IAP
     public static final String SKU_PREMIUM = "id_upgrade_to_pro";
 
+
+    public static final String SD_IN  = "/sdcard/Music";
+    public static final String SD_EX0 = "/storage/emulated/0/Music";
+    public static final String SD_EX1 = "/storage/emulated/1/Music";
+
 }
