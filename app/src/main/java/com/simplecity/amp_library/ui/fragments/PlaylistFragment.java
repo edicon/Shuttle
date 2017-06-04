@@ -1,7 +1,9 @@
 package com.simplecity.amp_library.ui.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -23,6 +25,8 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.bignerdranch.android.multiselector.ModalMultiSelectorCallback;
 import com.bignerdranch.android.multiselector.MultiSelector;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.interfaces.FileType;
 import com.simplecity.amp_library.model.AdaptableItem;
@@ -71,6 +75,8 @@ public class PlaylistFragment extends BaseFragment implements
 
     private static final String ARG_PAGE_TITLE = "page_title";
 
+    private SharedPreferences prefs;
+
     private FastScrollRecyclerView mRecyclerView;
 
     private PlaylistAdapter mPlaylistAdapter;
@@ -84,6 +90,8 @@ public class PlaylistFragment extends BaseFragment implements
     ActionMode actionMode;
     boolean inActionMode = false;
 
+    private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener;
+    private RequestManager requestManager;
     // HI_RES
     private Toolbar toolbar;
     private View dummyToolbar;
@@ -124,6 +132,24 @@ public class PlaylistFragment extends BaseFragment implements
 
         mPlaylistAdapter = new PlaylistAdapter();
         mPlaylistAdapter.setListener(this);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+
+        sharedPreferenceChangeListener = (sharedPreferences, key) -> {
+            if (key.equals("pref_theme_highlight_color")
+                    || key.equals("pref_theme_accent_color")
+                    || key.equals("pref_theme_white_accent")) {
+                themeUIComponents();
+            } else if (key.equals("albumWhitelist")) {
+                refreshAdapterItems();
+            }
+        };
+
+        prefs.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+
+        if (requestManager == null) {
+            requestManager = Glide.with(this);
+        }
     }
 
     @Override
@@ -234,7 +260,7 @@ public class PlaylistFragment extends BaseFragment implements
                                 .sorted((a, b) -> ComparisonUtils.compare(a.name, b.name))
                                 .sorted((a, b) -> ComparisonUtils.compareInt(a.type, b.type))
                                 // HI_RES .map(playlist -> (AdaptableItem) new PlaylistView(playlist))
-                                .map(playlist -> (AdaptableItem) new PlaylistView(playlist, multiSelector))
+                                .map(playlist -> (AdaptableItem) new PlaylistView(getActivity(), playlist, requestManager, multiSelector))
                                 .collect(Collectors.toList()))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(items -> {
@@ -333,7 +359,8 @@ public class PlaylistFragment extends BaseFragment implements
     // HI_RES
     private void updateActionModeSelectionCount() {
         if (actionMode != null && multiSelector != null) {
-            actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
+            if( !HI_RES )
+                actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
         }
     }
 
@@ -355,13 +382,21 @@ public class PlaylistFragment extends BaseFragment implements
             final List<Playlist> checkedPlaylists = getCheckedPlaylists();
 
             if (checkedPlaylists == null || checkedPlaylists.size() == 0) {
+                if(item.getItemId() == R.id.menu_cancel) {
+                    if( actionMode != null )
+                        actionMode.finish();
+                }
                 return true;
             }
             Context context = getContext();
 
-            // ToDo: rename: SingleSelector 적용
             switch (item.getItemId()) {
+                // ToDo: rename: SingleSelector 적용
                 case R.id.rename:
+                    if( checkedPlaylists.size() > 1) {
+                        Toast.makeText(context, R.string.playlist_renamed_info, Toast.LENGTH_SHORT).show();
+                        break;
+                    }
                     for( Playlist playlist : checkedPlaylists) {
                         PlaylistUtils.renamePlaylistDialog(getContext(), playlist, null );
                     }
@@ -377,6 +412,10 @@ public class PlaylistFragment extends BaseFragment implements
                         playlist.delete(context);
                         Toast.makeText(context, R.string.playlist_deleted_message, Toast.LENGTH_SHORT).show();
                     }
+                    break;
+                case R.id.menu_cancel:
+                    if (actionMode != null)
+                        actionMode.finish();
                     break;
             }
             mPlaylistAdapter.notifyDataSetChanged();
