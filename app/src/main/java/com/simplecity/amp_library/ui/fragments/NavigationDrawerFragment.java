@@ -153,19 +153,21 @@ public class NavigationDrawerFragment extends BaseFragment implements
             mRootView = inflater.inflate(R.layout.fragment_drawer, container, false);
 
             mListView = (AnimatedExpandableListView) mRootView.findViewById(R.id.list);
-            mListView.setGroupIndicator(null);
-            mListView.setOnGroupClickListener((parent, v, groupPosition, id) -> {
-                // We call collapseGroupWithAnimation(int) and
-                // expandGroupWithAnimation(int) to animate group
-                // expansion/collapse.
-                if (mListView.isGroupExpanded(groupPosition)) {
-                    mListView.collapseGroupWithAnimation(groupPosition);
-                } else {
-                    mListView.expandGroupWithAnimation(groupPosition);
-                }
-                return true;
-            });
-            mListView.setAdapter(mAdapter);
+            if( HI_RES ) {
+                mListView.setGroupIndicator(null);
+                mListView.setOnGroupClickListener((parent, v, groupPosition, id) -> {
+                    // We call collapseGroupWithAnimation(int) and
+                    // expandGroupWithAnimation(int) to animate group
+                    // expansion/collapse.
+                    if (mListView.isGroupExpanded(groupPosition)) {
+                        mListView.collapseGroupWithAnimation(groupPosition);
+                    } else {
+                        mListView.expandGroupWithAnimation(groupPosition);
+                    }
+                    return true;
+                });
+                mListView.setAdapter(mAdapter);
+            }
 
             getChildFragmentManager()
                     .beginTransaction()
@@ -260,7 +262,8 @@ public class NavigationDrawerFragment extends BaseFragment implements
     public void onResume() {
         super.onResume();
 
-        refreshAdapterItems();
+        if( !HI_RES )
+            refreshAdapterItems();
     }
 
     private void refreshAdapterItems() {
@@ -316,7 +319,8 @@ public class NavigationDrawerFragment extends BaseFragment implements
     }
 
     public void themeUIComponents() {
-        mAdapter.notifyDataSetChanged();
+        if( !HI_RES )
+            mAdapter.notifyDataSetChanged();
 
         if (mListView != null) {
             ThemeUtils.themeListView(mListView);
