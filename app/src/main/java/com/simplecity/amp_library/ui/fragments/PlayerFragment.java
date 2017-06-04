@@ -14,15 +14,23 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
 import com.jakewharton.rxbinding.widget.RxSeekBar;
 import com.jakewharton.rxbinding.widget.SeekBarChangeEvent;
 import com.jakewharton.rxbinding.widget.SeekBarProgressChangeEvent;
@@ -39,6 +47,7 @@ import com.simplecity.amp_library.ui.views.PlayPauseView;
 import com.simplecity.amp_library.ui.views.PlayerView;
 import com.simplecity.amp_library.ui.views.RepeatingImageButton;
 import com.simplecity.amp_library.ui.views.SizableSeekBar;
+import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.DialogUtils;
 import com.simplecity.amp_library.utils.DrawableUtils;
@@ -109,6 +118,12 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
     private PlayerPresenter presenter = new PlayerPresenter();
 
+    // HI_RES
+    private Toolbar toolbar;
+    private View dummyToolbar;
+    private View dummyStatusBar;
+    private RequestManager requestManager;
+
     public PlayerFragment() {
     }
 
@@ -123,6 +138,8 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
 
         mSharedPreferenceChangeListener = (sharedPreferences, key) -> {
@@ -132,16 +149,50 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
         };
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(mSharedPreferenceChangeListener);
+
+        if( HI_RES ) {
+            if (requestManager == null) {
+                requestManager = Glide.with(this);
+            }
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_player, container, false);
+        // ToDo: HI_RES
         if( HI_RES ) {
             rootView = inflater.inflate(R.layout.fragment_player_hires, container, false);
             seekinfoContainer = rootView.findViewById(R.id.seekBarContainer);
         }
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("");
+        toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        dummyToolbar = rootView.findViewById(R.id.dummyToolbar);
+        dummyStatusBar = rootView.findViewById(R.id.dummyStatusBar);
+
+        //We need to set the dummy status bar height.
+        if (ShuttleUtils.hasKitKat()) {
+            // ToDo: ERROR: Sliding..Exception
+            // LinearLayout.LayoutParams statusBarParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) ActionBarUtils.getStatusBarHeight(getActivity()));
+            // dummyStatusBar.setLayoutParams(statusBarParams);
+        } else {
+            dummyStatusBar.setVisibility(View.GONE);
+        }
+
+        if (getParentFragment() == null || !(getParentFragment() instanceof PlayerFragment )) {
+            if (ShuttleUtils.hasKitKat()) {
+                dummyStatusBar.setVisibility(View.VISIBLE);
+            }
+            dummyToolbar.setVisibility(View.VISIBLE);
+        } else {
+            toolbar.setVisibility(View.GONE);
+            if (ShuttleUtils.hasKitKat()) {
+                dummyStatusBar.setVisibility(View.GONE);
+            }
+            dummyToolbar.setVisibility(View.GONE);
+        }
+        // ToDo: END HI_RES
 
         bottomView = rootView.findViewById(R.id.bottom_view);
 
@@ -324,6 +375,27 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     public void onDestroy() {
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(mSharedPreferenceChangeListener);
         super.onDestroy();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        // if( HI_RES )
+        //     menu.findItem(R.id.action_search).setVisible(false);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem search = menu.findItem(R.id.action_search);
+        MenuItem drawer = menu.findItem(R.id.action_drawer);
+        MenuItem setting = menu.findItem(R.id.action_setting);
+        if( search != null )
+            search.setVisible(true);
+        if( drawer != null )
+            drawer.setVisible(false);
+        if( setting != null )
+            setting.setVisible(false);
     }
 
     public void toggleLyrics() {
