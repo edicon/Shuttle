@@ -4,7 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/transparent"
     android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/dummyStatusBar"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@color/transparent"
+        android:elevation="4dp" />
+
+    <FrameLayout
+        android:id="@+id/dummyToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/transparent"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize" />
 
     <FrameLayout
         android:id="@+id/drawer_header_container"
@@ -18,8 +34,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="3dp"
+        android:layout_margin="1dp"
         android:orientation="vertical"
+        android:background="@color/transparent_white"
         android:gravity="center"
         >
         <ImageButton
@@ -29,7 +46,8 @@
             android:layout_weight="1"
             android:layout_margin="2dp"
             android:background="@color/amber_300"
-            android:src="@drawable/ic_settings_help"/>
+            android:visibility="gone"
+            android:src="@drawable/ic_queue_music_24dp"/>
         <ImageButton
             android:id="@+id/btn_drawer_song"
             android:layout_width="match_parent"
@@ -37,7 +55,7 @@
             android:layout_weight="1"
             android:layout_margin="2dp"
             android:background="@color/amber_300"
-            android:src="@drawable/ic_action_toggle_queue"/>
+            android:src="@drawable/ic_queue_music_24dp"/>
         <ImageButton
             android:id="@+id/btn_drawer_albums"
             android:layout_width="match_parent"
@@ -45,7 +63,7 @@
             android:layout_weight="1"
             android:layout_margin="2dp"
             android:background="@color/amber_300"
-            android:src="@drawable/ic_library_white"/>
+            android:src="@drawable/ic_album_white_24dp"/>
         <ImageButton
             android:id="@+id/btn_drawer_artist"
             android:layout_width="match_parent"
@@ -53,7 +71,7 @@
             android:layout_weight="1"
             android:layout_margin="2dp"
             android:background="@color/amber_300"
-            android:src="@drawable/ic_queue_music_24dp"/>
+            android:src="@drawable/ic_artist_white_24dp"/>
         <ImageButton
             android:id="@+id/btn_drawer_genres"
             android:layout_width="match_parent"
@@ -61,7 +79,7 @@
             android:layout_weight="1"
             android:layout_margin="2dp"
             android:background="@color/amber_300"
-            android:src="@drawable/ic_action_lyrics_light_24dp"/>
+            android:src="@drawable/ic_music_genres_white_24dp"/>
         <ImageButton
             android:id="@+id/btn_drawer_playlist"
             android:layout_width="match_parent"
