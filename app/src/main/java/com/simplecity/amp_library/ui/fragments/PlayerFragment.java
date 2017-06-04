@@ -14,6 +14,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -41,6 +42,7 @@ import com.simplecity.amp_library.lyrics.LyricsFragment;
 import com.simplecity.amp_library.model.Playlist;
 import com.simplecity.amp_library.model.Song;
 import com.simplecity.amp_library.playback.MusicService;
+import com.simplecity.amp_library.sql.databases.BlacklistHelper;
 import com.simplecity.amp_library.ui.activities.MainActivity;
 import com.simplecity.amp_library.ui.presenters.PlayerPresenter;
 import com.simplecity.amp_library.ui.views.PlayPauseView;
@@ -51,6 +53,7 @@ import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.DialogUtils;
 import com.simplecity.amp_library.utils.DrawableUtils;
+import com.simplecity.amp_library.utils.MenuUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.PlaylistUtils;
 import com.simplecity.amp_library.utils.ShuttleUtils;
@@ -68,6 +71,7 @@ import rx.subscriptions.CompositeSubscription;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 import static com.simplecity.amp_library.ui.hires.MainActivity.mDrawerLayout;
 import static com.simplecity.amp_library.ui.hires.MainActivity.playlistId;
+import static com.simplecity.amp_library.utils.MusicUtils.Defs.BLACKLIST;
 
 public class PlayerFragment extends BaseFragment implements PlayerView {
 
@@ -217,7 +221,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
             subSuffleBtn.setOnClickListener(v -> presenter.toggleShuffle());
 
             subPlaylistBtn = (ImageButton) rootView.findViewById(R.id.sub_playlist);
-            subPlaylistBtn.setOnClickListener(v -> togglePlaylist(getActivity()));
+            subPlaylistBtn.setOnClickListener(v -> togglePlaylist(getActivity(), v));
 
             subLylicBtn = (ImageButton) rootView.findViewById(R.id.sub_lylic);
             subLylicBtn.setOnClickListener(v -> toggleLylic((AppCompatActivity)getActivity()));
@@ -651,13 +655,27 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
         PlaylistUtils.toggleFavorite( cx );
     }
 
-    public void togglePlaylist( Activity cx ) {
+    public void togglePlaylist( Activity cx, View v ) {
+        /*
         // https://stackoverflow.com/questions/3720804/android-open-menu-from-a-button
         // https://stackoverflow.com/questions/16938522/how-to-get-the-android-id-for-a-menu-item-in-android
-        // ToDo: Color dimmed
         cx.openOptionsMenu(); // activity's onCreateOptionsMenu gets called
-        com.simplecity.amp_library.ui.hires.MainActivity.optionMenu.performIdentifierAction( playlistId /* R.id.menu_lyrics*/ , 0);
+        com.simplecity.amp_library.ui.hires.MainActivity.optionMenu.performIdentifierAction( playlistId, 0);
         cx.closeOptionsMenu();
+        */
+        Song song = MusicUtils.getSong();
+        PopupMenu menu = new PopupMenu(cx, v);
+        MenuUtils.addSongMenuOptions(getActivity(), menu);
+        MenuUtils.addClickHandler((AppCompatActivity) getActivity(), menu, song, item -> {
+            switch (item.getItemId()) {
+                case BLACKLIST: {
+                    BlacklistHelper.addToBlacklist(song);
+                    return true;
+                }
+            }
+            return false;
+        });
+        menu.show();
     }
 
     public void toggleLylic(AppCompatActivity cx ) {

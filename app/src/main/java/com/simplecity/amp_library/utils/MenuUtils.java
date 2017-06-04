@@ -32,17 +32,15 @@ public class MenuUtils implements MusicUtils.Defs {
         PlaylistUtils.makePlaylistMenu(context, sub, SONG_FRAGMENT_GROUP_ID);
         menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, QUEUE, 2, R.string.add_to_queue);
         if (ShuttleUtils.isUpgraded()) {
+            if( !HI_RES )
             menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, TAGGER, 3, R.string.edit_tags);
         }
-        if( !HI_RES )
+        if( !HI_RES ) {
             menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, USE_AS_RINGTONE, 5, R.string.ringtone_menu);
-
+            menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, SHARE, 7, R.string.share);
+            menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, BLACKLIST, 8, R.string.blacklist_title);
+        }
         menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, VIEW_INFO, 6, R.string.song_info);
-
-        menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, SHARE, 7, R.string.share);
-
-        menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, BLACKLIST, 8, R.string.blacklist_title);
-
         menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, DELETE_ITEM, 9, R.string.delete_item);
     }
 

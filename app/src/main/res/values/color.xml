@@ -55,5 +55,6 @@
 
     <color name="primary_text_dark">#ffffff</color>
     <color name="primary_text_light">#000000</color>
+    <color name="transparent_2f">#802f2f2f</color>
 
 </resources>
