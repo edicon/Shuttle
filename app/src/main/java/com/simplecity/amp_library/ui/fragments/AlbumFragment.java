@@ -14,6 +14,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -449,6 +450,7 @@ public class AlbumFragment extends BaseFragment implements
                 if (multiSelector.getSelectedPositions().size() == 0) {
                     actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
                     inActionMode = true;
+                    initViewAsIcon();
                 }
 
                 // Do Not Select Default
@@ -524,7 +526,8 @@ public class AlbumFragment extends BaseFragment implements
 
     private void updateActionModeSelectionCount() {
         if (actionMode != null && multiSelector != null) {
-            actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
+            if( !HI_RES )
+                actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
         }
     }
 
@@ -534,7 +537,7 @@ public class AlbumFragment extends BaseFragment implements
             ThemeUtils.themeContextualActionBar(getActivity());
             inActionMode = true;
             MenuInflater inflater = getActivity().getMenuInflater();
-            inflater.inflate(R.menu.context_menu_songs, menu);
+            inflater.inflate(R.menu.context_menu_album, menu);
             SubMenu sub = menu.getItem(0).getSubMenu();
             PlaylistUtils.makePlaylistMenu(AlbumFragment.this.getActivity(), sub, ALBUM_FRAGMENT_GROUP_ID);
             return true;
@@ -546,6 +549,12 @@ public class AlbumFragment extends BaseFragment implements
             List<Album> checkedAlbums = getCheckedAlbums();
 
             if (checkedAlbums == null || checkedAlbums.size() == 0) {
+                if(menuItem.getItemId() == R.id.menu_view_as) {
+                    toggleViewAs();
+                } else if(menuItem.getItemId() == R.id.menu_cancel) {
+                    if( actionMode != null )
+                        actionMode.finish();
+                }
                 return true;
             }
 
@@ -590,6 +599,13 @@ public class AlbumFragment extends BaseFragment implements
                             .subscribe(songs -> MusicUtils.addToQueue(getActivity(), songs));
                     break;
                 }
+                case R.id.menu_cancel:
+                    if (actionMode != null)
+                        actionMode.finish();
+                    break;
+                case R.id.menu_view_as:
+                    toggleViewAs();
+                    break;
             }
             return true;
         }
@@ -602,6 +618,34 @@ public class AlbumFragment extends BaseFragment implements
             multiSelector.clearSelections();
         }
     };
+
+    private void initViewAsIcon() {
+        if( actionMode == null )
+            return;
+
+        int viewType = SettingsManager.getInstance().getAlbumDisplayType();
+        if( viewType == ViewType.ALBUM_CARD )
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_grid_on_white_24dp);
+        else
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_view_list_white_24dp);
+    }
+    private void toggleViewAs() {
+        int viewType = SettingsManager.getInstance().getAlbumDisplayType();
+        if( viewType == ViewType.ALBUM_CARD ) {
+            SettingsManager.getInstance().setAlbumDisplayType(ViewType.ALBUM_LIST);
+            layoutManager.setSpanCount(getResources().getInteger(R.integer.list_num_columns));
+            albumAdapter.updateItemViewType();
+            albumAdapter.notifyItemRangeChanged(0, albumAdapter.getItemCount());
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_view_list_white_24dp);
+        } else {
+            SettingsManager.getInstance().setAlbumDisplayType(ViewType.ALBUM_CARD);
+            layoutManager.setSpanCount(SettingsManager.getInstance().getAlbumColumnCount(getResources()));
+            albumAdapter.updateItemViewType();
+            albumAdapter.notifyItemRangeChanged(0, albumAdapter.getItemCount());
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_grid_on_white_24dp);
+        }
+        Log.d("toggleViewAs", "viewType" + viewType );
+    }
 
     List<Album> getCheckedAlbums() {
         return Stream.of(multiSelector.getSelectedPositions())

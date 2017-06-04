@@ -14,6 +14,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -451,6 +452,7 @@ public class AlbumArtistFragment extends BaseFragment implements
                 if (multiSelector.getSelectedPositions().size() == 0) {
                     actionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(mActionModeCallback);
                     inActionMode = true;
+                    initViewAsIcon();
                 }
 
                 // Do Not Select Default
@@ -526,7 +528,8 @@ public class AlbumArtistFragment extends BaseFragment implements
 
     private void updateActionModeSelectionCount() {
         if (actionMode != null && multiSelector != null) {
-            actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
+            if( !HI_RES )
+                actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
         }
     }
 
@@ -536,7 +539,7 @@ public class AlbumArtistFragment extends BaseFragment implements
             ThemeUtils.themeContextualActionBar(getActivity());
             inActionMode = true;
             MenuInflater inflater = getActivity().getMenuInflater();
-            inflater.inflate(R.menu.context_menu_songs, menu);
+            inflater.inflate(R.menu.context_menu_album, menu);
             SubMenu sub = menu.getItem(0).getSubMenu();
             PlaylistUtils.makePlaylistMenu(AlbumArtistFragment.this.getActivity(), sub, ARTIST_FRAGMENT_GROUP_ID);
             return true;
@@ -548,6 +551,12 @@ public class AlbumArtistFragment extends BaseFragment implements
             List<AlbumArtist> checkedAlbumArtists = getCheckedAlbumArtists();
 
             if (checkedAlbumArtists == null || checkedAlbumArtists.size() == 0) {
+                if(menuItem.getItemId() == R.id.menu_view_as) {
+                    toggleViewAs();
+                } else if(menuItem.getItemId() == R.id.menu_cancel) {
+                    if( actionMode != null )
+                        actionMode.finish();
+                }
                 return true;
             }
 
@@ -590,6 +599,13 @@ public class AlbumArtistFragment extends BaseFragment implements
                     songsObservable.subscribe(songs -> MusicUtils.addToQueue(getActivity(), songs));
                     return true;
                 }
+                case R.id.menu_cancel:
+                    if (actionMode != null)
+                        actionMode.finish();
+                    return true;
+                case R.id.menu_view_as:
+                    toggleViewAs();
+                    return true;
             }
             return false;
         }
@@ -602,6 +618,34 @@ public class AlbumArtistFragment extends BaseFragment implements
             multiSelector.clearSelections();
         }
     };
+
+    private void initViewAsIcon() {
+        if( actionMode == null )
+            return;
+
+        int viewType = SettingsManager.getInstance().getArtistDisplayType();
+        if( viewType == ViewType.ARTIST_CARD )
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_grid_on_white_24dp);
+        else
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_view_list_white_24dp);
+    }
+    private void toggleViewAs() {
+        int viewType = SettingsManager.getInstance().getArtistDisplayType();
+        if( viewType == ViewType.ARTIST_CARD ) {
+            SettingsManager.getInstance().setArtistDisplayType(ViewType.ARTIST_LIST);
+            layoutManager.setSpanCount(getResources().getInteger(R.integer.list_num_columns));
+            albumArtistAdapter.updateItemViewType();
+            albumArtistAdapter.notifyItemRangeChanged(0, albumArtistAdapter.getItemCount());
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_view_list_white_24dp);
+        } else {
+            SettingsManager.getInstance().setArtistDisplayType(ViewType.ARTIST_CARD);
+            layoutManager.setSpanCount(SettingsManager.getInstance().getArtistColumnCount(getResources()));
+            albumArtistAdapter.updateItemViewType();
+            albumArtistAdapter.notifyItemRangeChanged(0, albumArtistAdapter.getItemCount());
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_grid_on_white_24dp);
+        }
+        Log.d("toggleViewAs", "viewType" + viewType );
+    }
 
     List<AlbumArtist> getCheckedAlbumArtists() {
         return Stream.of(multiSelector.getSelectedPositions())
