@@ -47,6 +47,13 @@
     <attr name="btn_quicklyric" format="reference" />
     <attr name="btn_sort" format="reference" />
     <attr name="btn_dialog_alert" format="reference" />
+    <!-- HI_RES -->
+    <attr name="btn_drawer" format="reference" />
+    <attr name="btn_navi_before" format="reference" />
+    <attr name="btn_cancel" format="reference" />
+    <attr name="btn_view_as_list" format="reference" />
+    <attr name="btn_folder" format="reference" />
+    <attr name="btn_sdcard" format="reference" />
 
     <attr name="drag_grip" format="reference" />
     <attr name="listDividerColor" format="reference|color" />

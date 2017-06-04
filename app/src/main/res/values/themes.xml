@@ -235,6 +235,13 @@
         <item name="btn_delete">@drawable/ic_action_delete</item>
         <item name="btn_remove">@drawable/ic_action_remove</item>
         <item name="btn_dialog_alert">@drawable/ic_dialog_alert</item>
+        <!-- HI_RES -->
+        <item name="btn_cancel">@drawable/ic_cancel_white_24dp</item>
+        <item name="btn_view_as_list">@drawable/ic_view_list_white_24dp</item>
+        <item name="btn_drawer">@drawable/ic_menu_white_24dp</item>
+        <item name="btn_navi_before">@drawable/ic_navigate_before_white_24dp</item>
+        <item name="btn_folder">@drawable/ic_folder_open_white_24dp</item>
+        <item name="btn_sdcard">@drawable/ic_sd_storage_white_24dp</item>
     </style>
 
     <style name="AppTheme.Light.Buttons" parent="Theme.AppCompat.Light.NoActionBar">
@@ -252,6 +259,12 @@
         <item name="btn_delete">@drawable/ic_action_delete_light</item>
         <item name="btn_remove">@drawable/ic_action_remove_light</item>
         <item name="btn_dialog_alert">@drawable/ic_dialog_alert_light</item>
+        <item name="btn_cancel">@drawable/ic_cancel_black_24dp</item>
+        <item name="btn_view_as_list">@drawable/ic_view_list_black_24dp</item>
+        <item name="btn_drawer">@drawable/ic_menu_black_24dp</item>
+        <item name="btn_navi_before">@drawable/ic_navigate_before_black_24dp</item>
+        <item name="btn_folder">@drawable/ic_folder_open_black_24dp</item>
+        <item name="btn_sdcard">@drawable/ic_sd_storage_black_24dp</item>
     </style>
 
     <style name="AppTheme.Light.Buttons.Inverse" parent="Theme.AppCompat.Light.NoActionBar">
@@ -269,6 +282,12 @@
         <item name="btn_delete">@drawable/ic_action_delete</item>
         <item name="btn_remove">@drawable/ic_action_remove</item>
         <item name="btn_dialog_alert">@drawable/ic_dialog_alert</item>
+        <item name="btn_cancel">@drawable/ic_cancel_white_24dp</item>
+        <item name="btn_view_as_list">@drawable/ic_view_list_white_24dp</item>
+        <item name="btn_drawer">@drawable/ic_menu_white_24dp</item>
+        <item name="btn_navi_before">@drawable/ic_navigate_before_white_24dp</item>
+        <item name="btn_folder">@drawable/ic_folder_open_white_24dp</item>
+        <item name="btn_sdcard">@drawable/ic_sd_storage_white_24dp</item>
     </style>
 
     <style name="Widget.Styled.ActionBar" parent="Widget.AppCompat.ActionBar">
