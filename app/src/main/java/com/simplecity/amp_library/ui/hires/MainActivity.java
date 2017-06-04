@@ -258,7 +258,7 @@ public class MainActivity extends BaseCastActivity implements
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
-        mTitle = getString(R.string.library_title);
+        mTitle = getString(R.string.app_name);
 
         mDrawerLayout = (CustomDrawerLayout) findViewById(R.id.drawer_layout);
         if (ShuttleUtils.hasLollipop() && ShuttleUtils.hasKitKat()) {
@@ -413,6 +413,10 @@ public class MainActivity extends BaseCastActivity implements
 
         if( !HI_RES )
             showChangelogDialog();
+        else {
+            mToolbar.setTitle("");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
     }
 
     private void showChangelogDialog() {
@@ -896,7 +900,11 @@ public class MainActivity extends BaseCastActivity implements
             }
         }
 
-        super.onBackPressed();
+        try {
+            super.onBackPressed();
+        } catch( Exception e ) {
+            e.printStackTrace();
+        }
 
         if (isShowingFolders || containerFragment instanceof MainFragment) {
             if (mNavigationDrawerFragment != null) {
@@ -1471,6 +1479,25 @@ public class MainActivity extends BaseCastActivity implements
                 public void onBackStackChanged() {
                     // Update your UI here.
                     Log.d("BACKSTACK", "BackStack Listener");
+                    if( HI_RES ) {
+                        int count = getSupportFragmentManager().getBackStackEntryCount();
+                        if( count == 0 ) {
+                            try {
+                                mToolbar.setTitle("");
+                                getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                            } catch (IllegalStateException e) {
+                                Log.e(TAG, "Error popping backstack: " + e);
+                                CrashlyticsCore.getInstance().logException(e);
+                            }
+                        } else {
+                            TypedArray a = getTheme().obtainStyledAttributes(R.style.AppTheme_Dark_Buttons, new int[]{R.attr.btn_navi_before});
+                            int attributeResourceId = a.getResourceId(0, 0);
+                            Drawable drawable = getResources().getDrawable(attributeResourceId);
+                            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                            getSupportActionBar().setHomeAsUpIndicator(drawable);
+                        }
+                    }
+
                 }
             });
     }
