@@ -484,7 +484,8 @@ public class SongFragment extends BaseFragment implements
 
     private void updateActionModeSelectionCount() {
         if (actionMode != null && multiSelector != null) {
-            actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
+            if( !HI_RES )
+                actionMode.setTitle(getString(R.string.action_mode_selection_count, multiSelector.getSelectedPositions().size()));
         }
     }
 
@@ -506,6 +507,10 @@ public class SongFragment extends BaseFragment implements
             final List<Song> checkedSongs = getCheckedSongs();
 
             if (checkedSongs == null || checkedSongs.size() == 0) {
+                if(item.getItemId() == R.id.menu_cancel) {
+                    if( actionMode != null )
+                        actionMode.finish();
+                }
                 return true;
             }
 
@@ -532,6 +537,10 @@ public class SongFragment extends BaseFragment implements
                     break;
                 case R.id.menu_add_to_queue:
                     MusicUtils.addToQueue(SongFragment.this.getActivity(), checkedSongs);
+                    break;
+                case R.id.menu_cancel:
+                    if (actionMode != null)
+                        actionMode.finish();
                     break;
             }
             return true;
