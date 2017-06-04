@@ -7,6 +7,23 @@
                 android:orientation="vertical">
 
     <FrameLayout
+        android:layout_alignParentTop="true"
+        android:id="@+id/dummyStatusBar"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="?attr/colorPrimaryDark"
+        android:elevation="4dp" />
+
+    <FrameLayout
+        android:id="@+id/dummyToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:layout_below="@+id/dummyStatusBar"
+        android:minHeight="?attr/actionBarSize" />
+
+    <FrameLayout
         android:id="@+id/main_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,238 +32,7 @@
         tools:background="#B0363A"
          >
 
-        <!--
-        <LinearLayout
-            android:id="@+id/subMenuContainer"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_gravity="top"
-            android:background="@color/amber_300"
-            android:baselineAligned="false"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/sub_repeat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="?attr/circular_ripple"
-                    android:contentDescription="@string/btn_repeat_current"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_repeat_white" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/sub_shuffle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="?attr/circular_ripple"
-                    android:contentDescription="@string/shuffle_all"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_shuffle_white"
-                    android:visibility="visible" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/sub_playlist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="?attr/circular_ripple"
-                    android:contentDescription="@string/shuffle_all"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_shuffle_white"
-                    android:visibility="visible" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/sub_lylic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="?attr/circular_ripple"
-                    android:contentDescription="@string/shuffle_all"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_shuffle_white"
-                    android:visibility="visible" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/sub_file"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="?attr/circular_ripple"
-                    android:contentDescription="@string/shuffle_all"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_shuffle_white"
-                    android:visibility="visible" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/sub_delete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="?attr/circular_ripple"
-                    android:contentDescription="@string/shuffle_all"
-                    android:padding="12dp"
-                    android:src="@drawable/ic_shuffle_white"
-                    android:visibility="visible" />
-            </FrameLayout>
-        </LinearLayout>
-        -->
     </FrameLayout>
-
-    <!--
-    <LinearLayout
-        android:id="@+id/subMenuContainer"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_gravity="top"
-        android:background="@color/amber_300"
-        android:baselineAligned="false"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:id="@+id/sub_repeat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="?attr/circular_ripple"
-                android:contentDescription="@string/btn_repeat_current"
-                android:padding="12dp"
-                android:src="@drawable/ic_repeat_white" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:id="@+id/sub_shuffle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="?attr/circular_ripple"
-                android:contentDescription="@string/shuffle_all"
-                android:padding="12dp"
-                android:src="@drawable/ic_shuffle_white"
-                android:visibility="visible" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:id="@+id/sub_playlist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="?attr/circular_ripple"
-                android:contentDescription="@string/shuffle_all"
-                android:padding="12dp"
-                android:src="@drawable/ic_shuffle_white"
-                android:visibility="visible" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:id="@+id/sub_lylic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="?attr/circular_ripple"
-                android:contentDescription="@string/shuffle_all"
-                android:padding="12dp"
-                android:src="@drawable/ic_shuffle_white"
-                android:visibility="visible" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:id="@+id/sub_file"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="?attr/circular_ripple"
-                android:contentDescription="@string/shuffle_all"
-                android:padding="12dp"
-                android:src="@drawable/ic_shuffle_white"
-                android:visibility="visible" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageButton
-                android:id="@+id/sub_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="?attr/circular_ripple"
-                android:contentDescription="@string/shuffle_all"
-                android:padding="12dp"
-                android:src="@drawable/ic_shuffle_white"
-                android:visibility="visible" />
-        </FrameLayout>
-    </LinearLayout>
-    -->
 
 <!-- android:background="@color/amber_300" -->
     <FrameLayout
