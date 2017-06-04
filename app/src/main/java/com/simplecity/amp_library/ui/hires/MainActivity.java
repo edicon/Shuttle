@@ -865,7 +865,11 @@ public class MainActivity extends BaseCastActivity implements
     public void onBackPressed() {
 
         // ToDo: Check play/main Fragment swap
-        Fragment playingFragment = getSupportFragmentManager().findFragmentById(R.id.player_container);
+        Fragment playingFragment;
+        if( HI_RES )
+            playingFragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+        else
+            playingFragment = getSupportFragmentManager().findFragmentById(R.id.player_container);
         if (playingFragment != null) {
             Fragment childFragment = playingFragment.getChildFragmentManager().findFragmentById(R.id.queue_container);
             if (childFragment != null && childFragment instanceof QueueFragment) {
@@ -908,7 +912,8 @@ public class MainActivity extends BaseCastActivity implements
 
         if (isShowingFolders || containerFragment instanceof MainFragment) {
             if (mNavigationDrawerFragment != null) {
-                mNavigationDrawerFragment.setDrawerItem(0);
+                if( !HI_RES )
+                    mNavigationDrawerFragment.setDrawerItem(0);
             }
             mTitle = getString(R.string.library_title);
             supportInvalidateOptionsMenu();

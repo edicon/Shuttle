@@ -407,7 +407,11 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
         if (fragment instanceof LyricsFragment) {
             return;
         }
-        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        FragmentTransaction ft;
+        if( !HI_RES ) // Full Screen
+            ft = getActivity().getSupportFragmentManager().beginTransaction();
+        else // Half Screen?
+            ft = getChildFragmentManager().beginTransaction();
         ft.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out);
         if (fragment instanceof QueueFragment) {
             ft.replace(R.id.main_container, new QueuePagerFragment(), QUEUE_PAGER_FRAGMENT);
