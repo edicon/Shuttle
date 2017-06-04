@@ -242,6 +242,7 @@
         <item name="btn_navi_before">@drawable/ic_navigate_before_white_24dp</item>
         <item name="btn_folder">@drawable/ic_folder_open_white_24dp</item>
         <item name="btn_sdcard">@drawable/ic_sd_storage_white_24dp</item>
+        <item name="btn_edit">@drawable/ic_mode_edit_white_24dp</item>
     </style>
 
     <style name="AppTheme.Light.Buttons" parent="Theme.AppCompat.Light.NoActionBar">
@@ -265,6 +266,7 @@
         <item name="btn_navi_before">@drawable/ic_navigate_before_black_24dp</item>
         <item name="btn_folder">@drawable/ic_folder_open_black_24dp</item>
         <item name="btn_sdcard">@drawable/ic_sd_storage_black_24dp</item>
+        <item name="btn_edit">@drawable/ic_mode_edit_black_24dp</item>
     </style>
 
     <style name="AppTheme.Light.Buttons.Inverse" parent="Theme.AppCompat.Light.NoActionBar">
@@ -288,6 +290,7 @@
         <item name="btn_navi_before">@drawable/ic_navigate_before_white_24dp</item>
         <item name="btn_folder">@drawable/ic_folder_open_white_24dp</item>
         <item name="btn_sdcard">@drawable/ic_sd_storage_white_24dp</item>
+        <item name="btn_edit">@drawable/ic_mode_edit_white_24dp</item>
     </style>
 
     <style name="Widget.Styled.ActionBar" parent="Widget.AppCompat.ActionBar">

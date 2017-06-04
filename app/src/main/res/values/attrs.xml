@@ -54,6 +54,8 @@
     <attr name="btn_view_as_list" format="reference" />
     <attr name="btn_folder" format="reference" />
     <attr name="btn_sdcard" format="reference" />
+    <attr name="btn_edit" format="reference" />
+    <!-- WNS -->
 
     <attr name="drag_grip" format="reference" />
     <attr name="listDividerColor" format="reference|color" />

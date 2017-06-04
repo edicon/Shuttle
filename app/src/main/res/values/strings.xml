@@ -834,5 +834,6 @@
 
     <!-- HI_RES -->
     <string name="not_implemented">Not Yet Implementated</string>
+    <string name="playlist_renamed_info">Select one playlist renamed.</string>
 
 </resources>
