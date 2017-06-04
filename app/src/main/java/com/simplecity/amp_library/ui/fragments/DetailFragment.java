@@ -703,21 +703,26 @@ public class DetailFragment extends BaseFragment implements
         //If we've already inflated artist, playlist or genre sorting items by now, then we're looking
         //at at the albums detail screen. We need to remove the duplicate sorting menu items.
 
-        MenuItem artistSortItem = menu.findItem(R.id.artist_sort);
-        if (artistSortItem != null) {
-            artistSortItem.setVisible(false);
-        }
+        if( !HI_RES ) {
+            MenuItem artistSortItem = menu.findItem(R.id.artist_sort);
+            if (artistSortItem != null) {
+                artistSortItem.setVisible(false);
+            }
 
-        if (albumArtist != null || genre != null || playlist != null) {
-            inflater.inflate(R.menu.menu_sort_detail, menu);
-        } else if (album != null) {
-            inflater.inflate(R.menu.menu_sort_detail_album, menu);
+            if (albumArtist != null || genre != null || playlist != null) {
+                inflater.inflate(R.menu.menu_sort_detail, menu);
+            } else if (album != null) {
+                inflater.inflate(R.menu.menu_sort_detail_album, menu);
+            }
         }
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+
+        if( HI_RES )
+            return;
 
         //Songs
         switch (getSongsSortOrder()) {
