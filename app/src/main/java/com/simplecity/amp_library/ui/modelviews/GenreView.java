@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.simplecity.amp_library.R;
@@ -32,6 +33,7 @@ public class GenreView extends BaseAdaptableItem<Genre, GenreView.ViewHolder> {
 
     @Override
     public void bindView(ViewHolder holder) {
+        holder.imageOne.setVisibility(View.VISIBLE);
         holder.lineOne.setText(genre.name);
         String albumAndSongsLabel = StringUtils.makeAlbumAndSongsLabel(holder.itemView.getContext(), -1, genre.numSongs);
         if (!TextUtils.isEmpty(albumAndSongsLabel)) {
@@ -54,6 +56,7 @@ public class GenreView extends BaseAdaptableItem<Genre, GenreView.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        public ImageView imageOne;
         public TextView lineOne;
         public TextView lineTwo;
         public NonScrollImageButton overflowButton;
@@ -61,6 +64,9 @@ public class GenreView extends BaseAdaptableItem<Genre, GenreView.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
 
+            imageOne = (ImageView) itemView.findViewById(R.id.image);
+            // ToDo: Change Default Image
+            imageOne.setImageResource(R.drawable.ic_music_genres_black_24dp);
             lineOne = (TextView) itemView.findViewById(R.id.line_one);
             lineTwo = (TextView) itemView.findViewById(R.id.line_two);
             overflowButton = (NonScrollImageButton) itemView.findViewById(R.id.btn_overflow);
