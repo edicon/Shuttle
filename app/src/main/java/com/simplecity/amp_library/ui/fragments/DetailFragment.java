@@ -560,7 +560,10 @@ public class DetailFragment extends BaseFragment implements
                                         SongView songView = new SongView(song, multiSelector, requestManager);
                                         songView.setShowAlbumArt(false);
                                         songView.setEditable(canEdit());
-                                        songView.setShowTrackNumber(album != null && (songSort == SortManager.SongSort.DETAIL_DEFAULT || songSort == SortManager.SongSort.TRACK_NUMBER));
+                                        if( HI_RES )
+                                            songView.setShowTrackNumber(true);
+                                        else
+                                            songView.setShowTrackNumber(album != null && (songSort == SortManager.SongSort.DETAIL_DEFAULT || songSort == SortManager.SongSort.TRACK_NUMBER));
                                         return songView;
                                     })
                                     .collect(Collectors.toList());
@@ -581,12 +584,20 @@ public class DetailFragment extends BaseFragment implements
                             }
 
                             List<AdaptableItem> adaptableItems = new ArrayList<>();
-                            if( !HI_RES )
+                            if( !HI_RES ) // ToDo: Skip Large Image
                                 adaptableItems.add(headerItem);
                             if (album == null) {
-                                adaptableItems.add(horizontalRecyclerView);
+                                if( !HI_RES ) // ToDo: Skip Album List
+                                    adaptableItems.add(horizontalRecyclerView);
                             }
 
+
+                            // Position Index
+                            if( HI_RES ) {
+                                for (int i = 0;  i < songViews.size(); i++ ) {
+                                    ((SongView)songViews.get(i)).setPosition(i+1);
+                                }
+                            }
                             adaptableItems.addAll(songViews);
 
                             return adaptableItems;
