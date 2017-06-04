@@ -414,6 +414,8 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
             toggleFabVisibility(true, true);
         }
         ft.add(R.id.main_container, new LyricsFragment(), LYRICS_FRAGMENT);
+        if( HI_RES )
+            ft.addToBackStack(null);
         ft.commit();
     }
 
@@ -679,7 +681,11 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     }
 
     public void toggleLylic(AppCompatActivity cx ) {
-        Fragment playingFragment  = cx.getSupportFragmentManager().findFragmentById(R.id.player_container);
+        Fragment playingFragment;
+        if( HI_RES )
+            playingFragment  = cx.getSupportFragmentManager().findFragmentById(R.id.main_container);
+        else
+            playingFragment  = cx.getSupportFragmentManager().findFragmentById(R.id.player_container);
         if (playingFragment != null) {
             Fragment fragment = playingFragment.getChildFragmentManager().findFragmentById(R.id.main_container);
             if (fragment instanceof LyricsFragment)
