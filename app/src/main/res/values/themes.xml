@@ -236,13 +236,19 @@
         <item name="btn_remove">@drawable/ic_action_remove</item>
         <item name="btn_dialog_alert">@drawable/ic_dialog_alert</item>
         <!-- HI_RES -->
-        <item name="btn_cancel">@drawable/ic_cancel_white_24dp</item>
-        <item name="btn_view_as_list">@drawable/ic_view_list_white_24dp</item>
-        <item name="btn_drawer">@drawable/ic_menu_white_24dp</item>
-        <item name="btn_navi_before">@drawable/ic_navigate_before_white_24dp</item>
+        <item name="btn_cancel">@drawable/cancel_btn</item>
+        <item name="btn_view_as_list">@drawable/view_type_1_btn</item>
+        <item name="btn_view_as_card">@drawable/view_type_2_btn</item>
+        <item name="btn_drawer">@drawable/main_menu_open_btn</item>
+        <item name="btn_navi_before">@drawable/backward_btn</item>
+        <item name="btn_edit">@drawable/name_edit_btn</item>
+        <item name="btn_file_editing">@drawable/file_editing_btn</item>
+        <item name="btn_trashcan">@drawable/trashcan_btn</item>
+        <item name="btn_move">@drawable/move_btn</item>
+        <item name="btn_play">@drawable/play_btn</item>
+        <item name="btn_folder_del">@drawable/folder_delete_btn</item>
         <item name="btn_folder">@drawable/ic_folder_open_white_24dp</item>
-        <item name="btn_sdcard">@drawable/ic_sd_storage_white_24dp</item>
-        <item name="btn_edit">@drawable/ic_mode_edit_white_24dp</item>
+        <item name="btn_sdcard">@drawable/memory_internal_on</item>
     </style>
 
     <style name="AppTheme.Light.Buttons" parent="Theme.AppCompat.Light.NoActionBar">
@@ -260,13 +266,20 @@
         <item name="btn_delete">@drawable/ic_action_delete_light</item>
         <item name="btn_remove">@drawable/ic_action_remove_light</item>
         <item name="btn_dialog_alert">@drawable/ic_dialog_alert_light</item>
-        <item name="btn_cancel">@drawable/ic_cancel_black_24dp</item>
-        <item name="btn_view_as_list">@drawable/ic_view_list_black_24dp</item>
-        <item name="btn_drawer">@drawable/ic_menu_black_24dp</item>
-        <item name="btn_navi_before">@drawable/ic_navigate_before_black_24dp</item>
+       <!-- HI_RES -->
+        <item name="btn_cancel">@drawable/cancel_btn</item>
+        <item name="btn_view_as_list">@drawable/view_type_1_btn</item>
+        <item name="btn_view_as_card">@drawable/view_type_2_btn</item>
+        <item name="btn_drawer">@drawable/main_menu_open_btn</item>
+        <item name="btn_navi_before">@drawable/backward_btn</item>
+        <item name="btn_edit">@drawable/name_edit_btn</item>
+        <item name="btn_file_editing">@drawable/file_editing_btn</item>
+        <item name="btn_trashcan">@drawable/trashcan_btn</item>
+        <item name="btn_move">@drawable/move_btn</item>
+        <item name="btn_play">@drawable/play_btn</item>
+        <item name="btn_folder_del">@drawable/folder_delete_btn</item>
         <item name="btn_folder">@drawable/ic_folder_open_black_24dp</item>
-        <item name="btn_sdcard">@drawable/ic_sd_storage_black_24dp</item>
-        <item name="btn_edit">@drawable/ic_mode_edit_black_24dp</item>
+        <item name="btn_sdcard">@drawable/memory_internal_on</item>
     </style>
 
     <style name="AppTheme.Light.Buttons.Inverse" parent="Theme.AppCompat.Light.NoActionBar">
@@ -284,13 +297,20 @@
         <item name="btn_delete">@drawable/ic_action_delete</item>
         <item name="btn_remove">@drawable/ic_action_remove</item>
         <item name="btn_dialog_alert">@drawable/ic_dialog_alert</item>
-        <item name="btn_cancel">@drawable/ic_cancel_white_24dp</item>
-        <item name="btn_view_as_list">@drawable/ic_view_list_white_24dp</item>
-        <item name="btn_drawer">@drawable/ic_menu_white_24dp</item>
-        <item name="btn_navi_before">@drawable/ic_navigate_before_white_24dp</item>
+        <!-- HI_RES -->
+        <item name="btn_cancel">@drawable/cancel_btn</item>
+        <item name="btn_view_as_list">@drawable/view_type_1_btn</item>
+        <item name="btn_view_as_card">@drawable/view_type_2_btn</item>
+        <item name="btn_drawer">@drawable/main_menu_open_btn</item>
+        <item name="btn_navi_before">@drawable/backward_btn</item>
+        <item name="btn_edit">@drawable/name_edit_btn</item>
+        <item name="btn_file_editing">@drawable/file_editing_btn</item>
+        <item name="btn_trashcan">@drawable/trashcan_btn</item>
+        <item name="btn_move">@drawable/move_btn</item>
+        <item name="btn_play">@drawable/play_btn</item>
+        <item name="btn_folder_del">@drawable/folder_delete_btn</item>
         <item name="btn_folder">@drawable/ic_folder_open_white_24dp</item>
-        <item name="btn_sdcard">@drawable/ic_sd_storage_white_24dp</item>
-        <item name="btn_edit">@drawable/ic_mode_edit_white_24dp</item>
+        <item name="btn_sdcard">@drawable/memory_internal_on</item>
     </style>
 
     <style name="Widget.Styled.ActionBar" parent="Widget.AppCompat.ActionBar">
