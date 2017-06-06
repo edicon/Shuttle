@@ -5,3 +5,37 @@ ToDo:
 
 3. DetailFragment: horizontalRecyclerView <-- Album 동적 List, Playlist에 Album넣을지 결정
 4. FavoriteFragment: List?CardView: Holding
+
+Ref.
+RecycleView
+ -https://android.jlelse.eu/android-dtt-12-animate-recyclerview-with-diffutil-cac02b229911
+ -https://hellsoft.se/a-nice-combination-of-rxjava-and-diffutil-fe3807186012
+How to convert an AsyncTask to RxJava
+ -https://android.jlelse.eu/how-to-convert-an-asynctask-to-rxjava-80e5d777a40
+
+ReactiveX
+ 일반  함수:       Method 정의 --> Method Call --> Return Value 저장 --> Return Value 처리/활용
+ 비동기 함수: 비동기 Method 정의 --> Method Call --> Return Value     --> Return Value 처리/활용 --> 비동기 중단
+ (Observable)..(Observer:Method)....(Subscribe-->SubscribeOn).......(ObserverOn-->Subscribe).(Unsubscribe)
+ -http://reactivex.io/documentation/observable.html
+ -Observable: 비동기(Async) 작업 전체를 정의
+ -Observer: Observable이 호출할 비동기 Method를 정의. 이 Method는 Observable 비동기 schedulerOn에 의해 call
+  Android의 경우 Observable.subscribeOn(Schedulers.io())서 상기 Observer.Method Call
+ -Subscribe: Observable과 Observer를 연결(attatch), 이때부터 Observer.Method가 비동기로 동작 함
+ **Cold/Hot Observable: Observable Item Emission 시점 지정, 즉 초기값/현재값부터 emit
+
+  subscription =
+  Observable( param => Observer() {
+       onNext(){ return item },     // emissions: zero or more called
+       onError(){ return error },   // notifications
+       onCompleted(){}              // // notifications
+  })
+  .subscribeOn(schedule.io)
+  .observerOn(AndroidMainThread)
+  .operator(do,filter,map,...)
+  .subscribe( item => subscriber(item) {
+       onNext( item ){},
+       onError( error ){},
+       onCompleted(){}
+  });
+  subscription.unsubscribe();
