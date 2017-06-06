@@ -625,9 +625,9 @@ public class AlbumFragment extends BaseFragment implements
 
         int viewType = SettingsManager.getInstance().getAlbumDisplayType();
         if( viewType == ViewType.ALBUM_CARD )
-            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_grid_on_white_24dp);
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.view_type_2_btn);
         else
-            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_view_list_white_24dp);
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.view_type_1_btn);
     }
     private void toggleViewAs() {
         int viewType = SettingsManager.getInstance().getAlbumDisplayType();
@@ -636,13 +636,13 @@ public class AlbumFragment extends BaseFragment implements
             layoutManager.setSpanCount(getResources().getInteger(R.integer.list_num_columns));
             albumAdapter.updateItemViewType();
             albumAdapter.notifyItemRangeChanged(0, albumAdapter.getItemCount());
-            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_view_list_white_24dp);
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.view_type_1_btn);
         } else {
             SettingsManager.getInstance().setAlbumDisplayType(ViewType.ALBUM_CARD);
             layoutManager.setSpanCount(SettingsManager.getInstance().getAlbumColumnCount(getResources()));
             albumAdapter.updateItemViewType();
             albumAdapter.notifyItemRangeChanged(0, albumAdapter.getItemCount());
-            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_grid_on_white_24dp);
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.view_type_2_btn);
         }
         Log.d("toggleViewAs", "viewType" + viewType );
     }

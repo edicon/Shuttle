@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bignerdranch.android.multiselector.MultiSelector;
@@ -87,7 +88,10 @@ public class FolderView extends BaseAdaptableItem<BaseFileObject, FolderView.Vie
                 break;
             case FileType.FOLDER:
                 holder.overflow.setVisibility(View.VISIBLE);
-                holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.drawable.ic_folder_closed_white));
+                if( !HI_RES )
+                    holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.drawable.folder_icon));
+                else
+                    holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.drawable.ic_folder_closed_white));
                 holder.lineTwo.setText(StringUtils.makeSubfoldersLabel(holder.itemView.getContext(), ((FolderObject) baseFileObject).folderCount, ((FolderObject) baseFileObject).fileCount));
                 holder.lineThree.setVisibility(View.GONE);
                 holder.lineOne.setText(baseFileObject.name);
@@ -104,10 +108,12 @@ public class FolderView extends BaseAdaptableItem<BaseFileObject, FolderView.Vie
                 break;
         }
 
-        if (ColorUtils.isPrimaryColorLowContrast(holder.itemView.getContext())) {
-            holder.imageView.setColorFilter(ColorUtils.getAccentColor());
-        } else {
-            holder.imageView.setColorFilter(ColorUtils.getPrimaryColor());
+        if( HI_RES ) {
+            if (ColorUtils.isPrimaryColorLowContrast(holder.itemView.getContext())) {
+                holder.imageView.setColorFilter(ColorUtils.getAccentColor());
+            } else {
+                holder.imageView.setColorFilter(ColorUtils.getPrimaryColor());
+            }
         }
 
         if (mShowCheckboxes && baseFileObject.fileType == FileType.FOLDER) {
@@ -148,7 +154,9 @@ public class FolderView extends BaseAdaptableItem<BaseFileObject, FolderView.Vie
         public TextView lineThree;
         public TextView lineFour;
         public View textContainer;
-        public CircleImageView imageView;
+        // HI_RES
+        // public CircleImageView imageView;
+        public ImageView imageView;
         public ImageButton overflow;
         public CheckBox checkBox;
 
@@ -161,7 +169,10 @@ public class FolderView extends BaseAdaptableItem<BaseFileObject, FolderView.Vie
             lineThree = (TextView) itemView.findViewById(R.id.line_three);
             lineFour = (TextView) itemView.findViewById(R.id.line_four);
             textContainer = itemView.findViewById(R.id.textContainer);
-            imageView = (CircleImageView) itemView.findViewById(R.id.image);
+            if( !HI_RES )
+                imageView = (ImageView) itemView.findViewById(R.id.image);
+            else
+                imageView = (CircleImageView) itemView.findViewById(R.id.image);
             overflow = (ImageButton) itemView.findViewById(R.id.btn_overflow);
             overflow.setImageDrawable(DrawableUtils.getColoredStateListDrawable(itemView.getContext(), R.drawable.ic_overflow_white));
             checkBox = (CheckBox) itemView.findViewById(R.id.checkbox);

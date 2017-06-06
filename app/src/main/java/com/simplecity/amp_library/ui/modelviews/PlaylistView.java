@@ -110,7 +110,7 @@ public class PlaylistView extends BaseAdaptableItem<Playlist, PlaylistView.ViewH
 
             imageOne = (ImageView) itemView.findViewById(R.id.image);
             // ToDo: Change Default Image
-            imageOne.setImageResource(R.drawable.ic_playlist_black_24dp);
+            imageOne.setImageResource(R.drawable.playlist_icon);
             lineOne = (TextView) itemView.findViewById(R.id.line_one);
             lineTwo = (TextView) itemView.findViewById(R.id.line_two);
             overflowButton = (NonScrollImageButton) itemView.findViewById(R.id.btn_overflow);

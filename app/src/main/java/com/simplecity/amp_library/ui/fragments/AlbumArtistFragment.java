@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.annimon.stream.Collectors;
@@ -625,9 +626,9 @@ public class AlbumArtistFragment extends BaseFragment implements
 
         int viewType = SettingsManager.getInstance().getArtistDisplayType();
         if( viewType == ViewType.ARTIST_CARD )
-            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_grid_on_white_24dp);
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.view_type_2_btn);
         else
-            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_view_list_white_24dp);
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.view_type_1_btn);
     }
     private void toggleViewAs() {
         int viewType = SettingsManager.getInstance().getArtistDisplayType();
@@ -636,13 +637,13 @@ public class AlbumArtistFragment extends BaseFragment implements
             layoutManager.setSpanCount(getResources().getInteger(R.integer.list_num_columns));
             albumArtistAdapter.updateItemViewType();
             albumArtistAdapter.notifyItemRangeChanged(0, albumArtistAdapter.getItemCount());
-            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_view_list_white_24dp);
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.view_type_1_btn);
         } else {
             SettingsManager.getInstance().setArtistDisplayType(ViewType.ARTIST_CARD);
             layoutManager.setSpanCount(SettingsManager.getInstance().getArtistColumnCount(getResources()));
             albumArtistAdapter.updateItemViewType();
             albumArtistAdapter.notifyItemRangeChanged(0, albumArtistAdapter.getItemCount());
-            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_grid_on_white_24dp);
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.view_type_2_btn);
         }
         Log.d("toggleViewAs", "viewType" + viewType );
     }

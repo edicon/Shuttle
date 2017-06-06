@@ -280,9 +280,9 @@ public class FolderFragment extends BaseFragment implements
 
     private void dispSdcard( File currFile ) {
 
-        sdIn.setImageResource(R.drawable.ic_sd_storage_black_24dp);
-        sdEx0.setImageResource(R.drawable.ic_sd_storage_black_24dp);
-        sdEx1.setImageResource(R.drawable.ic_sd_storage_black_24dp);
+        sdIn.setImageResource(R.drawable.memory_internal_off);
+        sdEx0.setImageResource(R.drawable.memory_1_off);
+        sdEx1.setImageResource(R.drawable.memory_2_off);
 
         if( currFile != null ) {
             if( currFile.exists() ) {
@@ -290,11 +290,11 @@ public class FolderFragment extends BaseFragment implements
                 if( BuildConfig.DEBUG)
                     Log.d("PATH", "currPath: " + path);
                 if( path.contains("0") )
-                    sdEx0.setImageResource(R.drawable.ic_sd_storage_white_24dp);
+                    sdEx0.setImageResource(R.drawable.memory_1_on);
                 else if( path.contains("1"))
-                    sdEx1.setImageResource(R.drawable.ic_sd_storage_white_24dp);
+                    sdEx1.setImageResource(R.drawable.memory_2_on);
                 else
-                    sdIn.setImageResource(R.drawable.ic_sd_storage_white_24dp);
+                    sdIn.setImageResource(R.drawable.memory_internal_on);
             }
         }
     }

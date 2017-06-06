@@ -66,7 +66,7 @@ public class GenreView extends BaseAdaptableItem<Genre, GenreView.ViewHolder> {
 
             imageOne = (ImageView) itemView.findViewById(R.id.image);
             // ToDo: Change Default Image
-            imageOne.setImageResource(R.drawable.ic_music_genres_black_24dp);
+            imageOne.setImageResource(R.drawable.genres_icon);
             lineOne = (TextView) itemView.findViewById(R.id.line_one);
             lineTwo = (TextView) itemView.findViewById(R.id.line_two);
             overflowButton = (NonScrollImageButton) itemView.findViewById(R.id.btn_overflow);

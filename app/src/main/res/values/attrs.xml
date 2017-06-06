@@ -48,19 +48,21 @@
     <attr name="btn_sort" format="reference" />
     <attr name="btn_dialog_alert" format="reference" />
     <!-- HI_RES -->
+    <attr name="btn_add2" format="reference" />
     <attr name="btn_cancel" format="reference" />
     <attr name="btn_view_as_list" format="reference" />
     <attr name="btn_view_as_card" format="reference" />
     <attr name="btn_drawer" format="reference" />
     <attr name="btn_navi_before" format="reference" />
     <attr name="btn_edit" format="reference" />
-    <attr name="btn_file_edit" format="reference" />
+    <attr name="btn_file_editing" format="reference" />
     <attr name="btn_trashcan" format="reference" />
     <attr name="btn_move" format="reference" />
     <attr name="btn_play" format="reference" />
     <attr name="btn_folder_del" format="reference" />
     <attr name="btn_folder" format="reference" />
     <attr name="btn_sdcard" format="reference" />
+
     <!-- WNS -->
 
     <attr name="drag_grip" format="reference" />

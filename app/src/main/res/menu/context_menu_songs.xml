@@ -14,13 +14,13 @@
 
     <item
         android:id="@+id/menu_add_to_queue"
-        android:icon="?attr/btn_queue"
+        android:icon="?attr/btn_add2"
         android:title="@string/add_to_queue"
         app:showAsAction="always"/>
 
     <item
         android:id="@+id/delete"
-        android:icon="?attr/btn_delete"
+        android:icon="?attr/btn_trashcan"
         android:title="@string/delete_item"
         app:showAsAction="always"/>
     <item

@@ -15,7 +15,7 @@
         app:showAsAction="always"/>
     <item
         android:id="@+id/action_setting"
-        android:icon="?attr/btn_settings"
+        android:icon="?attr/btn_file_editing"
         android:title="@string/settings"
         app:showAsAction="always"/>
 

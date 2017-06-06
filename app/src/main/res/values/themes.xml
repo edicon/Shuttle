@@ -236,6 +236,7 @@
         <item name="btn_remove">@drawable/ic_action_remove</item>
         <item name="btn_dialog_alert">@drawable/ic_dialog_alert</item>
         <!-- HI_RES -->
+        <item name="btn_add2">@drawable/add_btn</item>
         <item name="btn_cancel">@drawable/cancel_btn</item>
         <item name="btn_view_as_list">@drawable/view_type_1_btn</item>
         <item name="btn_view_as_card">@drawable/view_type_2_btn</item>
@@ -267,6 +268,7 @@
         <item name="btn_remove">@drawable/ic_action_remove_light</item>
         <item name="btn_dialog_alert">@drawable/ic_dialog_alert_light</item>
        <!-- HI_RES -->
+        <item name="btn_add2">@drawable/add_btn</item>
         <item name="btn_cancel">@drawable/cancel_btn</item>
         <item name="btn_view_as_list">@drawable/view_type_1_btn</item>
         <item name="btn_view_as_card">@drawable/view_type_2_btn</item>
@@ -298,6 +300,7 @@
         <item name="btn_remove">@drawable/ic_action_remove</item>
         <item name="btn_dialog_alert">@drawable/ic_dialog_alert</item>
         <!-- HI_RES -->
+        <item name="btn_add2">@drawable/add_btn</item>
         <item name="btn_cancel">@drawable/cancel_btn</item>
         <item name="btn_view_as_list">@drawable/view_type_1_btn</item>
         <item name="btn_view_as_card">@drawable/view_type_2_btn</item>

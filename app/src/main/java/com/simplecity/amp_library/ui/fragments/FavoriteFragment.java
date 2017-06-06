@@ -639,13 +639,13 @@ public class FavoriteFragment extends BaseFragment implements
             layoutManager.setSpanCount(getResources().getInteger(R.integer.list_num_columns));
             favoriteAdapter.updateItemViewType();
             favoriteAdapter.notifyItemRangeChanged(0, favoriteAdapter.getItemCount());
-            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_view_list_white_24dp);
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.view_type_1_btn);
         } else {
             SettingsManager.getInstance().setFavoriteDisplayType(ViewType.FAVORITE_CARD);
             layoutManager.setSpanCount(SettingsManager.getInstance().getFavoriteColumnCount(getResources()));
             favoriteAdapter.updateItemViewType();
             favoriteAdapter.notifyItemRangeChanged(0, favoriteAdapter.getItemCount());
-            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.ic_grid_on_white_24dp);
+            actionMode.getMenu().findItem(R.id.menu_view_as).setIcon(R.drawable.view_type_2_btn);
         }
         Log.d("toggleViewAs", "viewType" + viewType );
     }
