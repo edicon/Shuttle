@@ -40,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_mainplayer"
         android:clickable="true">
 
         <RelativeLayout
@@ -108,10 +109,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/seekBarContainer"
                 android:orientation="vertical"
-                android:paddingBottom="16dp"
+                android:paddingBottom="0dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:paddingTop="16dp"
+                android:paddingTop="0dp"
                 android:gravity="center" >
 
                 <TextView
@@ -146,8 +147,10 @@
                 android:layout_below="@id/textContainer"
                 android:baselineAligned="false"
                 android:gravity="center_vertical"
+                android:layout_marginBottom="24dp"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp">
+                android:paddingRight="8dp"
+                android:paddingBottom="0dp">
 
                 <FrameLayout
                     android:layout_width="wrap_content"
@@ -162,7 +165,7 @@
                         android:background="?attr/circular_ripple"
                         android:contentDescription="@string/btn_drawer"
                         android:padding="12dp"
-                        android:src="@drawable/ic_menu_white_24dp" />
+                        android:src="@drawable/btn_player_drawer" />
                     <ImageButton
                         android:id="@+id/shuffle"
                         android:layout_width="wrap_content"
@@ -189,7 +192,7 @@
                         android:background="?attr/circular_ripple"
                         android:contentDescription="@string/btn_prev"
                         android:padding="16dp"
-                        android:src="@drawable/ic_prev_white"/>
+                        android:src="@drawable/btn_player_rew"/>
                 </FrameLayout>
 
                 <FrameLayout
@@ -202,8 +205,17 @@
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         android:layout_gravity="center"
+                        android:visibility="gone"
                         android:background="?attr/circular_ripple"
                         android:contentDescription="@string/btn_play"/>
+                    <ImageButton
+                        android:id="@+id/btn_play"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="?attr/circular_ripple"
+                        android:contentDescription="@string/btn_play"
+                        android:src="@drawable/btn_player_pause"/>
                 </FrameLayout>
 
                 <FrameLayout
@@ -219,7 +231,7 @@
                         android:background="?attr/circular_ripple"
                         android:contentDescription="@string/btn_skip"
                         android:padding="16dp"
-                        android:src="@drawable/ic_skip_white"/>
+                        android:src="@drawable/btn_player_ff"/>
                 </FrameLayout>
 
                 <FrameLayout
@@ -235,7 +247,7 @@
                         android:background="?attr/circular_ripple"
                         android:contentDescription="@string/btn_favor"
                         android:padding="12dp"
-                        android:src="@drawable/ic_fav"/>
+                        android:src="@drawable/btn_player_favorites"/>
                     <ImageButton
                         android:id="@+id/repeat"
                         android:layout_width="wrap_content"
@@ -305,7 +317,7 @@
                     android:background="?attr/circular_ripple"
                     android:contentDescription="@string/btn_repeat_current"
                     android:padding="12dp"
-                    android:src="@drawable/ic_repeat_white" />
+                    android:src="@drawable/btn_sub_replay" />
             </FrameLayout>
 
             <FrameLayout
@@ -321,7 +333,7 @@
                     android:background="?attr/circular_ripple"
                     android:contentDescription="@string/shuffle_all"
                     android:padding="12dp"
-                    android:src="@drawable/ic_shuffle_white"
+                    android:src="@drawable/btn_sub_shuffle"
                     android:visibility="visible" />
             </FrameLayout>
 
@@ -338,7 +350,7 @@
                     android:background="?attr/circular_ripple"
                     android:contentDescription="@string/shuffle_all"
                     android:padding="12dp"
-                    android:src="@drawable/ic_playlist_white_24dp"
+                    android:src="@drawable/btn_sub_list"
                     android:visibility="visible" />
             </FrameLayout>
 
@@ -372,7 +384,7 @@
                     android:background="?attr/circular_ripple"
                     android:contentDescription="@string/shuffle_all"
                     android:padding="12dp"
-                    android:src="@drawable/ic_info_outline_white_24dp"
+                    android:src="@drawable/btn_sub_search"
                     android:visibility="visible" />
             </FrameLayout>
 
@@ -389,7 +401,7 @@
                     android:background="?attr/circular_ripple"
                     android:contentDescription="@string/shuffle_all"
                     android:padding="12dp"
-                    android:src="@drawable/ic_action_delete"
+                    android:src="@drawable/btn_sub_delete"
                     android:visibility="visible" />
             </FrameLayout>
         </LinearLayout>

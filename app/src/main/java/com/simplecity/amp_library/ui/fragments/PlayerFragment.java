@@ -81,6 +81,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     private boolean isSeeking;
 
     private PlayPauseView playPauseView;
+    private ImageButton playPauseButton;
 
     private ImageButton shuffleButton;
     private ImageButton repeatButton;
@@ -200,11 +201,20 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
         bottomView = rootView.findViewById(R.id.bottom_view);
 
-        playPauseView = (PlayPauseView) rootView.findViewById(R.id.play);
-        playPauseView.setOnClickListener(v -> {
-            playPauseView.toggle();
-            playPauseView.postDelayed(() -> presenter.togglePlayback(), 200);
-        });
+        if( HI_RES ) {
+            playPauseButton = (ImageButton) rootView.findViewById(R.id.btn_play);
+            playPauseButton.setOnClickListener(v -> {
+                // playPauseView.toggle();
+                togglePlayButton();
+                playPauseButton.postDelayed(() -> presenter.togglePlayback(), 200);
+            });
+        } else {
+            playPauseView = (PlayPauseView) rootView.findViewById(R.id.play);
+            playPauseView.setOnClickListener(v -> {
+                playPauseView.toggle();
+                playPauseView.postDelayed(() -> presenter.togglePlayback(), 200);
+            });
+        }
 
         if( HI_RES ) {
             favorButton = (ImageButton) rootView.findViewById(R.id.favor);
@@ -288,6 +298,12 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
         return rootView;
     }
+    private void togglePlayButton() {
+        if( MusicUtils.isPlaying() )
+            playPauseButton.setImageResource(R.drawable.btn_player_play);
+        else
+            playPauseButton.setImageResource(R.drawable.btn_player_pause);
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -310,6 +326,9 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     }
 
     public void themeUIComponents() {
+
+        if( HI_RES )
+            return; // skip theme
 
         if ( HI_RES ) {
             if (seekinfoContainer != null) {
@@ -578,6 +597,16 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
     @Override
     public void playbackChanged(boolean isPlaying) {
+        if( HI_RES ) {
+            if( isPlaying ) {
+                playPauseButton.setImageResource(R.drawable.btn_player_pause);
+                playPauseButton.setContentDescription(getString(R.string.btn_pause));
+            } else {
+                playPauseButton.setImageResource(R.drawable.btn_player_play);
+                playPauseButton.setContentDescription(getString(R.string.btn_play));
+            }
+            return;
+        }
         if (isPlaying) {
             if (playPauseView.isPlay()) {
                 playPauseView.toggle();
