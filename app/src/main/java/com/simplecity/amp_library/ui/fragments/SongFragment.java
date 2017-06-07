@@ -502,8 +502,6 @@ public class SongFragment extends BaseFragment implements
             getActivity().getMenuInflater().inflate(R.menu.context_menu_songs, menu);
             SubMenu sub = menu.getItem(0).getSubMenu();
             PlaylistUtils.makePlaylistMenu(getActivity(), sub, SONG_FRAGMENT_GROUP_ID);
-
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff123456));
             return true;
         }
 

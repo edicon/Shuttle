@@ -47,14 +47,20 @@
 
         <item name="drag_grip">@color/white</item>
 
-        <!-- HI_RES -->
+        <!-- HI_RES
         <item name="android:actionModeStyle">@style/HiResTheme.ActionMode</item>
+        -->
+        <item name="actionModeStyle">@style/Widget.ActionMode</item>
+        <item name="actionModeCloseDrawable">@color/amber_500</item>
 
     </style>
 
     <!-- HI_RES -->
     <style name="HiResTheme.ActionMode" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionModeBackground">@color/amber_500</item>
+    </style>
+    <style name="Widget.ActionMode" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="android:background">@color/amber_500</item>
     </style>
 
 
