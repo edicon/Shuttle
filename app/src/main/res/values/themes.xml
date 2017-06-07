@@ -49,9 +49,11 @@
 
         <!-- HI_RES
         <item name="android:actionModeStyle">@style/HiResTheme.ActionMode</item>
-        -->
         <item name="actionModeStyle">@style/Widget.ActionMode</item>
         <item name="actionModeCloseDrawable">@color/amber_500</item>
+        -->
+
+        <item name="android:actionModeBackground">@color/amber_500</item>
 
     </style>
 
@@ -62,6 +64,7 @@
     <style name="Widget.ActionMode" parent="@style/Widget.AppCompat.ActionMode">
         <item name="background">@color/amber_500</item>
         <item name="android:background">@color/amber_500</item>
+        <item name="backgroundSplit">@color/amber_500</item>
     </style>
 
 
