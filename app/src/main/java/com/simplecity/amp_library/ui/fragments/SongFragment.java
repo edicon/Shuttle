@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -152,10 +154,12 @@ public class SongFragment extends BaseFragment implements
             if (requestManager == null) {
                 requestManager = Glide.with(this);
             }
+            // ((AppCompatActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff123456));
+
         }
     }
 
-    private void themeUIComponents() {
+    private void themeUIComponents( ) {
         ThemeUtils.themeRecyclerView(mRecyclerView);
         mRecyclerView.setThumbColor(ColorUtils.getAccentColor());
         mRecyclerView.setPopupBgColor(ColorUtils.getAccentColor());
@@ -498,6 +502,8 @@ public class SongFragment extends BaseFragment implements
             getActivity().getMenuInflater().inflate(R.menu.context_menu_songs, menu);
             SubMenu sub = menu.getItem(0).getSubMenu();
             PlaylistUtils.makePlaylistMenu(getActivity(), sub, SONG_FRAGMENT_GROUP_ID);
+
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff123456));
             return true;
         }
 

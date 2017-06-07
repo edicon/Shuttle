@@ -60,6 +60,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class ThemeUtils {
 
     private static final String TAG = "ThemeUtils";
@@ -76,7 +78,7 @@ public class ThemeUtils {
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({ThemeType.TYPE_LIGHT, ThemeType.TYPE_DARK, ThemeType.TYPE_BLACK, ThemeType.TYPE_SOLID_LIGHT,
-            ThemeType.TYPE_SOLID_DARK, ThemeType.TYPE_SOLID_BLACK})
+            ThemeType.TYPE_SOLID_DARK, ThemeType.TYPE_SOLID_BLACK, ThemeType.TYPE_HIRES_BLACK})
     public @interface ThemeType {
         int TYPE_LIGHT = 0;
         int TYPE_DARK = 1;
@@ -84,6 +86,7 @@ public class ThemeUtils {
         int TYPE_SOLID_LIGHT = 3;
         int TYPE_SOLID_DARK = 4;
         int TYPE_SOLID_BLACK = 5;
+        int TYPE_HIRES_BLACK = 6;
     }
 
     public int themeType;
@@ -104,6 +107,9 @@ public class ThemeUtils {
      * @return the current {@link com.simplecity.amp_library.utils.ThemeUtils.ThemeType}
      */
     public static int getThemeType(Context context) {
+        if( HI_RES )
+            return ThemeType.TYPE_HIRES_BLACK;
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String theme = sharedPreferences.getString("pref_theme_base", "0");
 
@@ -127,8 +133,14 @@ public class ThemeUtils {
 
 
     public static void setTheme(Activity activity) {
+
         int themeType = getThemeType(activity);
         ThemeUtils.getInstance().themeType = themeType;
+
+        if( HI_RES ) {
+            activity.setTheme(R.style.AppTheme_HiRes);
+            return;
+        }
 
         if (activity instanceof PlayerActivity) {
             if (themeType == ThemeType.TYPE_LIGHT || themeType == ThemeType.TYPE_SOLID_LIGHT) {

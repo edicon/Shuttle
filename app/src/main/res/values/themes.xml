@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- HiRes Dark Theme -->
+    <style name="AppTheme.HiRes" parent="AppTheme.Dark.Buttons">
+
+        <item name="android:textViewStyle">@style/PrimaryTextDark</item>
+        <item name="android:checkboxStyle">@style/CheckboxStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+        <item name="android:editTextStyle">@style/EditTextStyle</item>
+        <item name="secondaryTextViewStyle">@style/SecondaryTextDark</item>
+        <!--<item name="android:windowEnterTransition">@transition/details_window_enter_transition</item>-->
+        <!--<item name="android:windowReturnTransition">@transition/details_window_return_transition</item>-->
+
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+
+        <item name="colorPrimary">@color/grey_900</item>
+        <item name="colorPrimaryDark">@color/grey_900</item>
+        <item name="colorAccent">@color/pink_a400</item>
+
+        <item name="windowActionModeOverlay">true</item>
+
+        <item name="ic_placeholder_large">@drawable/ic_placeholder_dark_large</item>
+        <item name="ic_placeholder_medium">@drawable/ic_placeholder_dark_medium</item>
+
+        <item name="toolbar_theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="toolbar_popup_theme">@style/ThemeOverlay.AppCompat.Dark</item>
+
+        <item name="android:progressBarStyleHorizontal">@style/CustomProgressBar</item>
+
+        <item name="android:windowBackground">@color/bg_dark</item>
+
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat</item>
+        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="android:actionOverflowButtonStyle">@style/Dark.OverFlow</item>
+
+        <item name="list_selector">@drawable/list_selector_dark</item>
+        <item name="circular_ripple">@drawable/ripple_circular_dark</item>
+        <item name="bg_drawer">@color/bg_drawer_dark</item>
+        <item name="listDividerColor">@color/list_divider_dark</item>
+        <item name="bg_card">@color/bg_card_dark</item>
+
+        <item name="circle_border">@color/grey_900</item>
+
+        <item name="breadcrumb_divider">@drawable/ic_breadcrumb_divider_white</item>
+
+        <item name="drag_grip">@color/white</item>
+
+        <!-- HI_RES -->
+        <item name="android:actionModeStyle">@style/HiResTheme.ActionMode</item>
+
+    </style>
+
+    <!-- HI_RES -->
+    <style name="HiResTheme.ActionMode" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionModeBackground">@color/amber_500</item>
+    </style>
+
+
     <!-- Base Dark Theme -->
     <style name="AppTheme.Dark" parent="AppTheme.Dark.Buttons">
 
