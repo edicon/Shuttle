@@ -215,10 +215,16 @@ public class ThemeUtils {
         if (ShuttleUtils.hasKitKat()) {
             if (ShuttleUtils.hasLollipop()) {
                 activity.getWindow().setStatusBarColor(ColorUtils.getPrimaryColorDark(activity));
+                if( HI_RES ) {
+                    activity.getWindow().setStatusBarColor(ColorUtils.getStatusBarColor(activity, R.attr.statusBarBackground));
+                }
             } else {
                 if (tintManager != null) {
                     tintManager.setStatusBarTintEnabled(true);
                     tintManager.setStatusBarTintColor(ColorUtils.getPrimaryColor());
+                    if( HI_RES ) {
+                        tintManager.setStatusBarTintColor(ColorUtils.getStatusBarColor(activity, R.attr.statusBarBackground));
+                    }
                 }
             }
         }

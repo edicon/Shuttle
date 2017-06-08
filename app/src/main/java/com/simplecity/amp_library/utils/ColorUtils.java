@@ -38,6 +38,11 @@ public class ColorUtils {
         return SettingsManager.getInstance().getAccentColor(ColorUtils.getDefaultAccentColor(getPrimaryColor()));
     }
 
+    public static int getStatusBarColor( Context cx, int rid ) {
+        return fetchAttrColor( cx,  rid);
+        // return SettingsManager.getInstance().getPrimaryColor(ShuttleApplication.getInstance().getResources().getColor(R.color.indigo_500));
+    }
+
     /**
      * @param context Context
      * @return an alternative, visible accent color

@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:layout_margin="0dp"
             android:visibility="visible"
-            android:background="@color/indigo_500"
+            android:background="@color/grey_900"
             android:src="@drawable/backward_btn"/>
         <ImageButton
             android:id="@+id/btn_drawer_song"

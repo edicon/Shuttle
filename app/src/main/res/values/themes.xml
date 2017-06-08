@@ -20,6 +20,7 @@
         <item name="colorAccent">@color/pink_a400</item>
         // HI_RES
         <item name="colorActionModeBackground">@color/grey_900</item>
+        <item name="statusBarColor">@color/grey_900</item>
 
         <item name="windowActionModeOverlay">true</item>
 
