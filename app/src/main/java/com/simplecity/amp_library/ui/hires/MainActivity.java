@@ -27,6 +27,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -36,6 +37,7 @@ import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -416,6 +418,8 @@ public class MainActivity extends BaseCastActivity implements
         else {
             mToolbar.setTitle("");
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+            ThemeUtils.themeStatusBar(this, mTintManager);
         }
     }
 
