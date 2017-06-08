@@ -18,6 +18,8 @@
         <item name="colorPrimary">@color/grey_900</item>
         <item name="colorPrimaryDark">@color/grey_900</item>
         <item name="colorAccent">@color/pink_a400</item>
+        // HI_RES
+        <item name="colorActionModeBackground">@color/grey_900</item>
 
         <item name="windowActionModeOverlay">true</item>
 
@@ -47,25 +49,26 @@
 
         <item name="drag_grip">@color/white</item>
 
-        <!-- HI_RES
-        <item name="android:actionModeStyle">@style/HiResTheme.ActionMode</item>
+        <!-- HI_RES: ToDo: Be Debugging
         <item name="actionModeCloseDrawable">@color/amber_500</item>
+
+        <item name="actionModeStyle">@style/HiRes.ActionMode</item>
+        <item name="android:actionModeStyle">@style/HiRes.ActionMode</item>
+        <item name="actionModeBackground">@color/amber_500</item>
+        <item name="android:actionModeBackground">@color/amber_500</item>
         -->
 
-        <item name="android:actionModeBackground">@color/amber_500</item>
-        <item name="actionModeStyle">@style/Widget.ActionMode</item>
-
     </style>
 
-    <!-- HI_RES -->
-    <style name="HiResTheme.ActionMode" parent="@android:style/Theme.Holo.Light">
+    <!-- HI_RES: DEBUG: actionMode가 적용 않됨 -->
+    <style name="HiRes.ActionMode" parent="@style/Widget.AppCompat.ActionMode">
         <item name="android:actionModeBackground">@color/amber_500</item>
-    </style>
-    <style name="Widget.ActionMode" parent="@style/Widget.AppCompat.ActionMode">
         <item name="android:background">@color/amber_500</item>
         <item name="background">@color/amber_500</item>
+        <item name="android:backgroundSplit">@color/amber_500</item>
+        <item name="android:height">10dp</item>
+        <item name="actionModeBackground">@color/amber_500</item>
     </style>
-
 
     <!-- Base Dark Theme -->
     <style name="AppTheme.Dark" parent="AppTheme.Dark.Buttons">

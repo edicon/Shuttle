@@ -70,6 +70,8 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+import static com.simplecity.amp_library.utils.ColorUtils.fetchAttrColor;
+import static com.simplecity.amp_library.utils.MenuUtils.changeActionModeBackground;
 
 // HI_RES : From SongFragment
 public class FavoriteFragment extends BaseFragment implements
@@ -570,6 +572,14 @@ public class FavoriteFragment extends BaseFragment implements
             getActivity().getMenuInflater().inflate(R.menu.context_menu_favor, menu);
             SubMenu sub = menu.getItem(0).getSubMenu();
             PlaylistUtils.makePlaylistMenu(getActivity(), sub, SONG_FRAGMENT_GROUP_ID);
+            return true;
+        }
+
+        // ToDo: ActionMode Background
+        //  -https://stackoverflow.com/questions/20769315/how-to-change-actionmode-background-color-in-android
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            changeActionModeBackground( getActivity(), fetchAttrColor(getActivity(), R.attr.colorActionModeBackground));
             return true;
         }
 

@@ -1,9 +1,13 @@
 package com.simplecity.amp_library.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.view.SubMenu;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -25,6 +29,31 @@ import rx.android.schedulers.AndroidSchedulers;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
 public class MenuUtils implements MusicUtils.Defs {
+
+    public static void changeActionModeBackground(Activity a, int rid ) {
+        final ViewGroup decorView = (ViewGroup) a.getWindow().getDecorView();
+        decorView.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                int buttonId = a.getResources().getIdentifier("menu_cancel", "id", "android");
+
+                View v = decorView.findViewById(buttonId);
+                if (v == null) {
+                    buttonId = R.id.menu_cancel;
+                    v = decorView.findViewById(buttonId);
+                }
+
+                if (v != null) {
+                    // ((View)v.getParent()).setBackgroundColor(Color.RED );
+                    View vv = (View)v.getParent().getParent();
+                    if( vv != null )
+                        vv.setBackgroundColor(rid);
+                        // vv.setBackgroundResource(rid);
+                }
+            }
+        }, 100); // 500
+    }
 
     public static void addSongMenuOptions(final Context context, final PopupMenu menu) {
         menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, PLAY_NEXT, 0, R.string.play_next);

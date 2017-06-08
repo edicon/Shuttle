@@ -62,6 +62,7 @@
     <attr name="btn_folder_del" format="reference" />
     <attr name="btn_folder" format="reference" />
     <attr name="btn_sdcard" format="reference" />
+    <attr name="colorActionModeBackground" format="reference|color" />
 
     <!-- WNS -->
 

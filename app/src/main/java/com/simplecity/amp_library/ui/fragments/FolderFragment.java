@@ -86,6 +86,8 @@ import rx.subscriptions.CompositeSubscription;
 
 import static com.simplecity.amp_library.R.styleable.Android;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+import static com.simplecity.amp_library.utils.ColorUtils.fetchAttrColor;
+import static com.simplecity.amp_library.utils.MenuUtils.changeActionModeBackground;
 
 public class FolderFragment extends BaseFragment implements
         MusicUtils.Defs,
@@ -916,9 +918,12 @@ public class FolderFragment extends BaseFragment implements
                     return true;
                 }
 
+                // ToDo: ActionMode Background
+                //  -https://stackoverflow.com/questions/20769315/how-to-change-actionmode-background-color-in-android
                 @Override
-                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                    return false;
+                public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+                    changeActionModeBackground( getActivity(), fetchAttrColor(getActivity(), R.attr.colorActionModeBackground));
+                    return true;
                 }
 
                 @Override

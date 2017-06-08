@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -65,6 +67,8 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+import static com.simplecity.amp_library.utils.ColorUtils.fetchAttrColor;
+import static com.simplecity.amp_library.utils.MenuUtils.changeActionModeBackground;
 
 public class SongFragment extends BaseFragment implements
         MusicUtils.Defs,
@@ -502,6 +506,15 @@ public class SongFragment extends BaseFragment implements
             getActivity().getMenuInflater().inflate(R.menu.context_menu_songs, menu);
             SubMenu sub = menu.getItem(0).getSubMenu();
             PlaylistUtils.makePlaylistMenu(getActivity(), sub, SONG_FRAGMENT_GROUP_ID);
+
+            return true;
+        }
+
+        // ToDo: ActionMode Background
+        //  -https://stackoverflow.com/questions/20769315/how-to-change-actionmode-background-color-in-android
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            changeActionModeBackground( getActivity(), fetchAttrColor(getActivity(), R.attr.colorActionModeBackground));
             return true;
         }
 

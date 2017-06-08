@@ -9,6 +9,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.FloatRange;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.simplecity.amp_library.R;
@@ -389,5 +390,17 @@ public class ColorUtils {
             throw new IllegalArgumentException("alpha must be between 0 and 255.");
         }
         return (color & 0x00ffffff) | (alpha << 24);
+    }
+
+    // HI_RES
+    public static int fetchAttrColor( Context cx,  int rid ) {
+        TypedValue typedValue = new TypedValue();
+
+        TypedArray a = cx.obtainStyledAttributes(typedValue.data, new int[] { rid });
+        int color = a.getColor(0, 0);
+
+        a.recycle();
+
+        return color;
     }
 }
