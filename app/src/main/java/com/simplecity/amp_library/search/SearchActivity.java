@@ -151,6 +151,9 @@ public class SearchActivity extends BaseActivity implements
 
         final String query = getIntent().getStringExtra(SearchManager.QUERY);
         searchPresenter.queryChanged(query);
+
+        if( HI_RES )
+            ThemeUtils.themeStatusBar(this, tintManager);
     }
 
     @Override
