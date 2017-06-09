@@ -3,14 +3,17 @@ package com.simplecity.amp_library.search;
 import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -43,6 +46,9 @@ import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+import static com.simplecity.amp_library.utils.ColorUtils.fetchAttrColor;
+import static com.simplecity.amp_library.utils.MenuUtils.changeActionModeBackground;
+import static com.simplecity.amp_library.utils.MenuUtils.changeSearchModeBackground;
 
 public class SearchActivity extends BaseActivity implements
         com.simplecity.amp_library.search.SearchView {
@@ -114,6 +120,8 @@ public class SearchActivity extends BaseActivity implements
             }
             return false;
         });
+        if( HI_RES )
+            setSupportActionBar(toolbar);
 
         adapter = new SearchAdapter();
 
@@ -152,8 +160,13 @@ public class SearchActivity extends BaseActivity implements
         final String query = getIntent().getStringExtra(SearchManager.QUERY);
         searchPresenter.queryChanged(query);
 
-        if( HI_RES )
+        if( HI_RES ) {
             ThemeUtils.themeStatusBar(this, tintManager);
+            ActionBar v = getSupportActionBar();
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff000000));
+            // getSupportActionBar().setSplitBackgroundDrawable(new ColorDrawable(0xff00ff00));
+            // getSupportActionBar().setStackedBackgroundDrawable(new ColorDrawable(0xff0000ff));
+        }
     }
 
     @Override
@@ -166,15 +179,17 @@ public class SearchActivity extends BaseActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // getMenuInflater().inflate(R.menu.menu_search_activity, menu);
+        getMenuInflater().inflate(R.menu.menu_search_activity, menu);
         menu.findItem(R.id.search_fuzzy).setVisible(false);
-        // invalidateOptionsMenu();
+        invalidateOptionsMenu();
 
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        if( HI_RES )
+            ; // changeSearchModeBackground( this, fetchAttrColor(this, R.attr.colorActionModeBackground));
         return super.onPrepareOptionsMenu(menu);
     }
 

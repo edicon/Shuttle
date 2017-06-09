@@ -54,6 +54,30 @@ public class MenuUtils implements MusicUtils.Defs {
             }
         }, 100); // 500
     }
+    public static void changeSearchModeBackground(Activity a, int rid ) {
+        final ViewGroup decorView = (ViewGroup) a.getWindow().getDecorView();
+        decorView.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                int buttonId = a.getResources().getIdentifier("search_fuzzy", "id", "android");
+
+                View v = decorView.findViewById(buttonId);
+                if (v == null) {
+                    buttonId = R.id.search_fuzzy;
+                    v = decorView.findViewById(buttonId);
+                }
+
+                if (v != null) {
+                    // ((View)v.getParent()).setBackgroundColor(Color.RED );
+                    View vv = (View) v.getParent().getParent();
+                    if (vv != null)
+                        vv.setBackgroundColor(rid);
+                    // vv.setBackgroundResource(rid);
+                }
+            }
+        }, 100); // 500
+    }
 
     public static void addSongMenuOptions(final Context context, final PopupMenu menu) {
         menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, PLAY_NEXT, 0, R.string.play_next);
