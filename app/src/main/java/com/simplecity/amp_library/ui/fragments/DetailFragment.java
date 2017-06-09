@@ -424,11 +424,12 @@ public class DetailFragment extends BaseFragment implements
 
         if (rootView != null) {
             int themeType = ThemeUtils.getThemeType(getActivity());
-            if (themeType == ThemeUtils.ThemeType.TYPE_DARK
-                    || themeType == ThemeUtils.ThemeType.TYPE_SOLID_DARK) {
+            if ( themeType == ThemeUtils.ThemeType.TYPE_HIRES_BLACK ||
+                 themeType == ThemeUtils.ThemeType.TYPE_DARK ||
+                 themeType == ThemeUtils.ThemeType.TYPE_SOLID_DARK) {
                 rootView.setBackgroundColor(getResources().getColor(R.color.bg_dark));
-            } else if (themeType == ThemeUtils.ThemeType.TYPE_BLACK
-                    || themeType == ThemeUtils.ThemeType.TYPE_SOLID_BLACK) {
+            } else if ( themeType == ThemeUtils.ThemeType.TYPE_BLACK ||
+                        themeType == ThemeUtils.ThemeType.TYPE_SOLID_BLACK) {
                 rootView.setBackgroundColor(getResources().getColor(R.color.bg_black));
             } else {
                 rootView.setBackgroundColor(getResources().getColor(R.color.bg_light));

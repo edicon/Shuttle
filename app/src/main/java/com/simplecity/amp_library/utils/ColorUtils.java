@@ -53,8 +53,9 @@ public class ColorUtils {
         int themeType = ThemeUtils.getThemeType(context);
         if (isAccentColorHighContrast(context)) {
             if (themeType == ThemeUtils.ThemeType.TYPE_DARK
-                    || themeType == ThemeUtils.ThemeType.TYPE_SOLID_DARK
-                    || themeType == ThemeUtils.ThemeType.TYPE_SOLID_BLACK) {
+             || themeType == ThemeUtils.ThemeType.TYPE_SOLID_DARK
+             || themeType == ThemeUtils.ThemeType.TYPE_HIRES_BLACK
+             || themeType == ThemeUtils.ThemeType.TYPE_SOLID_BLACK) {
                 return android.graphics.Color.WHITE;
             } else {
                 return res.getColor(R.color.grey_700);

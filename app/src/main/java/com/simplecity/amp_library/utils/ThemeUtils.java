@@ -335,10 +335,11 @@ public class ThemeUtils {
         if (!noBackground) {
             int color;
             int themeType = getThemeType(context);
-            if (themeType == ThemeType.TYPE_DARK
-                    || themeType == ThemeType.TYPE_SOLID_DARK
-                    || themeType == ThemeType.TYPE_BLACK
-                    || themeType == ThemeType.TYPE_SOLID_BLACK) {
+            if (themeType == ThemeType.TYPE_DARK ||
+                themeType == ThemeType.TYPE_HIRES_BLACK ||
+                themeType == ThemeType.TYPE_SOLID_DARK ||
+                themeType == ThemeType.TYPE_BLACK ||
+                themeType == ThemeType.TYPE_SOLID_BLACK) {
                 color = android.graphics.Color.parseColor("#5a5a5a");
             } else {
                 color = android.graphics.Color.parseColor("#bfbfbf");
