@@ -21,6 +21,8 @@
         // HI_RES
         <item name="colorActionModeBackground">@color/grey_900</item>
         <item name="statusBarColor">@color/grey_900</item>
+        <item name="searchViewColor">@color/grey_900</item>
+        <item name="searchViewBackgroundColor">@color/grey_1000</item>
 
         <item name="windowActionModeOverlay">true</item>
 

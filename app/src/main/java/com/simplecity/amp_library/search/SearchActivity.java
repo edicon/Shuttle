@@ -163,7 +163,7 @@ public class SearchActivity extends BaseActivity implements
         if( HI_RES ) {
             ThemeUtils.themeStatusBar(this, tintManager);
             ActionBar v = getSupportActionBar();
-            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff000000));
+            getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ColorUtils.fetchAttrColor(this, R.attr.searchViewBackgroundColor)));
             // getSupportActionBar().setSplitBackgroundDrawable(new ColorDrawable(0xff00ff00));
             // getSupportActionBar().setStackedBackgroundDrawable(new ColorDrawable(0xff0000ff));
         }

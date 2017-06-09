@@ -64,6 +64,8 @@
     <attr name="btn_sdcard" format="reference" />
     <attr name="colorActionModeBackground" format="reference|color" />
     <attr name="statusBarColor" format="reference|color" />
+    <attr name="searchViewColor" format="reference|color" />
+    <attr name="searchViewBackgroundColor" format="reference|color" />
 
     <!-- WNS -->
 
