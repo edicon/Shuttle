@@ -1,5 +1,7 @@
 package com.simplecity.amp_library.utils;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothHeadset;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +46,7 @@ public class IndiUtils {
         indiTime = (TextView) a.findViewById(R.id.indi_time);
 
         updateSdCard( false );
+        updateBT(isBluetoothHeadsetConnected());
     }
 
     public static void updatePlay( Context cx, boolean on ) {
@@ -141,7 +144,7 @@ public class IndiUtils {
             indiSleep.setImageResource(R.drawable.indi_sleep_off);
     }
 
-    public static void updateBT( Context cx, boolean on ) {
+    public static void updateBT( boolean on ) {
         if( indiBT == null )
             return;
         if( on )
@@ -216,5 +219,11 @@ public class IndiUtils {
     public static void stopTimer() {
         if( newtimer != null )
             newtimer.cancel();
+    }
+
+    public static boolean isBluetoothHeadsetConnected() {
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        return mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()
+            && mBluetoothAdapter.getProfileConnectionState(BluetoothHeadset.HEADSET) == BluetoothHeadset.STATE_CONNECTED;
     }
 }

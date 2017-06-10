@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.SearchManager;
+import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.ContentUris;
@@ -94,6 +95,7 @@ import com.simplecity.amp_library.ui.fragments.SuggestedFragment;
 import com.simplecity.amp_library.ui.views.CustomDrawerLayout;
 import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.AnalyticsManager;
+import com.simplecity.amp_library.utils.BtReceiver;
 import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.DataManager;
 import com.simplecity.amp_library.utils.DialogUtils;
@@ -187,6 +189,7 @@ public class MainActivity extends BaseCastActivity implements
     private BroadcastReceiver batReceiver;
     private ContentObserver contextObserver;
     private SdCardReceiver sdcardReceiver;
+    private BtReceiver btReceiver;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -255,6 +258,7 @@ public class MainActivity extends BaseCastActivity implements
             batReceiver = new BatteryBroadcastReceiver();
             contextObserver = new SettingsContentObserver( this, null );
             sdcardReceiver = new SdCardReceiver();
+            btReceiver = new BtReceiver();
         }
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -537,7 +541,9 @@ public class MainActivity extends BaseCastActivity implements
     protected void onPause() {
         super.onPause();
 
+        unregisterReceiver( btReceiver );
         unregisterReceiver( sdcardReceiver );
+
         IndiUtils.stopTimer();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
@@ -548,14 +554,20 @@ public class MainActivity extends BaseCastActivity implements
 
         super.onResume();
 
+        IntentFilter btFilter = new IntentFilter();
+        btFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
+        btFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+        btFilter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        registerReceiver(btReceiver, btFilter);
+
         IntentFilter filter = new IntentFilter();
         filter.addAction(MEDIA_REMOVED);
         filter.addAction(MEDIA_UNMOUNTED);
         filter.addAction(MEDIA_BAD_REMOVAL);
         // filter.addAction(MEDIA_EJECT);
         filter.addDataScheme("file");
-
         registerReceiver( sdcardReceiver, filter );
+
         IndiUtils.startTimer();
         DialogUtils.showUpgradeNagDialog(this, (materialDialog, dialogAction) -> {
             if (ShuttleUtils.isAmazonBuild()) {
