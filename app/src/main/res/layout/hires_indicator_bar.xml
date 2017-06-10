@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="24dp"
     android:orientation="horizontal"
+    android:background="@color/grey_900"
     android:gravity="center">
 
     <ImageView
         android:id="@+id/indi_dummy_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_weight="0.25"
         android:visibility="invisible"
         app:srcCompat="@drawable/indi_sleep_on" />
 
@@ -20,12 +21,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_play_on" />
+
     <ImageView
         android:id="@+id/indi_vol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_vol_on" />
+
     <TextView
         android:id="@+id/vol_val"
         android:layout_width="wrap_content"
@@ -33,6 +36,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/white"
         android:text="100" />
     <ImageView
         android:id="@+id/indi_replay"
@@ -107,27 +111,46 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:textColor="@color/white"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="100%" />
-    <ImageView
-        android:id="@+id/indi_bat"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
+        android:layout_marginStart="1dp"
         android:layout_weight="2"
-        app:srcCompat="@drawable/indi_battery_body" />
+        android:gravity="left|center_vertical"
+        android:src="@drawable/indi_battery_body">
+
+        <ImageView
+            android:id="@+id/indi_bat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:paddingTop="2dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/indi_battery_10" />
+    </LinearLayout>
     <TextView
         android:id="@+id/indi_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:gravity="center"
+        android:textColor="@color/white"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="10:55 PM" />
     <ImageView
         android:id="@+id/indi_dummy_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_weight="0.25"
         android:visibility="invisible"
         app:srcCompat="@drawable/indi_sleep_on" />
 
