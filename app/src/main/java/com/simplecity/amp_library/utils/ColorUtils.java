@@ -15,13 +15,19 @@ import android.view.View;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.ShuttleApplication;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class ColorUtils {
 
     /**
      * @return the highlight color for the current theme
      */
     public static int getPrimaryColor() {
-        return SettingsManager.getInstance().getPrimaryColor(ShuttleApplication.getInstance().getResources().getColor(R.color.indigo_500));
+        if( HI_RES ) {
+            int color = getThemeAttrColor(ShuttleApplication.getInstance().getApplicationContext(), R.attr.colorPrimary);
+            return SettingsManager.getInstance().getPrimaryColor(color);
+        } else
+            return SettingsManager.getInstance().getPrimaryColor(ShuttleApplication.getInstance().getResources().getColor(R.color.indigo_500));
     }
 
     public static int getAccentColor() {

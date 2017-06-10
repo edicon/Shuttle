@@ -204,7 +204,6 @@ public class FolderFragment extends BaseFragment implements
         View rootView = inflater.inflate(R.layout.fragment_folder_browser, container, false);
 
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
-
         dummyToolbar = rootView.findViewById(R.id.dummyToolbar);
         dummyStatusBar = rootView.findViewById(R.id.dummyStatusBar);
 
@@ -344,22 +343,25 @@ public class FolderFragment extends BaseFragment implements
 
     private void themeUIComponents() {
 
-        if (dummyStatusBar != null) {
-            //noinspection ResourceAsColor
-            dummyStatusBar.setBackgroundColor(ShuttleUtils.hasLollipop() ? ColorUtils.getPrimaryColorDark(getContext()) : ColorUtils.getPrimaryColor());
-        }
+        if( !HI_RES ) {
+            if (dummyStatusBar != null) {
+                //noinspection ResourceAsColor
+                dummyStatusBar.setBackgroundColor(ShuttleUtils.hasLollipop() ? ColorUtils.getPrimaryColorDark(getContext()) : ColorUtils.getPrimaryColor());
+            }
 
-        if (dummyToolbar != null) {
-            dummyToolbar.setBackgroundColor(ColorUtils.getPrimaryColor());
-        }
+            if (dummyToolbar != null) {
+                dummyToolbar.setBackgroundColor(ColorUtils.getPrimaryColor());
+            }
 
-        if (toolbar != null) {
-            if (getParentFragment() != null && getParentFragment() instanceof MainFragment) {
-                toolbar.setBackgroundColor(Color.TRANSPARENT);
-            } else {
-                toolbar.setBackgroundColor(ColorUtils.getPrimaryColor());
+            if (toolbar != null) {
+                if (getParentFragment() != null && getParentFragment() instanceof MainFragment) {
+                    toolbar.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    toolbar.setBackgroundColor(ColorUtils.getPrimaryColor());
+                }
             }
         }
+
 
         adapter.notifyItemRangeChanged(0, adapter.getItemCount());
 
@@ -1027,6 +1029,14 @@ public class FolderFragment extends BaseFragment implements
                 getActivity().getMenuInflater().inflate(R.menu.context_menu_songs, menu);
             SubMenu sub = menu.getItem(0).getSubMenu();
             PlaylistUtils.makePlaylistMenu(getActivity(), sub, FOLDER_FRAGMENT_GROUP_ID);
+            return true;
+        }
+
+        // ToDo: ActionMode Background
+        //  -https://stackoverflow.com/questions/20769315/how-to-change-actionmode-background-color-in-android
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            changeActionModeBackground( getActivity(), fetchAttrColor(getActivity(), R.attr.colorActionModeBackground));
             return true;
         }
 
