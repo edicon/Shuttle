@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.BatteryManager;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -49,15 +51,24 @@ public class IndiUtils {
         batVal = (TextView) a.findViewById(R.id.bat_val);
         indiTime = (TextView) a.findViewById(R.id.indi_time);
 
-        updatePlay(MusicUtils.isPlaying());
 
         AudioManager audio = (AudioManager) a.getSystemService(Context.AUDIO_SERVICE);
         int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
-        updateVol(currentVolume);
+        ConnectivityManager connManager = (ConnectivityManager) a.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-        updateBat(getBatteryPercentage(a));
+        updatePlay(MusicUtils.isPlaying());
+        updateVol(currentVolume);
+        updateRepeat(MusicUtils.getRepeatMode());
+        updateShuffle(MusicUtils.getShuffleMode());
+        // updateBo(MusicUtils.getShuffleMode());
         updateSdCard( false );
+        // updateEQ();
+        // updateLoading();
+        // updateSleep();
         updateBT(isBluetoothHeadsetConnected());
+        updateWifi(mWifi.isConnected());
+        updateBat(getBatteryPercentage(a));
     }
 
     public static void updatePlay( boolean on ) {
@@ -164,7 +175,7 @@ public class IndiUtils {
             indiBT.setImageResource(R.drawable.indi_bluetooth_off);
     }
 
-    public static void updateWifi( Context cx, boolean on ) {
+    public static void updateWifi( boolean on ) {
         if( indiWifi == null )
             return;
         if( on )
@@ -238,6 +249,7 @@ public class IndiUtils {
             && mBluetoothAdapter.getProfileConnectionState(BluetoothHeadset.HEADSET) == BluetoothHeadset.STATE_CONNECTED;
     }
 
+    // https://stackoverflow.com/questions/4715865/how-to-programmatically-tell-if-a-bluetooth-device-is-connected-android-2-2
     public static int getBatteryPercentage(Context context) {
 
         IntentFilter iFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
