@@ -19,6 +19,8 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 public class MusicUtils {
 
     private static final String TAG = "MusicUtils";

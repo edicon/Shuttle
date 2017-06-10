@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.simplecity.amp_library.R;
+import com.simplecity.amp_library.playback.MusicService;
 
 import java.util.Calendar;
 
@@ -50,19 +51,19 @@ public class IndiUtils {
             indiPlay.setImageResource(R.drawable.indi_play_off);
     }
 
-    public static void updateRepeat( Context cx, boolean on ) {
+    public static void updateRepeat( int mode ) {
         if( indiReplay == null )
             return;
-        if( on )
+        if( mode != MusicService.RepeatMode.OFF  )
             indiReplay.setImageResource(R.drawable.indi_replay_on);
         else
             indiReplay.setImageResource(R.drawable.indi_replay_off);
     }
 
-    public static void updateShuffle( Context cx, boolean on ) {
+    public static void updateShuffle( int mode ) {
         if( indiShuffle == null )
             return;
-        if( on )
+        if( mode == MusicService.ShuffleMode.ON )
             indiShuffle.setImageResource(R.drawable.indi_shuffle_on);
         else
             indiShuffle.setImageResource(R.drawable.indi_shuffle_off);

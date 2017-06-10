@@ -8,6 +8,7 @@ import com.simplecity.amp_library.ShuttleApplication;
 import com.simplecity.amp_library.playback.MusicService;
 import com.simplecity.amp_library.playback.PlaybackMonitor;
 import com.simplecity.amp_library.ui.views.PlayerView;
+import com.simplecity.amp_library.utils.IndiUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -15,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
 public class PlayerPresenter extends Presenter<PlayerView> {
 
@@ -161,11 +164,15 @@ public class PlayerPresenter extends Presenter<PlayerView> {
     public void toggleShuffle() {
         MusicUtils.toggleShuffleMode();
         updateShuffleMode();
+        if( HI_RES )
+            IndiUtils.updateShuffle(MusicUtils.getShuffleMode());
     }
 
     public void toggleRepeat() {
         MusicUtils.cycleRepeat();
         updateRepeatMode();
+        if( HI_RES )
+            IndiUtils.updateRepeat(MusicUtils.getRepeatMode());
     }
 
     public void seekTo(int progress) {
