@@ -254,7 +254,7 @@ public class MainActivity extends BaseCastActivity implements
         setContentView(R.layout.activity_main);
 
         if(HI_RES) {
-            IndiUtils.initIndi(this);
+            IndiUtils.initIndiBar(this);
             batReceiver = new BatteryBroadcastReceiver();
             contextObserver = new SettingsContentObserver( this, null );
             sdcardReceiver = new SdCardReceiver();

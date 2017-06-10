@@ -33,6 +33,7 @@ import com.simplecity.amp_library.ui.adapters.SearchAdapter;
 import com.simplecity.amp_library.ui.modelviews.EmptyView;
 import com.simplecity.amp_library.ui.modelviews.LoadingView;
 import com.simplecity.amp_library.utils.ColorUtils;
+import com.simplecity.amp_library.utils.IndiUtils;
 import com.simplecity.amp_library.utils.ResourceUtils;
 import com.simplecity.amp_library.utils.SettingsManager;
 import com.simplecity.amp_library.utils.ShuttleUtils;
@@ -130,8 +131,10 @@ public class SearchActivity extends BaseActivity implements
             }
             return false;
         });
-        if( HI_RES )
+        if( HI_RES ) {
             setSupportActionBar(toolbar);
+            IndiUtils.initIndiBar(this);
+        }
 
         adapter = new SearchAdapter();
 

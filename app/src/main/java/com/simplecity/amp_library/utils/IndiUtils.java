@@ -33,7 +33,7 @@ public class IndiUtils {
     private static ImageView indiLoading,indiSleep, indiBT, indiWifi, indiBat;
     private static TextView volVal,batVal, indiTime;
 
-    public static void initIndi(AppCompatActivity a) {
+    public static void initIndiBar(AppCompatActivity a) {
         indiPlay = (ImageView) a.findViewById(R.id.indi_play);
         indiVol = (ImageView) a.findViewById(R.id.indi_vol);
         volVal = (TextView) a.findViewById(R.id.vol_val);
