@@ -290,9 +290,9 @@ public class FolderFragment extends BaseFragment implements
                 String path = currFile.getAbsolutePath();
                 if( BuildConfig.DEBUG)
                     Log.d("PATH", "currPath: " + path);
-                if( path.contains("0") )
+                if( path.contains("1") )
                     sdEx0.setImageResource(R.drawable.memory_1_on);
-                else if( path.contains("1"))
+                else if( path.contains("2"))
                     sdEx1.setImageResource(R.drawable.memory_2_on);
                 else
                     sdIn.setImageResource(R.drawable.memory_internal_on);
@@ -971,16 +971,16 @@ public class FolderFragment extends BaseFragment implements
                     changeDir(musicFolder);
                 break;
             case R.id.btn_sd_ex0:
-                musicFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
-                // musicFolder = new File(com.simplecity.amp_library.constants.Config.SD_EX0);
+                // musicFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+                musicFolder = new File(com.simplecity.amp_library.constants.Config.SD_EX1);
                 if( BuildConfig.DEBUG )
                     Log.d("FOLDER", "SD1: " + musicFolder.getAbsolutePath());
                 if( musicFolder.exists())
                     changeDir(musicFolder);
                 break;
             case R.id.btn_sd_ex1:
-                musicFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
-                // musicFolder = new File(com.simplecity.amp_library.constants.Config.SD_EX1);
+                // musicFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC);
+                musicFolder = new File(com.simplecity.amp_library.constants.Config.SD_EX2);
                 if( BuildConfig.DEBUG )
                     Log.d("FOLDER", "SD1: " + musicFolder.getAbsolutePath());
                 if( musicFolder.exists())

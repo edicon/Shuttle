@@ -20,7 +20,9 @@ public final class Config {
 
 
     public static final String SD_IN  = "/sdcard/Music";
-    public static final String SD_EX0 = "/storage/emulated/0/Music";
-    public static final String SD_EX1 = "/storage/emulated/1/Music";
+    public static final String SD_EX1 = "/storage/sdcard1";
+    public static final String SD_EX2 = "/storage/sdcard2";
+    public static final String SD_EM_EX0 = "/storage/emulated/0/Music";
+    public static final String SD_EM_EX1 = "/storage/emulated/1/Music";
 
 }

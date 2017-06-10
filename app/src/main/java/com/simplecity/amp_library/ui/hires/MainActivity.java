@@ -102,6 +102,7 @@ import com.simplecity.amp_library.utils.MusicServiceConnectionUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.PlaylistUtils;
 import com.simplecity.amp_library.utils.ResourceUtils;
+import com.simplecity.amp_library.utils.SdCardReceiver;
 import com.simplecity.amp_library.utils.SettingsManager;
 import com.simplecity.amp_library.utils.ShuttleUtils;
 import com.simplecity.amp_library.utils.SleepTimer;
@@ -117,6 +118,9 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static android.os.Environment.MEDIA_BAD_REMOVAL;
+import static android.os.Environment.MEDIA_REMOVED;
+import static android.os.Environment.MEDIA_UNMOUNTED;
 import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
@@ -182,6 +186,7 @@ public class MainActivity extends BaseCastActivity implements
     private MainFragment mainFragment;
     private BroadcastReceiver batReceiver;
     private ContentObserver contextObserver;
+    private SdCardReceiver sdcardReceiver;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -249,6 +254,7 @@ public class MainActivity extends BaseCastActivity implements
             IndiUtils.initIndi(this);
             batReceiver = new BatteryBroadcastReceiver();
             contextObserver = new SettingsContentObserver( this, null );
+            sdcardReceiver = new SdCardReceiver();
         }
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -530,6 +536,8 @@ public class MainActivity extends BaseCastActivity implements
     @Override
     protected void onPause() {
         super.onPause();
+
+        unregisterReceiver( sdcardReceiver );
         IndiUtils.stopTimer();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
@@ -540,6 +548,14 @@ public class MainActivity extends BaseCastActivity implements
 
         super.onResume();
 
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(MEDIA_REMOVED);
+        filter.addAction(MEDIA_UNMOUNTED);
+        filter.addAction(MEDIA_BAD_REMOVAL);
+        // filter.addAction(MEDIA_EJECT);
+        filter.addDataScheme("file");
+
+        registerReceiver( sdcardReceiver, filter );
         IndiUtils.startTimer();
         DialogUtils.showUpgradeNagDialog(this, (materialDialog, dialogAction) -> {
             if (ShuttleUtils.isAmazonBuild()) {

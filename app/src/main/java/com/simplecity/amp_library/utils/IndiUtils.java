@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.simplecity.amp_library.R;
+import com.simplecity.amp_library.constants.Config;
 import com.simplecity.amp_library.playback.MusicService;
 
+import java.io.File;
 import java.util.Calendar;
 
 import rx.functions.Action0;
@@ -40,6 +42,8 @@ public class IndiUtils {
         indiBat = (ImageView) a.findViewById(R.id.indi_bat);
         batVal = (TextView) a.findViewById(R.id.bat_val);
         indiTime = (TextView) a.findViewById(R.id.indi_time);
+
+        updateSdCard( false );
     }
 
     public static void updatePlay( Context cx, boolean on ) {
@@ -78,14 +82,18 @@ public class IndiUtils {
             indiBo.setImageResource(R.drawable.indi_bo_off);
     }
 
-    public static void updateSdCard( int sdType, boolean on ) {
+    public static void updateSdCard( boolean on ) {
         if( indiSd1 == null )
             return;
-        if( on )
+
+        File sdFolder = new File(com.simplecity.amp_library.constants.Config.SD_EX1);
+        if( sdFolder.exists())
             indiSd1.setImageResource(R.drawable.indi_sd1_on);
         else
             indiSd1.setImageResource(R.drawable.indi_sd1_off);
-        if( on )
+
+        sdFolder = new File(com.simplecity.amp_library.constants.Config.SD_EX2);
+        if( sdFolder.exists())
             indiSd2.setImageResource(R.drawable.indi_sd2_on);
         else
             indiSd2.setImageResource(R.drawable.indi_sd2_off);
