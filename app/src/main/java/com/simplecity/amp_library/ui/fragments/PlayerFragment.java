@@ -53,6 +53,7 @@ import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.DialogUtils;
 import com.simplecity.amp_library.utils.DrawableUtils;
+import com.simplecity.amp_library.utils.IndiUtils;
 import com.simplecity.amp_library.utils.MenuUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.PlaylistUtils;
@@ -304,6 +305,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
             playPauseButton.setImageResource(R.drawable.btn_player_play);
         else
             playPauseButton.setImageResource(R.drawable.btn_player_pause);
+        IndiUtils.updatePlay(!MusicUtils.isPlaying());
     }
 
     @Override

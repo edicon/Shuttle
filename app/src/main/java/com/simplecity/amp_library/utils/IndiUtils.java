@@ -47,9 +47,10 @@ public class IndiUtils {
 
         updateSdCard( false );
         updateBT(isBluetoothHeadsetConnected());
+        updatePlay(MusicUtils.isPlaying());
     }
 
-    public static void updatePlay( Context cx, boolean on ) {
+    public static void updatePlay( boolean on ) {
         if( indiPlay == null )
             return;
         if( on )
