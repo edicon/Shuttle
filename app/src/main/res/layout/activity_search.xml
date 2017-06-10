@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".search.SearchActivity"
     tools:menu="@menu/menu_search_activity">
+
+    <FrameLayout
+        android:id="@+id/dummyStatusBar"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="?attr/colorPrimaryDark"
+        android:elevation="4dp" >
+        <include
+            android:id="@+id/indibar"
+            layout="@layout/hires_indicator_bar" />
+    </FrameLayout>
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,6 +32,7 @@
         app:contentInsetStartWithNavigation="0dp"
         app:popupTheme="?attr/toolbar_popup_theme"
         app:theme="?attr/toolbar_theme">
+
 
         <android.support.v7.widget.SearchView
             android:id="@+id/searchView"
@@ -52,4 +66,4 @@
         android:layout_gravity="center"
         android:layout="@layout/empty_view"/>
 
-</RelativeLayout>
+</LinearLayout>

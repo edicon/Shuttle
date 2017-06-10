@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -45,6 +46,8 @@ import java.util.concurrent.TimeUnit;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
+import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
+import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 import static com.simplecity.amp_library.utils.ColorUtils.fetchAttrColor;
 import static com.simplecity.amp_library.utils.MenuUtils.changeActionModeBackground;
@@ -83,17 +86,24 @@ public class SearchActivity extends BaseActivity implements
         ThemeUtils.setTheme(this);
 
         if (!ShuttleUtils.hasLollipop() && ShuttleUtils.hasKitKat()) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().setFlags(FLAG_TRANSLUCENT_STATUS, FLAG_TRANSLUCENT_STATUS);
             tintManager = new SystemBarTintManager(this);
         }
         if (!ShuttleUtils.hasKitKat()) {
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            getWindow().clearFlags(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         }
 
         if (SettingsManager.getInstance().canTintNavBar()) {
             getWindow().setNavigationBarColor(ColorUtils.getPrimaryColorDark(this));
         }
 
+        // Full Screen
+        if( HI_RES ) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
         super.onCreate(savedInstanceState);
 
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
