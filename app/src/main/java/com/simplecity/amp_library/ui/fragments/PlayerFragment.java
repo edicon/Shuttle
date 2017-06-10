@@ -171,6 +171,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
             rootView = inflater.inflate(R.layout.fragment_player_hires, container, false);
             seekinfoContainer = rootView.findViewById(R.id.seekBarContainer);
         }
+
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("");
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         dummyToolbar = rootView.findViewById(R.id.dummyToolbar);
@@ -327,8 +328,10 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
     public void themeUIComponents() {
 
-        if( HI_RES )
+        if( HI_RES ) {
+            dummyStatusBar.setVisibility(View.VISIBLE);
             return; // skip theme
+        }
 
         if ( HI_RES ) {
             if (seekinfoContainer != null) {

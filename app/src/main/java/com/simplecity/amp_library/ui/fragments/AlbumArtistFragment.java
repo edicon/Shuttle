@@ -262,6 +262,9 @@ public class AlbumArtistFragment extends BaseFragment implements
     }
 
     private void themeUIComponents() {
+        if( HI_RES )
+            dummyStatusBar.setVisibility(View.VISIBLE);
+
         ThemeUtils.themeRecyclerView(recyclerView);
         recyclerView.setThumbColor(ColorUtils.getAccentColor());
         recyclerView.setPopupBgColor(ColorUtils.getAccentColor());
@@ -552,7 +555,12 @@ public class AlbumArtistFragment extends BaseFragment implements
         //  -https://stackoverflow.com/questions/20769315/how-to-change-actionmode-background-color-in-android
         @Override
         public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-            changeActionModeBackground( getActivity(), fetchAttrColor(getActivity(), R.attr.colorActionModeBackground));
+            if( HI_RES ) {
+                changeActionModeBackground( getActivity(), fetchAttrColor(getActivity(), R.attr.colorActionModeBackground));
+                ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+                dummyStatusBar.setVisibility(View.GONE);
+                // dummyToolbar.setVisibility(View.GONE);
+            }
             return true;
         }
 
@@ -627,6 +635,11 @@ public class AlbumArtistFragment extends BaseFragment implements
             inActionMode = false;
             AlbumArtistFragment.this.actionMode = null;
             multiSelector.clearSelections();
+
+            if( HI_RES ) {
+                dummyStatusBar.setVisibility(View.VISIBLE);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+            }
         }
     };
 

@@ -21,7 +21,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
                 android:background="?attr/colorPrimaryDark"
-                android:visibility="gone" />
+                android:visibility="visible" >
+                <!-- HI_RES: Add IndiBar for all fragment -->
+                <include
+                    android:id="@+id/indiBar"
+                    layout="@layout/hires_indicator_bar" />
+            </FrameLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"

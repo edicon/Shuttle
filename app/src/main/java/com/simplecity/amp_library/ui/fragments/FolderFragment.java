@@ -361,7 +361,8 @@ public class FolderFragment extends BaseFragment implements
                 }
             }
         }
-
+        if( HI_RES )
+            dummyStatusBar.setVisibility(View.VISIBLE);
 
         adapter.notifyItemRangeChanged(0, adapter.getItemCount());
 
@@ -1036,8 +1037,12 @@ public class FolderFragment extends BaseFragment implements
         //  -https://stackoverflow.com/questions/20769315/how-to-change-actionmode-background-color-in-android
         @Override
         public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-            changeActionModeBackground( getActivity(), fetchAttrColor(getActivity(), R.attr.colorActionModeBackground));
-            return true;
+            if( HI_RES ) {
+                changeActionModeBackground( getActivity(), fetchAttrColor(getActivity(), R.attr.colorActionModeBackground));
+                ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+                dummyStatusBar.setVisibility(View.GONE);
+                // dummyToolbar.setVisibility(View.GONE);
+            }            return true;
         }
 
         @Override
@@ -1122,6 +1127,11 @@ public class FolderFragment extends BaseFragment implements
             inActionMode = false;
             FolderFragment.this.actionMode = null;
             multiSelector.clearSelections();
+
+            if( HI_RES ) {
+                dummyStatusBar.setVisibility(View.VISIBLE);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+            }
         }
     };
 

@@ -169,6 +169,9 @@ public class FavoriteFragment extends BaseFragment implements
     }
 
     private void themeUIComponents() {
+        if( HI_RES )
+            dummyStatusBar.setVisibility(View.VISIBLE);
+
         ThemeUtils.themeRecyclerView(mRecyclerView);
         mRecyclerView.setThumbColor(ColorUtils.getAccentColor());
         mRecyclerView.setPopupBgColor(ColorUtils.getAccentColor());
@@ -579,7 +582,12 @@ public class FavoriteFragment extends BaseFragment implements
         //  -https://stackoverflow.com/questions/20769315/how-to-change-actionmode-background-color-in-android
         @Override
         public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-            changeActionModeBackground( getActivity(), fetchAttrColor(getActivity(), R.attr.colorActionModeBackground));
+            if( HI_RES ) {
+                changeActionModeBackground( getActivity(), fetchAttrColor(getActivity(), R.attr.colorActionModeBackground));
+                ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
+                dummyStatusBar.setVisibility(View.GONE);
+                // dummyToolbar.setVisibility(View.GONE);
+            }
             return true;
         }
 
@@ -639,6 +647,11 @@ public class FavoriteFragment extends BaseFragment implements
             inActionMode = false;
             FavoriteFragment.this.actionMode = null;
             multiSelector.clearSelections();
+
+            if( HI_RES ) {
+                dummyStatusBar.setVisibility(View.VISIBLE);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+            }
         }
     };
 

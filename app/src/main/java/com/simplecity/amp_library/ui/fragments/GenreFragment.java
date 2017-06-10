@@ -199,6 +199,10 @@ public class GenreFragment extends BaseFragment implements
     }
 
     private void themeUIComponents() {
+
+        if( HI_RES )
+            dummyStatusBar.setVisibility(View.VISIBLE);
+
         if (mRecyclerView != null) {
             ThemeUtils.themeRecyclerView(mRecyclerView);
             mRecyclerView.setThumbColor(ColorUtils.getAccentColor());

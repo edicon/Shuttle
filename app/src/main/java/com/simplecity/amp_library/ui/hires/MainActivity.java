@@ -13,11 +13,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
 import android.net.Uri;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -94,6 +97,7 @@ import com.simplecity.amp_library.utils.AnalyticsManager;
 import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.DataManager;
 import com.simplecity.amp_library.utils.DialogUtils;
+import com.simplecity.amp_library.utils.IndiUtils;
 import com.simplecity.amp_library.utils.MusicServiceConnectionUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.PlaylistUtils;
@@ -113,6 +117,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
@@ -175,6 +180,8 @@ public class MainActivity extends BaseCastActivity implements
 
     // HI_RES
     private MainFragment mainFragment;
+    private BroadcastReceiver batReceiver;
+    private ContentObserver contextObserver;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -212,38 +219,53 @@ public class MainActivity extends BaseCastActivity implements
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+        if (!ShuttleUtils.hasKitKat()) {
+            getWindow().clearFlags(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
 
         if (SettingsManager.getInstance().canTintNavBar()) {
             getWindow().setNavigationBarColor(ColorUtils.getPrimaryColorDark(this));
         }
-        // Hide Status Bar: https://developer.android.com/training/system-ui/status.html
-        if (HI_RES && Build.VERSION.SDK_INT < 16) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        if ( Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
-
         supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-
+        // Full Screen: Hide Status Bar: https://developer.android.com/training/system-ui/status.html
+        if( HI_RES ) {
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
         // Now call super to ensure the theme was properly set
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
 
+        if(HI_RES) {
+            IndiUtils.initIndi(this);
+            batReceiver = new BatteryBroadcastReceiver();
+            contextObserver = new SettingsContentObserver( this, null );
+        }
+
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         mIsSlidingEnabled = getResources().getBoolean(R.bool.isSlidingEnabled);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mDummyStatusBar = (FrameLayout) findViewById(R.id.dummyStatusBar);
 
         if( ShuttleUtils.hasKitKat()) {
+            // HI_RES: Add IndiBar for all fragment
             mDummyStatusBar.setVisibility(View.VISIBLE);
             mDummyStatusBar.setBackgroundColor(ColorUtils.getPrimaryColorDark(this));
             LinearLayout.LayoutParams statusBarParams = new LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, (int) ActionBarUtils.getStatusBarHeight(this));
             mDummyStatusBar.setLayoutParams(statusBarParams);
         }
         // ToDo: Status Bar가 사라지나 Noti 후 다시 나타남, dummyStatusBar에 넣고 transparent를 black로
-        if( !HI_RES ) {
+        if( HI_RES ) {
             View decorView = getWindow().getDecorView();
             // Hide the status bar.
             int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -493,16 +515,32 @@ public class MainActivity extends BaseCastActivity implements
     }
 
     @Override
+    protected void onStart() {
+        getContentResolver().registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, contextObserver );
+        registerReceiver(batReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        super.onStart();
+    }
+    @Override
+    protected void onStop() {
+        unregisterReceiver(batReceiver);
+        getContentResolver().unregisterContentObserver(contextObserver);
+        super.onStop();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
+        IndiUtils.stopTimer();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
+
 
     @Override
     public void onResume() {
 
         super.onResume();
 
+        IndiUtils.startTimer();
         DialogUtils.showUpgradeNagDialog(this, (materialDialog, dialogAction) -> {
             if (ShuttleUtils.isAmazonBuild()) {
                 ShuttleUtils.openShuttleLink(MainActivity.this, "com.simplecity.amp_pro");
@@ -1509,5 +1547,38 @@ public class MainActivity extends BaseCastActivity implements
 
                 }
             });
+    }
+
+    // http://alexzh.com/tutorials/android-battery-status-use-broadcastreceiver/
+    private class BatteryBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+            Log.d(TAG, "BAT: " + " " + level);
+            IndiUtils.updateBat( level );
+        }
+    }
+
+    // https://stackoverflow.com/questions/11318933/listen-to-volume-changes-events-on-android
+    public class SettingsContentObserver extends ContentObserver {
+        private AudioManager audioManager;
+
+        public SettingsContentObserver(Context context, Handler handler) {
+            super(handler);
+            audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        }
+
+        @Override
+        public boolean deliverSelfNotifications() {
+            return false;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+
+            Log.d(TAG, "Volume now " + currentVolume);
+            IndiUtils.updateVol(currentVolume);
+        }
     }
 }

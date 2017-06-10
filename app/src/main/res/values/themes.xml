@@ -316,7 +316,7 @@
         <item name="btn_view_as_list">@drawable/view_type_1_btn</item>
         <item name="btn_view_as_card">@drawable/view_type_2_btn</item>
         <item name="btn_drawer">@drawable/main_menu_open_btn</item>
-        <item name="btn_navi_before">@drawable/backward_btn</item>
+        <item name="btn_navi_before">@drawable/ic_arrow_back_white_24dp</item>
         <item name="btn_edit">@drawable/name_edit_btn</item>
         <item name="btn_file_editing">@drawable/file_editing_btn</item>
         <item name="btn_trashcan">@drawable/trashcan_btn</item>
@@ -348,7 +348,7 @@
         <item name="btn_view_as_list">@drawable/view_type_1_btn</item>
         <item name="btn_view_as_card">@drawable/view_type_2_btn</item>
         <item name="btn_drawer">@drawable/main_menu_open_btn</item>
-        <item name="btn_navi_before">@drawable/backward_btn</item>
+        <item name="btn_navi_before">@drawable/ic_arrow_back_white_24dp</item>
         <item name="btn_edit">@drawable/name_edit_btn</item>
         <item name="btn_file_editing">@drawable/file_editing_btn</item>
         <item name="btn_trashcan">@drawable/trashcan_btn</item>
@@ -380,7 +380,7 @@
         <item name="btn_view_as_list">@drawable/view_type_1_btn</item>
         <item name="btn_view_as_card">@drawable/view_type_2_btn</item>
         <item name="btn_drawer">@drawable/main_menu_open_btn</item>
-        <item name="btn_navi_before">@drawable/backward_btn</item>
+        <item name="btn_navi_before">@drawable/ic_arrow_back_white_24dp</item>
         <item name="btn_edit">@drawable/name_edit_btn</item>
         <item name="btn_file_editing">@drawable/file_editing_btn</item>
         <item name="btn_trashcan">@drawable/trashcan_btn</item>

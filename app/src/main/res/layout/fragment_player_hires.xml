@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="24dp"
         android:background="?attr/colorPrimaryDark"
-        android:elevation="4dp" />
+        android:elevation="4dp" >
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/dummyToolbar"
