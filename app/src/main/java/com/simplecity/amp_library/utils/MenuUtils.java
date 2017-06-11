@@ -179,12 +179,15 @@ public class MenuUtils implements MusicUtils.Defs {
         PlaylistUtils.makePlaylistMenu(context, sub, ALBUM_FRAGMENT_GROUP_ID);
         menu.getMenu().add(ALBUM_FRAGMENT_GROUP_ID, QUEUE, 2, R.string.add_to_queue);
         if (ShuttleUtils.isUpgraded()) {
-            menu.getMenu().add(ALBUM_FRAGMENT_GROUP_ID, TAGGER, 3, R.string.edit_tags);
+            if( !HI_RES )
+                menu.getMenu().add(ALBUM_FRAGMENT_GROUP_ID, TAGGER, 3, R.string.edit_tags);
         }
 
+        // ToDo: check delete and keep
         menu.getMenu().add(ALBUM_FRAGMENT_GROUP_ID, EDIT_ARTWORK, 4, R.string.artwork_edit);
 
-        menu.getMenu().add(QUEUE_FRAGMENT_GROUP_ID, BLACKLIST, 5, R.string.blacklist_title);
+        if( !HI_RES )
+            menu.getMenu().add(QUEUE_FRAGMENT_GROUP_ID, BLACKLIST, 5, R.string.blacklist_title);
 
         menu.getMenu().add(ALBUM_FRAGMENT_GROUP_ID, DELETE_ITEM, 6, R.string.delete_item);
     }
@@ -258,11 +261,13 @@ public class MenuUtils implements MusicUtils.Defs {
         PlaylistUtils.makePlaylistMenu(context, sub, ARTIST_FRAGMENT_GROUP_ID);
         menu.getMenu().add(ARTIST_FRAGMENT_GROUP_ID, QUEUE, 2, R.string.add_to_queue);
         if (ShuttleUtils.isUpgraded()) {
-            menu.getMenu().add(ARTIST_FRAGMENT_GROUP_ID, TAGGER, 3, R.string.edit_tags);
+            if( !HI_RES )
+                menu.getMenu().add(ARTIST_FRAGMENT_GROUP_ID, TAGGER, 3, R.string.edit_tags);
             menu.getMenu().add(ARTIST_FRAGMENT_GROUP_ID, EDIT_ARTWORK, 4, R.string.artwork_edit);
         }
 
-        menu.getMenu().add(QUEUE_FRAGMENT_GROUP_ID, BLACKLIST, 5, R.string.blacklist_title);
+        if( !HI_RES )
+            menu.getMenu().add(QUEUE_FRAGMENT_GROUP_ID, BLACKLIST, 5, R.string.blacklist_title);
 
         menu.getMenu().add(ARTIST_FRAGMENT_GROUP_ID, DELETE_ITEM, 6, R.string.delete_item);
     }
@@ -352,7 +357,8 @@ public class MenuUtils implements MusicUtils.Defs {
         }
 
         if (playlist.id != MusicUtils.PlaylistIds.MOST_PLAYED_PLAYLIST) {
-            menu.getMenu().add(PLAYLIST_FRAGMENT_GROUP_ID, MusicUtils.PlaylistMenuOrder.EXPORT_PLAYLIST, 0, R.string.export_playlist);
+            if( !HI_RES )
+                menu.getMenu().add(PLAYLIST_FRAGMENT_GROUP_ID, MusicUtils.PlaylistMenuOrder.EXPORT_PLAYLIST, 0, R.string.export_playlist);
         }
 
     }

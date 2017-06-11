@@ -404,8 +404,10 @@ public class PlaylistFragment extends BaseFragment implements
                 if(item.getItemId() == R.id.menu_cancel) {
                     if( actionMode != null )
                         actionMode.finish();
+                    return true;
                 }
-                return true;
+                if(item.getItemId() != R.id.add)
+                    return true;
             }
             Context context = getContext();
 

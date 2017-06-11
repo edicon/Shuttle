@@ -3,12 +3,14 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/btn_add"
+        android:id="@+id/add"
         android:icon="?attr/btn_add2"
         android:title="@string/new_playlist"
         app:showAsAction="always">
         <menu>
+            <!--
             <item android:title="Placeholder"/>
+            -->
         </menu>
     </item>
 
