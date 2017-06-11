@@ -46,7 +46,6 @@ public class IndiUtils {
         batVal = (TextView) a.findViewById(R.id.bat_val);
         indiTime = (TextView) a.findViewById(R.id.indi_time);
 
-
         AudioManager audio = (AudioManager) a.getSystemService(Context.AUDIO_SERVICE);
         int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
         ConnectivityManager connManager = (ConnectivityManager) a.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -56,11 +55,13 @@ public class IndiUtils {
         updateVol(currentVolume);
         updateRepeat(MusicUtils.getRepeatMode());
         updateShuffle(MusicUtils.getShuffleMode());
-        // updateBo(MusicUtils.getShuffleMode());
         updateSdCard( false );
-        // updateEQ();
-        // updateLoading();
-        // updateSleep();
+        // ToDo: Check
+        updateBo(a, false);
+        updateEQ(a, false );
+        updateLoading(a, false);
+        updateSleep(a, false);
+        // ToDo: END
         updateBT(isBluetoothHeadsetConnected());
         updateWifi(mWifi.isConnected());
         updateBat(getBatteryPercentage(a));

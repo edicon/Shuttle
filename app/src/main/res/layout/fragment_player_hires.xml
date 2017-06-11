@@ -383,7 +383,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="?attr/circular_ripple"
-                    android:contentDescription="@string/shuffle_all"
+                    android:contentDescription="@string/song_info"
                     android:padding="12dp"
                     android:src="@drawable/btn_sub_search"
                     android:visibility="visible" />

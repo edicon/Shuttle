@@ -547,12 +547,12 @@ public class MainActivity extends BaseCastActivity implements
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
-
     @Override
     public void onResume() {
 
         super.onResume();
 
+        IndiUtils.startTimer();
         IndiUtils.updateIndiBar(this);
 
         IntentFilter btFilter = new IntentFilter();
@@ -569,7 +569,6 @@ public class MainActivity extends BaseCastActivity implements
         filter.addDataScheme("file");
         registerReceiver( sdcardReceiver, filter );
 
-        IndiUtils.startTimer();
         DialogUtils.showUpgradeNagDialog(this, (materialDialog, dialogAction) -> {
             if (ShuttleUtils.isAmazonBuild()) {
                 ShuttleUtils.openShuttleLink(MainActivity.this, "com.simplecity.amp_pro");

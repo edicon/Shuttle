@@ -81,6 +81,7 @@ import rx.schedulers.Schedulers;
 
 import static com.simplecity.amp_library.R.id.album;
 import static com.simplecity.amp_library.R.id.artist;
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
 public class DialogUtils {
 
@@ -93,6 +94,9 @@ public class DialogUtils {
                 || themeType == ThemeUtils.ThemeType.TYPE_DARK
                 || themeType == ThemeUtils.ThemeType.TYPE_SOLID_BLACK
                 || themeType == ThemeUtils.ThemeType.TYPE_SOLID_DARK;
+
+        if( HI_RES )
+            isDark = themeType == ThemeUtils.ThemeType.TYPE_HIRES_BLACK;
 
         int accentColor = ColorUtils.getContrastAwareColorAccent(context);
 
