@@ -127,6 +127,7 @@ import static android.os.Environment.MEDIA_UNMOUNTED;
 import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+import static com.simplecity.amp_library.utils.ArtworkUtils.downloadArtwork;
 
 @SuppressWarnings("ResourceAsColor")
 public class MainActivity extends BaseCastActivity implements
@@ -452,6 +453,7 @@ public class MainActivity extends BaseCastActivity implements
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
             ThemeUtils.themeStatusBar(this, mTintManager);
+            downloadArtwork( this );
         }
     }
 
