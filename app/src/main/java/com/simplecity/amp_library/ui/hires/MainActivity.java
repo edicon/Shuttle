@@ -254,7 +254,6 @@ public class MainActivity extends BaseCastActivity implements
         setContentView(R.layout.activity_main);
 
         if(HI_RES) {
-            IndiUtils.initIndiBar(this);
             batReceiver = new BatteryBroadcastReceiver();
             contextObserver = new SettingsContentObserver( this, null );
             sdcardReceiver = new SdCardReceiver();
@@ -553,6 +552,8 @@ public class MainActivity extends BaseCastActivity implements
     public void onResume() {
 
         super.onResume();
+
+        IndiUtils.updateIndiBar(this);
 
         IntentFilter btFilter = new IntentFilter();
         btFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
@@ -924,6 +925,9 @@ public class MainActivity extends BaseCastActivity implements
         handlePendingPlaybackRequest();
 
         togglePanelVisibility(!(MusicServiceConnectionUtils.sServiceBinder == null || MusicUtils.getSongId() == -1));
+        if( HI_RES ) {
+            IndiUtils.updateIndiBar(this);
+        }
     }
 
     @Override

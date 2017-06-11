@@ -133,7 +133,7 @@ public class SearchActivity extends BaseActivity implements
         });
         if( HI_RES ) {
             setSupportActionBar(toolbar);
-            IndiUtils.initIndiBar(this);
+            IndiUtils.updateIndiBar(this);
         }
 
         adapter = new SearchAdapter();

@@ -17,15 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.simplecity.amp_library.R;
-import com.simplecity.amp_library.constants.Config;
 import com.simplecity.amp_library.playback.MusicService;
 
 import java.io.File;
 import java.util.Calendar;
-
-import rx.functions.Action0;
-
-import static com.simplecity.amp_library.R.id.textView;
 
 public class IndiUtils {
 
@@ -33,7 +28,7 @@ public class IndiUtils {
     private static ImageView indiLoading,indiSleep, indiBT, indiWifi, indiBat;
     private static TextView volVal,batVal, indiTime;
 
-    public static void initIndiBar(AppCompatActivity a) {
+    public static void updateIndiBar(AppCompatActivity a) {
         indiPlay = (ImageView) a.findViewById(R.id.indi_play);
         indiVol = (ImageView) a.findViewById(R.id.indi_vol);
         volVal = (TextView) a.findViewById(R.id.vol_val);
