@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="@style/IndiBarText"
         android:textColor="@color/white"
         android:text="100" />
     <ImageView
@@ -112,7 +112,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="@style/IndiBarText"
         android:text="100%" />
 
     <LinearLayout
@@ -144,7 +144,7 @@
         android:layout_weight="2"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="@style/IndiBarText"
         android:text="10:55 PM" />
     <ImageView
         android:id="@+id/indi_dummy_end"

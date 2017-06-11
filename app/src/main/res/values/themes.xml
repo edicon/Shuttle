@@ -501,6 +501,9 @@
     <style name="HiResSecondaryText" parent="BaseTextStyle">
         <item name="android:textColor">#969696</item>
     </style>
-
+    <style name="IndiBarText" parent="BaseTextStyle">
+        <item name="android:textColor">#c0ffffff</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 
 </resources>

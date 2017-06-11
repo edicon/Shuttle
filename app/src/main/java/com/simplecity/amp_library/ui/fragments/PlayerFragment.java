@@ -93,7 +93,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     private TextView track;
     private TextView currentTime;
     private TextView totalTime;
-    private TextView queuePosition;
+    private TextView queuePosition, bitrate;
 
     private View textViewContainer, seekinfoContainer;
     private View buttonContainer;
@@ -255,6 +255,8 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
         currentTime = (TextView) rootView.findViewById(R.id.current_time);
         totalTime = (TextView) rootView.findViewById(R.id.total_time);
         queuePosition = (TextView) rootView.findViewById(R.id.queue_position);
+        bitrate = (TextView) rootView.findViewById(R.id.bitrate);
+
         track = (TextView) rootView.findViewById(R.id.text1);
         album = (TextView) rootView.findViewById(R.id.text2);
         artist = (TextView) rootView.findViewById(R.id.text3);
@@ -661,9 +663,13 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
         String totalTime = StringUtils.makeTimeString(this.getActivity(), song.duration / 1000);
         if (!TextUtils.isEmpty(totalTime)) {
-            if( HI_RES )
+            if( HI_RES ) {
                 this.totalTime.setText(String.format("%s", totalTime));
-            else
+                String bitRate = song.getBitrateLabel(); String sampleRate = song.getSampleRateLabel();
+                if( bitRate.contains("null"))
+                    bitRate = bitRate.replace("null", "?");
+                this.bitrate.setText(String.format("%s / %s",  bitRate, sampleRate));
+            } else
                 this.totalTime.setText(String.format(" / %s", totalTime));
         }
 
