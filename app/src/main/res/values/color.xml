@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- HI_RES: ListView Item Divider -->
+    <color name="list_divider_hires_dark">#7EFFFFFF</color>
+    <color name="list_divider_hires_light">#1E000000</color>
+
     <color name="list_divider_dark">#1EFFFFFF</color>
     <color name="list_divider_light">#1E000000</color>
 
@@ -11,6 +15,11 @@
     <color name="selected_material_light">#45000000</color>
     <color name="pressed_material_dark">#15ffffff</color>
     <color name="selected_material_dark">#40ffffff</color>
+    <!-- HI_RES -->
+    <color name="pressed_material_hires_light">#15000000</color>
+    <color name="selected_material_hires_light">#75ffffff</color>
+    <color name="pressed_material_hires_dark">#15ffffff</color>
+    <color name="selected_material_hires_dark">#45000000</color>
 
     <color name="drawable_base_color_light">#333333</color>
     <color name="drawable_base_color_dark">#ffffff</color>

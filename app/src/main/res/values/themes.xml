@@ -43,10 +43,12 @@
         <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="android:actionOverflowButtonStyle">@style/Dark.OverFlow</item>
 
-        <item name="list_selector">@drawable/list_selector_dark</item>
+        <!-- HI_RES: ListView Item Selector -->
+        <item name="list_selector">@drawable/list_selector_hires_dark</item>
+        <item name="listDividerColor">@color/list_divider_hires_dark</item>
+
         <item name="circular_ripple">@drawable/ripple_circular_dark</item>
         <item name="bg_drawer">@color/bg_drawer_dark</item>
-        <item name="listDividerColor">@color/list_divider_dark</item>
         <item name="bg_card">@color/bg_card_dark</item>
 
         <item name="circle_border">@color/grey_900</item>
