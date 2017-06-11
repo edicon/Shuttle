@@ -6,23 +6,30 @@
     android:layout_height="match_parent"
     android:background="@color/transparent"
     android:orientation="vertical">
-    <!-- ToDo: Primary Color로 -->
-
     <!--
     <FrameLayout
         android:id="@+id/dummyStatusBar"
         android:layout_width="match_parent"
         android:layout_height="24dp"
-        android:background="@color/transparent"
+        android:background="?attr/colorPrimaryDark"
         android:elevation="4dp" />
 
     <FrameLayout
         android:id="@+id/dummyToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/transparent"
+        android:background="?attr/colorPrimaryDark"
         android:elevation="4dp"
-        android:minHeight="?attr/actionBarSize" />
+        android:minHeight="?attr/actionBarSize" >
+        <ImageButton
+            android:id="@+id/btn_drawer_dummy1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="0dp"
+            android:visibility="visible"
+            android:src="@drawable/ic_arrow_back_white_24dp"/>
+    </FrameLayout>
     -->
 
     <FrameLayout
@@ -30,7 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/drawer_header_height"
         android:visibility="gone"
-        android:background="?attr/bg_drawer"/>
+        android:background="?attr/bg_drawer" >
+    </FrameLayout>
 
     <!-- ToDo: Dummy for HI_RES -->
     <LinearLayout
@@ -49,7 +57,7 @@
             android:layout_margin="0dp"
             android:visibility="visible"
             android:background="@color/grey_900"
-            android:src="@drawable/backward_btn"/>
+            android:src="@drawable/ic_arrow_back_white_24dp"/>
         <ImageButton
             android:id="@+id/btn_drawer_song"
             android:layout_width="match_parent"
