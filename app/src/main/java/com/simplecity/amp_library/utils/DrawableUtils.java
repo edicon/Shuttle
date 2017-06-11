@@ -33,6 +33,7 @@ public class DrawableUtils {
         Drawable highlightDrawable = baseDrawable.getConstantState().newDrawable();
         int baseColor;
         if ((ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_DARK)
+                || (ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_HIRES_BLACK) // ToDo: Check HI_RES, HIRES
                 || (ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_SOLID_DARK)
                 || (ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_SOLID_BLACK)) {
             baseColor = context.getResources().getColor(R.color.drawable_base_color_dark);
@@ -110,6 +111,7 @@ public class DrawableUtils {
     public static Drawable themeLightOrDark(Context context, Drawable drawable) {
         int baseColor;
         if ((ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_DARK)
+                || (ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_HIRES_BLACK) // ToDo: Check HI_RES, HIRES
                 || (ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_SOLID_DARK)
                 || (ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_SOLID_BLACK)) {
             baseColor = context.getResources().getColor(R.color.drawable_base_color_dark);
@@ -137,6 +139,7 @@ public class DrawableUtils {
         Drawable highlightDrawable = baseDrawable.getConstantState().newDrawable();
         int baseColor;
         if ((ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_DARK)
+                || (ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_HIRES_BLACK) // ToDo: Check HI_RES, HIRES
                 || (ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_SOLID_DARK)
                 || (ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_SOLID_BLACK)) {
             baseColor = context.getResources().getColor(R.color.drawable_base_color_dark);
@@ -219,6 +222,7 @@ public class DrawableUtils {
         Drawable highlightDrawable = baseDrawable.getConstantState().newDrawable();
         int baseColor;
         if ((themeType == ThemeUtils.ThemeType.TYPE_DARK)
+                || (ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_HIRES_BLACK) // ToDo: Check HI_RES, HIRES
                 || (themeType == ThemeUtils.ThemeType.TYPE_SOLID_DARK)
                 || (themeType == ThemeUtils.ThemeType.TYPE_SOLID_BLACK)) {
             baseColor = context.getResources().getColor(R.color.drawable_base_color_dark);
@@ -551,6 +555,7 @@ public class DrawableUtils {
                 || ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_SOLID_DARK) {
             return context.getResources().getDrawable(R.color.bg_dark);
         } else if (ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_BLACK
+                || (ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_HIRES_BLACK) // ToDo: Check HI_RES, HIRES
                 || ThemeUtils.getInstance().themeType == ThemeUtils.ThemeType.TYPE_SOLID_BLACK) {
             return context.getResources().getDrawable(R.color.bg_black);
         }

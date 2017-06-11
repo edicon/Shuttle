@@ -125,6 +125,9 @@ public class ThemeUtils {
     }
 
     public boolean isThemeDark() {
+        if( HI_RES )
+            return themeType == ThemeType.TYPE_HIRES_BLACK;
+
         return themeType == ThemeType.TYPE_DARK
                 || themeType == ThemeType.TYPE_SOLID_DARK
                 || themeType == ThemeType.TYPE_BLACK
@@ -244,6 +247,13 @@ public class ThemeUtils {
     }
 
     public static void themeHmsPicker(HmsPicker picker) {
+        if( HI_RES ) {
+            if ((ThemeUtils.getInstance().themeType == ThemeType.TYPE_HIRES_BLACK))
+                picker.setTheme(R.style.BetterPickersDialogFragment);
+            else
+                picker.setTheme(R.style.BetterPickersDialogFragment_Light);
+        }
+
         if ((ThemeUtils.getInstance().themeType == ThemeType.TYPE_DARK)
                 || (ThemeUtils.getInstance().themeType == ThemeType.TYPE_SOLID_DARK)
                 || (ThemeUtils.getInstance().themeType == ThemeType.TYPE_SOLID_BLACK)) {
@@ -254,6 +264,13 @@ public class ThemeUtils {
     }
 
     public static void themeHmsView(HmsView hmsView) {
+        if( HI_RES ) {
+            if ((ThemeUtils.getInstance().themeType == ThemeType.TYPE_HIRES_BLACK))
+                hmsView.setTheme(R.style.BetterPickersDialogFragment);
+            else
+                hmsView.setTheme(R.style.BetterPickersDialogFragment_Light);
+        }
+
         if ((ThemeUtils.getInstance().themeType == ThemeType.TYPE_DARK)
                 || (ThemeUtils.getInstance().themeType == ThemeType.TYPE_SOLID_DARK)
                 || (ThemeUtils.getInstance().themeType == ThemeType.TYPE_SOLID_BLACK)) {
@@ -336,7 +353,7 @@ public class ThemeUtils {
             int color;
             int themeType = getThemeType(context);
             if (themeType == ThemeType.TYPE_DARK ||
-                themeType == ThemeType.TYPE_HIRES_BLACK ||
+                themeType == ThemeType.TYPE_HIRES_BLACK || // ToDo: Check
                 themeType == ThemeType.TYPE_SOLID_DARK ||
                 themeType == ThemeType.TYPE_BLACK ||
                 themeType == ThemeType.TYPE_SOLID_BLACK) {
@@ -363,6 +380,7 @@ public class ThemeUtils {
         } else if (ThemeUtils.getInstance().themeType == ThemeType.TYPE_DARK
                 || ThemeUtils.getInstance().themeType == ThemeType.TYPE_SOLID_DARK
                 || ThemeUtils.getInstance().themeType == ThemeType.TYPE_BLACK
+                || ThemeUtils.getInstance().themeType == ThemeType.TYPE_HIRES_BLACK // ToDo Check
                 || ThemeUtils.getInstance().themeType == ThemeType.TYPE_SOLID_BLACK) {
             return context.getResources().getColor(R.color.white);
         }
