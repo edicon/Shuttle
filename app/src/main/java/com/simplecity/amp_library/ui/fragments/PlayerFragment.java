@@ -24,11 +24,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
@@ -39,17 +36,14 @@ import com.jakewharton.rxbinding.widget.SeekBarStartChangeEvent;
 import com.jakewharton.rxbinding.widget.SeekBarStopChangeEvent;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.lyrics.LyricsFragment;
-import com.simplecity.amp_library.model.Playlist;
 import com.simplecity.amp_library.model.Song;
 import com.simplecity.amp_library.playback.MusicService;
 import com.simplecity.amp_library.sql.databases.BlacklistHelper;
-import com.simplecity.amp_library.ui.activities.MainActivity;
 import com.simplecity.amp_library.ui.presenters.PlayerPresenter;
 import com.simplecity.amp_library.ui.views.PlayPauseView;
 import com.simplecity.amp_library.ui.views.PlayerView;
 import com.simplecity.amp_library.ui.views.RepeatingImageButton;
 import com.simplecity.amp_library.ui.views.SizableSeekBar;
-import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.DialogUtils;
 import com.simplecity.amp_library.utils.DrawableUtils;
@@ -62,7 +56,6 @@ import com.simplecity.amp_library.utils.StringUtils;
 import com.simplecity.amp_library.utils.ThemeUtils;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -71,7 +64,6 @@ import rx.subscriptions.CompositeSubscription;
 
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 import static com.simplecity.amp_library.ui.hires.MainActivity.mDrawerLayout;
-import static com.simplecity.amp_library.ui.hires.MainActivity.playlistId;
 import static com.simplecity.amp_library.utils.MusicUtils.Defs.BLACKLIST;
 
 public class PlayerFragment extends BaseFragment implements PlayerView {
@@ -669,7 +661,10 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
         String totalTime = StringUtils.makeTimeString(this.getActivity(), song.duration / 1000);
         if (!TextUtils.isEmpty(totalTime)) {
-            this.totalTime.setText(String.format(" / %s", totalTime));
+            if( HI_RES )
+                this.totalTime.setText(String.format("%s", totalTime));
+            else
+                this.totalTime.setText(String.format(" / %s", totalTime));
         }
 
         track.setText(song.name);

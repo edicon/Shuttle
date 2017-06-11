@@ -107,6 +107,10 @@ public class PlayerPresenter extends Presenter<PlayerView> {
     }
 
     private void setCurrentTimeVisibility(boolean visible) {
+        // Do Not Fresh
+        if( HI_RES )
+            visible = true;
+
         PlayerView view = getView();
         if (visible != currentPlaybackTimeVisible) {
             if (view != null) {
