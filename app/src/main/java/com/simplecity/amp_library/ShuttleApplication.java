@@ -164,18 +164,24 @@ public class ShuttleApplication extends Application {
                     .projection(new String[]{CustomArtworkTable.COLUMN_ID, CustomArtworkTable.COLUMN_KEY, CustomArtworkTable.COLUMN_TYPE, CustomArtworkTable.COLUMN_PATH})
                     .build();
 
-            SqlUtils.createActionableQuery(ShuttleApplication.this, cursor ->
-                            userSelectedArtwork.put(
-                                    cursor.getString(cursor.getColumnIndexOrThrow(CustomArtworkTable.COLUMN_KEY)),
-                                    new UserSelectedArtwork(
-                                            cursor.getInt(cursor.getColumnIndexOrThrow(CustomArtworkTable.COLUMN_TYPE)),
-                                            cursor.getString(cursor.getColumnIndexOrThrow(CustomArtworkTable.COLUMN_PATH)))
-                            ),
-                    query);
+            SqlUtils.createActionableQuery(ShuttleApplication.this, cursor -> {
+                    if( BuildConfig.DEBUG ) { // ToDo: Debug
+                        String s = cursor.getString(cursor.getColumnIndexOrThrow(CustomArtworkTable.COLUMN_KEY));
+                        Log.w("CUSTOM", "Custom Artwork: " + s);
+                    }
+                    userSelectedArtwork.put(
+                        cursor.getString(cursor.getColumnIndexOrThrow(CustomArtworkTable.COLUMN_KEY)),
+                        new UserSelectedArtwork(
+                                cursor.getInt(cursor.getColumnIndexOrThrow(CustomArtworkTable.COLUMN_TYPE)),
+                                cursor.getString(cursor.getColumnIndexOrThrow(CustomArtworkTable.COLUMN_PATH)))
+                    );
+                    },
+                    query
+            );
             return null;
-        })
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+            })
+            .subscribeOn(Schedulers.io())
+            .subscribe();
 
         //Clean up the genres database - remove any genres which contain no songs. Also, populates song counts.
         cleanGenres();

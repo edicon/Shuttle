@@ -126,8 +126,13 @@ public class ArtworkUtils {
                 .query(contentUri, new String[]{MediaStore.Audio.Albums.ALBUM_ART}, null, null, null);
 
         if (cursor != null) {
+            String name = null;
             try {
-                if (cursor.moveToFirst()) {
+                 if (cursor.moveToFirst()) {
+                    if( BuildConfig.DEBUG ) {
+                        int i = cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART);
+                        name = cursor.getString(i);
+                    }
                     File file = new File(cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART)));
                     if (file.exists()) {
                         try {
@@ -139,8 +144,12 @@ public class ArtworkUtils {
                     }
                 }
             } catch (NullPointerException ignored) {
-                if(BuildConfig.DEBUG)
-                    ignored.printStackTrace();
+                if(BuildConfig.DEBUG) {
+                    if( name == null )
+                        Log.w("ALBUM",  "Album Name: " + name);
+                    else
+                        ignored.printStackTrace();
+                }
             } finally {
                 cursor.close();
             }
@@ -224,6 +233,7 @@ public class ArtworkUtils {
         return fileArray;
     }
 
+    // HI_RES: Artword Fragment 없이 시험하기위해
     public static void downloadArtwork(AppCompatActivity a ) {
         DialogUtils.showDownloadWarningDialog(a, (materialDialog, dialogAction) ->
         {
