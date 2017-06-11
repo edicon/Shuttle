@@ -49,6 +49,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -707,6 +708,7 @@ public class MainActivity extends BaseCastActivity implements
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(isFavorite -> {
+                    ImageButton favorite = (ImageButton) findViewById(R.id.favor);
                     if (isFavorite) {
                         final MenuItem favItem = menu.findItem(R.id.menu_favorite);
                         int[] attrs = new int[]{R.attr.btn_fav_pressed};
@@ -718,6 +720,11 @@ public class MainActivity extends BaseCastActivity implements
                                 favItem.setIcon(drawableFromTheme);
                             }
                         }
+                        if( HI_RES && favorite != null )
+                            favorite.setImageResource(R.drawable.favorites_on_btn);
+                    } else {
+                        if( HI_RES && favorite != null )
+                            favorite.setImageResource(R.drawable.favorites_off_btn);
                     }
                 });
 
