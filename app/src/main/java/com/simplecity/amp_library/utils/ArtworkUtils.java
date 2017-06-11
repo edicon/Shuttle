@@ -1,18 +1,29 @@
 package com.simplecity.amp_library.utils;
 
 import android.content.ContentUris;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.preference.Preference;
+import android.preference.PreferenceGroup;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
+import android.support.v4.preference.PreferenceManagerCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.annimon.stream.Stream;
+import com.bumptech.glide.Glide;
+import com.simplecity.amp_library.BuildConfig;
+import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.ShuttleApplication;
 import com.simplecity.amp_library.model.Album;
 import com.simplecity.amp_library.model.Song;
+import com.simplecity.amp_library.services.ArtworkDownloadService;
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
@@ -122,12 +133,14 @@ public class ArtworkUtils {
                         try {
                             fileInputStream = new FileInputStream(file);
                         } catch (FileNotFoundException ignored) {
-
+                            if(BuildConfig.DEBUG)
+                                ignored.printStackTrace();
                         }
                     }
                 }
             } catch (NullPointerException ignored) {
-
+                if(BuildConfig.DEBUG)
+                    ignored.printStackTrace();
             } finally {
                 cursor.close();
             }
@@ -209,5 +222,50 @@ public class ArtworkUtils {
             }
         }
         return fileArray;
+    }
+
+    public static void downloadArtwork(AppCompatActivity a ) {
+        DialogUtils.showDownloadWarningDialog(a, (materialDialog, dialogAction) ->
+        {
+            Intent intent = new Intent(a.getBaseContext(), ArtworkDownloadService.class);
+            ShuttleApplication.getInstance().startService(intent);
+        });
+    }
+
+    public static void deleteArtwork( AppCompatActivity a) {
+        DialogUtils.getBuilder(a)
+                .title(a.getString(R.string.pref_title_delete_artwork))
+                .icon(DrawableUtils.themeLightOrDark(a, a.getResources().getDrawable(R.drawable.ic_dialog_alert)))
+                .content(a.getString(R.string.delete_artwork_confirmation_dialog))
+                .positiveText(a.getString(R.string.button_ok))
+                .onPositive((materialDialog, dialogAction) -> {
+
+                    //Clear Glide's mem cache
+                    Glide.get(a.getApplicationContext())
+                            .clearMemory();
+
+                    //Clear Glide' disk cache
+                    ShuttleUtils.execute(new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... params) {
+                            Glide.get(a.getApplicationContext())
+                                    .clearDiskCache();
+                            return null;
+                        }
+                    });
+                })
+                .negativeText(a.getString(R.string.cancel))
+                .show();
+    }
+
+    public static void downloadLastFm( AppCompatActivity a ) {
+        /*
+        PreferenceManager mPreferenceManager = null;
+        mPreferenceManager = PreferenceManagerCompat.newInstance(a), FIRST_REQUEST_CODE);
+        // PreferenceManagerCompat.setFragment(mPreferenceManager, this);
+        final Preference downloadSimpleLastFmScrobbler = findPreference("pref_download_simple_lastfm_scrobbler");
+        downloadSimpleLastFmScrobbler.setIntent(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=com.adam.aslfms")));
+        */
     }
 }

@@ -157,6 +157,7 @@ public class ShuttleApplication extends Application {
 
         startService(new Intent(this, EqualizerService.class));
 
+        // HI_RES: Setup Artwork
         Observable.fromCallable(() -> {
             Query query = new Query.Builder()
                     .uri(CustomArtworkTable.URI)
