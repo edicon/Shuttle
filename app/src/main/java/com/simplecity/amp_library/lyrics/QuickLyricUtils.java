@@ -15,6 +15,8 @@ import com.simplecity.amp_library.model.Song;
 import com.simplecity.amp_library.utils.ShuttleUtils;
 import com.simplecity.amp_library.utils.TypefaceManager;
 
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+
 /**
  * QuickLyric helpers
  */
@@ -49,6 +51,9 @@ public class QuickLyricUtils {
      * @return true if the Play Store is available, and this QuickLyric can be downloaded.
      */
     static boolean canDownloadQuickLyric() {
+        if( HI_RES )
+            return false;
+
         if (ShuttleUtils.isAmazonBuild()) return false;
         return getQuickLyricIntent().resolveActivity(ShuttleApplication.getInstance().getPackageManager()) != null;
     }
