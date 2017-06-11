@@ -58,7 +58,7 @@ public class IndiUtils {
         updateSdCard( false );
         // ToDo: Check
         updateBo(a, false);
-        updateEQ(a, false );
+        updateEQ(a, EqUtils.getEqualizerEnabled(a)); // ToDo: Call EqUgils.updateEq(); to get eq level from system
         updateLoading(a, false);
         updateSleep(a, false);
         // ToDo: END
