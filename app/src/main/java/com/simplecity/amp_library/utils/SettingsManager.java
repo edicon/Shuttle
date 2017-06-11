@@ -373,6 +373,8 @@ public class SettingsManager {
     }
 
     public boolean useGmailPlaceholders() {
+        if( HI_RES )
+            return getBooleanValue(KEY_USE_GMAIL_PLACEHOLDERS, true); // HI_RES: google email style image
         return getBooleanValue(KEY_USE_GMAIL_PLACEHOLDERS, false);
     }
 
