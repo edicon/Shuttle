@@ -875,8 +875,17 @@ public class MainActivity extends BaseCastActivity implements
                 break;
             case android.R.id.home:
                 if( HI_RES ) {
-                    if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
-                        getSupportFragmentManager().popBackStackImmediate();
+                    if( BuildConfig.DEBUG ) {
+                        Log.d("POP", "getBackStackEntryCount: " + getSupportFragmentManager().getBackStackEntryCount());
+                        Log.d("POP", "getFragment.size: " + getSupportFragmentManager().getFragments().size());
+                    }
+                    // Black Exception
+                    try {
+                        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                            getSupportFragmentManager().popBackStackImmediate();
+                        }
+                    } catch ( Exception e ) {
+                        e.printStackTrace();
                     }
                     return true;
                 }
@@ -1010,11 +1019,18 @@ public class MainActivity extends BaseCastActivity implements
     public void swapFragments(Fragment fragment, boolean addToBackStack) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
-        fragmentTransaction.replace(R.id.main_container, fragment);
+        // MainContainer:PlayerFragment는 항상 있고, 나머지 Fragment만 Push/Pop
+        // MainContainer:PlayFragment -> swapwith:songFragment --> playSong --> PopStack하면 플레이중이므로 Error
+        // fragmentTransaction.replace(R.id.main_container, fragment);
+        fragmentTransaction.add(R.id.main_container, fragment);
         if (addToBackStack) {
             fragmentTransaction.addToBackStack(null);
         }
         fragmentTransaction.commitAllowingStateLoss();
+        if( BuildConfig.DEBUG ) {
+            Log.d("SWAP1", "swapFragments: getBackStackEntryCount: " + getSupportFragmentManager().getBackStackEntryCount());
+            Log.d("SWAP1", "swapFragments: getFragment.size: " + getSupportFragmentManager().getFragments().size());
+        }
     }
 
     public void swapFragments(Serializable item, View transitionView) {
@@ -1037,6 +1053,10 @@ public class MainActivity extends BaseCastActivity implements
                 .add(R.id.main_container, detailFragment)
                 .addToBackStack(null)
                 .commit();
+        if( BuildConfig.DEBUG ) {
+            Log.d("SWAP2", "swapFragments: getBackStackEntryCount: " + getSupportFragmentManager().getBackStackEntryCount());
+            Log.d("SWAP2", "swapFragments: getFragment.size: " + getSupportFragmentManager().getFragments().size());
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
