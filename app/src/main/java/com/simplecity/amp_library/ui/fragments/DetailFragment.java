@@ -23,6 +23,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.transition.Transition;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -1041,6 +1042,7 @@ public class DetailFragment extends BaseFragment implements
 
     @Override
     public void onClick(View v) {
+        Log.d("VIEW", ""+v.getId());
         switch (v.getId()) {
             case R.id.fab:
                 if (albumArtist != null) {
@@ -1080,6 +1082,9 @@ public class DetailFragment extends BaseFragment implements
                     });
                 }
                 menu.show();
+                break;
+            case R.id.headerView:
+                Log.d("VIEW", ""+v.getId());
                 break;
         }
     }
