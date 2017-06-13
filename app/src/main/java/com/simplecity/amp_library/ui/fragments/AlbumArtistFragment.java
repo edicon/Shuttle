@@ -342,8 +342,18 @@ public class AlbumArtistFragment extends BaseFragment implements
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
-        if( HI_RES )
+        if( HI_RES ) {
+            MenuItem search = menu.findItem(R.id.action_search);
+            MenuItem drawer = menu.findItem(R.id.action_drawer);
+            MenuItem setting = menu.findItem(R.id.action_setting);
+            if( search != null )
+                search.setVisible(false);
+            if( drawer != null )
+                drawer.setVisible(true);
+            if( setting != null )
+                setting.setVisible(true);
             return;
+        }
 
         //Strip the 'asc' or 'desc' flag, we just want to know the sort type
         int sortOrder = SortManager.getInstance().getArtistsSortOrder();

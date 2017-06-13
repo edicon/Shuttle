@@ -292,6 +292,19 @@ public class PlaylistFragment extends BaseFragment implements
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+
+        if( HI_RES ) {
+            MenuItem search = menu.findItem(R.id.action_search);
+            MenuItem drawer = menu.findItem(R.id.action_drawer);
+            MenuItem setting = menu.findItem(R.id.action_setting);
+            if( search != null )
+                search.setVisible(false);
+            if( drawer != null )
+                drawer.setVisible(true);
+            if( setting != null )
+                setting.setVisible(true);
+            return;
+        }
     }
 
     @Override

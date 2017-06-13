@@ -8,6 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -89,6 +92,8 @@ public class GenreFragment extends BaseFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
 
         genreAdapter = new GenreAdapter();
         genreAdapter.setListener(this);
@@ -176,6 +181,35 @@ public class GenreFragment extends BaseFragment implements
     public void onDestroy() {
         mPrefs.unregisterOnSharedPreferenceChangeListener(mSharedPreferenceChangeListener);
         super.onDestroy();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        if (HI_RES) {
+            MenuItem search = menu.findItem(R.id.action_search);
+            MenuItem drawer = menu.findItem(R.id.action_drawer);
+            MenuItem setting = menu.findItem(R.id.action_setting);
+            if (search != null)
+                search.setVisible(false);
+            if (drawer != null)
+                drawer.setVisible(true);
+            if (setting != null)
+                setting.setVisible(true);
+            return;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     private void refreshAdapterItems() {
