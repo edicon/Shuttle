@@ -168,24 +168,6 @@ public class AlbumFragment extends BaseFragment implements
         }
     }
 
-    public void themeUIComponents() {
-        if( HI_RES )
-            dummyStatusBar.setVisibility(View.VISIBLE);
-
-        ThemeUtils.themeRecyclerView(recyclerView);
-        recyclerView.setThumbColor(ColorUtils.getAccentColor());
-        recyclerView.setPopupBgColor(ColorUtils.getAccentColor());
-        recyclerView.setPopupTextColor(ColorUtils.getAccentColorSensitiveTextColor(getContext()));
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                ThemeUtils.themeRecyclerView(recyclerView);
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
-    }
-
     @SuppressLint("NewApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -279,6 +261,24 @@ public class AlbumFragment extends BaseFragment implements
     public void onDestroy() {
         prefs.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         super.onDestroy();
+    }
+
+    public void themeUIComponents() {
+        if( HI_RES )
+            dummyStatusBar.setVisibility(View.VISIBLE);
+
+        ThemeUtils.themeRecyclerView(recyclerView);
+        recyclerView.setThumbColor(ColorUtils.getAccentColor());
+        recyclerView.setPopupBgColor(ColorUtils.getAccentColor());
+        recyclerView.setPopupTextColor(ColorUtils.getAccentColorSensitiveTextColor(getContext()));
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                ThemeUtils.themeRecyclerView(recyclerView);
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
     }
 
     void refreshAdapterItems() {
