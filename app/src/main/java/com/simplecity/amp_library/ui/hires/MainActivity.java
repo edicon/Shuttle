@@ -245,8 +245,8 @@ public class MainActivity extends BaseCastActivity implements
 
         // Full Screen: Hide Status Bar: https://developer.android.com/training/system-ui/status.html
         if( HI_RES ) {
-            if ( Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                // ToDo: Check.. requestWindowFeature(Window.FEATURE_NO_TITLE);
+            if ( ShuttleUtils.hasMarshmallow()) {
+                requestWindowFeature(Window.FEATURE_NO_TITLE);
             }
             getWindow().setFlags(
                     WindowManager.LayoutParams.FLAG_FULLSCREEN,
