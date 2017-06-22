@@ -209,10 +209,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginRight="8dp"
                         android:background="?attr/circular_ripple"
                         android:contentDescription="@string/btn_prev"
-                        android:padding="16dp"
-                        android:src="@drawable/btn_player_rew"/>
+                        android:src="@drawable/btn_player_rew" />
                 </FrameLayout>
 
                 <FrameLayout
@@ -228,14 +228,16 @@
                         android:visibility="gone"
                         android:background="?attr/circular_ripple"
                         android:contentDescription="@string/btn_play"/>
+
                     <ImageButton
                         android:id="@+id/btn_play"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginRight="0dp"
                         android:background="?attr/circular_ripple"
                         android:contentDescription="@string/btn_play"
-                        android:src="@drawable/btn_player_pause"/>
+                        android:src="@drawable/btn_player_pause" />
                 </FrameLayout>
 
                 <FrameLayout
@@ -248,10 +250,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginLeft="8dp"
                         android:background="?attr/circular_ripple"
                         android:contentDescription="@string/btn_skip"
-                        android:padding="16dp"
-                        android:src="@drawable/btn_player_ff"/>
+                        android:src="@drawable/btn_player_ff" />
                 </FrameLayout>
 
                 <FrameLayout

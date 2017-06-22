@@ -593,7 +593,6 @@ public class DetailFragment extends BaseFragment implements
                                     adaptableItems.add(horizontalRecyclerView);
                             }
 
-
                             // Position Index
                             if( HI_RES ) {
                                 for (int i = 0;  i < songViews.size(); i++ ) {
