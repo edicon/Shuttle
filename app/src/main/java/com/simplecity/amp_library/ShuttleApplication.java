@@ -374,4 +374,8 @@ public class ShuttleApplication extends Application {
                 .penaltyFlashScreen()
                 .build());
     }
+
+    public static Context getContext() {
+        return sInstance;
+    }
 }

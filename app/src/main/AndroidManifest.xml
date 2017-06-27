@@ -13,8 +13,9 @@
     <!-- ## End 'Protection-Normal' permissions ## -->
 
     <!-- ## 'Special' permissions ##-->
-    <!-- Used to set ringtone-->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- Used to set ringtone
+        <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    -->
     <!-- Used to read mediastore db, caching artwork etc. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- ## End 'Special' permissions ##-->

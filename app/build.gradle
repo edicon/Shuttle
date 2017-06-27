@@ -43,10 +43,6 @@ def getProperty(@Nullable Properties properties, String name) {
 
 android {
 
-    dexOptions {
-        jumboMode = true
-    }
-
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.buildTools
 
@@ -72,6 +68,30 @@ android {
         // manifestPlaceholders = [CRASHLYTICS_API_KEY: ""]
     }
 
+    // Used to enable Java8 features (via RetroLambda)
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        ignore 'ExtraTranslation', 'MissingTranslation'
+        abortOnError false
+    }
+
+    dexOptions {
+        jumboMode = true
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/ASL2.0'
+    }
+
     signingConfigs {
         release {
             Properties properties = getProperties('../keystore.properties')
@@ -90,7 +110,6 @@ android {
         }
 
         release {
-
             minifyEnabled true
             shrinkResources true
 
@@ -103,12 +122,21 @@ android {
             manifestPlaceholders = [CRASHLYTICS_API_KEY: "${getProperty(getProperties('../private.properties'), 'CRASHLYTICS_API_KEY')}"]
         }
 
+        splits {
+            abi {
+                enable true
+                reset()
+                include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64' // , 'mips'
+                universalApk true
+            }
+        }
+
         applicationVariants.all { variant ->
 
             if (variant.buildType.name.contains('release')) {
                 variant.outputs.each { output ->
                     def apk = output.outputFile;
-                    def newName = "shuttle-" + variant.baseName.replace("-release", "") + "-v" + defaultConfig.versionName + ".apk";
+                    def newName = "WaveVine-" + variant.baseName.replace("-release", "") + "-v" + defaultConfig.versionName + ".apk";
                     output.outputFile = new File(apk.parentFile, newName);
                 }
 
@@ -144,7 +172,7 @@ android {
         def names = variant.flavors*.name
         def buildTypes = variant.buildType*.name
 
-        def debugFilters = ["paid", "free", 'amazonPaid', "amazonFree"];
+        def debugFilters = ["paid", "free"] // , 'amazonPaid', "amazonFree"];
         def relFilters = ["dev", "devPre21"];
 
         def filter = { name -> names.contains(name) }
@@ -154,11 +182,6 @@ android {
         setIgnore(debugIgnore || releaseIgnore)
     }
 
-    // Used to enable Java8 features (via RetroLambda)
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 
     productFlavors {
 
@@ -211,10 +234,6 @@ android {
         amazonFree.java.srcDirs = ['src/free/java']
     }
 
-    lintOptions {
-        ignore 'ExtraTranslation', 'MissingTranslation'
-        abortOnError false
-    }
 }
 
 dependencies {
@@ -251,6 +270,7 @@ dependencies {
     // /////////////////////////////////////////////////////////////////////////
 
     retrolambdaConfig libs.lambdaBackport
+    compile libs.vlcAndroid
     compile libs.ccl
     compile libs.nanoHttp
     compile libs.dashClockApi

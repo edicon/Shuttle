@@ -51,6 +51,7 @@ ext.versions = [
         // Third party lib versions
         // /////////////////////////////////////////////////////////////////////////
 
+        vlcAndroid             : "1.9.8",
         nanoHttp               : "2.3.1",
         crashlytics            : "2.6.8@aar",
         dashClockApi           : "2.0.0",
@@ -137,6 +138,8 @@ ext.libs = [
         // Third party libs
         // /////////////////////////////////////////////////////////////////////////
 
+        // android VLC - https://github.com/mrmaffen/vlc-android-sdk, 2.0.6:latest
+        vlcAndroid         : "de.mrmaffen:vlc-android-sdk:$versions.vlcAndroid",
         // NanoHttp - https://github.com/NanoHttpd/nanohttpd (Various)
         nanoHttp           : "org.nanohttpd:nanohttpd-webserver:$versions.nanoHttp",
         // Crashlytics - https://fabric.io/kits/android/crashlytics
