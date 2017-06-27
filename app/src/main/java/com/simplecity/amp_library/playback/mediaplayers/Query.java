@@ -1,4 +1,4 @@
-package com.simplecity.amp_library.mediaplayers;
+package com.simplecity.amp_library.playback.mediaplayers;
 
 /**
  * Created by hslee on 2017. 6. 27..

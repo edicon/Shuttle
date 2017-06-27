@@ -15,19 +15,19 @@
  *   You should have received a copy of the GNU General Public License
  *   along with Tomahawk. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.simplecity.amp_library.mediaplayers;
+package com.simplecity.amp_library.playback.mediaplayers;
 
 public interface UniformMediaPlayerCallback {
 
     /**
      * Called as soon as a {@link Query} has been prepared
      */
-    void onPrepared(UniformMediaPlayer mediaPlayer, Query query);
+    void onPrepared(UniformMediaPlayer mediaPlayer);
 
     /**
      * Called if playback of the currently prepared {@link Query} has finished.
      */
-    void onCompletion(UniformMediaPlayer mediaPlayer, Query query);
+    void onCompletion(UniformMediaPlayer mediaPlayer);
 
     /**
      * Called whenever an error occurred.

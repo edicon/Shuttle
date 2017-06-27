@@ -15,7 +15,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with Tomahawk. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.simplecity.amp_library.mediaplayers.PrefUtils;
+package com.simplecity.amp_library.playback.mediaplayers.PrefUtils;
 
 import android.content.SharedPreferences;
 import android.os.Build;

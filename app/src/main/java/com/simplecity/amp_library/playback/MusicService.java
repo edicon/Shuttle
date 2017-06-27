@@ -73,6 +73,7 @@ import com.simplecity.amp_library.glide.utils.GlideUtils;
 import com.simplecity.amp_library.http.HttpServer;
 import com.simplecity.amp_library.model.Album;
 import com.simplecity.amp_library.model.Song;
+import com.simplecity.amp_library.playback.mediaplayers.WavevinePlayer;
 import com.simplecity.amp_library.services.EqualizerService;
 import com.simplecity.amp_library.ui.widgets.WidgetProviderExtraLarge;
 import com.simplecity.amp_library.ui.widgets.WidgetProviderLarge;
@@ -195,7 +196,7 @@ public class MusicService extends Service {
         int COMPLETE = 3;
     }
 
-    interface PlayerHandler {
+    public interface PlayerHandler {
         int TRACK_ENDED = 1;
         int RELEASE_WAKELOCK = 2;
         int SERVER_DIED = 3;
@@ -234,7 +235,8 @@ public class MusicService extends Service {
 
     private final IBinder mBinder = new LocalBinder(this);
 
-    MultiPlayer player;
+    // MultiPlayer player;
+    WavevinePlayer player;
 
     int shuffleMode = ShuffleMode.OFF;
     int repeatMode = RepeatMode.OFF;
@@ -614,7 +616,8 @@ public class MusicService extends Service {
         registerExternalStorageListener();
         registerA2dpServiceListener();
 
-        player = new MultiPlayer(this);
+        // player = new MultiPlayer(this);
+        player = new WavevinePlayer(this);
         player.setHandler(playerHandler);
 
         IntentFilter intentFilter = new IntentFilter();

@@ -15,17 +15,16 @@
  *   You should have received a copy of the GNU General Public License
  *   along with Tomahawk. If not, see <http://www.gnu.org/licenses/>.
  */
-package com.simplecity.amp_library.mediaplayers;
+package com.simplecity.amp_library.playback.mediaplayers;
 
+import android.os.Handler;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 
-import com.simplecity.amp_library.mediaplayers.PrefUtils.PreferenceUtils;
+import com.simplecity.amp_library.playback.mediaplayers.PrefUtils.PreferenceUtils;
 
 import org.videolan.libvlc.LibVLC;
-import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
-import org.videolan.libvlc.util.AndroidUtil;
 
 import java.util.ArrayList;
 
@@ -80,7 +79,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
                             Log.d(TAG, "MediaPlayer.Event.EndReached");
                             if (mMediaPlayerCallback != null) {
                                 mMediaPlayerCallback.onCompletion(
-                                        VLCMediaPlayer.this, mPreparedQuery);
+                                        VLCMediaPlayer.this /*, mPreparedQuery*/);
                             } else {
                                 Log.e(TAG, "Wasn't able to call onCompletion because callback"
                                         + " object is null");
@@ -118,12 +117,14 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     /**
      * Start playing the previously prepared { collection.Track}
      */
+    /*
     @Override
     public void play() throws IllegalStateException {
         Log.d(TAG, "play()");
         mPlayState = PlaybackStateCompat.STATE_PLAYING;
-        handlePlayState();
+        // handlePlayState();
     }
+    */
 
     /**
      * Pause playing the current { collection.Track}
@@ -132,24 +133,55 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     public void pause() throws IllegalStateException {
         Log.d(TAG, "pause()");
         mPlayState = PlaybackStateCompat.STATE_PAUSED;
-        handlePlayState();
+        // handlePlayState();
+    }
+
+    @Override
+    public long getDuration() {
+        return 0;
     }
 
     /**
      * Seek to the given playback position (in ms)
      */
     @Override
-    public void seekTo(long msec) throws IllegalStateException {
+    public long seekTo(long msec) throws IllegalStateException {
         Log.d(TAG, "seekTo()");
         // if (mPreparedQuery != null && !TomahawkApp.PLUGINNAME_BEATSMUSIC.equals(
         //         mPreparedQuery.getPreferredTrackResult().getResolvedBy().getId())) {
             getMediaPlayerInstance().setTime(msec);
         // }
+        // ToDo:
+        return 0L;
+    }
+
+    @Override
+    public void setVolume(float vol) {
+
+    }
+
+    @Override
+    public int getAudioSessionId() {
+        return 0;
+    }
+
+    @Override
+    public boolean isInitialized() {
+        return false;
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
     }
 
     /**
      * Prepare the given url
-     */
     @Override
     public void prepare(final Query query, UniformMediaPlayerCallback callback) {
         Log.d(TAG, "prepare() query: " + query);
@@ -157,7 +189,6 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
         getMediaPlayerInstance().stop();
         mPreparedQuery = null;
         mPreparingQuery = query;
-        /*
         getStreamUrl(query.getPreferredTrackResult()).done(new DoneCallback<String>() {
             @Override
             public void onDone(String url) {
@@ -177,8 +208,8 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
                 }
             }
         });
-        */
     }
+     */
 
     @Override
     public void release() {
@@ -193,7 +224,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
      * @return the current track position
      */
     @Override
-    public long getPosition() {
+    public long getCurrentPosition() {
         if (mPreparedQuery != null) {
             return getMediaPlayerInstance().getTime();
         } else {
@@ -205,6 +236,22 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     public void setBitrate(int bitrateMode) {
     }
 
+    @Override
+    public void setDataSource(String path) {
+
+    }
+
+    @Override
+    public void setNextDataSource(String path) {
+
+    }
+
+    @Override
+    public void setHandler(Handler handler) {
+
+    }
+
+    /*
     @Override
     public boolean isPlaying(Query query) {
         return isPrepared(query) && getMediaPlayerInstance().isPlaying();
@@ -231,4 +278,5 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
             }
         }
     }
+    */
 }
