@@ -148,11 +148,6 @@ class AndroidMediaPlayer extends UniformMediaPlayer {
         }
     }
 
-    @Override
-    public void setHandler(Handler handler) {
-        mHandler = handler;
-    }
-
     private boolean setDataSourceImpl(final MediaPlayer mediaPlayer, final String path) {
         if (TextUtils.isEmpty(path) || mediaPlayer == null) {
             return false;
@@ -220,6 +215,11 @@ class AndroidMediaPlayer extends UniformMediaPlayer {
         }
     }
 
+    @Override
+    public void setHandler(Handler handler) {
+        mHandler = handler;
+    }
+
     private MediaPlayer.OnCompletionListener completionListener = new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer mp) {
@@ -253,32 +253,4 @@ class AndroidMediaPlayer extends UniformMediaPlayer {
             return false;
         }
     };
-
-    /*
-    @Override
-    public boolean isPreparing(Query query) {
-        return mPreparingQuery != null && mPreparingQuery == query;
-    }
-
-    @Override
-    public boolean isPrepared(Query query) {
-        return mPreparedQuery != null && mPreparedQuery == query;
-    }
-
-    private void handlePlayState() {
-        if (sMediaPlayer != null && mPreparedQuery != null) {
-            try {
-                if (mPlayState == PlaybackStateCompat.STATE_PAUSED
-                        && sMediaPlayer.isPlaying()) {
-                    sMediaPlayer.pause();
-                } else if (mPlayState == PlaybackStateCompat.STATE_PLAYING
-                        && !sMediaPlayer.isPlaying()) {
-                    sMediaPlayer.start();
-                }
-            } catch (IllegalStateException e) {
-                //ignored
-            }
-        }
-    }
-    */
 }

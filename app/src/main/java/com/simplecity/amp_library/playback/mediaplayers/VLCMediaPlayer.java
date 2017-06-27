@@ -18,14 +18,20 @@
 package com.simplecity.amp_library.playback.mediaplayers;
 
 import android.os.Handler;
-import android.support.v4.media.session.PlaybackStateCompat;
+import android.os.PowerManager;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.crashlytics.android.core.CrashlyticsCore;
+import com.simplecity.amp_library.playback.MusicService;
 import com.simplecity.amp_library.playback.mediaplayers.PrefUtils.PreferenceUtils;
 
 import org.videolan.libvlc.LibVLC;
+import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
+import org.videolan.libvlc.util.AndroidUtil;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
@@ -35,65 +41,35 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
 
     private static final String TAG = VLCMediaPlayer.class.getSimpleName();
 
-    private static MediaPlayer sMediaPlayer;
+    private final WeakReference<MusicService> mService;
+    private static MediaPlayer mCurrentMediaPlayer;
+    private MediaPlayer mNextMediaPlayer;
+    private android.media.MediaPlayer powerMediaPlayer = new android.media.MediaPlayer(); // ToDo: for fake
+    private Handler mHandler;
+    private boolean mIsInitialized = false;
+
+    private UniformMediaPlayerCallback mMediaPlayerCallback;
 
     private static LibVLC sLibVLC;
+
+    public VLCMediaPlayer(final MusicService service) {
+        mService = new WeakReference<>(service);
+        powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
+
+        mCurrentMediaPlayer = new MediaPlayer(sLibVLC);
+        mCurrentMediaPlayer.setEventListener( mediaPlayerListener );
+        setEqualizer();
+    }
 
     static {
         ArrayList<String> options = new ArrayList<>();
         options.add("--http-reconnect");
         options.add("--network-caching=2000");
         sLibVLC = new LibVLC(options);
-        sMediaPlayer = new MediaPlayer(sLibVLC);
+        mCurrentMediaPlayer = new MediaPlayer(sLibVLC);
     }
 
-    private UniformMediaPlayerCallback mMediaPlayerCallback;
-
-    private Query mPreparedQuery;
-
-    private Query mPreparingQuery;
-
-    private int mPlayState = PlaybackStateCompat.STATE_NONE;
-
-    private class MediaPlayerListener implements MediaPlayer.EventListener {
-
-        @Override
-        public void onEvent(final MediaPlayer.Event event) {
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    switch (event.type) {
-                        case MediaPlayer.Event.EncounteredError:
-                            Log.d(TAG, "MediaPlayer.Event.EncounteredError");
-                            mPreparedQuery = null;
-                            mPreparingQuery = null;
-                            if (mMediaPlayerCallback != null) {
-                                mMediaPlayerCallback.onError(
-                                        VLCMediaPlayer.this, "LibVLC encountered an error");
-                            } else {
-                                Log.e(TAG, "Wasn't able to call onError because callback"
-                                        + " object is null");
-                            }
-                            break;
-                        case MediaPlayer.Event.EndReached:
-                            Log.d(TAG, "MediaPlayer.Event.EndReached");
-                            if (mMediaPlayerCallback != null) {
-                                mMediaPlayerCallback.onCompletion(
-                                        VLCMediaPlayer.this /*, mPreparedQuery*/);
-                            } else {
-                                Log.e(TAG, "Wasn't able to call onCompletion because callback"
-                                        + " object is null");
-                            }
-                            break;
-                    }
-                }
-            };
-            // ToDo: ThreadManager.get().executePlayback(VLCMediaPlayer.this, r);
-        }
-    }
-
-    public VLCMediaPlayer() {
-        sMediaPlayer = new MediaPlayer(sLibVLC);
+    private static void setEqualizer() {
         if (PreferenceUtils.getBoolean(PreferenceUtils.EQUALIZER_ENABLED)) {
             MediaPlayer.Equalizer equalizer = MediaPlayer.Equalizer.create();
             float[] bands = PreferenceUtils.getFloatArray(PreferenceUtils.EQUALIZER_VALUES);
@@ -101,9 +77,8 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
             for (int i = 0; i < MediaPlayer.Equalizer.getBandCount(); i++) {
                 equalizer.setAmp(i, bands[i + 1]);
             }
-            sMediaPlayer.setEqualizer(equalizer);
+            mCurrentMediaPlayer.setEqualizer(equalizer);
         }
-        sMediaPlayer.setEventListener(new MediaPlayerListener());
     }
 
     public static LibVLC getLibVlcInstance() {
@@ -111,73 +86,103 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     }
 
     public static MediaPlayer getMediaPlayerInstance() {
-        return sMediaPlayer;
+        return mCurrentMediaPlayer;
     }
 
-    /**
-     * Start playing the previously prepared { collection.Track}
-     */
+    @Override
+    public void pause() {
+        try {
+            mCurrentMediaPlayer.pause();
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "Error pausing MultiPlayer: " + e.getLocalizedMessage());
+        }
+    }
+
     /*
     @Override
-    public void play() throws IllegalStateException {
-        Log.d(TAG, "play()");
-        mPlayState = PlaybackStateCompat.STATE_PLAYING;
-        // handlePlayState();
+    public boolean isPlaying() {
+        try {
+            return sMediaPlayer != null && sMediaPlayer.isPlaying();
+        } catch (IllegalStateException e) {
+            //ignored
+        }
+        return false;
     }
     */
 
-    /**
-     * Pause playing the current { collection.Track}
-     */
-    @Override
-    public void pause() throws IllegalStateException {
-        Log.d(TAG, "pause()");
-        mPlayState = PlaybackStateCompat.STATE_PAUSED;
-        // handlePlayState();
-    }
-
     @Override
     public long getDuration() {
-        return 0;
+        try {
+            return mCurrentMediaPlayer.getLength(); // .getDuration();
+        } catch (IllegalStateException ignored) {
+            return 0;
+        }
     }
 
-    /**
-     * Seek to the given playback position (in ms)
-     */
     @Override
-    public long seekTo(long msec) throws IllegalStateException {
-        Log.d(TAG, "seekTo()");
-        // if (mPreparedQuery != null && !TomahawkApp.PLUGINNAME_BEATSMUSIC.equals(
-        //         mPreparedQuery.getPreferredTrackResult().getResolvedBy().getId())) {
-            getMediaPlayerInstance().setTime(msec);
-        // }
-        // ToDo:
-        return 0L;
+    public long getCurrentPosition() {
+        try {
+            return (long)mCurrentMediaPlayer.getPosition(); // .getCurrentPosition();
+        } catch (IllegalStateException ignored) {
+            return 0;
+        }
+    }
+
+    @Override
+    public long seekTo(long whereto) {
+        try {
+            mCurrentMediaPlayer.setPosition((float)whereto );     // .seekTo((int) whereto);
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "Error seeking MultiPlayer: " + e.getLocalizedMessage());
+        }
+        return whereto;
     }
 
     @Override
     public void setVolume(float vol) {
-
+        try {
+            mCurrentMediaPlayer.setVolume((int) vol );  // .setVolume(vol, vol);
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "Error setting MultiPlayer volume: " + e.getLocalizedMessage());
+        }
     }
 
     @Override
     public int getAudioSessionId() {
-        return 0;
+        int sessionId = 0;
+        try {
+            // ToDo;
+            sessionId = mCurrentMediaPlayer.getAudioTrack(); // .getAudioSessionId();
+        } catch (IllegalStateException ignored) {
+            //Nothing to do
+        }
+        return sessionId;
     }
 
     @Override
     public boolean isInitialized() {
-        return false;
+        return mIsInitialized;
     }
 
     @Override
     public void start() {
-
+        try {
+            mCurrentMediaPlayer.play();     // .start();
+        } catch (RuntimeException e) {
+            CrashlyticsCore.getInstance().log("MusicService.start() failed. Exception: " + e.toString());
+        }
     }
 
     @Override
     public void stop() {
-
+        try {
+            // ToDo;
+            mCurrentMediaPlayer.stop();     // .reset();
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "Error stopping MultiPlayer: " + e.getLocalizedMessage());
+            CrashlyticsCore.getInstance().log("stop() failed. Error: " + e.getLocalizedMessage());
+        }
+        mIsInitialized = false;
     }
 
     /**
@@ -213,70 +218,132 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public void release() {
-        Log.d(TAG, "release()");
-        mPreparedQuery = null;
-        mPreparingQuery = null;
-        getMediaPlayerInstance().stop();
-        mMediaPlayerCallback = null;
+        stop();
+        mCurrentMediaPlayer.release();
     }
 
-    /**
-     * @return the current track position
-     */
-    @Override
-    public long getCurrentPosition() {
-        if (mPreparedQuery != null) {
-            return getMediaPlayerInstance().getTime();
-        } else {
-            return 0L;
-        }
-    }
 
     @Override
-    public void setBitrate(int bitrateMode) {
+    public void setBitrate(int mode) {
     }
 
     @Override
     public void setDataSource(String path) {
-
+        mIsInitialized = setDataSourceImpl(mCurrentMediaPlayer, path);
+        if (mIsInitialized) {
+            setNextDataSource(null);
+        }
     }
 
-    @Override
-    public void setNextDataSource(String path) {
+    private boolean setDataSourceImpl(final MediaPlayer mediaPlayer, final String path) {
+        if (TextUtils.isEmpty(path) || mediaPlayer == null) {
+            return false;
+        }
 
+        // mMediaPlayerCallback = callback;
+        getMediaPlayerInstance().stop();
+        // Log.d(TAG, "Received stream url: " + path + " for query: " + query);
+        Media media = new Media(sLibVLC, AndroidUtil.LocationToUri(path));
+        getMediaPlayerInstance().setMedia(media);
+        mCurrentMediaPlayer.setEventListener( mediaPlayerListener);
+        // mMediaPlayerCallback.onPrepared(VLCMediaPlayer.this, mPreparedQuery);
+        // handlePlayState();
+        /*
+        try {
+            mediaPlayer.reset();
+            mediaPlayer.setOnPreparedListener(null);
+            if (path.startsWith("content://")) {
+                Uri uri = Uri.parse(path);
+                mediaPlayer.setDataSource(mService.get(), uri);
+            } else {
+                mediaPlayer.setDataSource(path);
+            }
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.prepare();
+        } catch (final Exception e) {
+            Log.e(TAG, "setDataSource failed: " + e.getLocalizedMessage());
+            CrashlyticsCore.getInstance().log("setDataSourceImpl failed. Path: [" + path + "] error: " + e.getLocalizedMessage());
+            return false;
+        }
+        mediaPlayer.setOnCompletionListener(completionListener);
+        mediaPlayer.setOnErrorListener(errorListener);
+        */
+
+        return true;
+    }
+
+    public void setNextDataSource(final String path) {
+        // ToDo:
+        try {
+            // mCurrentMediaPlayer.setNextMediaPlayer(null);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Next media player is current one, continuing");
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "Media player not initialized!");
+            CrashlyticsCore.getInstance().log("setNextDataSource failed for. Media player not intitialized.");
+            return;
+        }
+        if (mNextMediaPlayer != null) {
+            mNextMediaPlayer.release();
+            mNextMediaPlayer = null;
+        }
+        if (TextUtils.isEmpty(path)) {
+            return;
+        }
+        mNextMediaPlayer = new MediaPlayer(sLibVLC);
+        powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
+        // mNextMediaPlayer.setAudioSessionId(getAudioSessionId());
+        if (setDataSourceImpl(mNextMediaPlayer, path)) {
+            try {
+                // mCurrentMediaPlayer.setNextMediaPlayer(mNextMediaPlayer);
+            } catch (Exception e) {
+                Log.e(TAG, "setNextDataSource failed - failed to call setNextMediaPlayer on mCurrentMediaPlayer. Error: " + e.getLocalizedMessage());
+                CrashlyticsCore.getInstance().log("setNextDataSource failed - failed to call setNextMediaPlayer on mCurrentMediaPlayer. Error: " + e.getLocalizedMessage());
+                if (mNextMediaPlayer != null) {
+                    mNextMediaPlayer.release();
+                    mNextMediaPlayer = null;
+                }
+            }
+        } else {
+            Log.e(TAG, "setDataSourceImpl failed for path: [" + path + "]. Setting next media player to null");
+            CrashlyticsCore.getInstance().log("setDataSourceImpl failed for path: [" + path + "]. Setting next media player to null");
+            if (mNextMediaPlayer != null) {
+                mNextMediaPlayer.release();
+                mNextMediaPlayer = null;
+            }
+        }
     }
 
     @Override
     public void setHandler(Handler handler) {
-
+        mHandler = handler;
     }
 
-    /*
-    @Override
-    public boolean isPlaying(Query query) {
-        return isPrepared(query) && getMediaPlayerInstance().isPlaying();
-    }
-
-    @Override
-    public boolean isPreparing(Query query) {
-        return mPreparingQuery != null && mPreparingQuery == query;
-    }
-
-    @Override
-    public boolean isPrepared(Query query) {
-        return mPreparedQuery != null && mPreparedQuery == query;
-    }
-
-    private void handlePlayState() {
-        if (mPreparedQuery != null) {
-            if (mPlayState == PlaybackStateCompat.STATE_PAUSED
-                    && getMediaPlayerInstance().isPlaying()) {
-                getMediaPlayerInstance().pause();
-            } else if (mPlayState == PlaybackStateCompat.STATE_PLAYING
-                    && !getMediaPlayerInstance().isPlaying()) {
-                getMediaPlayerInstance().play();
+    private MediaPlayer.EventListener  mediaPlayerListener = new MediaPlayer.EventListener() {
+        @Override
+        public void onEvent(final MediaPlayer.Event event) {
+            switch (event.type) {
+                case MediaPlayer.Event.EncounteredError:
+                        mIsInitialized = false;
+                        mCurrentMediaPlayer.release();
+                        mCurrentMediaPlayer = new MediaPlayer(sLibVLC);
+                        // ToDo;
+                        powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
+                        mHandler.sendMessageDelayed(mHandler.obtainMessage(MusicService.PlayerHandler.SERVER_DIED), 2000);
+                    break;
+                case MediaPlayer.Event.EndReached:
+                    if ( mCurrentMediaPlayer != null && mNextMediaPlayer != null) {
+                        mCurrentMediaPlayer.release();
+                        mCurrentMediaPlayer = mNextMediaPlayer;
+                        mNextMediaPlayer = null;
+                        mHandler.sendEmptyMessage(MusicService.PlayerHandler.TRACK_WENT_TO_NEXT);
+                    } else {
+                        mService.get().mWakeLock.acquire(30000);
+                        mHandler.sendEmptyMessage(MusicService.PlayerHandler.TRACK_ENDED);
+                        mHandler.sendEmptyMessage(MusicService.PlayerHandler.RELEASE_WAKELOCK);
+                    }
+                    break;
             }
         }
-    }
-    */
+    };
 }
