@@ -250,18 +250,18 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
             return false;
         }
 
+        getMediaPlayerInstance().stop();
+
         // ToDo: Check path or uri
         Uri uri = AndroidUtil.PathToUri(path);
         Log.d(TAG, "setDataSourceImpl: path: " + path + "\n Uri: "  + uri.toString() );
-        // mMediaPlayerCallback = callback;
-        getMediaPlayerInstance().stop();
+
         Media media = new Media(sLibVLC, uri );
         // Media media = new Media(sLibVLC, AndroidUtil.LocationToUri(path));
-        getMediaPlayerInstance().setMedia(media);
+        mCurrentMediaPlayer.setMedia(media);
         mCurrentMediaPlayer.setEventListener( mediaPlayerListener);
-        // mMediaPlayerCallback.onPrepared(VLCMediaPlayer.this, mPreparedQuery);
-        // handlePlayState();
         mCurrentMediaPlayer.play();
+
         debugPlayer( mCurrentMediaPlayer );
         debugMedia( media );
 
