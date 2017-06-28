@@ -24,7 +24,7 @@ public class WavevinePlayer {
         // mService = new WeakReference<>(service);
         // mCurrentMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
         // ToDo:
-        boolean RUN_VLC = false;
+        boolean RUN_VLC = true;
         if( RUN_VLC )
             mCurrentMediaPlayer = new VLCMediaPlayer( service );
         else

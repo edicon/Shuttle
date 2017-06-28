@@ -261,6 +261,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
         mCurrentMediaPlayer.setEventListener( mediaPlayerListener);
         // mMediaPlayerCallback.onPrepared(VLCMediaPlayer.this, mPreparedQuery);
         // handlePlayState();
+        mCurrentMediaPlayer.play();
         debugPlayer( mCurrentMediaPlayer );
         debugMedia( media );
 
@@ -339,8 +340,28 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     private MediaPlayer.EventListener  mediaPlayerListener = new MediaPlayer.EventListener() {
         @Override
         public void onEvent(final MediaPlayer.Event event) {
-            Log.e(TAG, "onEvent.type: [" + event.type + "]");
+            String x = String.format("%04x", event.type);
+            Log.d(TAG, "onEvent.type: [" + x + "]");
             switch (event.type) {
+                case MediaPlayer.Event.MediaChanged:    // 0x100
+                    break;
+                case MediaPlayer.Event.Opening:
+                    break;
+                case MediaPlayer.Event.Playing:         // 0x104
+                    break;
+                case MediaPlayer.Event.Paused:          // 0x105
+                    break;
+                case MediaPlayer.Event.Stopped:         // 0x106
+                    break;
+                case MediaPlayer.Event.TimeChanged:     // 0x10b
+                    break;
+                case MediaPlayer.Event.PositionChanged: // 0x10c
+                    break;
+                case MediaPlayer.Event.SeekableChanged:
+                    break;
+                case MediaPlayer.Event.ESAdded:         // 0x114/114
+                case MediaPlayer.Event.ESDeleted:
+                    break;
                 case MediaPlayer.Event.EndReached:
                     if ( mCurrentMediaPlayer != null && mNextMediaPlayer != null) {
                         mCurrentMediaPlayer.release();
@@ -360,6 +381,9 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
                     // ToDo;
                     powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
                     mHandler.sendMessageDelayed(mHandler.obtainMessage(MusicService.PlayerHandler.SERVER_DIED), 2000);
+                    break;
+                default:
+                    Log.d(TAG, "onEvent.type(UnKnown): [" + x + "]");
                     break;
             }
         }
