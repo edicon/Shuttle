@@ -565,6 +565,9 @@ public class MusicService extends Service {
     public void onCreate() {
         super.onCreate();
 
+        if( BuildConfig.DEBUG )
+            ; // android.os.Debug.waitForDebugger();
+
         servicePrefs = getSharedPreferences("Service", 0);
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -616,6 +619,7 @@ public class MusicService extends Service {
         registerExternalStorageListener();
         registerA2dpServiceListener();
 
+        // ToDo: EDC
         // player = new MultiPlayer(this);
         player = new WavevinePlayer(this);
         player.setHandler(playerHandler);

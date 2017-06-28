@@ -17,6 +17,7 @@
  */
 package com.simplecity.amp_library.playback.mediaplayers;
 
+import android.net.Uri;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.text.TextUtils;
@@ -48,7 +49,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     private Handler mHandler;
     private boolean mIsInitialized = false;
 
-    private UniformMediaPlayerCallback mMediaPlayerCallback;
+    // private UniformMediaPlayerCallback mMediaPlayerCallback;
 
     private static LibVLC sLibVLC;
 
@@ -56,17 +57,21 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
         mService = new WeakReference<>(service);
         powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
 
+        // ToDo: static와 우선 관계
         mCurrentMediaPlayer = new MediaPlayer(sLibVLC);
         mCurrentMediaPlayer.setEventListener( mediaPlayerListener );
         setEqualizer();
+
+        Log.d(TAG, "VLCMediaPlayer: MediaPlayer: Created");
     }
 
     static {
         ArrayList<String> options = new ArrayList<>();
         options.add("--http-reconnect");
         options.add("--network-caching=2000");
+
         sLibVLC = new LibVLC(options);
-        mCurrentMediaPlayer = new MediaPlayer(sLibVLC);
+        Log.d(TAG, "VLCMediaPlayer: Static: ver: " +  sLibVLC.version());
     }
 
     private static void setEqualizer() {
@@ -102,7 +107,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     @Override
     public boolean isPlaying() {
         try {
-            return sMediaPlayer != null && sMediaPlayer.isPlaying();
+            return mCurrentMediaPlayer != null && mCurrentMediaPlayer.isPlaying();
         } catch (IllegalStateException e) {
             //ignored
         }
@@ -122,6 +127,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     @Override
     public long getCurrentPosition() {
         try {
+            // ToDo: Check .time()
             return (long)mCurrentMediaPlayer.getPosition(); // .getCurrentPosition();
         } catch (IllegalStateException ignored) {
             return 0;
@@ -140,6 +146,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public void setVolume(float vol) {
+        // ToDo:
         try {
             mCurrentMediaPlayer.setVolume((int) vol );  // .setVolume(vol, vol);
         } catch (IllegalStateException e) {
@@ -219,12 +226,15 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     @Override
     public void release() {
         stop();
-        mCurrentMediaPlayer.release();
+        // ToDO: check resource release
+        // mCurrentMediaPlayer.release();
     }
 
 
     @Override
     public void setBitrate(int mode) {
+        // ToDo:
+        mCurrentMediaPlayer.setRate((float)mode);
     }
 
     @Override
@@ -240,14 +250,20 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
             return false;
         }
 
+        // ToDo: Check path or uri
+        Uri uri = AndroidUtil.PathToUri(path);
+        Log.d(TAG, "setDataSourceImpl: path: " + path + "\n Uri: "  + uri.toString() );
         // mMediaPlayerCallback = callback;
         getMediaPlayerInstance().stop();
-        // Log.d(TAG, "Received stream url: " + path + " for query: " + query);
-        Media media = new Media(sLibVLC, AndroidUtil.LocationToUri(path));
+        Media media = new Media(sLibVLC, uri );
+        // Media media = new Media(sLibVLC, AndroidUtil.LocationToUri(path));
         getMediaPlayerInstance().setMedia(media);
         mCurrentMediaPlayer.setEventListener( mediaPlayerListener);
         // mMediaPlayerCallback.onPrepared(VLCMediaPlayer.this, mPreparedQuery);
         // handlePlayState();
+        debugPlayer( mCurrentMediaPlayer );
+        debugMedia( media );
+
         /*
         try {
             mediaPlayer.reset();
@@ -273,8 +289,8 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     }
 
     public void setNextDataSource(final String path) {
-        // ToDo:
         try {
+            // ToDo: MediaListPlayer
             // mCurrentMediaPlayer.setNextMediaPlayer(null);
         } catch (IllegalArgumentException e) {
             Log.e(TAG, "Next media player is current one, continuing");
@@ -284,7 +300,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
             return;
         }
         if (mNextMediaPlayer != null) {
-            mNextMediaPlayer.release();
+            mNextMediaPlayer.release(); // ToDo: Check release or stop
             mNextMediaPlayer = null;
         }
         if (TextUtils.isEmpty(path)) {
@@ -292,6 +308,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
         }
         mNextMediaPlayer = new MediaPlayer(sLibVLC);
         powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
+        // ToDo:
         // mNextMediaPlayer.setAudioSessionId(getAudioSessionId());
         if (setDataSourceImpl(mNextMediaPlayer, path)) {
             try {
@@ -322,15 +339,8 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     private MediaPlayer.EventListener  mediaPlayerListener = new MediaPlayer.EventListener() {
         @Override
         public void onEvent(final MediaPlayer.Event event) {
+            Log.e(TAG, "onEvent.type: [" + event.type + "]");
             switch (event.type) {
-                case MediaPlayer.Event.EncounteredError:
-                        mIsInitialized = false;
-                        mCurrentMediaPlayer.release();
-                        mCurrentMediaPlayer = new MediaPlayer(sLibVLC);
-                        // ToDo;
-                        powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
-                        mHandler.sendMessageDelayed(mHandler.obtainMessage(MusicService.PlayerHandler.SERVER_DIED), 2000);
-                    break;
                 case MediaPlayer.Event.EndReached:
                     if ( mCurrentMediaPlayer != null && mNextMediaPlayer != null) {
                         mCurrentMediaPlayer.release();
@@ -343,7 +353,41 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
                         mHandler.sendEmptyMessage(MusicService.PlayerHandler.RELEASE_WAKELOCK);
                     }
                     break;
+                case MediaPlayer.Event.EncounteredError:
+                    mIsInitialized = false;
+                    mCurrentMediaPlayer.release();
+                    mCurrentMediaPlayer = new MediaPlayer(sLibVLC);
+                    // ToDo;
+                    powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
+                    mHandler.sendMessageDelayed(mHandler.obtainMessage(MusicService.PlayerHandler.SERVER_DIED), 2000);
+                    break;
             }
         }
     };
+
+    private void debugMedia( Media media ) {
+        Log.d( TAG, "Media :" + "\n" +
+            "getDuration: " + media.getDuration()     + "/" +
+            "getState: "    + media.getState()        + "/" +
+            "getTrackCount: " + media.getTrackCount() + "/" +
+            "getType: "     + media.getType()         + "/" +
+            "getUri: "      + media.getUri()          + "/" +
+            "isParsed: "    + media.isParsed()        + "/" +
+            "isReleased: "  + media.isReleased()
+        );
+    }
+
+    private void debugPlayer( MediaPlayer player ) {
+        Log.d(TAG, "Player :" + "\n" +
+            "getLength: "           + player.getLength()        + "/" +
+            "isReleased: "          + player.isReleased()       + "/" +
+            "getPosition: "         + player.getPosition()      + "/" +
+            "getAudioTrack: "       + player.getAudioTrack()    + "/" +
+            "getAudioTracksCount: " + player.getAudioTracksCount() + "/" +
+            "getTime: "             + player.getTime()          + "/" +
+            "getPlayerState: "      + player.getPlayerState()   + "/" +
+            "getRate: "             + player.getRate()          + "/" +
+            "isReleased: "          + player.isReleased()
+        );
+    }
 }

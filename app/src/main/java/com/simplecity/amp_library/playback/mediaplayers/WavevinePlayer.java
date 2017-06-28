@@ -23,8 +23,13 @@ public class WavevinePlayer {
     public WavevinePlayer(final MusicService service) {
         // mService = new WeakReference<>(service);
         // mCurrentMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
-        mCurrentMediaPlayer = new AndroidMediaPlayer( service );
-        mCurrentVlcPlayer = new VLCMediaPlayer( service );
+        // ToDo:
+        boolean RUN_VLC = false;
+        if( RUN_VLC )
+            mCurrentMediaPlayer = new VLCMediaPlayer( service );
+        else
+            mCurrentMediaPlayer = new AndroidMediaPlayer( service );
+        // mCurrentVlcPlayer = new VLCMediaPlayer( service );
     }
 
     public void setDataSource(final String path) {
