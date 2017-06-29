@@ -9,9 +9,12 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.simplecity.amp_library.BuildConfig;
 import com.simplecity.amp_library.playback.MusicService;
 
 import java.lang.ref.WeakReference;
+
+import static com.simplecity.amp_library.utils.FileHelper.getPathFromUri;
 
 class AndroidMediaPlayer extends UniformMediaPlayer {
 
@@ -142,6 +145,9 @@ class AndroidMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public void setDataSource(String path) {
+        if( BuildConfig.DEBUG ) {
+            Log.e(TAG, "setDataSource: path: " + path );
+        }
         mIsInitialized = setDataSourceImpl(mCurrentMediaPlayer, path);
         if (mIsInitialized) {
             setNextDataSource(null);
@@ -155,14 +161,24 @@ class AndroidMediaPlayer extends UniformMediaPlayer {
         try {
             mediaPlayer.reset();
             mediaPlayer.setOnPreparedListener(null);
+
+            String filePath = path;
+            if( BuildConfig.DEBUG )
+                filePath = getPathFromUri( mService.get(), Uri.parse(path ));
+
+            Uri uri = Uri.parse(path);
             if (path.startsWith("content://")) {
-                Uri uri = Uri.parse(path);
                 mediaPlayer.setDataSource(mService.get(), uri);
             } else {
                 mediaPlayer.setDataSource(path);
             }
+
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.prepare();
+
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "setDataSourceImpl: filePath: " + filePath + "\n Uri: " + uri.toString());
+            }
         } catch (final Exception e) {
             Log.e(TAG, "setDataSource failed: " + e.getLocalizedMessage());
             CrashlyticsCore.getInstance().log("setDataSourceImpl failed. Path: [" + path + "] error: " + e.getLocalizedMessage());
@@ -175,6 +191,9 @@ class AndroidMediaPlayer extends UniformMediaPlayer {
     }
 
     public void setNextDataSource(final String path) {
+        if( BuildConfig.DEBUG ) {
+            Log.e(TAG, "setNextDataSource: path: " + path );
+        }
         try {
             mCurrentMediaPlayer.setNextMediaPlayer(null);
         } catch (IllegalArgumentException e) {

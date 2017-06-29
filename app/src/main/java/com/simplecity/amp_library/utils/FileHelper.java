@@ -1,15 +1,19 @@
 package com.simplecity.amp_library.utils;
 
 import android.annotation.SuppressLint;
+import android.app.Service;
 import android.content.Context;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.WorkerThread;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.simplecity.amp_library.BuildConfig;
 import com.simplecity.amp_library.model.BaseFileObject;
 import com.simplecity.amp_library.model.FileObject;
 import com.simplecity.amp_library.model.Song;
@@ -354,5 +358,26 @@ public class FileHelper {
             }
             return false;
         };
+    }
+
+    public static String getPathFromUri(Service cx, Uri _uri ) {
+
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "pathUri = "+ _uri);
+
+        String filePath;
+        if (_uri != null && "content".equals(_uri.getScheme())) {
+            Cursor cursor = cx.getContentResolver().query(_uri, new String[] { android.provider.MediaStore.Images.ImageColumns.DATA }, null, null, null);
+            cursor.moveToFirst();
+            filePath = cursor.getString(0);
+            cursor.close();
+        } else {
+            filePath = _uri.getPath();
+        }
+
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "filePath = "+ filePath);
+
+        return filePath;
     }
 }

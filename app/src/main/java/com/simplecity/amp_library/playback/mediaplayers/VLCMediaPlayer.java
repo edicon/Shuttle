@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.simplecity.amp_library.BuildConfig;
 import com.simplecity.amp_library.playback.MusicService;
 import com.simplecity.amp_library.playback.mediaplayers.PrefUtils.PreferenceUtils;
 
@@ -34,6 +35,8 @@ import org.videolan.libvlc.util.AndroidUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+
+import static com.simplecity.amp_library.utils.FileHelper.getPathFromUri;
 
 /**
  * This class wraps a libvlc mediaplayer instance.
@@ -50,19 +53,18 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     private boolean mIsInitialized = false;
 
     // private UniformMediaPlayerCallback mMediaPlayerCallback;
-
     private static LibVLC sLibVLC;
 
     public VLCMediaPlayer(final MusicService service) {
         mService = new WeakReference<>(service);
         powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
 
-        // ToDo: static와 우선 관계
         mCurrentMediaPlayer = new MediaPlayer(sLibVLC);
         mCurrentMediaPlayer.setEventListener( mediaPlayerListener );
-        setEqualizer();
+        setEqualizer(mCurrentMediaPlayer);
 
-        Log.d(TAG, "VLCMediaPlayer: MediaPlayer: Created");
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "VLCMediaPlayer: Created");
     }
 
     static {
@@ -71,10 +73,12 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
         options.add("--network-caching=2000");
 
         sLibVLC = new LibVLC(options);
-        Log.d(TAG, "VLCMediaPlayer: Static: ver: " +  sLibVLC.version());
+
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "VLCMediaPlayer: Static: ver: " +  sLibVLC.version());
     }
 
-    private static void setEqualizer() {
+    private static void setEqualizer( MediaPlayer mediaPlayer ) {
         if (PreferenceUtils.getBoolean(PreferenceUtils.EQUALIZER_ENABLED)) {
             MediaPlayer.Equalizer equalizer = MediaPlayer.Equalizer.create();
             float[] bands = PreferenceUtils.getFloatArray(PreferenceUtils.EQUALIZER_VALUES);
@@ -82,7 +86,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
             for (int i = 0; i < MediaPlayer.Equalizer.getBandCount(); i++) {
                 equalizer.setAmp(i, bands[i + 1]);
             }
-            mCurrentMediaPlayer.setEqualizer(equalizer);
+            mediaPlayer.setEqualizer(equalizer);
         }
     }
 
@@ -196,33 +200,9 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     }
 
     /**
-     * Prepare the given url
+     * Prepare the given url: Ref.: Tomahawk Player
     @Override
     public void prepare(final Query query, UniformMediaPlayerCallback callback) {
-        Log.d(TAG, "prepare() query: " + query);
-        mMediaPlayerCallback = callback;
-        getMediaPlayerInstance().stop();
-        mPreparedQuery = null;
-        mPreparingQuery = query;
-        getStreamUrl(query.getPreferredTrackResult()).done(new DoneCallback<String>() {
-            @Override
-            public void onDone(String url) {
-                Log.d(TAG, "Received stream url: " + url + " for query: " + query);
-                if (mPreparingQuery != null && mPreparingQuery == query) {
-                    Log.d(TAG, "Starting to prepare stream url: " + url + " for query: " + query);
-                    Media media = new Media(sLibVLC, AndroidUtil.LocationToUri(url));
-                    getMediaPlayerInstance().setMedia(media);
-                    mPreparedQuery = mPreparingQuery;
-                    mPreparingQuery = null;
-                    mMediaPlayerCallback.onPrepared(VLCMediaPlayer.this, mPreparedQuery);
-                    handlePlayState();
-                    Log.d(TAG, "onPrepared() url: " + url + " for query: " + query);
-                } else {
-                    Log.d(TAG, "Ignoring stream url: " + url + " for query: " + query
-                            + ", because preparing query is: " + mPreparingQuery);
-                }
-            }
-        });
     }
      */
 
@@ -242,6 +222,9 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public void setDataSource(String path) {
+        if( BuildConfig.DEBUG ) {
+            Log.e(TAG, "setDataSource: path: " + path );
+        }
         mIsInitialized = setDataSourceImpl(mCurrentMediaPlayer, path);
         if (mIsInitialized) {
             setNextDataSource(null);
@@ -253,46 +236,47 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
             return false;
         }
 
-        getMediaPlayerInstance().stop();
-
-        // ToDo: Check path or uri
-        Uri uri = AndroidUtil.PathToUri(path);
-        Log.d(TAG, "setDataSourceImpl: path: " + path + "\n Uri: "  + uri.toString() );
-
-        Media media = new Media(sLibVLC, uri );
-        // Media media = new Media(sLibVLC, AndroidUtil.LocationToUri(path));
-        mCurrentMediaPlayer.setMedia(media);
-        mCurrentMediaPlayer.setEventListener( mediaPlayerListener);
-        mCurrentMediaPlayer.play();
-
-        debugPlayer( mCurrentMediaPlayer );
-        debugMedia( media );
-
-        /*
+        // Ref: AndroidMediaPlayer.java
         try {
-            mediaPlayer.reset();
-            mediaPlayer.setOnPreparedListener(null);
+            getMediaPlayerInstance().stop();
+            mediaPlayer.setEventListener(null);
+
+            // get file path from uri
+            //  -https://stackoverflow.com/questions/5657411/android-getting-a-file-uri-from-a-content-uri
+            String filePath = path;
             if (path.startsWith("content://")) {
-                Uri uri = Uri.parse(path);
-                mediaPlayer.setDataSource(mService.get(), uri);
-            } else {
-                mediaPlayer.setDataSource(path);
+                filePath = getPathFromUri( mService.get(), Uri.parse(path ));
             }
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlayer.prepare();
-        } catch (final Exception e) {
+
+            Uri uri = AndroidUtil.PathToUri(filePath);
+            Media media = new Media(sLibVLC, uri); //  = new Media(sLibVLC, AndroidUtil.LocationToUri(path));
+
+            mediaPlayer.setMedia(media);
+            mediaPlayer.setEventListener(mediaPlayerListener);
+            setEqualizer(mediaPlayer);
+
+            // Initial Play or Not --> NOT
+            //  -Comment out: cause of setNextDataSource and setDataSource가 동시 실행됨
+            // mediaPlayer.play();
+
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "setDataSourceImpl: filePath: " + filePath + "\n Uri: " + uri.toString());
+                debugMedia(media);
+                debugPlayer(mediaPlayer);
+            }
+        } catch( Exception e ) {
             Log.e(TAG, "setDataSource failed: " + e.getLocalizedMessage());
             CrashlyticsCore.getInstance().log("setDataSourceImpl failed. Path: [" + path + "] error: " + e.getLocalizedMessage());
             return false;
         }
-        mediaPlayer.setOnCompletionListener(completionListener);
-        mediaPlayer.setOnErrorListener(errorListener);
-        */
 
         return true;
     }
 
     public void setNextDataSource(final String path) {
+        if( BuildConfig.DEBUG ) {
+            Log.e(TAG, "setNextDataSource: path: " + path );
+        }
         try {
             // ToDo: MediaListPlayer
             // mCurrentMediaPlayer.setNextMediaPlayer(null);
@@ -340,11 +324,25 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
         mHandler = handler;
     }
 
+    private int eventCount;
     private MediaPlayer.EventListener  mediaPlayerListener = new MediaPlayer.EventListener() {
         @Override
         public void onEvent(final MediaPlayer.Event event) {
-            String x = String.format("%04x", event.type);
-            Log.d(TAG, "onEvent.type: [" + x + "]");
+
+            if( BuildConfig.DEBUG ) {
+                if( event.type != 0x10b && event.type != 0x10c ) {
+                    String x = String.format("%04x", event.type);
+                    Log.d(TAG, "onEvent.type: [" + x + "]");
+                } else {
+                    if( eventCount < 500 )
+                        eventCount++;
+                    else {
+                        eventCount = 0;
+                        Log.d(TAG, "onEvent: ...");
+                    }
+                }
+            }
+
             switch (event.type) {
                 case MediaPlayer.Event.MediaChanged:    // 0x100
                     break;
@@ -360,12 +358,13 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
                     break;
                 case MediaPlayer.Event.PositionChanged: // 0x10c
                     break;
-                case MediaPlayer.Event.SeekableChanged:
+                case MediaPlayer.Event.SeekableChanged: // 0x10d
+                case MediaPlayer.Event.PausableChanged: // 0x10e
                     break;
                 case MediaPlayer.Event.ESAdded:         // 0x114/115
                 case MediaPlayer.Event.ESDeleted:
                     break;
-                case MediaPlayer.Event.EndReached:
+                case MediaPlayer.Event.EndReached:      // 0x109
                     if ( mCurrentMediaPlayer != null && mNextMediaPlayer != null) {
                         mCurrentMediaPlayer.release();
                         mCurrentMediaPlayer = mNextMediaPlayer;
@@ -377,7 +376,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
                         mHandler.sendEmptyMessage(MusicService.PlayerHandler.RELEASE_WAKELOCK);
                     }
                     break;
-                case MediaPlayer.Event.EncounteredError:
+                case MediaPlayer.Event.EncounteredError: // 0x10a
                     mIsInitialized = false;
                     mCurrentMediaPlayer.release();
                     mCurrentMediaPlayer = new MediaPlayer(sLibVLC);
@@ -386,7 +385,8 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
                     mHandler.sendMessageDelayed(mHandler.obtainMessage(MusicService.PlayerHandler.SERVER_DIED), 2000);
                     break;
                 default:
-                    Log.d(TAG, "onEvent.type(UnKnown): [" + x + "]");
+                    String x = String.format("%04x", event.type);
+                    Log.e(TAG, "onEvent.type(UnKnown): [" + x + "]");
                     break;
             }
         }
@@ -394,26 +394,26 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
 
     private void debugMedia( Media media ) {
         Log.d( TAG, "Media :" + "\n" +
-            "getDuration: " + media.getDuration()     + "/" +
-            "getState: "    + media.getState()        + "/" +
-            "getTrackCount: " + media.getTrackCount() + "/" +
-            "getType: "     + media.getType()         + "/" +
-            "getUri: "      + media.getUri()          + "/" +
-            "isParsed: "    + media.isParsed()        + "/" +
+            "getDuration: " + media.getDuration()     + ", " +
+            "getState: "    + media.getState()        + ", " +
+            "getTrackCount: " + media.getTrackCount() + ", " +
+            "getType: "     + media.getType()         + ", " +
+            "getUri: "      + media.getUri()          + ", " +
+            "isParsed: "    + media.isParsed()        + ", " +
             "isReleased: "  + media.isReleased()
         );
     }
 
     private void debugPlayer( MediaPlayer player ) {
         Log.d(TAG, "Player :" + "\n" +
-            "getLength: "           + player.getLength()        + "/" +
-            "isReleased: "          + player.isReleased()       + "/" +
-            "getPosition: "         + player.getPosition()      + "/" +
-            "getAudioTrack: "       + player.getAudioTrack()    + "/" +
-            "getAudioTracksCount: " + player.getAudioTracksCount() + "/" +
-            "getTime: "             + player.getTime()          + "/" +
-            "getPlayerState: "      + player.getPlayerState()   + "/" +
-            "getRate: "             + player.getRate()          + "/" +
+            "getLength: "           + player.getLength()        + ", " +
+            "isReleased: "          + player.isReleased()       + ", " +
+            "getPosition: "         + player.getPosition()      + ", " +
+            "getAudioTrack: "       + player.getAudioTrack()    + ", " +
+            "getAudioTracksCount: " + player.getAudioTracksCount() + ", " +
+            "getTime: "             + player.getTime()          + ", " +
+            "getPlayerState: "      + player.getPlayerState()   + ", " +
+            "getRate: "             + player.getRate()          + ", " +
             "isReleased: "          + player.isReleased()
         );
     }
