@@ -127,8 +127,9 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     @Override
     public long getCurrentPosition() {
         try {
-            // ToDo: Check .time()
-            return (long)mCurrentMediaPlayer.getPosition(); // .getCurrentPosition();
+            // Android:MediaPlayer.getCurrentPosition();
+            // VLC:MediaPlayer.getTime(); getPosition: Movie(Video)Position
+            return mCurrentMediaPlayer.getTime();
         } catch (IllegalStateException ignored) {
             return 0;
         }
@@ -137,7 +138,8 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     @Override
     public long seekTo(long whereto) {
         try {
-            mCurrentMediaPlayer.setPosition((float)whereto );     // .seekTo((int) whereto);
+            mCurrentMediaPlayer.setTime( whereto );     // .seekTo((int) whereto);
+            // mCurrentMediaPlayer.setPosition((float)whereto );     // .seekTo((int) whereto);
         } catch (IllegalStateException e) {
             Log.e(TAG, "Error seeking MultiPlayer: " + e.getLocalizedMessage());
         }
@@ -146,9 +148,10 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public void setVolume(float vol) {
-        // ToDo:
         try {
-            mCurrentMediaPlayer.setVolume((int) vol );  // .setVolume(vol, vol);
+            // ToDo: Skip seting of Vol
+            Log.e(TAG, "setVolumeL: SKIPPED  " + vol );
+            // mCurrentMediaPlayer.setVolume((int) vol );  // .setVolume(vol, vol);
         } catch (IllegalStateException e) {
             Log.e(TAG, "Error setting MultiPlayer volume: " + e.getLocalizedMessage());
         }
@@ -359,7 +362,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
                     break;
                 case MediaPlayer.Event.SeekableChanged:
                     break;
-                case MediaPlayer.Event.ESAdded:         // 0x114/114
+                case MediaPlayer.Event.ESAdded:         // 0x114/115
                 case MediaPlayer.Event.ESDeleted:
                     break;
                 case MediaPlayer.Event.EndReached:
