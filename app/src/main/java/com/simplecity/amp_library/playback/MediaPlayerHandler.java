@@ -6,6 +6,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import com.simplecity.amp_library.BuildConfig;
+
 import java.lang.ref.WeakReference;
 
 final class MediaPlayerHandler extends Handler {
@@ -56,6 +58,9 @@ final class MediaPlayerHandler extends Handler {
                 }
                 break;
             case MusicService.PlayerHandler.TRACK_WENT_TO_NEXT:
+                if(BuildConfig.DEBUG)
+                    Log.e(TAG, "TRACK_WENT_TO_NEXT: nextPlayPos: " + service.nextPlayPos);
+
                 service.notifyChange(MusicService.InternalIntents.TRACK_ENDING);
                 service.playPos = service.nextPlayPos;
                 if (service.playPos >= 0 && !service.getCurrentPlaylist().isEmpty()) {
@@ -66,6 +71,9 @@ final class MediaPlayerHandler extends Handler {
                 service.setNextTrack();
                 break;
             case MusicService.PlayerHandler.TRACK_ENDED:
+                if(BuildConfig.DEBUG)
+                    Log.e(TAG, "TRACK_ENDED: repeatMode: " + service.repeatMode );
+
                 service.notifyChange(MusicService.InternalIntents.TRACK_ENDING);
                 if (service.repeatMode == MusicService.RepeatMode.ONE) {
                     service.seekTo(0);

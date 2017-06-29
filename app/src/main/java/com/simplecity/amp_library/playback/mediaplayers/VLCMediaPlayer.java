@@ -365,6 +365,9 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
                 case MediaPlayer.Event.ESDeleted:
                     break;
                 case MediaPlayer.Event.EndReached:      // 0x109
+                    if(BuildConfig.DEBUG)
+                        Log.e(TAG, "onCompletion: ");
+
                     if ( mCurrentMediaPlayer != null && mNextMediaPlayer != null) {
                         mCurrentMediaPlayer.release();
                         mCurrentMediaPlayer = mNextMediaPlayer;

@@ -1671,6 +1671,8 @@ public class MusicService extends Service {
                 CrashlyticsCore.getInstance().log("setNextTrack() failed with null id. error: " + e.getLocalizedMessage());
             }
         }
+        if( BuildConfig.DEBUG )
+            Log.e(TAG, "setNextTrack: nextPlayPos: " + nextPlayPos);
     }
 
     public boolean open(Song song) {

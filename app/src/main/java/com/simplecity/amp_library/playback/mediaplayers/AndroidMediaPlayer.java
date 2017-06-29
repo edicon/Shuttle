@@ -3,6 +3,7 @@ package com.simplecity.amp_library.playback.mediaplayers;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.text.TextUtils;
@@ -242,6 +243,9 @@ class AndroidMediaPlayer extends UniformMediaPlayer {
     private MediaPlayer.OnCompletionListener completionListener = new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer mp) {
+            if(BuildConfig.DEBUG)
+                Log.e(TAG, "onCompletion: ");
+
             if (mp == mCurrentMediaPlayer && mNextMediaPlayer != null) {
                 mCurrentMediaPlayer.release();
                 mCurrentMediaPlayer = mNextMediaPlayer;
