@@ -2648,6 +2648,10 @@ public class MusicService extends Service {
     }
 
     public Song getSong() {
+        // ToDo: Add rate info
+        // if( player != null ) {
+        //    currentSong.setBItRate = player.getRaate();
+        // }
         return currentSong;
     }
 

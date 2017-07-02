@@ -24,6 +24,8 @@ import java.util.Calendar;
 
 public class IndiUtils {
 
+    public IndiUtils() {}
+
     private static ImageView indiPlay,indiVol, indiReplay, indiShuffle, indiBo, indiSd1, indiSd2, indiEq;
     private static ImageView indiLoading,indiSleep, indiBT, indiWifi, indiBat;
     private static TextView volVal,batVal, indiTime;

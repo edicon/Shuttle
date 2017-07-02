@@ -670,9 +670,10 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
         if (!TextUtils.isEmpty(totalTime)) {
             if( HI_RES ) {
                 this.totalTime.setText(String.format("%s", totalTime));
-                String bitRate = song.getBitrateLabel(); String sampleRate = song.getSampleRateLabel();
+                String bitRate = song.getBitrateLabel();
+                String sampleRate = song.getSampleRateLabel();
                 if( bitRate.contains("null"))
-                    bitRate = bitRate.replace("null", "?");
+                    bitRate = bitRate.replace("null", "");
                 this.bitrate.setText(String.format("%s / %s",  bitRate, sampleRate));
             } else
                 this.totalTime.setText(String.format(" / %s", totalTime));

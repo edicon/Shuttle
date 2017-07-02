@@ -38,7 +38,7 @@ public abstract class UniformMediaPlayer {
     public abstract long seekTo(long msec);
 
     public abstract void setVolume(float vol);
-    public abstract int getAudioSessionId();
+    public abstract int  getAudioSessionId();
 
     public abstract void setBitrate(int mode);
 
