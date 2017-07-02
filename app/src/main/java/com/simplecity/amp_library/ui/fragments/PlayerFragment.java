@@ -687,11 +687,14 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     // HI_RES
     @Override
     public void menuChanged( long time ) {
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if( actionBar.isShowing()) {
-            time = System.currentTimeMillis();
-            if(( time - toggleTime) > 5000 )
-                toggleMenu();
+        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.main_container);
+        if (fragment instanceof PlayerFragment) {
+            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            if (actionBar.isShowing()) {
+                time = System.currentTimeMillis();
+                if ((time - toggleTime) > 5000)
+                    toggleMenu();
+            }
         }
     }
 
