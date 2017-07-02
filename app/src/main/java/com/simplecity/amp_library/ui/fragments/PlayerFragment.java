@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -121,6 +122,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     private View dummyToolbar;
     private View dummyStatusBar;
     private RequestManager requestManager;
+    private LinearLayout subMenuContainer;
 
     public PlayerFragment() {
     }
@@ -169,6 +171,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         dummyToolbar = rootView.findViewById(R.id.dummyToolbar);
         dummyStatusBar = rootView.findViewById(R.id.dummyStatusBar);
+        subMenuContainer  = (LinearLayout)rootView.findViewById(R.id.subMenuContainer);
 
         //We need to set the dummy status bar height.
         if (ShuttleUtils.hasKitKat()) {
@@ -748,5 +751,16 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
                 .songsToDelete(Observable.just(Collections.singletonList(MusicUtils.getSong())))
                 .build()
                 .show();
+    }
+
+    public void toggleSubMenu() {
+        if( subMenuContainer.getVisibility() == View.VISIBLE )
+            subMenuContainer.setVisibility( View.INVISIBLE );
+        else
+            subMenuContainer.setVisibility( View.VISIBLE );
+    }
+
+    public void toggleSearchMenu() {
+        toolbar.getMenu().setGroupVisible(0, false);
     }
 }

@@ -919,25 +919,25 @@ public class MainActivity extends BaseCastActivity implements
         super.onServiceConnected(name, obj);
         supportInvalidateOptionsMenu();
 
-        if (mIsSlidingEnabled) {
-            if( HI_RES ) {
-               // ToDo:
-            } else {
-                PlayerFragment playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentById(R.id.player_container);
+        if ( HI_RES || mIsSlidingEnabled) {
+            PlayerFragment playerFragment;
+            if( HI_RES )
+                playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentById(R.id.main_container);
+            else
+                playerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentById(R.id.player_container);
 
-                if (playerFragment != null) {
+            if (playerFragment != null) {
 
-                    playerFragment.update();
+                playerFragment.update();
 
-                    // If the QueuePagerFragment's adapter is empty, it's because it was created before the service
-                    // was connected. We need to recreate it now that we know the service is connected.
-                    Fragment fragment = playerFragment.getChildFragmentManager().findFragmentById(R.id.main_container);
-                    if (fragment instanceof QueueFragment) {
-                        ((QueueFragment) fragment).scrollToCurrentItem();
-                    } else if (fragment instanceof QueuePagerFragment) {
-                        ((QueuePagerFragment) fragment).resetAdapter();
-                        ((QueuePagerFragment) fragment).updateQueuePosition();
-                    }
+                // If the QueuePagerFragment's adapter is empty, it's because it was created before the service
+                // was connected. We need to recreate it now that we know the service is connected.
+                Fragment fragment = playerFragment.getChildFragmentManager().findFragmentById(R.id.main_container);
+                if (fragment instanceof QueueFragment) {
+                    ((QueueFragment) fragment).scrollToCurrentItem();
+                } else if (fragment instanceof QueuePagerFragment) {
+                    ((QueuePagerFragment) fragment).resetAdapter();
+                    ((QueuePagerFragment) fragment).updateQueuePosition();
                 }
             }
         }
@@ -973,7 +973,7 @@ public class MainActivity extends BaseCastActivity implements
             }
         }
 
-        if( HI_RES ) {// for Lylics Fragment
+        if( !HI_RES ) {// for Lylics Fragment
             if (playingFragment != null) {
                 FragmentManager manager =  playingFragment.getChildFragmentManager();
                 FragmentTransaction ft = manager.beginTransaction();
