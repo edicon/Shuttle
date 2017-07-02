@@ -92,9 +92,10 @@ public class MenuUtils implements MusicUtils.Defs {
             menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, USE_AS_RINGTONE, 5, R.string.ringtone_menu);
             menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, SHARE, 7, R.string.share);
             menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, BLACKLIST, 8, R.string.blacklist_title);
+
+            menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, VIEW_INFO, 6, R.string.song_info);
+            menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, DELETE_ITEM, 9, R.string.delete_item);
         }
-        menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, VIEW_INFO, 6, R.string.song_info);
-        menu.getMenu().add(SONG_FRAGMENT_GROUP_ID, DELETE_ITEM, 9, R.string.delete_item);
     }
 
     public static void addClickHandler(final AppCompatActivity activity, final PopupMenu menu, final Song song, final PopupMenu.OnMenuItemClickListener onMenuItemClickListener) {

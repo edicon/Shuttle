@@ -121,6 +121,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static android.R.attr.fragment;
 import static android.os.Environment.MEDIA_BAD_REMOVAL;
 import static android.os.Environment.MEDIA_REMOVED;
 import static android.os.Environment.MEDIA_UNMOUNTED;
@@ -969,6 +970,20 @@ public class MainActivity extends BaseCastActivity implements
                 ((PlayerFragment) playingFragment).toggleQueue();
                 toggleQueue(false);
                 return;
+            }
+        }
+
+        if( HI_RES ) {// for Lylics Fragment
+            if (playingFragment != null) {
+                FragmentManager manager =  playingFragment.getChildFragmentManager();
+                FragmentTransaction ft = manager.beginTransaction();
+                Fragment fragment = manager.findFragmentById(R.id.main_container);
+                if (fragment instanceof LyricsFragment) {
+                    ft.remove( fragment );
+                    ft.commit();
+                    manager.popBackStack();
+                    return;
+                }
             }
         }
 
