@@ -25,4 +25,6 @@ public interface PlayerView {
     void favoriteChanged();
 
     void trackInfoChanged(@Nullable Song song);
+
+    void menuChanged(long time);
 }

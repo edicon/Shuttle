@@ -3,6 +3,7 @@ package com.simplecity.amp_library.ui.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,6 +20,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.crashlytics.android.Crashlytics;
 import com.jp.wasabeef.glide.transformations.BlurTransformation;
+import com.simplecity.amp_library.BuildConfig;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.glide.utils.GlideUtils;
 import com.simplecity.amp_library.model.Song;
@@ -188,6 +190,35 @@ public class ArtworkFragment extends BaseFragment {
                     ((PlayerFragment) playingFragment).toggleLyrics();
                 }
             }
+            return false;
+        }
+
+        // HI_RES
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent event) {
+            if(BuildConfig.DEBUG )
+                Log.d(TAG, "onSingleTapConfirmed: " + event.toString());
+
+            Fragment fragment = fragmentWeakReference.get();
+            if (fragment == null) {
+                return false;
+            }
+
+            Activity activity = fragment.getActivity();
+            if (activity instanceof PlayerActivity) {
+                ((PlayerActivity) activity).toggleLyrics();
+                return true;
+            } else {
+                Fragment parentFragment = fragment.getParentFragment();
+                Fragment playingFragment = null;
+                if (parentFragment != null) {
+                    playingFragment = parentFragment.getParentFragment();
+                }
+                if (playingFragment != null && playingFragment instanceof PlayerFragment) {
+                    ((PlayerFragment) playingFragment).toggleMenu();
+                }
+            }
+
             return false;
         }
     }

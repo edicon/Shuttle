@@ -13,10 +13,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -119,7 +121,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
     // HI_RES
     private Toolbar toolbar;
-    private View dummyToolbar;
+    private static View dummyToolbar;
     private View dummyStatusBar;
     private RequestManager requestManager;
     private LinearLayout subMenuContainer;
@@ -681,6 +683,17 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
         album.setText(String.format("%s | %s", song.artistName, song.albumName));
     }
 
+    // HI_RES
+    @Override
+    public void menuChanged( long time ) {
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        if( actionBar.isShowing()) {
+            time = System.currentTimeMillis();
+            if(( time - toggleTime) > 5000 )
+                toggleMenu();
+        }
+    }
+
     // ToDo: HI_RES
     public static boolean actionDrawer;
     public void toggleDrawerMenu( boolean actionDrawer) {
@@ -753,14 +766,31 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
                 .show();
     }
 
+    long toggleTime;
+    public void toggleMenu() {
+        toggleTime = System.currentTimeMillis();
+        toggleActionbar();
+        toggleSubMenu();
+    }
     public void toggleSubMenu() {
-        if( subMenuContainer.getVisibility() == View.VISIBLE )
-            subMenuContainer.setVisibility( View.INVISIBLE );
-        else
-            subMenuContainer.setVisibility( View.VISIBLE );
     }
 
-    public void toggleSearchMenu() {
-        toolbar.getMenu().setGroupVisible(0, false);
+    public void toggleActionbar() {
+
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        if( actionBar.isShowing()) {
+            actionBar.hide();
+            dummyToolbar.setVisibility(View.INVISIBLE);
+            subMenuContainer.setVisibility( View.INVISIBLE );
+        } else {
+            actionBar.show();
+            dummyToolbar.setVisibility(View.VISIBLE);
+            subMenuContainer.setVisibility( View.VISIBLE );
+        }
+    }
+
+    public static void showDummyToolbar() {
+        if( dummyToolbar != null )
+            dummyToolbar.setVisibility(View.VISIBLE);
     }
 }

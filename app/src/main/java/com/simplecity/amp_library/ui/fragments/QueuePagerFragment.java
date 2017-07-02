@@ -9,12 +9,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.simplecity.amp_library.BuildConfig;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.model.Song;
 import com.simplecity.amp_library.playback.MusicService;
@@ -24,6 +26,8 @@ import com.simplecity.amp_library.utils.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
 public class QueuePagerFragment extends BaseFragment implements
         ViewPager.OnPageChangeListener,
@@ -111,6 +115,22 @@ public class QueuePagerFragment extends BaseFragment implements
                 mPager.setCurrentItem(MusicUtils.getQueuePosition());
                 mPager.addOnPageChangeListener(this);
             }
+
+            if( HI_RES ) {
+                // ToDO:
+                // Pager에서는 OnClickListener 동작하지 않고, Pager의 content view에 적용
+                // 여기서는 ArtworkFragment에 Gesture로 구현
+                /*
+                boolean c = mPager.isClickable();
+                mPager.setClickable(true);
+                mPager.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v) {
+                        //this will log the page number that was click
+                        Log.i("TAG", "This page was clicked: " + v);
+                    }
+                });
+                */
+            }
         });
     }
 
@@ -174,6 +194,8 @@ public class QueuePagerFragment extends BaseFragment implements
 
     @Override
     public void onPageScrollStateChanged(int state) {
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "onPageScrollStateChanged");
     }
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {

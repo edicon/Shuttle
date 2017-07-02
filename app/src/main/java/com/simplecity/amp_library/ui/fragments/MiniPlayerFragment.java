@@ -301,6 +301,11 @@ public class MiniPlayerFragment extends BaseFragment implements PlayerView {
         rootView.setContentDescription(getString(R.string.btn_now_playing, song.name, song.artistName));
 
     }
+
+    @Override
+    public void menuChanged(long time) {
+
+    }
 }
 
 

@@ -2,11 +2,14 @@ package com.simplecity.amp_library.ui.presenters;
 
 import android.content.IntentFilter;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.f2prateek.rx.receivers.RxBroadcastReceiver;
+import com.simplecity.amp_library.BuildConfig;
 import com.simplecity.amp_library.ShuttleApplication;
 import com.simplecity.amp_library.playback.MusicService;
 import com.simplecity.amp_library.playback.PlaybackMonitor;
+import com.simplecity.amp_library.ui.fragments.PlayerFragment;
 import com.simplecity.amp_library.ui.views.PlayerView;
 import com.simplecity.amp_library.utils.IndiUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
@@ -20,6 +23,8 @@ import rx.schedulers.Schedulers;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
 public class PlayerPresenter extends Presenter<PlayerView> {
+
+    private static final String TAG = PlayerPresenter.class.getSimpleName();
 
     private long startSeekPos = 0;
     private long lastSeekEventTime;
@@ -55,6 +60,14 @@ public class PlayerPresenter extends Presenter<PlayerView> {
                 .onBackpressureDrop()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong -> setCurrentTimeVisibility(MusicUtils.isPlaying() || !currentPlaybackTimeVisible)));
+
+        addSubcscription(Observable.interval(5000, TimeUnit.MILLISECONDS)
+                .onBackpressureDrop()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aLong -> {
+                    if(MusicUtils.isPlaying())
+                        toggleActionMenu(aLong);
+                }));
 
         final IntentFilter filter = new IntentFilter();
         filter.addAction(MusicService.InternalIntents.META_CHANGED);
@@ -177,6 +190,13 @@ public class PlayerPresenter extends Presenter<PlayerView> {
         updateRepeatMode();
         if( HI_RES )
             IndiUtils.updateRepeat(MusicUtils.getRepeatMode());
+    }
+
+    public void toggleActionMenu( long l ) {
+        PlayerView view = getView();
+        if (view != null) {
+            view.menuChanged( l );
+        }
     }
 
     public void seekTo(int progress) {

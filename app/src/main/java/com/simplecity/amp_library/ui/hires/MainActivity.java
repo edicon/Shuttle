@@ -36,6 +36,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Transition;
@@ -128,6 +129,7 @@ import static android.os.Environment.MEDIA_UNMOUNTED;
 import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
+import static com.simplecity.amp_library.ui.fragments.PlayerFragment.showDummyToolbar;
 import static com.simplecity.amp_library.utils.ArtworkUtils.downloadArtwork;
 
 @SuppressWarnings("ResourceAsColor")
@@ -1139,6 +1141,8 @@ public class MainActivity extends BaseCastActivity implements
             }
         }
 
+        showActionbar();
+
         Fragment fragment;
         switch (v.getId()) {
             case R.id.btn_drawer_song:
@@ -1205,6 +1209,8 @@ public class MainActivity extends BaseCastActivity implements
                 }
             }
         }
+
+        showActionbar();
 
         int itemIndex = 0;
         switch (drawerGroupItem.type) {
@@ -1656,6 +1662,14 @@ public class MainActivity extends BaseCastActivity implements
 
             Log.d(TAG, "Volume now " + currentVolume);
             IndiUtils.updateVol(currentVolume);
+        }
+    }
+
+    private void showActionbar() {
+        ActionBar actionBar = getSupportActionBar();
+        if( !actionBar.isShowing()) {
+            actionBar.show();
+            showDummyToolbar();
         }
     }
 }
