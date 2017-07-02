@@ -21,6 +21,8 @@ import android.os.Handler;
 
 public abstract class UniformMediaPlayer {
 
+    public abstract Class getInstance();
+
     public abstract boolean isInitialized();
     public abstract void start();
     public abstract void stop();

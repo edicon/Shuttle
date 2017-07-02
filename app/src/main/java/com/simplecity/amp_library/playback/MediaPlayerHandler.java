@@ -7,6 +7,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.simplecity.amp_library.BuildConfig;
+import com.simplecity.amp_library.playback.mediaplayers.VLCMediaPlayer;
 
 import java.lang.ref.WeakReference;
 
@@ -69,6 +70,13 @@ final class MediaPlayerHandler extends Handler {
                 service.notifyChange(MusicService.InternalIntents.META_CHANGED);
                 service.updateNotification();
                 service.setNextTrack();
+
+                // ToDo: Repeat for VLCPlayer cause of onPrepared가 동작하지 않음
+                if( BuildConfig.DEBUG )
+                    Log.w(TAG, "getPlayerInstance: " + service.player.getPlayerInstance());
+                if( service.player.getPlayerInstance() == VLCMediaPlayer.class) {
+                    service.play();
+                }
                 break;
             case MusicService.PlayerHandler.TRACK_ENDED:
                 if(BuildConfig.DEBUG)

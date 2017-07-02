@@ -32,6 +32,10 @@ public class WavevinePlayer {
         // mCurrentVlcPlayer = new VLCMediaPlayer( service );
     }
 
+    public Class getPlayerInstance() {
+        return mCurrentMediaPlayer.getInstance();
+    }
+
     public void setDataSource(final String path) {
         mCurrentMediaPlayer.setDataSource( path );
     }

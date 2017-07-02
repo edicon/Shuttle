@@ -99,7 +99,15 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     }
 
     @Override
+    public Class getInstance() {
+        return VLCMediaPlayer.class;
+    }
+
+    @Override
     public void pause() {
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "pause");
+
         try {
             mCurrentMediaPlayer.pause();
         } catch (IllegalStateException e) {
@@ -141,6 +149,9 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public long seekTo(long whereto) {
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "seekTo");
+
         try {
             mCurrentMediaPlayer.setTime( whereto );     // .seekTo((int) whereto);
             // mCurrentMediaPlayer.setPosition((float)whereto );     // .seekTo((int) whereto);
@@ -180,6 +191,9 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public void start() {
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "start");
+
         try {
             mCurrentMediaPlayer.play();     // .start();
         } catch (RuntimeException e) {
@@ -189,6 +203,9 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public void stop() {
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "stop");
+
         try {
             // ToDo;
             mCurrentMediaPlayer.stop();     // .reset();
@@ -208,9 +225,12 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public void release() {
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "release");
+
         stop();
         // ToDO: check resource release
-        // mCurrentMediaPlayer.release();
+        mCurrentMediaPlayer.release();
     }
 
 
@@ -238,7 +258,8 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
 
         // Ref: AndroidMediaPlayer.java
         try {
-            getMediaPlayerInstance().stop();
+            // getMediaPlayerInstance().stop();
+            mediaPlayer.stop();               // Current/NectMediaPlayer
             mediaPlayer.setEventListener(null);
 
             // get file path from uri

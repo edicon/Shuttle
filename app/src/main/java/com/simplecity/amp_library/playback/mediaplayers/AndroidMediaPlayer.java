@@ -35,7 +35,15 @@ class AndroidMediaPlayer extends UniformMediaPlayer {
     }
 
     @Override
+    public Class getInstance() {
+        return AndroidMediaPlayer.class;
+    }
+
+    @Override
     public void pause() {
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "pause");
+
         try {
             mCurrentMediaPlayer.pause();
         } catch (IllegalStateException e) {
@@ -75,6 +83,9 @@ class AndroidMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public long seekTo(long whereto) {
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "seekTo");
+
         try {
             mCurrentMediaPlayer.seekTo((int) whereto);
         } catch (IllegalStateException e) {
@@ -110,6 +121,9 @@ class AndroidMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public void start() {
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "start");
+
         try {
             mCurrentMediaPlayer.start();
         } catch (RuntimeException e) {
@@ -119,6 +133,9 @@ class AndroidMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public void stop() {
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "stop");
+
         try {
             mCurrentMediaPlayer.reset();
         } catch (IllegalStateException e) {
@@ -135,6 +152,9 @@ class AndroidMediaPlayer extends UniformMediaPlayer {
 
     @Override
     public void release() {
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "release");
+
         stop();
         mCurrentMediaPlayer.release();
     }
