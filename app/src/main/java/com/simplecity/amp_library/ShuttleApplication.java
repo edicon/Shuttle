@@ -84,9 +84,9 @@ public class ShuttleApplication extends Application {
         super.attachBaseContext(base);
 
         if (BuildConfig.MULTIDEX_ENABLED) {
-        MultiDex.install(base);
+            MultiDex.install(base);
+        }
     }
-}
 
     @Override
     public void onCreate() {

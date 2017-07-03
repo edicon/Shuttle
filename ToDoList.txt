@@ -39,3 +39,13 @@ ReactiveX
        onCompleted(){}
   });
   subscription.unsubscribe();
+
+5. VLC Audio Format
+ -MPEG Layer 1/2, MP3 - MPEG Layer 3, AAC - MPEG-4 part3, Vorbis,
+  AC3 - A/52, E-AC-3, MLP / TrueHD>3, DTS, WMA 1/2, WMA 3, FLAC, ALAC,
+  Speex, Musepack / MPC, ATRAC 3, Wavpack, Mod, TrueAudio, APE,
+  Real Audio, Alaw/µlaw, AMR (3GPP), MIDI, LPCM, ADPCM, QCELP,
+  DV Audio, QDM2/QDMC, MACE.mk0
+
+
+6. Disable EQ of Android MediaPlayer using AudioSessionId
