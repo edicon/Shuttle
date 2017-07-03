@@ -224,37 +224,57 @@ public class MainActivity extends BaseCastActivity implements
 
         ThemeUtils.setTheme(this);
 
-        if (!ShuttleUtils.hasLollipop() && ShuttleUtils.hasKitKat()) {
-            getWindow().setFlags(FLAG_TRANSLUCENT_STATUS, FLAG_TRANSLUCENT_STATUS);
-            mTintManager = new SystemBarTintManager(this);
+        if ( Build.VERSION.SDK_INT < 16) {                              // Android 4.0
+            getWindow().setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN
+            );
         }
-        if (ShuttleUtils.hasLollipop()) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        if (!ShuttleUtils.hasLollipop() && ShuttleUtils.hasKitKat()) {  // API: 19
+            getWindow().setFlags(
+                    FLAG_TRANSLUCENT_STATUS,
+                    FLAG_TRANSLUCENT_STATUS
+            );
+            mTintManager = new SystemBarTintManager(this);
         }
         if (!ShuttleUtils.hasKitKat()) {
             getWindow().clearFlags(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
+        if (ShuttleUtils.hasKitKat()) {                               // API: 21
+        // if (ShuttleUtils.hasLollipop()) {                               // API: 21
+            View decorView = getWindow().getDecorView();
+            int uiOptions =
+                      View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View. SYSTEM_UI_FLAG_IMMERSIVE
+                    ;
+            // Make Content Appear Behind the Navigation Bar
+            //    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            //    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            decorView.setSystemUiVisibility( uiOptions );
+            decorView.setOnSystemUiVisibilityChangeListener (new View.OnSystemUiVisibilityChangeListener() {
+                @Override
+                public void onSystemUiVisibilityChange(int visibility) {
+                    // Note that system bars will only be "visible" if none of the
+                    // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
+                    if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                        // TODO: The system bars are visible. Make any desired
+                        decorView.setSystemUiVisibility( uiOptions );
+                    } else {
+                        // TODO: The system bars are NOT visible. Make any desired
+                        decorView.setSystemUiVisibility( uiOptions );
+                    }
+                }
+            });
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
 
         if (SettingsManager.getInstance().canTintNavBar()) {
             getWindow().setNavigationBarColor(ColorUtils.getPrimaryColorDark(this));
         }
-        if ( Build.VERSION.SDK_INT < 16) {
-            getWindow().setFlags(
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
+
         supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 
-        // Full Screen: Hide Status Bar: https://developer.android.com/training/system-ui/status.html
-        if( HI_RES ) {
-            if ( ShuttleUtils.hasMarshmallow()) {
-                requestWindowFeature(Window.FEATURE_NO_TITLE);
-            }
-            getWindow().setFlags(
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
         // Now call super to ensure the theme was properly set
         super.onCreate(savedInstanceState);
 
