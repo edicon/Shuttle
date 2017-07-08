@@ -706,8 +706,8 @@ karpeta</item>
     <string name="song_info_bitrate">Bitrate</string>
     <string name="song_info_sample_Rate">Laginketa Frekuentzia</string>
     <string name="song_info_play_count">Erreprodukzio Kantitatea</string>
-    <string name="song_info_bitrate_suffix">" kb/s"</string>
-    <string name="song_info_sample_rate_suffix">" kHz"</string>
+    <string name="song_info_bitrate_suffix">"kbps"</string>
+    <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Eroskea berreskuratua. Mesedez Shuttle berrabiarazi ezazu</string>
     <string name="iab_purchase_not_found">Ez da aurreko erosketarik aurkitu.</string>
     <string name="iab_already_upgraded">Shuttle jada hobetuta dago. Saiatu app-a berrabiarazten.</string>

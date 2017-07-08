@@ -663,8 +663,8 @@ segítségével
     <string name="song_info_bitrate">Bitráta</string>
     <string name="song_info_sample_Rate">Mintavételezés</string>
     <string name="song_info_play_count">Lejátszások száma</string>
-    <string name="song_info_bitrate_suffix">" kbps"</string>
-    <string name="song_info_sample_rate_suffix">" kHz"</string>
+    <string name="song_info_bitrate_suffix">"kbps"</string>
+    <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Vásárlás visszaállítva. Kérem indítsa újra a Shuttle-t</string>
     <string name="iab_purchase_not_found">Nem találhatóak múltbéli vásárlások</string>
     <string name="iab_already_upgraded">A Shuttle már meg lett vásárolva. Próbálja újraindítani a programot.</string>

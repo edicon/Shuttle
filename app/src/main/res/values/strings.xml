@@ -760,8 +760,8 @@
     <string name="song_info_bitrate">Bitrate</string>
     <string name="song_info_sample_Rate">Sample Rate</string>
     <string name="song_info_play_count">Play Count</string>
-    <string name="song_info_bitrate_suffix">" kbps"</string>
-    <string name="song_info_sample_rate_suffix">" kHz"</string>
+    <string name="song_info_bitrate_suffix">"kbps"</string>
+    <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Purchase Restored. Please restart Shuttle</string>
     <string name="iab_purchase_not_found">No previous purchase found.</string>
     <string name="iab_already_upgraded">Shuttle is already upgraded. Try restarting the app.</string>

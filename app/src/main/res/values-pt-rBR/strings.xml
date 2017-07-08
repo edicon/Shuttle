@@ -701,8 +701,8 @@ pastas</item>
     <string name="song_info_bitrate">Taxa de bits</string>
     <string name="song_info_sample_Rate">Taxa de amostragem</string>
     <string name="song_info_play_count">Núm. de reproduções</string>
-    <string name="song_info_bitrate_suffix">" kbps"</string>
-    <string name="song_info_sample_rate_suffix">" kHz"</string>
+    <string name="song_info_bitrate_suffix">"kbps"</string>
+    <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Compra restaurada. Por favor, reinicie o Shuttle</string>
     <string name="iab_purchase_not_found">Nenhuma compra encontrada</string>
     <string name="iab_already_upgraded">O Shuttle já está atualizado. Tente reiniciar o app.</string>

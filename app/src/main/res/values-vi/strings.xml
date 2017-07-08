@@ -700,8 +700,8 @@
     <string name="song_info_bitrate">Tốc độ bit</string>
     <string name="song_info_sample_Rate">Tốc độ mẫu</string>
     <string name="song_info_play_count">Lần phát</string>
-    <string name="song_info_bitrate_suffix">" kbps"</string>
-    <string name="song_info_sample_rate_suffix">" kHz"</string>
+    <string name="song_info_bitrate_suffix">"kbps"</string>
+    <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Đã phục hồi mua hàng. Hãy khởi động lại Shuttle</string>
     <string name="iab_purchase_not_found">Không phát hiện đã mua hàng trước đây.</string>
     <string name="iab_already_upgraded">Shuttle đã được nâng cấp. Hãy thử khởi động lại ứng dụng.</string>

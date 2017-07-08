@@ -699,8 +699,8 @@
     <string name="song_info_bitrate">비트레이트</string>
     <string name="song_info_sample_Rate">샘플링 레이트</string>
     <string name="song_info_play_count">재생 횟수</string>
-    <string name="song_info_bitrate_suffix">" kbps"</string>
-    <string name="song_info_sample_rate_suffix">" kHz"</string>
+    <string name="song_info_bitrate_suffix">"kbps"</string>
+    <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">구매 기록이 복원되었습니다. Shuttle을 다시 시작해 주십시오</string>
     <string name="iab_purchase_not_found">이전에 구매한 기록이 없습니다.</string>
     <string name="iab_already_upgraded">Shuttle이 이미 업그레이드되었습니다. 앱을 다시 시작해 주십시오.</string>

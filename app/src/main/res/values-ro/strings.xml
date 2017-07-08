@@ -667,8 +667,8 @@
     <string name="song_info_bitrate">Bitrate-ul</string>
     <string name="song_info_sample_Rate">Rată simplă</string>
     <string name="song_info_play_count">Numărul redărilor</string>
-    <string name="song_info_bitrate_suffix">" kbps"</string>
-    <string name="song_info_sample_rate_suffix">" kHz"</string>
+    <string name="song_info_bitrate_suffix">"kbps"</string>
+    <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Achiziție retrasă. Restartează Shuttle.</string>
     <string name="iab_purchase_not_found">Nu s-au găsit achiziți anterioare.</string>
     <string name="iab_already_upgraded">Shuttle este deja upgradat. Încearcă să restartezi aplicația.</string>

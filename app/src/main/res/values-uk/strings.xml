@@ -708,8 +708,8 @@
     <string name="song_info_bitrate">Бітрейт</string>
     <string name="song_info_sample_Rate">Семпл рейт</string>
     <string name="song_info_play_count">Кількість відтворювань</string>
-    <string name="song_info_bitrate_suffix">" kbps"</string>
-    <string name="song_info_sample_rate_suffix">" kHz"</string>
+    <string name="song_info_bitrate_suffix">"kbps"</string>
+    <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Покупку відновлено. Будь ласка перезавантажте Shuttle</string>
     <string name="iab_purchase_not_found">Не знайдено попередньої покупки.</string>
     <string name="iab_already_upgraded">Shuttle вже оновлено. Спробуйте перезавантажити додаток.</string>

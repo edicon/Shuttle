@@ -705,8 +705,8 @@ map "</item>
     <string name="song_info_bitrate">Bitrate</string>
     <string name="song_info_sample_Rate">Sample rate</string>
     <string name="song_info_play_count">Afspeelteller</string>
-    <string name="song_info_bitrate_suffix">" kbps"</string>
-    <string name="song_info_sample_rate_suffix">" KHz"</string>
+    <string name="song_info_bitrate_suffix">"kbps"</string>
+    <string name="song_info_sample_rate_suffix">"KHz"</string>
     <string name="iab_purchase_restored">Aankoop hersteld. Start Shuttle opnieuw op.</string>
     <string name="iab_purchase_not_found">Geen vorige aankoop gevonden.</string>
     <string name="iab_already_upgraded">Shuttle is al geüpgraded. Probeer de app opnieuw op te starten.</string>

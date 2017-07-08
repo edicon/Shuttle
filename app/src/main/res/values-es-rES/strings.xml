@@ -696,8 +696,8 @@ carpetas</item>
     <string name="song_info_bitrate">Veloc. de bits</string>
     <string name="song_info_sample_Rate">Frec. de muestreo</string>
     <string name="song_info_play_count">Cont. de reprod.</string>
-    <string name="song_info_bitrate_suffix">" kbps"</string>
-    <string name="song_info_sample_rate_suffix">" kHz"</string>
+    <string name="song_info_bitrate_suffix">"kbps"</string>
+    <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Compra restablecida. Por favor reinicie Shuttle.</string>
     <string name="iab_purchase_not_found">Ninguna compra previa ha sido encontrada.</string>
     <string name="iab_already_upgraded">Shuttle ya esta actualizado. Intente reiniciando la aplicación.</string>

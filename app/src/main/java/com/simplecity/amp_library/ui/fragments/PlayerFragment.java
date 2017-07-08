@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -124,6 +127,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     private View dummyStatusBar;
     private RequestManager requestManager;
     private LinearLayout subMenuContainer;
+    private ActionBar actionBar;
 
     public PlayerFragment() {
     }
@@ -155,6 +159,8 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
             if (requestManager == null) {
                 requestManager = Glide.with(this);
             }
+            actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+            initAnimation(getContext());
         }
     }
 
@@ -778,22 +784,85 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
     public void toggleSubMenu() {
     }
 
+    private boolean useToggleAnimation = true;
     public void toggleActionbar() {
 
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         if( actionBar.isShowing()) {
-            actionBar.hide();
-            dummyToolbar.setVisibility(View.INVISIBLE);
-            subMenuContainer.setVisibility( View.INVISIBLE );
+            if( !useToggleAnimation ) {
+                actionBar.hide();
+                dummyToolbar.setVisibility(View.INVISIBLE);
+                subMenuContainer.setVisibility( View.INVISIBLE );
+            } else {
+                slideDownTop(dummyToolbar);
+                slideDownBottom(subMenuContainer);
+            }
         } else {
-            actionBar.show();
-            dummyToolbar.setVisibility(View.VISIBLE);
-            subMenuContainer.setVisibility( View.VISIBLE );
+            if( !useToggleAnimation ) {
+                actionBar.show();
+                dummyToolbar.setVisibility(View.VISIBLE);
+                subMenuContainer.setVisibility( View.VISIBLE );
+            } else {
+                slideUpTop(dummyToolbar);
+                slideUpBottom(subMenuContainer);
+            }
         }
     }
 
     public static void showDummyToolbar() {
         if( dummyToolbar != null )
             dummyToolbar.setVisibility(View.VISIBLE);
+    }
+
+    private static Animation animShowTop, animHideTop;
+    private static Animation animShowBottom, animHideBottom;
+    private void initAnimation( Context cx ) {
+        animShowTop = AnimationUtils.loadAnimation( cx, R.anim.view_show_top);
+        animHideTop = AnimationUtils.loadAnimation( cx, R.anim.view_hide_top);
+
+        animShowTop.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                actionBar.show();
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        animHideTop.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                actionBar.hide();
+            }
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        animShowBottom = AnimationUtils.loadAnimation( cx, R.anim.view_show_bottom);
+        animHideBottom = AnimationUtils.loadAnimation( cx, R.anim.view_hide_bottom);
+    }
+
+    public static void slideUpTop( View view ) {
+        view.setVisibility(View.VISIBLE);
+        view.startAnimation( animShowTop );
+    }
+    public static void slideDownTop( View view ) {
+        view.startAnimation( animHideTop );
+        view.setVisibility(View.GONE);
+    }
+
+    public static void slideUpBottom( View view ) {
+        view.setVisibility(View.VISIBLE);
+        view.startAnimation( animShowBottom );
+    }
+    public static void slideDownBottom( View view ) {
+        view.startAnimation( animHideBottom );
+        view.setVisibility(View.GONE);
     }
 }
