@@ -819,11 +819,22 @@ public class DialogUtils {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(playCount -> playCountValue.setText(String.valueOf(playCount)));
 
-        getBuilder(context)
+        MaterialDialog.Builder md = getBuilder(context)
                 .title(context.getString(R.string.dialog_song_info_title))
                 .customView(view, false)
-                .negativeText(R.string.close)
-                .show();
+                .negativeText(R.string.close);
+        md.show();
+
+        if( HI_RES )
+            hideSystemUI( view );
+        /*
+        md.showListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                hideSystemUI( view );
+            }
+        });
+        */
     }
 
     public static void showFileInfoDialog(Context context, FileObject fileObject) {
@@ -987,5 +998,18 @@ public class DialogUtils {
                 }
             }
         }
+    }
+
+    public static void hideSystemUI( View view ){
+        int uiOptions =
+              View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            // Make Content Appear Behind the Navigation Bar
+            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+
+        view.setSystemUiVisibility(uiOptions);
     }
 }

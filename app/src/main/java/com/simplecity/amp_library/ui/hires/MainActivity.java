@@ -214,23 +214,42 @@ public class MainActivity extends BaseCastActivity implements
         handleIntent(intent);
     }
 
+    // https://stackoverflow.com/questions/40924752/how-to-keep-full-screen-when-show-popup-menu?noredirect=1&lq=1
+    private View hideSystemUI() {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        int uiOptions =
+              View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            // Make Content Appear Behind the Navigation Bar
+            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(uiOptions);
+        // View focusView = getWindow().getCurrentFocus();
+        // if( focusView != null )
+        //     focusView.setSystemUiVisibility(uiOptions);
+
+        if( BuildConfig.DEBUG )
+            Log.d(TAG, "hideSystemUI: " + uiOptions);
+
+        return decorView;
+    }
+
     // setOnSystemUiVisibilityChangeListener와 동일
     @SuppressLint("NewApi")
     @Override
-    public void onWindowFocusChanged(boolean hasFocus)
-    {
+    public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        if(currentApiVersion >= Build.VERSION_CODES.KITKAT && hasFocus)
-        {
-            getWindow().getDecorView().setSystemUiVisibility(
-                  View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        if(currentApiVersion >= Build.VERSION_CODES.KITKAT && hasFocus) {
+            if( BuildConfig.DEBUG )
+                Log.d(TAG, "onWindowFocusChanged: " + hasFocus);
+
+            hideSystemUI();
         }
     }
 
@@ -263,27 +282,20 @@ public class MainActivity extends BaseCastActivity implements
         // http://cloudylab.blogspot.kr/2015/02/android-full-screen.html
         if (ShuttleUtils.hasKitKat()) {                                 // API: 19
         // if (ShuttleUtils.hasLollipop()) {                            // API: 21
-            View decorView = getWindow().getDecorView();
-            int uiOptions =
-                      View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                // Make Content Appear Behind the Navigation Bar
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-            decorView.setSystemUiVisibility( uiOptions );
+
+            View decorView = hideSystemUI();
             decorView.setOnSystemUiVisibilityChangeListener (new View.OnSystemUiVisibilityChangeListener() {
                 @Override
                 public void onSystemUiVisibilityChange(int visibility) {
+                    if( BuildConfig.DEBUG )
+                        Log.d(TAG, "onSystemUiVisibilityChange: " + visibility);
+
                     // Note that system bars will only be "visible" if none of the
                     // LOW_PROFILE, HIDE_NAVIGATION, or FULLSCREEN flags are set.
                     if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-                        // TODO: The system bars are visible. Make any desired
-                        decorView.setSystemUiVisibility( uiOptions );
+                        hideSystemUI();
                     } else {
-                        // TODO: The system bars are NOT visible. Make any desired
-                        decorView.setSystemUiVisibility( uiOptions );
+                        hideSystemUI();
                     }
                 }
             });

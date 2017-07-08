@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -742,6 +743,16 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
             return false;
         });
         menu.show();
+        // cx.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+        /* ToDo: Check
+        v.setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        // menu.show();
+        */
     }
 
     public void toggleLylic(AppCompatActivity cx ) {
@@ -760,8 +771,13 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
         }
     }
 
+    private Handler mHandler = new Handler();
     public void toggleFile( Activity cx ) {
         DialogUtils.showSongInfoDialog( cx, MusicUtils.getSong());
+
+        // ToDo: Hide SystemUI after popupwindow
+        // mHandler.postDelayed(runHideSystemUI, 500);
+        // hideSystemUI();
     }
 
     public void toggleDelete( Activity cx ) {
@@ -773,6 +789,24 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
                 .songsToDelete(Observable.just(Collections.singletonList(MusicUtils.getSong())))
                 .build()
                 .show();
+    }
+
+    private Runnable runHideSystemUI  = new Runnable() {
+        public void run() {
+            hideSystemUI();
+        }
+    };
+
+    private void hideSystemUI() {
+        View decorView = getActivity().getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+              View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            | View.SYSTEM_UI_FLAG_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        );
     }
 
     long toggleTime;
