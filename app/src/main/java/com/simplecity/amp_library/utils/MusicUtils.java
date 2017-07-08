@@ -3,23 +3,26 @@ package com.simplecity.amp_library.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.media.MediaExtractor;
+import android.media.MediaFormat;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.simplecity.amp_library.BuildConfig;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.model.Album;
 import com.simplecity.amp_library.model.AlbumArtist;
 import com.simplecity.amp_library.model.Song;
 import com.simplecity.amp_library.playback.MusicService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
-
-import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 
 public class MusicUtils {
 
@@ -547,6 +550,44 @@ public class MusicUtils {
     public static void removeFromQueue(final List<Song> songs, boolean notify) {
         if (MusicServiceConnectionUtils.sServiceBinder != null && MusicServiceConnectionUtils.sServiceBinder.getService() != null) {
             MusicServiceConnectionUtils.sServiceBinder.getService().removeTracks(songs, notify);
+        }
+    }
+
+    public static int getBitRate( String filePath, boolean bitFlag ) {
+
+        MediaExtractor mex = new MediaExtractor();
+
+        try {
+            mex.setDataSource(filePath);	// the adress location of the sound on memory
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1;
+        }
+
+        try {
+            MediaFormat format = mex.getTrackFormat(0);
+
+            String mime     = format.getString(MediaFormat.KEY_MIME);
+            int bitRate     = format.getInteger(MediaFormat.KEY_BIT_RATE);
+            int sampleRate  = format.getInteger(MediaFormat.KEY_SAMPLE_RATE);
+            int channelCount= format.getInteger(MediaFormat.KEY_CHANNEL_COUNT);
+            long duration   = format.getLong(MediaFormat.KEY_DURATION);
+
+            if( BuildConfig.DEBUG ) {
+                Log.d(TAG, "mime = " + mime);
+                Log.d(TAG, "bitRate = " + bitRate);
+                Log.d(TAG, "sampleRate = " + sampleRate);
+                Log.d(TAG, "channelCount = " + channelCount);
+                Log.d(TAG, "duration = " + duration);
+            }
+
+            if( bitFlag )
+                return bitRate;
+            return sampleRate;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 }

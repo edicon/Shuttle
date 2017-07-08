@@ -2,6 +2,8 @@ package com.simplecity.amp_library.model;
 
 import android.text.TextUtils;
 
+import com.simplecity.amp_library.BuildConfig;
+
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.AudioHeader;
@@ -30,6 +32,7 @@ public class TagInfo implements Serializable {
     public String genre;
 
     public TagInfo(String filePath) {
+        String r;
         if (filePath != null) {
             File file = new File(filePath);
             if (file.exists()) {
@@ -40,16 +43,26 @@ public class TagInfo implements Serializable {
                     this.albumArtistName = getTag(audioFile, FieldKey.ALBUM_ARTIST);
                     this.albumName = getTag(audioFile, FieldKey.ALBUM);
                     this.trackName = getTag(audioFile, FieldKey.TITLE);
-                    this.trackNumber = Integer.parseInt(getTag(audioFile, FieldKey.TRACK));
-                    this.trackTotal = Integer.parseInt(getTag(audioFile, FieldKey.TRACK_TOTAL));
-                    this.discNumber = Integer.parseInt(getTag(audioFile, FieldKey.DISC_NO));
-                    this.discTotal = Integer.parseInt(getTag(audioFile, FieldKey.DISC_TOTAL));
+                    r = getTag(audioFile, FieldKey.TRACK);
+                    if( !"Unknown".equals(r))
+                        this.trackNumber = Integer.parseInt(getTag(audioFile, FieldKey.TRACK));
+                    r = getTag(audioFile, FieldKey.TRACK_TOTAL);
+                    if( !"Unknown".equals(r))
+                        this.trackTotal = Integer.parseInt(getTag(audioFile, FieldKey.TRACK_TOTAL));
+                    r = getTag(audioFile, FieldKey.DISC_NO);
+                    if( !"Unknown".equals(r))
+                        this.discNumber = Integer.parseInt(getTag(audioFile, FieldKey.DISC_NO));
+                    r = getTag(audioFile, FieldKey.DISC_TOTAL);
+                    if( !"Unknown".equals(r))
+                        this.discTotal = Integer.parseInt(getTag(audioFile, FieldKey.DISC_TOTAL));
                     this.bitrate = getBitrate(audioFile);
                     this.format = getFormat(audioFile);
                     this.sampleRate = getSampleRate(audioFile);
                     this.genre = getTag(audioFile, FieldKey.GENRE);
 
                 } catch (Exception ignored) {
+                    if(BuildConfig.DEBUG)
+                        ignored.printStackTrace();
                 }
             }
         }
