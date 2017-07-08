@@ -166,7 +166,7 @@ músicas adicionadas à fila.</item>
     <!--"Set Ringtone" title -->
     <string name="dialog_title_set_ringtone">Usar como toque</string>
     <!-- "Set Ringtone" message -->
-    <string name="dialog_message_set_ringtone">O Shuttle precisa da permissão \"Modificar Configurações\" para poder modificar seu toque.\n\nApós dar permissão, tente modificar seu toque novamente.</string>
+    <string name="dialog_message_set_ringtone">O Wavevine precisa da permissão \"Modificar Configurações\" para poder modificar seu toque.\n\nApós dar permissão, tente modificar seu toque novamente.</string>
     <!-- Message displayed in dialog when attempting to add duplicates to playlist -->
     <string name="dialog_message_playlist_add_duplicate"><xliff:g id="artist">%s</xliff:g> - <xliff:g id="song">%s</xliff:g> já existe nesta playlist. Adicionar mesmo assim?</string>
     <!-- Checkbox text 'apply to all' -->
@@ -311,7 +311,7 @@ músicas adicionadas à fila.</item>
     <!-- Settings title for embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_embedded_art">Preferir capas embutidas</string>
     <!-- Settings summary for the ignore embedded artwork checkbox-->
-    <string name="pref_summary_prefer_embedded_art">Marque esta caixa se você prefere que o Shuttle procure pela capa dentro do próprio arquivo, antes de procurar nos seus diretórios de música</string>
+    <string name="pref_summary_prefer_embedded_art">Marque esta caixa se você prefere que o Wavevine procure pela capa dentro do próprio arquivo, antes de procurar nos seus diretórios de música</string>
     <!-- Settings title for ignore embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_ignore_embedded_art">Ignorar capa embutida</string>
     <!-- Settings summary for the ignore folder artwork checkbox-->
@@ -327,7 +327,7 @@ músicas adicionadas à fila.</item>
     <!-- Settings title for ignore folder artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_lastfm">Preferir capas do Last.fm</string>
     <!-- Settings summary for the embedded artwork checkbox-->
-    <string name="pref_summary_prefer_lastfm">Marque essa caixa se você prefere que o Shuttle procure uma capa no Last.fm primeiro, antes de procurar nos servidores do iTunes. (Apenas capas de álbuns)</string>
+    <string name="pref_summary_prefer_lastfm">Marque essa caixa se você prefere que o Wavevine procure uma capa no Last.fm primeiro, antes de procurar nos servidores do iTunes. (Apenas capas de álbuns)</string>
     <!-- Settings title for Artwork settings heading -->
     <string name="pref_string_title_artwork">Capas</string>
     <!-- Settings title for the download artwork button -->
@@ -335,7 +335,7 @@ músicas adicionadas à fila.</item>
     <!-- Settings summary for the download artwork button-->
     <string name="pref_summary_download_artwork">Baixar imagens ausentes dos artistas e álbuns</string>
     <!-- Settings warning for the download artwork button -->
-    <string name="pref_warning_download_artwork">O Shuttle vai baixar todas as capas independentemente de sua conexão. Taxas de uso de dados poderão ser aplicadas.</string>
+    <string name="pref_warning_download_artwork">O Wavevine vai baixar todas as capas independentemente de sua conexão. Taxas de uso de dados poderão ser aplicadas.</string>
     <!-- Settings title for the delete artwork button-->
     <string name="pref_title_delete_artwork">Excluir capas</string>
     <!-- Settings summary for the delete artwork button -->
@@ -356,7 +356,7 @@ músicas adicionadas à fila.</item>
     <string name="pref_title_placeholders">Capas estilo Gmail</string>
     <!-- Settings summary for gmail style placeholders checkbox-->
     <string name="pref_summary_placeholders">Exibir capas ausentes estilo \'Gmail\' por padrão.
-Se estiver desmarcado, o ícone do Shuttle será usado como uma capa</string>
+Se estiver desmarcado, o ícone do Wavevine será usado como uma capa</string>
     <!-- Settings title for the enable lockscreen controls checkbox -->
     <string name="pref_title_lockscreen">Mostrar capa na tela de bloqueio</string>
     <!-- Settings summary for the enable lockscreen controls checkbox -->
@@ -409,7 +409,7 @@ Se estiver desmarcado, o ícone do Shuttle será usado como uma capa</string>
     <string name="pref_title_faq">Perguntas frequentes</string>
     <string name="pref_summary_faq">Tem alguma pergunta? Precisa de ajuda? Clique aqui para ver as perguntas frequentes em www.shuttlemusicplayer.com</string>
     <string name="pref_title_gplus">Pedir ajuda</string>
-    <string name="pref_summary_gplus">Há uma comunidade bastante ativa de usuários do Shuttle no Google+. Se você tiver perguntas ou precisa de ajuda, lá é o melhor lugar para ir.</string>
+    <string name="pref_summary_gplus">Há uma comunidade bastante ativa de usuários do Wavevine no Google+. Se você tiver perguntas ou precisa de ajuda, lá é o melhor lugar para ir.</string>
     <string name="pref_title_rate">Diga obrigado</string>
     <string name="pref_summary_rate">Se você gosta do Shuttle, considere deixar um comentário.</string>
     <!-- Settings title for ignore playlist duplicates -->
@@ -461,11 +461,11 @@ Se estiver desmarcado, o ícone do Shuttle será usado como uma capa</string>
     <string name="save">Salvar</string>
     <!-- Message displayed when tag editing fails -->
     <string name="tag_edit_error">Um erro ocorreu ao editar tags.</string>
-    <string name="tag_error_lollipop">Ocorreu um erro ao editar as tags. Se o arquivo estiver num cartão de memória, talvez o Shuttle não tenha permissão para acessá-lo.</string>
+    <string name="tag_error_lollipop">Ocorreu um erro ao editar as tags. Se o arquivo estiver num cartão de memória, talvez o Wavevine não tenha permissão para acessá-lo.</string>
     <string name="tag_error_kitkat">Ocorreu um erro ao editar as tags. O arquivo está num cartão de memória? Se sim, o Google fez impossível alterar tags para esse arquivo.</string>
-    <string name="tag_editor_document_tree_message">Devido à mudanças no Android 5.0, o Google agora exige que você especifique quais pastas o app pode editar num cartão de memória.\n\nO Shuttle abrirá um seletor de arquivos. Por favor, escolha a pasta mãe dos arquivos que você deseja modificar.</string>
+    <string name="tag_editor_document_tree_message">Devido à mudanças no Android 5.0, o Google agora exige que você especifique quais pastas o app pode editar num cartão de memória.\n\nO Wavevine abrirá um seletor de arquivos. Por favor, escolha a pasta mãe dos arquivos que você deseja modificar.</string>
     <string name="tag_editor_check_permission">Conferindo permissões. Isso pode demorar um pouco...\n\nCulpe o Google!</string>
-    <string name="tag_editor_document_tree_permission_failed">Parece que o Shuttle ainda não tem permissões para editar os arquivos. Marque novamente o diretório no seletor de arquivos.</string>
+    <string name="tag_editor_document_tree_permission_failed">Parece que o Wavevine ainda não tem permissões para editar os arquivos. Marque novamente o diretório no seletor de arquivos.</string>
     <string name="tag_retrieve_error">Um erro ocorreu ao obter tags.</string>
     <!-- ## Folder browsing ## -->
     <!-- -->
@@ -587,7 +587,7 @@ pastas</item>
     <!-- Button name in time span picker -->
     <string name="button_done">Pronto</string>
     <!-- Title of time span picker -->
-    <string name="weekpicker_title">Escolha quantas por semanas no passado o Shuttle deve buscar por músicas \'recentes\'.</string>
+    <string name="weekpicker_title">Escolha quantas por semanas no passado o Wavevine deve buscar por músicas \'recentes\'.</string>
     <!-- ## Notification bar text ## -->
     <!-- Message in notification bar when downloading -->
     <string name="notif_downloading_art">Baixando capas</string>
@@ -705,7 +705,7 @@ pastas</item>
     <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Compra restaurada. Por favor, reinicie o Shuttle</string>
     <string name="iab_purchase_not_found">Nenhuma compra encontrada</string>
-    <string name="iab_already_upgraded">O Shuttle já está atualizado. Tente reiniciar o app.</string>
+    <string name="iab_already_upgraded">O Wavevine já está atualizado. Tente reiniciar o app.</string>
     <string name="iab_purchase_failed">Alguma coisa deu errado. Por favor, tente novamente mais tarde...</string>
     <string name="snackbar_rate_text">Gostando do Shuttle?</string>
     <string name="snackbar_rate_action">Avaliar!</string>

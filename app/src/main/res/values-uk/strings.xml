@@ -173,7 +173,7 @@
     <!--"Set Ringtone" title -->
     <string name="dialog_title_set_ringtone">Поставити на дзвінок</string>
     <!-- "Set Ringtone" message -->
-    <string name="dialog_message_set_ringtone">Shuttle потребує дозволу на \"запис налаштувань\", щоб налаштувати ваш рингтон.\n\nПісля надання дозволу, спробуйте налаштувати ваш рингтон ще раз.</string>
+    <string name="dialog_message_set_ringtone">Wavevine потребує дозволу на \"запис налаштувань\", щоб налаштувати ваш рингтон.\n\nПісля надання дозволу, спробуйте налаштувати ваш рингтон ще раз.</string>
     <!-- Message displayed in dialog when attempting to add duplicates to playlist -->
     <string name="dialog_message_playlist_add_duplicate"><xliff:g id="artist">%s</xliff:g> - <xliff:g id="song">%s</xliff:g> вже є у цьому плейлісті. Додати пропри все?</string>
     <!-- Checkbox text 'apply to all' -->
@@ -331,7 +331,7 @@
     <!-- Settings title for ignore folder artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_lastfm">Віддаю перевагу обкладинці Last.fm</string>
     <!-- Settings summary for the embedded artwork checkbox-->
-    <string name="pref_summary_prefer_lastfm">Віддаю перевагу Shuttle для пошуку обкладинок на Last.fm, перед пошуком на сервері iTunes. (Тільки картинки обкладинок альбому)</string>
+    <string name="pref_summary_prefer_lastfm">Віддаю перевагу Wavevine для пошуку обкладинок на Last.fm, перед пошуком на сервері iTunes. (Тільки картинки обкладинок альбому)</string>
     <!-- Settings title for Artwork settings heading -->
     <string name="pref_string_title_artwork">Обкладинка</string>
     <!-- Settings title for the download artwork button -->
@@ -339,7 +339,7 @@
     <!-- Settings summary for the download artwork button-->
     <string name="pref_summary_download_artwork">Завантажувати відсутні зображення алобомів та виконавців</string>
     <!-- Settings warning for the download artwork button -->
-    <string name="pref_warning_download_artwork">Shuttle завантажить обкладинки незважаючи на швидкість вашого з\'єднання. За використання даних може стягуватись додаткова плата.</string>
+    <string name="pref_warning_download_artwork">Wavevine завантажить обкладинки незважаючи на швидкість вашого з\'єднання. За використання даних може стягуватись додаткова плата.</string>
     <!-- Settings title for the delete artwork button-->
     <string name="pref_title_delete_artwork">Видалити обкладинку</string>
     <!-- Settings summary for the delete artwork button -->
@@ -413,7 +413,7 @@
     <string name="pref_title_faq">Допомога</string>
     <string name="pref_summary_faq">Маєте питання? Потрібна допомога? Натисніть тут щоб переглянути статті \"питання-відповідь\" @ www.shuttlemusicplayer.com</string>
     <string name="pref_title_gplus">Отримати</string>
-    <string name="pref_summary_gplus">В нас є дуже активна спільнота користувачів Shuttle в Google+. Якщо ви маєте якісь питання чи вам потрібна допомога, пишіть нам.</string>
+    <string name="pref_summary_gplus">В нас є дуже активна спільнота користувачів Wavevine в Google+. Якщо ви маєте якісь питання чи вам потрібна допомога, пишіть нам.</string>
     <string name="pref_title_rate">Подякувати</string>
     <string name="pref_summary_rate">Якщо Вам подобається Shuttle, будь ласка залиште відгук</string>
     <!-- Settings title for ignore playlist duplicates -->
@@ -460,11 +460,11 @@
     <string name="save">Зберегти</string>
     <!-- Message displayed when tag editing fails -->
     <string name="tag_edit_error">Під час редагування тегів сталася помилка.</string>
-    <string name="tag_error_lollipop">Під час редагування тегів виникла помилка. Якщо цей файл розміщено на SD-карті, Shuttle не матиме до нього доступу.</string>
+    <string name="tag_error_lollipop">Під час редагування тегів виникла помилка. Якщо цей файл розміщено на SD-карті, Wavevine не матиме до нього доступу.</string>
     <string name="tag_error_kitkat">Під час редагування тегів виникла помилка. Файл розміщено на SD-карті? Якщо так, Google зробить можливим редагування цього файлу.</string>
-    <string name="tag_editor_document_tree_message">У зв\'язку зі змінами в Android 5.0, Google потребує щоб ви визначили які теки додатку дозволено редагувати.\n\nShuttle зараз відкриє провідник. Будь ласка оберіть   теку файлів, які ви хочете змінити.</string>
+    <string name="tag_editor_document_tree_message">У зв\'язку зі змінами в Android 5.0, Google потребує щоб ви визначили які теки додатку дозволено редагувати.\n\nSWavevine зараз відкриє провідник. Будь ласка оберіть   теку файлів, які ви хочете змінити.</string>
     <string name="tag_editor_check_permission">Перевірка дозволів. Це займе момент...\n\nАвторство Google!</string>
-    <string name="tag_editor_document_tree_permission_failed">Здається що Shuttle досі не має дозволу на редагування файлів. Двічі перевірте теку в провіднику.</string>
+    <string name="tag_editor_document_tree_permission_failed">Здається що Wavevine досі не має дозволу на редагування файлів. Двічі перевірте теку в провіднику.</string>
     <string name="tag_retrieve_error">Під час отримання тегів сталася помилка.</string>
     <!-- ## Folder browsing ## -->
     <!-- -->
@@ -712,7 +712,7 @@
     <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Покупку відновлено. Будь ласка перезавантажте Shuttle</string>
     <string name="iab_purchase_not_found">Не знайдено попередньої покупки.</string>
-    <string name="iab_already_upgraded">Shuttle вже оновлено. Спробуйте перезавантажити додаток.</string>
+    <string name="iab_already_upgraded">Wavevine вже оновлено. Спробуйте перезавантажити додаток.</string>
     <string name="iab_purchase_failed">Щось пішло не так. Будь ласка спробуйте ще раз..</string>
     <string name="snackbar_rate_text">Сподобався Shuttle?</string>
     <string name="snackbar_rate_action">Оцініть його!</string>

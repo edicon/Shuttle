@@ -82,7 +82,7 @@ abesti ilarara gehituak.</item>
     <!-- Displays when a restart is required due to a change (themes etc) -->
     <string name="restart_tite">Berrabiarazpena beharrezkoa</string>
     <!-- Displays when a restart is required due to a change (themes etc) -->
-    <string name="restart_message">Aldaketa hauek ez dira ikusiko Shuttle berrabiarazi arte</string>
+    <string name="restart_message">Aldaketa hauek ez dira ikusiko Wavevine berrabiarazi arte</string>
     <!-- Restart now button -->
     <string name="restart_button">Orain berrabiarazi</string>
     <!-- Displays when picking a theme color -->
@@ -106,7 +106,7 @@ abesti ilarara gehituak.</item>
     <!-- -->
     <string name="get_pro_title">Shuttle+ erosi</string>
     <!-- -->
-    <string name="get_pro_message">Shuttle gustokoa baduzu, mesedez erostea pentsa ezazu.
+    <string name="get_pro_message">Wavevine gustokoa baduzu, mesedez erostea pentsa ezazu.
 \n\nEzaugarriak:
 \n• Gai berri piloa
 \n• Etiketen edizioa
@@ -411,7 +411,7 @@ Desaktibatzen bada, Shuttle-en ikonoa erabiliko da bere ordez</string>
     <string name="pref_title_gplus">Laguntza lortu</string>
     <string name="pref_summary_gplus">Shuttle-en erabiltzaile komunitate oso aktiboa dago Google+ plataforman. Galderak badituzu edota laguntza behar baduzu, hau da leku onena.</string>
     <string name="pref_title_rate">Eskerrak eman</string>
-    <string name="pref_summary_rate">Shuttle gustokoa baduzu, mesedez pentsatu kritika bat idaztea.</string>
+    <string name="pref_summary_rate">Wavevine gustokoa baduzu, mesedez pentsatu kritika bat idaztea.</string>
     <string name="pref_title_headset_beep">Soinua pasatzean</string>
     <string name="pref_summary_headset_beep">Soinua egin abesti bat pasatzean entzungailuaren kontrolekin</string>
     <!-- Settings title for ignore playlist duplicates -->
@@ -708,11 +708,11 @@ karpeta</item>
     <string name="song_info_play_count">Erreprodukzio Kantitatea</string>
     <string name="song_info_bitrate_suffix">"kbps"</string>
     <string name="song_info_sample_rate_suffix">"kHz"</string>
-    <string name="iab_purchase_restored">Eroskea berreskuratua. Mesedez Shuttle berrabiarazi ezazu</string>
+    <string name="iab_purchase_restored">Eroskea berreskuratua. Mesedez Wavevine berrabiarazi ezazu</string>
     <string name="iab_purchase_not_found">Ez da aurreko erosketarik aurkitu.</string>
-    <string name="iab_already_upgraded">Shuttle jada hobetuta dago. Saiatu app-a berrabiarazten.</string>
+    <string name="iab_already_upgraded">Wavevine jada hobetuta dago. Saiatu app-a berrabiarazten.</string>
     <string name="iab_purchase_failed">Zerbait txarto joan da. Mesedez saiatu berriz geroago...</string>
-    <string name="snackbar_rate_text">Shuttle erabiltzea gustuko?</string>
+    <string name="snackbar_rate_text">Wavevine erabiltzea gustuko?</string>
     <string name="snackbar_rate_action">Puntua ezazu!</string>
     <string name="toast_purchase_failed">Zerbait txarto joan da. Mesedez saiatu berriz geroago...</string>
     <string name="dialog_create_playlist_error">Errorea erreprodukzio-zerrenda sortzean</string>

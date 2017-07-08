@@ -82,7 +82,7 @@
     <!-- Displays when a restart is required due to a change (themes etc) -->
     <string name="restart_tite">Neustart erforderlich</string>
     <!-- Displays when a restart is required due to a change (themes etc) -->
-    <string name="restart_message">Diese Veränderungen treten erst in Kraft, wenn Shuttle neu gestartet wird</string>
+    <string name="restart_message">Diese Veränderungen treten erst in Kraft, wenn Wavevine neu gestartet wird</string>
     <!-- Restart now button -->
     <string name="restart_button">Neu starten</string>
     <!-- Displays when picking a theme color -->
@@ -106,7 +106,7 @@
     <!-- -->
     <string name="get_pro_title">Auf Shuttle+ upgraden</string>
     <!-- -->
-    <string name="get_pro_message">Wenn dir Shuttle gefällt, denke bitte über ein Upgrade nach.
+    <string name="get_pro_message">Wenn dir Wavevine gefällt, denke bitte über ein Upgrade nach.
         \n\nFunktionen:
         \n• Viele neue Themen
         \n• Bearbeiten von Tags
@@ -165,7 +165,7 @@
     <!--"Set Ringtone" title -->
     <string name="dialog_title_set_ringtone">Klingelton festlegen</string>
     <!-- "Set Ringtone" message -->
-    <string name="dialog_message_set_ringtone">Shuttle benötigt Schreibrechte damit ein Klingelton gesetzt werden kann.\n\nVersuche das einstellen erneut, wenn diese Rechte gewährt wurden.</string>
+    <string name="dialog_message_set_ringtone">Wavevine benötigt Schreibrechte damit ein Klingelton gesetzt werden kann.\n\nVersuche das einstellen erneut, wenn diese Rechte gewährt wurden.</string>
     <!-- Message displayed in dialog when attempting to add duplicates to playlist -->
     <string name="dialog_message_playlist_add_duplicate">"<xliff:g id="artist">%s</xliff:g> - <xliff:g id="song">%s</xliff:g> existiert bereits in dieser Playlist. Trotzdem hinzufügen? "</string>
     <!-- Checkbox text 'apply to all' -->
@@ -311,7 +311,7 @@
     <!-- Settings title for embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_embedded_art">Eingebettete Bilder bevorzugen</string>
     <!-- Settings summary for the ignore embedded artwork checkbox-->
-    <string name="pref_summary_prefer_embedded_art">Anwählen, wenn Shuttle zunächst in der Datei und erst danach in dem Ordner nach Bildern (wie z. B. folder.jpg, cover.png) suchen soll.</string>
+    <string name="pref_summary_prefer_embedded_art">Anwählen, wenn Wavevine zunächst in der Datei und erst danach in dem Ordner nach Bildern (wie z. B. folder.jpg, cover.png) suchen soll.</string>
     <!-- Settings title for ignore embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_ignore_embedded_art">Eingebettete Bilder ignorieren</string>
     <!-- Settings summary for the ignore folder artwork checkbox-->
@@ -327,7 +327,7 @@
     <!-- Settings title for ignore folder artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_lastfm">Last.fm Bildmaterial bevorzugen</string>
     <!-- Settings summary for the embedded artwork checkbox-->
-    <string name="pref_summary_prefer_lastfm">Auswählen um Shuttle bevorzugt auf Last.fm nach Bildern suchen zu lassen -  erst danach wird auf iTunes Servern gesucht. (nur Album Bilder)</string>
+    <string name="pref_summary_prefer_lastfm">Auswählen um Wavevine bevorzugt auf Last.fm nach Bildern suchen zu lassen -  erst danach wird auf iTunes Servern gesucht. (nur Album Bilder)</string>
     <!-- Settings title for Artwork settings heading -->
     <string name="pref_string_title_artwork">Bilder</string>
     <!-- Settings title for the download artwork button -->
@@ -336,7 +336,7 @@
     <string name="pref_summary_download_artwork">"Fehlende Künstler und Alben-Bilder herunterladen
     "</string>
     <!-- Settings warning for the download artwork button -->
-    <string name="pref_warning_download_artwork">Shuttle wird alle Bilder unabhängig von deiner Datenverbindung herunterladen. Mobilfunkdaten könnten Kosten verursachen</string>
+    <string name="pref_warning_download_artwork">Wavevine wird alle Bilder unabhängig von deiner Datenverbindung herunterladen. Mobilfunkdaten könnten Kosten verursachen</string>
     <!-- Settings title for the delete artwork button-->
     <string name="pref_title_delete_artwork">Bilder löschen</string>
     <!-- Settings summary for the delete artwork button -->
@@ -415,9 +415,9 @@
     <string name="pref_title_faq">FAQ</string>
     <string name="pref_summary_faq">Du hast eine Frage oder brauchst Hilfe? Klicke hier für die FAQ auf www.shuttlemusicplayer.com.</string>
     <string name="pref_title_gplus">Hilfe</string>
-    <string name="pref_summary_gplus">Shuttle hat eine sehr aktive Community auf Google+. Für Fragen oder Hilfe ist das der beste Ort.</string>
+    <string name="pref_summary_gplus">Wavevine hat eine sehr aktive Community auf Google+. Für Fragen oder Hilfe ist das der beste Ort.</string>
     <string name="pref_title_rate">Danke sagen</string>
-    <string name="pref_summary_rate">Wenn dir Shuttle gefällt, gib bitte eine Bewertung ab.</string>
+    <string name="pref_summary_rate">Wenn dir Wavevine gefällt, gib bitte eine Bewertung ab.</string>
     <string name="pref_title_headset_beep">Ton beim Überspringen</string>
     <string name="pref_summary_headset_beep">Ton beim Überspringen mit Headset</string>
     <!-- Settings title for ignore playlist duplicates -->
@@ -469,11 +469,11 @@
     <string name="save">Speichern</string>
     <!-- Message displayed when tag editing fails -->
     <string name="tag_edit_error">Fehler beim Bearbeiten der Tags.</string>
-    <string name="tag_error_lollipop">Tags konnten nicht gespeichert werden. Wenn die Datei auf einer SD-Karte gespeichert ist, hat Shuttle möglicherweise keine Schreibrechte.</string>
+    <string name="tag_error_lollipop">Tags konnten nicht gespeichert werden. Wenn die Datei auf einer SD-Karte gespeichert ist, hat Wavevine möglicherweise keine Schreibrechte.</string>
     <string name="tag_error_kitkat">Tags konnten nicht gespeichert werden. Wenn die Datei auf einer SD-Karte gespeichert ist, hat Google das Speichern für diese Datei unmöglich gemacht.</string>
     <string name="tag_editor_document_tree_message">Wegen Änderungen in Android 5.0 muss angegeben werden welche Dateien auf der SD-Karte bearbeitet werden dürfen.\n\nWählen Sie den Überordner aus, in dem die Dateien bearbeitet werden dürfen.</string>
     <string name="tag_editor_check_permission">Rechte werden überprüft. Es könnte einen Moment dauern...\n\nGoogle ist schuld!</string>
-    <string name="tag_editor_document_tree_permission_failed">Shuttle hat immer noch keine Rechte Dateien zu bearbeiten. Überprüfe das Verzeichnis im Explorer.</string>
+    <string name="tag_editor_document_tree_permission_failed">Wavevine hat immer noch keine Rechte Dateien zu bearbeiten. Überprüfe das Verzeichnis im Explorer.</string>
     <string name="tag_retrieve_error">Fehler beim Lesen der Tags.</string>
     <!-- ## Folder browsing ## -->
     <!-- -->
@@ -604,7 +604,7 @@
     <string name="weekpicker_title">Für wie viele Wochen soll Musik als neu hinzugefügt gelten?</string>
     <!-- ## Notification bar text ## -->
     <!-- Message in notification bar when downloading -->
-    <string name="notif_downloading_art">Shuttle - Lade herunter</string>
+    <string name="notif_downloading_art">Wavevine - Lade herunter</string>
     <!-- ## SD card error messages ##-->
     <!-- Title of screen when no sd card is present -->
     <string name="sdcard_missing_title">Keine SD-Karte</string>
@@ -706,7 +706,7 @@
     <string name="btn_now_playing">Spielt %1$s von %2$s</string>
     <!-- Accessibility 'show lyrics' -->
     <string name="btn_show_lyrics">Text anzeigen</string>
-    <string name="pref_summary_restore_purchases">Klicke hier wenn Shuttle trotz Upgrade noch als Gratis-Version angezeigt wird.</string>
+    <string name="pref_summary_restore_purchases">Klicke hier wenn Wavevine trotz Upgrade noch als Gratis-Version angezeigt wird.</string>
     <string name="pref_title_restore_purchases">Käufe wiederherstellen</string>
     <string name="blacklist_empty">Du hast keine Titel in deiner Blacklist!</string>
     <string name="whitelist_empty">Du hast keine Ordner in deiner Whitelist!</string>
@@ -719,11 +719,11 @@
     <string name="song_info_play_count">Zähler</string>
     <string name="song_info_bitrate_suffix">"kbps"</string>
     <string name="song_info_sample_rate_suffix">"kHz"</string>
-    <string name="iab_purchase_restored">Kauf wiederhergestellt. Bitte Shuttle Neu-starten.</string>
+    <string name="iab_purchase_restored">Kauf wiederhergestellt. Bitte Wavevine Neu-starten.</string>
     <string name="iab_purchase_not_found">Kein vorheriger Kauf gefunden</string>
-    <string name="iab_already_upgraded">Shuttle wurde schon upgegradet. Bitte starten Sie die App neu</string>
+    <string name="iab_already_upgraded">Wavevine wurde schon upgegradet. Bitte starten Sie die App neu</string>
     <string name="iab_purchase_failed">Etwas ist schiefgelaufen. Bitte versuch es später erneut...</string>
-    <string name="snackbar_rate_text">Gefällt dir Shuttle ?</string>
+    <string name="snackbar_rate_text">Gefällt dir Wavevine ?</string>
     <string name="snackbar_rate_action">Bewerte die App</string>
     <string name="toast_purchase_failed">Etwas ist schief gelaufen. Bitte versuch es später nochmal..</string>
     <string name="dialog_create_playlist_error">Fehler beim erstellen einer Playlist</string>

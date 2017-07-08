@@ -83,7 +83,7 @@
     <!-- Displays when a restart is required due to a change (themes etc) -->
     <string name="restart_tite">Yeniden başlatma gerekli</string>
     <!-- Displays when a restart is required due to a change (themes etc) -->
-    <string name="restart_message">Shuttle yeniden başlatılana kadar değişiklikler geçerli olmayacak</string>
+    <string name="restart_message">Wavevine yeniden başlatılana kadar değişiklikler geçerli olmayacak</string>
     <!-- Restart now button -->
     <string name="restart_button">Şimdi yeniden başlat</string>
     <!-- Displays when picking a theme color -->
@@ -118,7 +118,7 @@
     <string name="upgraded_title">Teşekkürler</string>
     <string name="upgraded_message">Başarıyla Shuttle+ \'a yükselttiniz. Desteğiniz için teşekkür ederim.
 \n\nTüm özelliklerin etkinleştirilmesini sağlamak için lütfen uygulamayı yeniden başlatın</string>
-    <string name="upgrade_dialog_message">Yükseltme Shuttle ek özelliklerinin kilidi açılacak, dahil olacaklar:
+    <string name="upgrade_dialog_message">Yükseltme Wavevine ek özelliklerinin kilidi açılacak, dahil olacaklar:
 \n\n•Fazladan tonlarca tema
 \n•Etiket düzenleme
 \n•Klasör tarama
@@ -166,7 +166,7 @@
     <!--"Set Ringtone" title -->
     <string name="dialog_title_set_ringtone">Zil sesi olarak ayarla</string>
     <!-- "Set Ringtone" message -->
-    <string name="dialog_message_set_ringtone">Shuttle sizin zil sesi olarak ayarlamanız için \'yazma ayarları\' izin gerektirir.\n\nİzin verilmesinin ardından, tekrar zil sesi ayarlamayı deneyin.</string>
+    <string name="dialog_message_set_ringtone">Wavevine sizin zil sesi olarak ayarlamanız için \'yazma ayarları\' izin gerektirir.\n\nİzin verilmesinin ardından, tekrar zil sesi ayarlamayı deneyin.</string>
     <!-- Message displayed in dialog when attempting to add duplicates to playlist -->
     <string name="dialog_message_playlist_add_duplicate"><xliff:g id="artist">%s</xliff:g> - <xliff:g id="song">%s</xliff:g> zaten oynatma listesinde var. Yine de eklensin mi?</string>
     <!-- Checkbox text 'apply to all' -->
@@ -336,7 +336,7 @@
     <!-- Settings summary for the download artwork button-->
     <string name="pref_summary_download_artwork">Eksik sanatçı ve albüm kapaklarını indir</string>
     <!-- Settings warning for the download artwork button -->
-    <string name="pref_warning_download_artwork">Shuttle ağınıza bakılmaksızın tüm albüm kapaklarını indirir. Veri kullanım ücreti alınabilir.</string>
+    <string name="pref_warning_download_artwork">Wavevine ağınıza bakılmaksızın tüm albüm kapaklarını indirir. Veri kullanım ücreti alınabilir.</string>
     <!-- Settings title for the delete artwork button-->
     <string name="pref_title_delete_artwork">Albüm Kapaklarını Sil</string>
     <!-- Settings summary for the delete artwork button -->
@@ -357,7 +357,7 @@
     <string name="pref_title_placeholders">Gmail Harf Görsellerini Kullan</string>
     <!-- Settings summary for gmail style placeholders checkbox-->
     <string name="pref_summary_placeholders">Varsayılan olarak \'Gmail\' harf görselleri kullanılacaktır.
-Bu seçenek işaretli değilse, Shuttle simgesi kullanılacaktır.</string>
+Bu seçenek işaretli değilse, Wavevine simgesi kullanılacaktır.</string>
     <!-- Settings title for the enable lockscreen controls checkbox -->
     <string name="pref_title_lockscreen">Kilit Ekranında Albüm Kapağı</string>
     <!-- Settings summary for the enable lockscreen controls checkbox -->
@@ -411,7 +411,7 @@ Bu seçenek işaretli değilse, Shuttle simgesi kullanılacaktır.</string>
     <string name="pref_title_faq">SSS</string>
     <string name="pref_summary_faq">Bir sorunuz mu var? Yardıma mı ihtiyacınız var? SSS leri görmek için buraya tıklayın @ www.shuttlemusicplayer.com</string>
     <string name="pref_title_gplus">Yardım Alın</string>
-    <string name="pref_summary_gplus">Shuttle kullanıcıların çok aktif bir Google+ topluluğu vardır. Sorularınız varsa veya yardıma ihtiyacınız varsa, burası uğramanız gereken en doğru yerdir.</string>
+    <string name="pref_summary_gplus">Wavevine kullanıcıların çok aktif bir Google+ topluluğu vardır. Sorularınız varsa veya yardıma ihtiyacınız varsa, burası uğramanız gereken en doğru yerdir.</string>
     <string name="pref_title_rate">Teşekkür etmek için</string>
     <string name="pref_summary_rate">Eğer Shuttle\'ı beğendiyseniz, bir yorum bırakmayı düşünün lütfen</string>
     <string name="pref_title_headset_beep">Bip Sesini Atla</string>
@@ -467,7 +467,7 @@ Bu seçenek işaretli değilse, Shuttle simgesi kullanılacaktır.</string>
     <string name="tag_edit_error">Etiketleri düzenlerken bir hata oluştu.</string>
     <string name="tag_error_lollipop">Etiketleri düzenlerken bir hata oluştu. Dosya bir SD kart üzerine kayıtlı ise, Shutlle\'ın erişim için izni olmayabilir.</string>
     <string name="tag_error_kitkat">Etiketleri düzenlerken bir hata oluştu. Dosya SD Kart saklanmaktadır? Eğer öyleyse, Google bu dosyanın etiketinin düzenlemesini olanaksız hale getirdi.</string>
-    <string name="tag_editor_document_tree_message">Android 5.0 değişiklikler nedeniyle, Google artık bir uygulamanın SD kartta bulunan klasörler de düzenleme yapabilmesi için bunu belirtmek ve izin vermek gerektirir.\n\nShuttle şimdi dosya seçiciyi açacaktır. Değiştirmek istediğiniz dosyaların üst klasörünü seçiniz.</string>
+    <string name="tag_editor_document_tree_message">Android 5.0 değişiklikler nedeniyle, Google artık bir uygulamanın SD kartta bulunan klasörler de düzenleme yapabilmesi için bunu belirtmek ve izin vermek gerektirir.\n\nWavevineşimdi dosya seçiciyi açacaktır. Değiştirmek istediğiniz dosyaların üst klasörünü seçiniz.</string>
     <string name="tag_editor_check_permission">İzinler denetleniyor. Bu biraz zaman alabilir ...\n\nGoogle\'ı suçlayın!</string>
     <string name="tag_editor_document_tree_permission_failed">Shuttle\' ın hala dosyaları düzenlemek için izni yok görünüyor. Dosya seçiciden dosya yolunun doğru olduğunu tekrar kontrol edin.</string>
     <string name="tag_retrieve_error">Etiketler alınırken bir hata oluştu.</string>
@@ -592,7 +592,7 @@ dosyalar</item>
     <!-- Button name in time span picker -->
     <string name="button_done">Tamam</string>
     <!-- Title of time span picker -->
-    <string name="weekpicker_title">Shuttle içerisinde \'En son\' aranan müziklerin kaç geçmiş haftayı kapsayacağını seçin.</string>
+    <string name="weekpicker_title">Wavevine içerisinde \'En son\' aranan müziklerin kaç geçmiş haftayı kapsayacağını seçin.</string>
     <!-- ## Notification bar text ## -->
     <!-- Message in notification bar when downloading -->
     <string name="notif_downloading_art">Albüm Kapağı İndiriliyor</string>
@@ -712,9 +712,9 @@ dosyalar</item>
     <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Satın alma yenilendi. Lütfen Shuttle\'ı yeniden başlatın</string>
     <string name="iab_purchase_not_found">Geçmiş satın alma bulunamadı.</string>
-    <string name="iab_already_upgraded">Shuttle zaten geliştirilmiş. Uygulamayı yeniden başlatmayı deneyin.</string>
+    <string name="iab_already_upgraded">Wavevine zaten geliştirilmiş. Uygulamayı yeniden başlatmayı deneyin.</string>
     <string name="iab_purchase_failed">Bir şeyler yanlış gitti. Lütfen daha sonra tekrar deneyin..</string>
-    <string name="snackbar_rate_text">Shuttle kullanmaktan keyif aldınız mı?</string>
+    <string name="snackbar_rate_text">Wavevine kullanmaktan keyif aldınız mı?</string>
     <string name="snackbar_rate_action">Oy Verin!</string>
     <string name="toast_purchase_failed">Bir şeyler yanlış gitti. Lütfen daha sonra tekrar deneyiniz..</string>
     <string name="dialog_create_playlist_error">Şarkı listesi oluşturma hatası</string>

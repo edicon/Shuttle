@@ -160,7 +160,7 @@
     <!--"Set Ringtone" title -->
     <string name="dialog_title_set_ringtone">Đặt làm nhạc chuông</string>
     <!-- "Set Ringtone" message -->
-    <string name="dialog_message_set_ringtone">Shuttle yêu cầu quyền \'ghi thiết lập\' để đặt nhạc chuông.\n\nSau khi cấp quyền, hãy thử đặt nhạc chuông lần nữa.</string>
+    <string name="dialog_message_set_ringtone">Wavevine yêu cầu quyền \'ghi thiết lập\' để đặt nhạc chuông.\n\nSau khi cấp quyền, hãy thử đặt nhạc chuông lần nữa.</string>
     <!-- Message displayed in dialog when attempting to add duplicates to playlist -->
     <string name="dialog_message_playlist_add_duplicate"><xliff:g id="artist">%s</xliff:g> - <xliff:g id="song">%s</xliff:g> đã có trong danh sách. Vẫn cứ thêm vào?</string>
     <!-- Checkbox text 'apply to all' -->
@@ -306,7 +306,7 @@
     <!-- Settings title for embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_embedded_art">Ưu tiên ảnh bìa được nhúng sẵn</string>
     <!-- Settings summary for the ignore embedded artwork checkbox-->
-    <string name="pref_summary_prefer_embedded_art">Chọn mục này nếu bạn muốn Shuttle tìm ảnh bìa có sẵn trong tập tin nhạc trước khi tìm trong thư mục nhạc</string>
+    <string name="pref_summary_prefer_embedded_art">Chọn mục này nếu bạn muốn Wavevine tìm ảnh bìa có sẵn trong tập tin nhạc trước khi tìm trong thư mục nhạc</string>
     <!-- Settings title for ignore embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_ignore_embedded_art">Bỏ qua ảnh bìa kèm theo</string>
     <!-- Settings summary for the ignore folder artwork checkbox-->
@@ -322,7 +322,7 @@
     <!-- Settings title for ignore folder artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_lastfm">Ưu tiên ảnh bìa Last.fm</string>
     <!-- Settings summary for the embedded artwork checkbox-->
-    <string name="pref_summary_prefer_lastfm">Chọn mục này nếu bạn muốn Shuttle tìm ảnh bìa từ Last.fm trước khi tìm trong máy chủ iTunes. (Chỉ ảnh bìa album)</string>
+    <string name="pref_summary_prefer_lastfm">Chọn mục này nếu bạn muốn Wavevine tìm ảnh bìa từ Last.fm trước khi tìm trong máy chủ iTunes. (Chỉ ảnh bìa album)</string>
     <!-- Settings title for Artwork settings heading -->
     <string name="pref_string_title_artwork">Ảnh bìa</string>
     <!-- Settings title for the download artwork button -->
@@ -330,7 +330,7 @@
     <!-- Settings summary for the download artwork button-->
     <string name="pref_summary_download_artwork">Tải ảnh nghệ sĩ và album còn thiếu</string>
     <!-- Settings warning for the download artwork button -->
-    <string name="pref_warning_download_artwork">Shuttle sẽ tải xuống tất cả ảnh bìa mà không phụ thuộc mạng. Phí sử dụng dữ liệu có thể áp dụng.</string>
+    <string name="pref_warning_download_artwork">Wavevine sẽ tải xuống tất cả ảnh bìa mà không phụ thuộc mạng. Phí sử dụng dữ liệu có thể áp dụng.</string>
     <!-- Settings title for the delete artwork button-->
     <string name="pref_title_delete_artwork">Xoá ảnh bìa</string>
     <!-- Settings summary for the delete artwork button -->
@@ -351,7 +351,7 @@
     <string name="pref_title_placeholders">Sử dụng chỗ dành sẵn kiểu Gmail</string>
     <!-- Settings summary for gmail style placeholders checkbox-->
     <string name="pref_summary_placeholders">Hiển thị mặc định chỗ dành sẵn kiểu \'Gmail\'.
- Nếu không chọn, biểu tượng Shuttle sẽ được sử dụng làm chỗ dành sẵn</string>
+ Nếu không chọn, biểu tượng Wavevine sẽ được sử dụng làm chỗ dành sẵn</string>
     <!-- Settings title for the enable lockscreen controls checkbox -->
     <string name="pref_title_lockscreen">Kích hoạt ảnh bìa màn hình khoá</string>
     <!-- Settings summary for the enable lockscreen controls checkbox -->
@@ -404,7 +404,7 @@
     <string name="pref_title_faq">FAQ</string>
     <string name="pref_summary_faq">Bạn có câu hỏi? Cần giúp dỡ? Chạm vào đây để xem FAQ @ www.shuttlemusicplayer.com</string>
     <string name="pref_title_gplus">Nhận giúp đỡ</string>
-    <string name="pref_summary_gplus">Có một cộng đồng người dùng Shuttle rất năng động trên Google+. Nếu bạn có câu hỏi hay cần giúp đỡ gì đó, đấy chính là nơi tốt nhất.</string>
+    <string name="pref_summary_gplus">Có một cộng đồng người dùng Wavevine rất năng động trên Google+. Nếu bạn có câu hỏi hay cần giúp đỡ gì đó, đấy chính là nơi tốt nhất.</string>
     <string name="pref_title_rate">Nói cảm ơn</string>
     <string name="pref_summary_rate">Nếu bạn thích Shuttle, hãy xem xét để lại một đánh giá</string>
     <string name="pref_title_headset_beep">Beep khi bỏ qua</string>
@@ -458,11 +458,11 @@
     <string name="save">Lưu</string>
     <!-- Message displayed when tag editing fails -->
     <string name="tag_edit_error">Lỗi đã xảy ra khi chỉnh sửa thẻ.</string>
-    <string name="tag_error_lollipop">Lỗi đã xảy ra trong khi chỉnh sửa thẻ. Nếu tập tin được lưu trên thẻ nhớ, Shuttle có thể không có quyền truy cập nó.</string>
+    <string name="tag_error_lollipop">Lỗi đã xảy ra trong khi chỉnh sửa thẻ. Nếu tập tin được lưu trên thẻ nhớ, Wavevine có thể không có quyền truy cập nó.</string>
     <string name="tag_error_kitkat">Lỗi đã xảy ra trong khi chỉnh sửa thẻ. Tập tin được lưu trên thẻ nhớ? Nếu vậy, Google không cho phép chỉnh sửa thẻ của tập tin này.</string>
-    <string name="tag_editor_document_tree_message">Vì những thay đổi trong Android 5.0, Google giờ đây yêu cầu bạn chọn thư mục nào trên thẻ nhớ mà một ứng dụng được phép chỉnh sửa.\n\nShuttle sẽ mở trình chọn tập tin. Hãy chọn thư mục chính của những tập tin bạn muốn thay đổi.</string>
+    <string name="tag_editor_document_tree_message">Vì những thay đổi trong Android 5.0, Google giờ đây yêu cầu bạn chọn thư mục nào trên thẻ nhớ mà một ứng dụng được phép chỉnh sửa.\n\nWavevine sẽ mở trình chọn tập tin. Hãy chọn thư mục chính của những tập tin bạn muốn thay đổi.</string>
     <string name="tag_editor_check_permission">Đang kiểm tra quyền truy cập. Có thể sẽ mất một lúc...\n\nXin hãy đổ lỗi cho Google!</string>
-    <string name="tag_editor_document_tree_permission_failed">Có vẻ như Shuttle vẫn không có quyền chỉnh sửa tập tin. Hãy kiểm tra lại đường dẫn trong trình chọn tập tin.</string>
+    <string name="tag_editor_document_tree_permission_failed">Có vẻ như Wavevine vẫn không có quyền chỉnh sửa tập tin. Hãy kiểm tra lại đường dẫn trong trình chọn tập tin.</string>
     <string name="tag_retrieve_error">Lỗi đã xảy ra khi nhận thẻ.</string>
     <!-- ## Folder browsing ## -->
     <!-- -->
@@ -586,7 +586,7 @@
     <!-- Button name in time span picker -->
     <string name="button_done">Xong</string>
     <!-- Title of time span picker -->
-    <string name="weekpicker_title">Chọn số tuần trước đây mà Shuttle sẽ tìm nhạc \'gần đây\'.</string>
+    <string name="weekpicker_title">Chọn số tuần trước đây mà Wavevine sẽ tìm nhạc \'gần đây\'.</string>
     <!-- ## Notification bar text ## -->
     <!-- Message in notification bar when downloading -->
     <string name="notif_downloading_art">Tải xuống ảnh bìa</string>
@@ -689,7 +689,7 @@
     <string name="btn_now_playing">Hiện đang phát %1$s do %2$s trình bài</string>
     <!-- Accessibility 'show lyrics' -->
     <string name="btn_show_lyrics">Hiện lời bài hát</string>
-    <string name="pref_summary_restore_purchases">Nếu bạn đã nâng cấp Shuttle rồi nhưng vẫn hiện là bản miễn phí, hãy chạm vào đây.</string>
+    <string name="pref_summary_restore_purchases">Nếu bạn đã nâng cấp Wavevine rồi nhưng vẫn hiện là bản miễn phí, hãy chạm vào đây.</string>
     <string name="pref_title_restore_purchases">Phục hồi mua hàng</string>
     <string name="blacklist_empty">Bạn chưa đưa bài hát nào vào danh sách đen cả</string>
     <string name="whitelist_empty">Bạn chưa đưa thư mục nào vào danh sách trắng cả!</string>
@@ -704,7 +704,7 @@
     <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Đã phục hồi mua hàng. Hãy khởi động lại Shuttle</string>
     <string name="iab_purchase_not_found">Không phát hiện đã mua hàng trước đây.</string>
-    <string name="iab_already_upgraded">Shuttle đã được nâng cấp. Hãy thử khởi động lại ứng dụng.</string>
+    <string name="iab_already_upgraded">Wavevine đã được nâng cấp. Hãy thử khởi động lại ứng dụng.</string>
     <string name="iab_purchase_failed">Có gì đó không đúng. Hãy thử lại sau.</string>
     <string name="snackbar_rate_text">Thích sử dụng Shuttle?</string>
     <string name="snackbar_rate_action">Hãy đánh giá nó!</string>

@@ -171,7 +171,7 @@
     <!-- Delete confirmation dialog, confirmation button text -->
     <string name="button_ok">OK</string>
     <!-- -->
-    <string name="delete_folder_confirmation_dialog">Are you sure you want to permanently delete \"<xliff:g id="folder">%s</xliff:g>\"? All items in this folder will be deleted, including items which might not be visible in the Shuttle file browser.</string>
+    <string name="delete_folder_confirmation_dialog">Are you sure you want to permanently delete \"<xliff:g id="folder">%s</xliff:g>\"? All items in this folder will be deleted, including items which might not be visible in the Wavevine file browser.</string>
     <!-- -->
     <string name="delete_file_confirmation_dialog">Are you sure you want to permanently delete \"<xliff:g id="file">%s</xliff:g>\"?</string>
     <!-- Displayed when user presses 'delete artwork' -->
@@ -179,7 +179,7 @@
     <!--"Set Ringtone" title -->
     <string name="dialog_title_set_ringtone">Set Ringtone</string>
     <!-- "Set Ringtone" message -->
-    <string name="dialog_message_set_ringtone">Shuttle requires permission to \'write settings\' in order to set your ringtone.\n\nAfter granting permission, try setting your ringtone again.</string>
+    <string name="dialog_message_set_ringtone">Wavevine requires permission to \'write settings\' in order to set your ringtone.\n\nAfter granting permission, try setting your ringtone again.</string>
 
     <!-- Message displayed in dialog when attempting to add duplicates to playlist -->
     <string name="dialog_message_playlist_add_duplicate"><xliff:g id="artist">%s</xliff:g> - <xliff:g id="song">%s</xliff:g> already exists in this playlist. Add it anyway?</string>
@@ -331,7 +331,7 @@
     <!-- Settings title for embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_embedded_art">Prefer embedded artwork</string>
     <!-- Settings summary for the ignore embedded artwork checkbox-->
-    <string name="pref_summary_prefer_embedded_art">Check this box if you\'d prefer Shuttle to look for artwork embedded within your music files, before searching in your music directories</string>
+    <string name="pref_summary_prefer_embedded_art">Check this box if you\'d prefer Wavevine to look for artwork embedded within your music files, before searching in your music directories</string>
     <!-- Settings title for ignore embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_ignore_embedded_art">Ignore embedded artwork</string>
     <!-- Settings summary for the ignore folder artwork checkbox-->
@@ -347,7 +347,7 @@
     <!-- Settings title for ignore folder artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_lastfm">Prefer Last.fm artwork</string>
     <!-- Settings summary for the embedded artwork checkbox-->
-    <string name="pref_summary_prefer_lastfm">Check this box if you\'d prefer Shuttle to look for artwork at Last.fm first, before searching iTunes servers. (Album artwork only)</string>
+    <string name="pref_summary_prefer_lastfm">Check this box if you\'d prefer Wavevine to look for artwork at Last.fm first, before searching iTunes servers. (Album artwork only)</string>
     <!-- Settings title for Artwork settings heading -->
     <string name="pref_string_title_artwork">Artwork</string>
     <!-- Settings title for the download artwork button -->
@@ -355,7 +355,7 @@
     <!-- Settings summary for the download artwork button-->
     <string name="pref_summary_download_artwork">Download missing artist and album images</string>
     <!-- Settings warning for the download artwork button -->
-    <string name="pref_warning_download_artwork">Shuttle will download all artwork regardless of your network. Data usage fees may apply.</string>
+    <string name="pref_warning_download_artwork">Wavevine will download all artwork regardless of your network. Data usage fees may apply.</string>
     <!-- Settings title for the delete artwork button-->
     <string name="pref_title_delete_artwork">Delete Artwork</string>
     <!-- Settings summary for the delete artwork button -->
@@ -376,7 +376,7 @@
     <string name="pref_title_placeholders">Use Gmail Style Placeholders</string>
     <!-- Settings summary for gmail style placeholders checkbox-->
     <string name="pref_summary_placeholders">Displays \'Gmail\' style placeholders by default.
-        If unchecked, the Shuttle icon will be used as a placeholder instead</string>
+        If unchecked, the Wavevine icon will be used as a placeholder instead</string>
     <!-- Settings title for the enable lockscreen controls checkbox -->
     <string name="pref_title_lockscreen">Enable Lockscreen Artwork</string>
     <!-- Settings summary for the enable lockscreen controls checkbox -->
@@ -430,7 +430,7 @@
     <string name="pref_title_faq">FAQ</string>
     <string name="pref_summary_faq">Have a question? Need help? Click here to view the FAQ @ www.shuttlemusicplayer.com</string>
     <string name="pref_title_gplus">Get Help</string>
-    <string name="pref_summary_gplus">There is a very active community of Shuttle users on Google+. If you have questions or need help, this is the best place to go.</string>
+    <string name="pref_summary_gplus">There is a very active community of Wavevine users on Google+. If you have questions or need help, this is the best place to go.</string>
     <string name="pref_title_rate">Say Thanks</string>
     <string name="pref_summary_rate">If you like Shuttle, please consider leaving a review.</string>
 
@@ -492,11 +492,11 @@
     <string name="save">Save</string>
     <!-- Message displayed when tag editing fails -->
     <string name="tag_edit_error">An error occurred editing tags.</string>
-    <string name="tag_error_lollipop">An error occurred editing tags. If the file is stored on an SD Card, Shuttle might not have permission to access it.</string>
+    <string name="tag_error_lollipop">An error occurred editing tags. If the file is stored on an SD Card, Wavevine might not have permission to access it.</string>
     <string name="tag_error_kitkat">An error occurred editing tags. Is the file stored on an SD Card? If so, Google have made tag editing impossible for this file.</string>
-    <string name="tag_editor_document_tree_message">Due to changes in Android 5.0, Google now require that you specify which folders on the SD card an app is allowed to edit.\n\nShuttle will now open a file picker. Please choose the parent folder of the files you wish to modify.</string>
+    <string name="tag_editor_document_tree_message">Due to changes in Android 5.0, Google now require that you specify which folders on the SD card an app is allowed to edit.\n\nWavevinewill now open a file picker. Please choose the parent folder of the files you wish to modify.</string>
     <string name="tag_editor_check_permission">Checking for permissions. This may take a while…\n\nBlame Google!</string>
-    <string name="tag_editor_document_tree_permission_failed">It seems that Shuttle still doesn\'t have permission to edit the files. Double check the directory in the file picker.</string>
+    <string name="tag_editor_document_tree_permission_failed">It seems that Wavevine still doesn\'t have permission to edit the files. Double check the directory in the file picker.</string>
     <string name="tag_retrieve_error">An error occurred retrieving tags.</string>
 
     <!-- ## Folder browsing ## -->
@@ -629,7 +629,7 @@
     <!-- Button name in time span picker -->
     <string name="button_done">Done</string>
     <!-- Title of time span picker -->
-    <string name="weekpicker_title">Choose how many weeks into the past Shuttle should search for \'recent\' music.</string>
+    <string name="weekpicker_title">Choose how many weeks into the past Wavevine should search for \'recent\' music.</string>
 
     <!-- ## Notification bar text ## -->
     <!-- Message in notification bar when downloading -->
@@ -764,7 +764,7 @@
     <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Purchase Restored. Please restart Shuttle</string>
     <string name="iab_purchase_not_found">No previous purchase found.</string>
-    <string name="iab_already_upgraded">Shuttle is already upgraded. Try restarting the app.</string>
+    <string name="iab_already_upgraded">Wavevine is already upgraded. Try restarting the app.</string>
     <string name="iab_purchase_failed">Something went wrong. Please try again later..</string>
     <string name="snackbar_rate_text">Enjoy using Shuttle?</string>
     <string name="snackbar_rate_action">Rate It!</string>
@@ -830,7 +830,7 @@
     <!-- Shown when there are no lyrics -->
     <string name="no_lyrics">No embedded lyrics found.</string>
     <!-- QuickLyric info dialog message-->
-    <string name="quicklyric_info">QuickLyric is an open-source lyric fetcher on the Google Play Store.\n\nOnce installed, QuickLyric will be opened from Shuttle whenever you hit the \'QuickLyric\' menu button.</string>
+    <string name="quicklyric_info">QuickLyric is an open-source lyric fetcher on the Google Play Store.\n\nOnce installed, QuickLyric will be opened from Wavevine whenever you hit the \'QuickLyric\' menu button.</string>
 
     <!-- HI_RES -->
     <string name="not_implemented">Not Yet Implementated</string>

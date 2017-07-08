@@ -103,7 +103,7 @@
     <!-- -->
     <string name="get_pro_title">Shuttle+ vásárlása</string>
     <!-- -->
-    <string name="get_pro_message">Ha tetszik a Shuttle, kérlek vedd fontolóra a Shuttle megvásárlását.
+    <string name="get_pro_message">Ha tetszik a Shuttle, kérlek vedd fontolóra a Wavevine megvásárlását.
 \n\nJellemzők:
 \nRengeteg további téma
 \nCimkék szerkesztése
@@ -147,7 +147,7 @@
     <!-- Delete confirmation dialog, confirmation button text -->
     <string name="button_ok">OK</string>
     <!-- -->
-    <string name="delete_folder_confirmation_dialog">Biztosan törölni szeretné a \"<xliff:g id="folder">%s</xliff:g>\" mappát? Minden elem törölve lesz, olyanok is, amik nem látszanak a Shuttle fájlkeresőjében!</string>
+    <string name="delete_folder_confirmation_dialog">Biztosan törölni szeretné a \"<xliff:g id="folder">%s</xliff:g>\" mappát? Minden elem törölve lesz, olyanok is, amik nem látszanak a Wavevine fájlkeresőjében!</string>
     <!-- -->
     <string name="delete_file_confirmation_dialog">Biztosan törli: <xliff:g id="file">%s</xliff:g> ?</string>
     <!-- Displayed when user presses 'delete artwork' -->
@@ -334,7 +334,7 @@
     <!-- Settings title for gmail style placeholders checkbox-->
     <string name="pref_title_placeholders">Gmail stílusű helykitöltők</string>
     <!-- Settings summary for gmail style placeholders checkbox-->
-    <string name="pref_summary_placeholders">\'Gmail\' stílusű helykitöltők használata. Ha ki van kapcsolva, egy Shuttle ikon jelenik meg helykitöltőként.</string>
+    <string name="pref_summary_placeholders">\'Gmail\' stílusű helykitöltők használata. Ha ki van kapcsolva, egy Wavevine ikon jelenik meg helykitöltőként.</string>
     <!-- Settings title for the enable lockscreen controls checkbox -->
     <string name="pref_title_lockscreen">Képernyőzári borítókép engedélyezése</string>
     <!-- Settings summary for the enable lockscreen controls checkbox -->
@@ -437,7 +437,7 @@ segítségével
     <!-- Message displayed when tag editing fails -->
     <string name="tag_error_lollipop">Hiba történt a címkék szerkesztése közben. Ha a fájlok az SD kártyán találhatóak, akkor lehet hogy a Shuttle-nek nincs engedélye hozzáférni.</string>
     <string name="tag_error_kitkat">Hiba történt a címkék szerkesztése közben. Ha a fájlok az SD kártyán vannak, akkor a szerkesztésük nem lehetséges a Google miatt.</string>
-    <string name="tag_editor_document_tree_message">Az Android 5.0-ban bevezetett változtatások miatt, meg kell adnia azt a mappát, amiben a Shuttle módosításokat hajthat végre.\n\nMost megnyílik egy fájlkezelő. Válassza ki azt a mappát, amiben azok a fájlok vannak amiket szerkeszteni szeretne.</string>
+    <string name="tag_editor_document_tree_message">Az Android 5.0-ban bevezetett változtatások miatt, meg kell adnia azt a mappát, amiben a Wavevine módosításokat hajthat végre.\n\nMost megnyílik egy fájlkezelő. Válassza ki azt a mappát, amiben azok a fájlok vannak amiket szerkeszteni szeretne.</string>
     <string name="tag_editor_check_permission">Engedélyek ellenőrzése. Ez eltarthat egy darabig...\n\nA Google-t hibáztassa!</string>
     <string name="tag_editor_document_tree_permission_failed">Nincs hozzáférési engedély a fájlok módosításához. Ellenőrizze a megadott mappát.</string>
     <!-- ## Folder browsing ## -->
@@ -564,10 +564,10 @@ segítségével
     <!-- Button name in time span picker -->
     <string name="button_done">Kész</string>
     <!-- Title of time span picker -->
-    <string name="weekpicker_title">Állítsa be, hogy a Shuttle hány héttel ezelőttig jegyezze meg a Nemrég játszott dalokat.</string>
+    <string name="weekpicker_title">Állítsa be, hogy a Wavevine hány héttel ezelőttig jegyezze meg a Nemrég játszott dalokat.</string>
     <!-- ## Notification bar text ## -->
     <!-- Message in notification bar when downloading -->
-    <string name="notif_downloading_art">Shuttle - Letöltés</string>
+    <string name="notif_downloading_art">Wavevine - Letöltés</string>
     <!-- ## SD card error messages ##-->
     <!-- Title of screen when no sd card is present -->
     <string name="sdcard_missing_title">Hiányzó SD-kártya</string>
@@ -667,7 +667,7 @@ segítségével
     <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Vásárlás visszaállítva. Kérem indítsa újra a Shuttle-t</string>
     <string name="iab_purchase_not_found">Nem találhatóak múltbéli vásárlások</string>
-    <string name="iab_already_upgraded">A Shuttle már meg lett vásárolva. Próbálja újraindítani a programot.</string>
+    <string name="iab_already_upgraded">A Wavevine már meg lett vásárolva. Próbálja újraindítani a programot.</string>
     <string name="iab_purchase_failed">Valami hiba történt. Próbálja újra később...</string>
     <string name="snackbar_rate_text">Szereti használni a Shuttle-t?</string>
     <string name="snackbar_rate_action">Értékelje!</string>

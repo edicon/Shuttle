@@ -298,7 +298,7 @@
     <!-- Settings title for embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_embedded_art">Alege coperți incorporate</string>
     <!-- Settings summary for the ignore embedded artwork checkbox-->
-    <string name="pref_summary_prefer_embedded_art">Bifează această căsuță dacă preferi ca Shuttle să caute coperți incorporate în fișierele de muzică înainte de a căuta în directoarele de muzică</string>
+    <string name="pref_summary_prefer_embedded_art">Bifează această căsuță dacă preferi ca Wavevine să caute coperți incorporate în fișierele de muzică înainte de a căuta în directoarele de muzică</string>
     <!-- Settings title for ignore embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_ignore_embedded_art">Ignoră coperțile incorporate</string>
     <!-- Settings summary for the ignore folder artwork checkbox-->
@@ -314,7 +314,7 @@
     <!-- Settings title for ignore folder artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_lastfm">Alege coperți de pe Last.fm</string>
     <!-- Settings summary for the embedded artwork checkbox-->
-    <string name="pref_summary_prefer_lastfm">Bifează această căsuță dacă preferi ca Shuttle să caute coperți pe Last.fm înainte de a căuta în serverele iTunes. (Doar pentru coperți de album)</string>
+    <string name="pref_summary_prefer_lastfm">Bifează această căsuță dacă preferi ca Wavevine să caute coperți pe Last.fm înainte de a căuta în serverele iTunes. (Doar pentru coperți de album)</string>
     <!-- Settings title for Artwork settings heading -->
     <string name="pref_string_title_artwork">Copertă</string>
     <!-- Settings title for the download artwork button -->
@@ -322,7 +322,7 @@
     <!-- Settings summary for the download artwork button-->
     <string name="pref_summary_download_artwork">Descarcă coperți lipsă ale artiștilor și albumelor</string>
     <!-- Settings warning for the download artwork button -->
-    <string name="pref_warning_download_artwork">Shuttle va descărca toate coperțile în ciuda rețelei tale. Se pot percepe tarife pentru date.</string>
+    <string name="pref_warning_download_artwork">Wavevine va descărca toate coperțile în ciuda rețelei tale. Se pot percepe tarife pentru date.</string>
     <!-- Settings title for the delete artwork button-->
     <string name="pref_title_delete_artwork">Șterge coperți</string>
     <!-- Settings summary for the delete artwork button -->
@@ -342,7 +342,7 @@
     <string name="pref_title_placeholders">Folosește substituenți Gmail</string>
     <!-- Settings summary for gmail style placeholders checkbox-->
     <string name="pref_summary_placeholders">Arată substituenți „Gmail” în mod predefinit.
- Dacă nu este bifat, pictograma Shuttle va fi folosită ca substituent</string>
+ Dacă nu este bifat, pictograma Wavevine va fi folosită ca substituent</string>
     <!-- Settings title for the enable lockscreen controls checkbox -->
     <string name="pref_title_lockscreen">Activează coperțile de album în ecranul de blocare</string>
     <!-- Settings summary for the enable lockscreen controls checkbox -->
@@ -395,7 +395,7 @@
     <string name="pref_title_faq">Întrebări Frecvente</string>
     <string name="pref_summary_faq">Ai o întrebare? Ai nevoie de ajutor? Click aici pentru a vedea întrebările frecvente pe www.shuttlemusicplayer.com</string>
     <string name="pref_title_gplus">Ajutor</string>
-    <string name="pref_summary_gplus">Aceasta este o comunitate foarte activă de utilizatori Shuttle pe Google+. Dacă ai întrebari sau ai nevoie de ajutor, acesta este cel mai bun loc.</string>
+    <string name="pref_summary_gplus">Aceasta este o comunitate foarte activă de utilizatori Wavevine pe Google+. Dacă ai întrebari sau ai nevoie de ajutor, acesta este cel mai bun loc.</string>
     <string name="pref_title_rate">Spune mulțumesc</string>
     <string name="pref_summary_rate">Dacă îți place Shuttle, lasă o recenzie.</string>
     <!-- Settings title for ignore playlist duplicates -->
@@ -439,11 +439,11 @@
     <!-- Button text for saving tags  -->
     <string name="save">Salvează</string>
     <!-- Message displayed when tag editing fails -->
-    <string name="tag_error_lollipop">A apărut o eroare la editarea tag-urilor. Dacă fișierul este stocat pe un card SD, Shuttle s-ar putea să nu aibă acces la el.</string>
+    <string name="tag_error_lollipop">A apărut o eroare la editarea tag-urilor. Dacă fișierul este stocat pe un card SD, Wavevine s-ar putea să nu aibă acces la el.</string>
     <string name="tag_error_kitkat">A apărut o eroare la editarea tag-urilor. Fișierul este stocat pe un card SD? Dacă da, Google a făcut editarea tag-urilor imposibilă pentru acest fișier.</string>
-    <string name="tag_editor_document_tree_message">Din cauza schimbărilor în Android 5.0, trebuie să specifici ce foldere de pe cardul SD poate edita o aplicație.\n\nShuttle va deschide acum un „file picker”. Alege folderul-părinte a fișierelor pe care vrei să le modifici.</string>
+    <string name="tag_editor_document_tree_message">Din cauza schimbărilor în Android 5.0, trebuie să specifici ce foldere de pe cardul SD poate edita o aplicație.\n\nWavevineva deschide acum un „file picker”. Alege folderul-părinte a fișierelor pe care vrei să le modifici.</string>
     <string name="tag_editor_check_permission">Se verifică permisiunile. S-ar putea să dureze puțin...\n\nDă vina pe Google!</string>
-    <string name="tag_editor_document_tree_permission_failed">Se pare că Shuttle încă nu are permisiunea de a edita fișierele. Verifică din nou folderul din „file picker”</string>
+    <string name="tag_editor_document_tree_permission_failed">Se pare că Wavevine încă nu are permisiunea de a edita fișierele. Verifică din nou folderul din „file picker”</string>
     <!-- ## Folder browsing ## -->
     <!-- -->
     <string name="rename_folder">Redenumește folder-ul</string>
@@ -566,7 +566,7 @@
     <!-- Button name in time span picker -->
     <string name="button_done">Gata</string>
     <!-- Title of time span picker -->
-    <string name="weekpicker_title">Setează câte săptămâni ar trebui să considere Shuttle în căutarea muzicii „recente”.</string>
+    <string name="weekpicker_title">Setează câte săptămâni ar trebui să considere Wavevine în căutarea muzicii „recente”.</string>
     <!-- ## Notification bar text ## -->
     <!-- Message in notification bar when downloading -->
     <string name="notif_downloading_art">Se descarcă coperți</string>
@@ -671,7 +671,7 @@
     <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Achiziție retrasă. Restartează Shuttle.</string>
     <string name="iab_purchase_not_found">Nu s-au găsit achiziți anterioare.</string>
-    <string name="iab_already_upgraded">Shuttle este deja upgradat. Încearcă să restartezi aplicația.</string>
+    <string name="iab_already_upgraded">Wavevine este deja upgradat. Încearcă să restartezi aplicația.</string>
     <string name="iab_purchase_failed">Ceva nu a mers bine. Încearcă din nou mai târziu...</string>
     <string name="snackbar_rate_text">Te bucuri de Shuttle?</string>
     <string name="snackbar_rate_action">Dă-i o notă!</string>

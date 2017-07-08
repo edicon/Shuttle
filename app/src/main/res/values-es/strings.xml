@@ -106,7 +106,7 @@
     <!-- -->
     <string name="get_pro_title">Actualizar a Shuttle+</string>
     <!-- -->
-    <string name="get_pro_message">Si disfrutas de Shuttle Music Player, por favor considera comprar Shuttle+.\n\nCaracterísticas:\n\&#8226;-Un montón de temas extras\n\&#8226;-Edición de etiqueta (soporte limitado en Android 4.4 KitKat)\n\&#8226;-Navegación de carpertas\n\&#8226;-Soporte Chromecast\n\nTambién ayuda a promocionar un futuro desarrollo.</string>
+    <string name="get_pro_message">Si disfrutas de Wavevine Music Player, por favor considera comprar Shuttle+.\n\nCaracterísticas:\n\&#8226;-Un montón de temas extras\n\&#8226;-Edición de etiqueta (soporte limitado en Android 4.4 KitKat)\n\&#8226;-Navegación de carpertas\n\&#8226;-Soporte Chromecast\n\nTambién ayuda a promocionar un futuro desarrollo.</string>
     <!-- -->
     <string name="upgraded_title">Gracias</string>
     <string name="upgraded_message">Has sido actualizado correctamente a Shuttle+. Agradezco tu apoyo. .\n\nPor favor reinicia la aplicación para asegurarse de que todas las funciones están habilitadas.</string>
@@ -153,7 +153,7 @@
     <!--"Set Ringtone" title -->
     <string name="dialog_title_set_ringtone">Establecer como tono de llamada</string>
     <!-- "Set Ringtone" message -->
-    <string name="dialog_message_set_ringtone">Shuttle requiere permiso de escritura con el fin de establecer el tono.\n\nDespués de conceder el permiso, intenta configurar el tono de llamada de nuevo.</string>
+    <string name="dialog_message_set_ringtone">Wavevine requiere permiso de escritura con el fin de establecer el tono.\n\nDespués de conceder el permiso, intenta configurar el tono de llamada de nuevo.</string>
     <!-- Message displayed in dialog when attempting to add duplicates to playlist -->
     <string name="dialog_message_playlist_add_duplicate"><xliff:g id="artist">%s</xliff:g> - <xliff:g id="song">%s</xliff:g> ya existe en esta lista de reproducción. ¿Añadir de todos modos?</string>
     <!-- Checkbox text 'apply to all' -->
@@ -298,7 +298,7 @@
     <!-- Settings title for embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_embedded_art">Preferir caratulas incorporadas</string>
     <!-- Settings summary for the ignore embedded artwork checkbox-->
-    <string name="pref_summary_prefer_embedded_art">Selecciona esta casilla si prefieres que Shuttle busque las carátulas dentro del archivo en lugar de buscar en tus carpetas de música</string>
+    <string name="pref_summary_prefer_embedded_art">Selecciona esta casilla si prefieres que Wavevine busque las carátulas dentro del archivo en lugar de buscar en tus carpetas de música</string>
     <!-- Settings title for ignore embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_ignore_embedded_art">Ignorar carátulas incrustadas</string>
     <!-- Settings summary for the ignore folder artwork checkbox-->
@@ -314,7 +314,7 @@
     <!-- Settings title for ignore folder artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_lastfm">Preferir carátulas de Last.fm</string>
     <!-- Settings summary for the embedded artwork checkbox-->
-    <string name="pref_summary_prefer_lastfm">Selecciona esta opción si prefieres que Shuttle busque las carátulas en Last.fm en lugar de los servidores de iTunes (Sólo aplica a las carátulas).</string>
+    <string name="pref_summary_prefer_lastfm">Selecciona esta opción si prefieres que Wavevine busque las carátulas en Last.fm en lugar de los servidores de iTunes (Sólo aplica a las carátulas).</string>
     <!-- Settings title for Artwork settings heading -->
     <string name="pref_string_title_artwork">Carátula</string>
     <!-- Settings title for the download artwork button -->
@@ -322,7 +322,7 @@
     <!-- Settings summary for the download artwork button-->
     <string name="pref_summary_download_artwork">Descargar imágenes de artista o carátulas faltantes</string>
     <!-- Settings warning for the download artwork button -->
-    <string name="pref_warning_download_artwork">Shuttle descargará todas las carátulas, independientemente de su red. Pueden aplicarse cargos por uso de datos.</string>
+    <string name="pref_warning_download_artwork">Wavevine descargará todas las carátulas, independientemente de su red. Pueden aplicarse cargos por uso de datos.</string>
     <!-- Settings title for the delete artwork button-->
     <string name="pref_title_delete_artwork">Borrar carátula</string>
     <!-- Settings summary for the delete artwork button -->
@@ -343,12 +343,12 @@
     <string name="pref_title_placeholders">Usar marcadores estilo Gmail</string>
     <!-- Settings summary for gmail style placeholders checkbox-->
     <string name="pref_summary_placeholders">Muestra marcadores estilo \'Gmail\' por defecto
- Si no se selecciona, se utilizará el icono de Shuttle como marcador</string>
+ Si no se selecciona, se utilizará el icono de Wavevine como marcador</string>
     <!-- Settings title for the enable lockscreen controls checkbox -->
     <string name="pref_title_lockscreen">Habilitar carátula en Pantalla de Bloqueo</string>
     <!-- Settings summary for the enable lockscreen controls checkbox -->
     <string name="pref_summary_lockscreen">Habilita/Deshabilita los controles e información de artista cuando la pantalla está bloqueada (ICS+)
- \nPrecaución: No seleccione esta opción si usa Shuttle con un receptor Bluetooth</string>
+ \nPrecaución: No seleccione esta opción si usa Wavevine con un receptor Bluetooth</string>
     <!-- Settings title for the Display heading -->
     <string name="pref_title_display">Pantalla</string>
     <!-- Settings title for the keep screen on checkbox -->
@@ -397,7 +397,7 @@
     <string name="pref_title_faq">"FAQ "</string>
     <string name="pref_summary_faq">"¿Tienes alguna pregunta? ¿Necesitas ayuda? Has click aquí para ver el FAQ (Preguntas frecuentes) @ www.shuttlemusicplayer.com "</string>
     <string name="pref_title_gplus">¡Ayuda!</string>
-    <string name="pref_summary_gplus">Hay una muy activa comunidad de usuarios de Shuttle en Google+. Si tiene preguntas o necesita ayuda, este es el mejor lugar para ir</string>
+    <string name="pref_summary_gplus">Hay una muy activa comunidad de usuarios de Wavevine en Google+. Si tiene preguntas o necesita ayuda, este es el mejor lugar para ir</string>
     <string name="pref_title_rate">"Agradece "</string>
     <string name="pref_summary_rate">Si te gusta Shuttle, por favor considera dejar una reseña</string>
     <!-- Settings title for ignore playlist duplicates -->
@@ -449,11 +449,11 @@
     <string name="save">Guardar</string>
     <!-- Message displayed when tag editing fails -->
     <string name="tag_edit_error">Ha ocurrido un error al editar las etiquetas.</string>
-    <string name="tag_error_lollipop">Se produjo un error de edición de etiquetas. Si el archivo se almacena en una tarjeta SD, Shuttle podría no tener permiso para acceder a ella.</string>
+    <string name="tag_error_lollipop">Se produjo un error de edición de etiquetas. Si el archivo se almacena en una tarjeta SD, Wavevine podría no tener permiso para acceder a ella.</string>
     <string name="tag_error_kitkat">Se produjo un error de edición de etiquetas. ¿Está almacenado el archivo en una tarjeta SD? Si es así, Google ha hecho imposible la edición de etiquetas para este archivo.</string>
-    <string name="tag_editor_document_tree_message">Debido a cambios en Android 5.0, Google ahora requiere que especifique qué carpetas en la tarjeta SD  permitirá una aplicación para editar.\n\nShuttle ahora abrirá un selector de archivos. Por favor seleccione la carpeta principal de los archivos que desea modificar.</string>
+    <string name="tag_editor_document_tree_message">Debido a cambios en Android 5.0, Google ahora requiere que especifique qué carpetas en la tarjeta SD  permitirá una aplicación para editar.\n\nWavevine ahora abrirá un selector de archivos. Por favor seleccione la carpeta principal de los archivos que desea modificar.</string>
     <string name="tag_editor_check_permission">Comprobando permisos. Esto puede tardar un rato…\n\n¡Échale la culpa a Google!</string>
-    <string name="tag_editor_document_tree_permission_failed">Parece que Shuttle aún no tiene permiso para modificar los archivos. Vuelva a revisar el directorio en el selector de archivos.</string>
+    <string name="tag_editor_document_tree_permission_failed">Parece que Wavevine aún no tiene permiso para modificar los archivos. Vuelva a revisar el directorio en el selector de archivos.</string>
     <string name="tag_retrieve_error">Ha ocurrido un error al obtener las etiquetas.</string>
     <!-- ## Folder browsing ## -->
     <!-- -->
@@ -576,7 +576,7 @@
     <!-- Button name in time span picker -->
     <string name="button_done">Hecho</string>
     <!-- Title of time span picker -->
-    <string name="weekpicker_title">Elija de cuántas semanas atras Shuttle debería buscar música \'reciente\'.</string>
+    <string name="weekpicker_title">Elija de cuántas semanas atras Wavevine debería buscar música \'reciente\'.</string>
     <!-- ## Notification bar text ## -->
     <!-- Message in notification bar when downloading -->
     <string name="notif_downloading_art">Descargando Carátula</string>
@@ -696,7 +696,7 @@
     <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Compra restaurada. Por favor reinicia Shuttle</string>
     <string name="iab_purchase_not_found">Compras previas no encontradas.</string>
-    <string name="iab_already_upgraded">Shuttle está siendo actualizado, intenta reiniciando la app.</string>
+    <string name="iab_already_upgraded">Wavevine está siendo actualizado, intenta reiniciando la app.</string>
     <string name="iab_purchase_failed">Algo salío mal. Por favor, inténtalo de nuevo más tarde</string>
     <string name="snackbar_rate_text">¿Disfrutas el usar Shuttle?</string>
     <string name="snackbar_rate_action">¡Puntúalo!</string>

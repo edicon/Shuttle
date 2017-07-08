@@ -77,7 +77,7 @@
     <!-- Displays when a restart is required due to a change (themes etc) -->
     <string name="restart_tite">需要重新啟動</string>
     <!-- Displays when a restart is required due to a change (themes etc) -->
-    <string name="restart_message">您的變更將在重新啟動 Shuttle 後生效</string>
+    <string name="restart_message">您的變更將在重新啟動 Wavevine 後生效</string>
     <!-- Restart now button -->
     <string name="restart_button">立即重新啟動</string>
     <!-- Displays when picking a theme color -->
@@ -101,7 +101,7 @@
     <!-- -->
     <string name="get_pro_title">升級至 Shuttle+</string>
     <!-- -->
-    <string name="get_pro_message">若您喜歡 Shuttle 音樂播放器，請考慮升級為 Shuttle+
+    <string name="get_pro_message">若您喜歡 Wavevine 音樂播放器，請考慮升級為 Shuttle+
 \n\n功能特色：
 \n• 更多配色與主題
 \n• 編輯音樂標籤
@@ -112,7 +112,7 @@
     <string name="upgraded_title">感謝您</string>
     <string name="upgraded_message">您已成功升級至 Shuttle+，非常感謝您的支持。
 \n\n請重新啟動 Shuttle+，以確保所有功能已啟用，並且能夠正常運作</string>
-    <string name="upgrade_dialog_message">升級您的 Shuttle 將能使用更多功能，包括：
+    <string name="upgrade_dialog_message">升級您的 Wavevine 將能使用更多功能，包括：
 \n\n• 更多配色與主題
 \n• 編輯音樂標籤
 \n• 資料夾瀏覽模式
@@ -150,7 +150,7 @@
     <!-- Delete confirmation dialog, confirmation button text -->
     <string name="button_ok">確定</string>
     <!-- -->
-    <string name="delete_folder_confirmation_dialog">您確定要永久刪除「<xliff:g id="folder">%s</xliff:g>」嗎？將會刪除這個資料夾中的所有項目，包含 Shuttle 檔案瀏覽模式中無法檢視的隱藏項目</string>
+    <string name="delete_folder_confirmation_dialog">您確定要永久刪除「<xliff:g id="folder">%s</xliff:g>」嗎？將會刪除這個資料夾中的所有項目，包含 Wavevine 檔案瀏覽模式中無法檢視的隱藏項目</string>
     <!-- -->
     <string name="delete_file_confirmation_dialog">您確定要永久刪除「<xliff:g id="file">%s</xliff:g>」嗎？</string>
     <!-- Displayed when user presses 'delete artwork' -->
@@ -161,7 +161,7 @@
     <!--"Set Ringtone" title -->
     <string name="dialog_title_set_ringtone">設為鈴聲</string>
     <!-- "Set Ringtone" message -->
-    <string name="dialog_message_set_ringtone">Shuttle 需要「寫入設定」權限才能設定鈴聲。\n\n請在您允許權限後再一次設定鈴聲</string>
+    <string name="dialog_message_set_ringtone">Wavevine 需要「寫入設定」權限才能設定鈴聲。\n\n請在您允許權限後再一次設定鈴聲</string>
     <!-- Message displayed in dialog when attempting to add duplicates to playlist -->
     <string name="dialog_message_playlist_add_duplicate">「<xliff:g id="artist">%s</xliff:g>—<xliff:g id="song">%s</xliff:g>」已存在於這個播放清單中。要繼續加入嗎？</string>
     <!-- Checkbox text 'apply to all' -->
@@ -304,7 +304,7 @@
     <!-- Settings title for embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_embedded_art">使用本機或內嵌專輯封面</string>
     <!-- Settings summary for the ignore embedded artwork checkbox-->
-    <string name="pref_summary_prefer_embedded_art">若您的音樂檔案或資料夾中擁有內嵌專輯封面，Shuttle 將會優先使用</string>
+    Wavevine
     <!-- Settings title for ignore embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_ignore_embedded_art">略過內嵌專輯封面</string>
     <!-- Settings summary for the ignore folder artwork checkbox-->
@@ -328,7 +328,7 @@
     <!-- Settings summary for the download artwork button-->
     <string name="pref_summary_download_artwork">下載缺少的演出者與專輯封面</string>
     <!-- Settings warning for the download artwork button -->
-    <string name="pref_warning_download_artwork">Shuttle 將會透過任何網路連線下載所有專輯封面，這可能會使用一些數據用量</string>
+    <string name="pref_warning_download_artwork">Wavevine 將會透過任何網路連線下載所有專輯封面，這可能會使用一些數據用量</string>
     <!-- Settings title for the delete artwork button-->
     <string name="pref_title_delete_artwork">刪除專輯封面</string>
     <!-- Settings summary for the delete artwork button -->
@@ -348,7 +348,7 @@
     <!-- Settings title for gmail style placeholders checkbox-->
     <string name="pref_title_placeholders">使用 Gmail 樣式</string>
     <!-- Settings summary for gmail style placeholders checkbox-->
-    <string name="pref_summary_placeholders">顯示 Gmail 樣式的預設專輯封面。若取消勾選則會以 Shuttle 圖示替代</string>
+    <string name="pref_summary_placeholders">顯示 Gmail 樣式的預設專輯封面。若取消勾選則會以 Wavevine 圖示替代</string>
     <!-- Settings title for the enable lockscreen controls checkbox -->
     <string name="pref_title_lockscreen">啟用鎖定螢幕播放控制</string>
     <!-- Settings summary for the enable lockscreen controls checkbox -->
@@ -401,7 +401,7 @@
     <string name="pref_title_faq">常見問題</string>
     <string name="pref_summary_faq">有問題或需要協助嗎？請按這裡查詢常見問題 www.shuttlemusicplayer.com</string>
     <string name="pref_title_gplus">取得支援</string>
-    <string name="pref_summary_gplus">我們在 Google+ 上有個非常活躍的 Shuttle 社群，若您有任何問題或需要協助，您可拜訪這個好地方</string>
+    <string name="pref_summary_gplus">我們在 Google+ 上有個非常活躍的 Wavevine 社群，若您有任何問題或需要協助，您可拜訪這個好地方</string>
     <string name="pref_title_rate">感謝與評分</string>
     <string name="pref_summary_rate">若您喜歡 Shuttle，您可給予評價</string>
     <!-- Settings title for ignore playlist duplicates -->
@@ -453,11 +453,11 @@
     <string name="save">儲存</string>
     <!-- Message displayed when tag editing fails -->
     <string name="tag_edit_error">編輯標籤時發生錯誤</string>
-    <string name="tag_error_lollipop">編輯標籤時發生錯誤。若您的檔案存放於 SD 卡中，Shuttle 可能無法進行變更</string>
+    <string name="tag_error_lollipop">編輯標籤時發生錯誤。若您的檔案存放於 SD 卡中，Wavevine 可能無法進行變更</string>
     <string name="tag_error_kitkat">編輯標籤時發生錯誤。您的檔案是否存放於 SD 卡中？由於 Google 已限制其存取權限，因此無法編輯這個檔案的標籤</string>
-    <string name="tag_editor_document_tree_message">由於 Google 對於 Android 5.0 作業系統的規範變更，您必須指定 SD 卡中有哪些資料夾允許應用程式存取內容。\n\nShuttle 將會開啟檔案選取介面，請選擇您要允許應用程式使用的主要資料夾</string>
+    <string name="tag_editor_document_tree_message">由於 Google 對於 Android 5.0 作業系統的規範變更，您必須指定 SD 卡中有哪些資料夾允許應用程式存取內容。\n\Wavevine 將會開啟檔案選取介面，請選擇您要允許應用程式使用的主要資料夾</string>
     <string name="tag_editor_check_permission">正在檢查權限，可能需要一段時間…\n\n都是 Google！</string>
-    <string name="tag_editor_document_tree_permission_failed">Shuttle 似乎仍無法取得變更檔案內容的權限。請再確認一次選取介面中所選擇的資料夾路徑</string>
+    <string name="tag_editor_document_tree_permission_failed">Wavevine 似乎仍無法取得變更檔案內容的權限。請再確認一次選取介面中所選擇的資料夾路徑</string>
     <string name="tag_retrieve_error">檢索標籤時發生錯誤</string>
     <!-- ## Folder browsing ## -->
     <!-- -->
@@ -577,7 +577,7 @@
     <!-- Button name in time span picker -->
     <string name="button_done">完成</string>
     <!-- Title of time span picker -->
-    <string name="weekpicker_title">設定 Shuttle 要在「最近播放」中顯示多少週前使用過的音樂</string>
+    <string name="weekpicker_title">設定 Wavevine 要在「最近播放」中顯示多少週前使用過的音樂</string>
     <!-- ## Notification bar text ## -->
     <!-- Message in notification bar when downloading -->
     <string name="notif_downloading_art">正在下載專輯封面...</string>
@@ -693,9 +693,9 @@
     <string name="song_info_sample_rate_suffix">"KHz"</string>
     <string name="iab_purchase_restored">已還原購買資料。請重新啟動 Shuttle</string>
     <string name="iab_purchase_not_found">找不到先前的購買記錄</string>
-    <string name="iab_already_upgraded">Shuttle 已升級完成。請重新啟動本應用程式</string>
+    <string name="iab_already_upgraded">ShutWavevinetle 已升級完成。請重新啟動本應用程式</string>
     <string name="iab_purchase_failed">發生錯誤。請稍後再試</string>
-    <string name="snackbar_rate_text">喜歡 Shuttle 嗎？</string>
+    <string name="snackbar_rate_text">喜歡 Wavevine 嗎？</string>
     <string name="snackbar_rate_action">立即評分！</string>
     <string name="toast_purchase_failed">發生一些問題，請稍後再試..</string>
     <string name="dialog_create_playlist_error">建立播放清單時發生錯誤</string>

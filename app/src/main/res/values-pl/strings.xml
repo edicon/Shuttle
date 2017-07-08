@@ -113,7 +113,7 @@
     <!-- -->
     <string name="get_pro_title">Uaktualnij do Shuttle+</string>
     <!-- -->
-    <string name="get_pro_message">Jeśli Shuttle spełnia Państwa oczekiwania, proszę rozważyć uaktualnienie do płatnej wersji.
+    <string name="get_pro_message">Jeśli Wavevine spełnia Państwa oczekiwania, proszę rozważyć uaktualnienie do płatnej wersji.
 
         \n\nFunkcje:
 
@@ -467,11 +467,11 @@ Po wyłączeniu, jako obraz zastępczy będzie używana ikona programu.</string>
     <string name="save">Zapisz</string>
     <!-- Message displayed when tag editing fails -->
     <string name="tag_edit_error">Wystąpił błąd podczas modyfikowania znaczników.</string>
-    <string name="tag_error_lollipop">Wystąpił błąd modyfikowania znaczników. Jeśli plik jest przechowywany na karcie SD, Shuttle może nie mieć do niego dostępu.</string>
+    <string name="tag_error_lollipop">Wystąpił błąd modyfikowania znaczników. Jeśli plik jest przechowywany na karcie SD, Wavevine może nie mieć do niego dostępu.</string>
     <string name="tag_error_kitkat">Wystąpił błąd modyfikowania znaczników. Czy plik jest przechowywany na karcie SD? Jeśli tak, Google uniemożliwiło modyfikowanie etykiet tego pliku.</string>
-    <string name="tag_editor_document_tree_message">Z powodu zmian w Androidzie 5.0, Google wymaga określenia katalogów, do których aplikacja może mieć uprawnienia do zapisywania.\n\nProgram Shuttle otworzy przeglądarkę plików. Proszę wybrać katalog nadrzędny z modyfikowanymi plikami.</string>
+    <string name="tag_editor_document_tree_message">Z powodu zmian w Androidzie 5.0, Google wymaga określenia katalogów, do których aplikacja może mieć uprawnienia do zapisywania.\n\nProgram Wavevine otworzy przeglądarkę plików. Proszę wybrać katalog nadrzędny z modyfikowanymi plikami.</string>
     <string name="tag_editor_check_permission">Sprawdzanie uprawnień. Może to chwilę potrwać...\n\nObwiniaj Google!</string>
-    <string name="tag_editor_document_tree_permission_failed">Wygląda na to, że Shuttle nie ma uprawnień do zapisywania plików. Proszę upewnić się, że wybrano odpowiedni katalog w przeglądarce plików.</string>
+    <string name="tag_editor_document_tree_permission_failed">Wygląda na to, że Wavevine nie ma uprawnień do zapisywania plików. Proszę upewnić się, że wybrano odpowiedni katalog w przeglądarce plików.</string>
     <string name="tag_retrieve_error">Wystąpił błąd podczas przetwarzania znaczników.</string>
     <!-- ## Folder browsing ## -->
     <!-- -->
@@ -720,9 +720,9 @@ Po wyłączeniu, jako obraz zastępczy będzie używana ikona programu.</string>
     <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Przywrócono zakupy. Proszę uruchomić program ponownie.</string>
     <string name="iab_purchase_not_found">Nie odnaleziono poprzednich zakupów.</string>
-    <string name="iab_already_upgraded">Program Shuttle jest już uaktualniony. Proszę spróbować uruchomić program ponownie.</string>
+    <string name="iab_already_upgraded">Program Wavevine jest już uaktualniony. Proszę spróbować uruchomić program ponownie.</string>
     <string name="iab_purchase_failed">Coś poszło nie tak. Proszę spróbować ponownie później.</string>
-    <string name="snackbar_rate_text">Odtwarzacz Shuttle jest ok?</string>
+    <string name="snackbar_rate_text">Odtwarzacz Wavevine jest ok?</string>
     <string name="snackbar_rate_action">Oceń go!</string>
     <string name="toast_purchase_failed">Coś poszło nie tak, jak powinno. Proszę spróbować ponownie później.</string>
     <string name="dialog_create_playlist_error">Błąd tworzenia listy odtwarzania</string>

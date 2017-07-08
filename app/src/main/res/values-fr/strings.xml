@@ -106,7 +106,7 @@
     <!-- -->
     <string name="get_pro_title">Passer à Shuttle+</string>
     <!-- -->
-    <string name="get_pro_message">Si vous aimez Shuttle Music Player, envisagez de passer à Shuttle+. \n\nFonctionnalités :\n\n\{&#8226;} Thèmes supplémentaires\n\{&#8226;} Édition des tags\n\{&#8226;} Navigation par dossiers\n\{&#8226;} Aucune publicité!\n\nCela permet aussi de contribuer au développement de l\'application!</string>
+    <string name="get_pro_message">Si vous aimez Wavevine Music Player, envisagez de passer à Shuttle+. \n\nFonctionnalités :\n\n\{&#8226;} Thèmes supplémentaires\n\{&#8226;} Édition des tags\n\{&#8226;} Navigation par dossiers\n\{&#8226;} Aucune publicité!\n\nCela permet aussi de contribuer au développement de l\'application!</string>
     <!-- -->
     <string name="upgraded_title">Merci</string>
     <string name="upgraded_message">Vous avez mis à niveau vers Shuttle+ avec succès. Merci de votre soutient.
@@ -297,7 +297,7 @@
     <!-- Settings title for embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_embedded_art">Privilégier les illustrations incorporés</string>
     <!-- Settings summary for the ignore embedded artwork checkbox-->
-    <string name="pref_summary_prefer_embedded_art">Cochez cette case si vous préférez que Shuttle cherche l\'illustration dans le fichier lui-même, avant de chercher les fichers folder.jpg, cover.png, etc.</string>
+    <string name="pref_summary_prefer_embedded_art">Cochez cette case si vous préférez que Wavevine cherche l\'illustration dans le fichier lui-même, avant de chercher les fichers folder.jpg, cover.png, etc.</string>
     <!-- Settings title for ignore embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_ignore_embedded_art">Ignorer la pochette intégrée</string>
     <!-- Settings summary for the ignore folder artwork checkbox-->
@@ -313,7 +313,7 @@
     <!-- Settings title for ignore folder artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_lastfm">Préférer la pochette de Last.fm</string>
     <!-- Settings summary for the embedded artwork checkbox-->
-    <string name="pref_summary_prefer_lastfm">Cocher cette case si vous préférez que Shuttle cherche une pochette sur Last.fm d\'abord, avant de chercher sur les serveurs iTunes. (Pochette d\'album uniquement)</string>
+    <string name="pref_summary_prefer_lastfm">Cocher cette case si vous préférez que Wavevine cherche une pochette sur Last.fm d\'abord, avant de chercher sur les serveurs iTunes. (Pochette d\'album uniquement)</string>
     <!-- Settings title for Artwork settings heading -->
     <string name="pref_string_title_artwork">Illustrations</string>
     <!-- Settings title for the download artwork button -->
@@ -321,7 +321,7 @@
     <!-- Settings summary for the download artwork button-->
     <string name="pref_summary_download_artwork">Télécharger les illustrations d\'artistes et d\'albums manquantes</string>
     <!-- Settings warning for the download artwork button -->
-    <string name="pref_warning_download_artwork">Shuttle téléchargera toutes les pochettes quelle que soit votre connexion. Des surcoûts de donnée internet peuvent s\'appliquer.</string>
+    <string name="pref_warning_download_artwork">Wavevine téléchargera toutes les pochettes quelle que soit votre connexion. Des surcoûts de donnée internet peuvent s\'appliquer.</string>
     <!-- Settings title for the delete artwork button-->
     <string name="pref_title_delete_artwork">Supprimer les illustrations</string>
     <!-- Settings summary for the delete artwork button -->
@@ -342,7 +342,7 @@
     <string name="pref_title_placeholders">Espaces réservés style Gmail</string>
     <!-- Settings summary for gmail style placeholders checkbox-->
     <string name="pref_summary_placeholders">Utilise des espaces réservés de style Gmail.
- Si décoché, l\'icône de Shuttle sera affichée dans les espaces réservés.</string>
+ Si décoché, l\'icône de Wavevine sera affichée dans les espaces réservés.</string>
     <!-- Settings title for the enable lockscreen controls checkbox -->
     <string name="pref_title_lockscreen">Afficher les boutons sur l\'écran de verrouillage</string>
     <!-- Settings summary for the enable lockscreen controls checkbox -->
@@ -398,7 +398,7 @@
     <string name="pref_title_faq">FAQ</string>
     <string name="pref_summary_faq">Une question? Besoin d\'aide? Cliquez ici pour voir la FAQ sur www.shuttlemusicplayer.com</string>
     <string name="pref_title_gplus">Obtenir de l\'aide</string>
-    <string name="pref_summary_gplus">Il y a une communauté très active d\'utilisateurs de Shuttle sur Google+. Si vous avez des questions ou besoin d\'aide, c\'est le meilleur endroit où aller.</string>
+    <string name="pref_summary_gplus">Il y a une communauté très active d\'utilisateurs de Wavevine sur Google+. Si vous avez des questions ou besoin d\'aide, c\'est le meilleur endroit où aller.</string>
     <string name="pref_title_rate">Dites Merci</string>
     <string name="pref_summary_rate">Si vous aimez Shuttle, merci d\'écrire une critique.</string>
     <!-- Settings title for ignore playlist duplicates -->
@@ -445,11 +445,11 @@
     <string name="save">Enregistrer</string>
     <!-- Message displayed when tag editing fails -->
     <string name="tag_edit_error">Une erreur est survenue pendant l\'édition des tags.</string>
-    <string name="tag_error_lollipop">Une erreur est survenue en modifiant les tags. Si le fichier est stocké sur une carte SD, Shuttle peut ne pas avoir l\'autorisation pour y accéder.</string>
+    <string name="tag_error_lollipop">Une erreur est survenue en modifiant les tags. Si le fichier est stocké sur une carte SD, Wavevine peut ne pas avoir l\'autorisation pour y accéder.</string>
     <string name="tag_error_kitkat">Une erreur est survenue en modifiant les tags. Est-ce que le fichier est stocké sur une carte SD? Si c\'est le cas, Google a rendu la modification de tag impossible pour ce fichier.</string>
-    <string name="tag_editor_document_tree_message">À cause de changements d\'Android 5.0, Google demande maintenant que vous spécifiez quels dossiers sur la carte SD une application peut modifier.\n\nShuttle va ouvrir maintenant un sélecteur de fichier. Merci de choisir le dossier parent des fichiers que vous souhaitez modifier.</string>
+    <string name="tag_editor_document_tree_message">À cause de changements d\'Android 5.0, Google demande maintenant que vous spécifiez quels dossiers sur la carte SD une application peut modifier.\n\Wavevine va ouvrir maintenant un sélecteur de fichier. Merci de choisir le dossier parent des fichiers que vous souhaitez modifier.</string>
     <string name="tag_editor_check_permission">Contrôle des autorisations en cours. Cela peut prendre un peu de temps...\n\nC\'est la faute à Google!</string>
-    <string name="tag_editor_document_tree_permission_failed">Il semble que Shuttle n\'a toujours pas l\'autorisation de modifier les fichiers. Recontrôlez le dossier dans le sélecteur de fichier.</string>
+    <string name="tag_editor_document_tree_permission_failed">Il semble que Wavevine n\'a toujours pas l\'autorisation de modifier les fichiers. Recontrôlez le dossier dans le sélecteur de fichier.</string>
     <string name="tag_retrieve_error">Une erreur est survenue pendant la récupération des tags.</string>
     <!-- ## Folder browsing ## -->
     <!-- -->
@@ -680,7 +680,7 @@
     <string name="song_info_sample_rate_suffix">"kHz"</string>
     <string name="iab_purchase_restored">Achat restauré. Veuillez redémarrer Shuttle</string>
     <string name="iab_purchase_not_found">Aucun ancien achat trouvé.</string>
-    <string name="iab_already_upgraded">Shuttle a déjà été upgradé. Essayez de redémarrer l\'application.</string>
+    <string name="iab_already_upgraded">Wavevine a déjà été upgradé. Essayez de redémarrer l\'application.</string>
     <string name="iab_purchase_failed">Il y a eu une erreur. Merci de réessayer plus tard...</string>
     <string name="snackbar_rate_text">Vous appréciez Shuttle?</string>
     <string name="snackbar_rate_action">Notez le!</string>

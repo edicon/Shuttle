@@ -116,7 +116,7 @@
     <!-- -->
     <string name="upgraded_title">Благодаря Ви</string>
     <string name="upgraded_message">Вие успешно надстроихте до Shuttle+. Оценявам подкрепата Ви.\n\nМоля рестартирайте приложението, за да се уверите, че всички функции са включени.</string>
-    <string name="upgrade_dialog_message">Актуализирането ще ви отключи допълнителни функции на Shuttle като:\n\n\&#8226;-Голям брой теми\n\&#8226;-Редактиране на информация за изп.(ограничена поддръжка при Андроид 4.4 КитКат)\n\&#8226;-Преглеждане на музика в папки\n\&#8226;-Поддръжка на ChromeCast\n\nПодпомагате за развитието на приложението.\n\nНяма нужда да актуализирате, ако вече притежавате Shuttle+</string>
+    <string name="upgrade_dialog_message">Актуализирането ще ви отключи допълнителни функции на Wavevine като:\n\n\&#8226;-Голям брой теми\n\&#8226;-Редактиране на информация за изп.(ограничена поддръжка при Андроид 4.4 КитКат)\n\&#8226;-Преглеждане на музика в папки\n\&#8226;-Поддръжка на ChromeCast\n\nПодпомагате за развитието на приложението.\n\nНяма нужда да актуализирате, ако вече притежавате Shuttle+</string>
     <string name="get_pro_button_play_store">Play Store</string>
     <string name="get_pro_button_amazon">Amazon</string>
     <string name="btn_upgrade">Актуализирай</string>
@@ -160,7 +160,7 @@
     <!--"Set Ringtone" title -->
     <string name="dialog_title_set_ringtone">Задай тон на звънене</string>
     <!-- "Set Ringtone" message -->
-    <string name="dialog_message_set_ringtone">Shuttle има нужда от допълнително разрешение, за да настрои тон на звънене.\n\nСлед като дадете разрешение, опитайте да промените тона на звънене повторно.</string>
+    <string name="dialog_message_set_ringtone">Wavevine има нужда от допълнително разрешение, за да настрои тон на звънене.\n\nСлед като дадете разрешение, опитайте да промените тона на звънене повторно.</string>
     <!-- Message displayed in dialog when attempting to add duplicates to playlist -->
     <string name="dialog_message_playlist_add_duplicate"><xliff:g id="artist">%s</xliff:g> - <xliff:g id="song">%s</xliff:g> вече е в този плейлист. Добавяне все пак?</string>
     <!-- Checkbox text 'apply to all' -->
@@ -302,7 +302,7 @@
     <!-- Settings title for embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_embedded_art">Предпочитане на вградена корица</string>
     <!-- Settings summary for the ignore embedded artwork checkbox-->
-    <string name="pref_summary_prefer_embedded_art">Маркирай ако предпочиташ Shuttle да търси корица вградена в музикалните файлове преди да търси в папките с музика</string>
+    <string name="pref_summary_prefer_embedded_art">Маркирай ако предпочиташ Wavevine да търси корица вградена в музикалните файлове преди да търси в папките с музика</string>
     <!-- Settings title for ignore embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_ignore_embedded_art">Игнорирай вградените корици</string>
     <!-- Settings summary for the ignore folder artwork checkbox-->
@@ -318,7 +318,7 @@
     <!-- Settings title for ignore folder artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_lastfm">Предпочитане на корици от Last.fm</string>
     <!-- Settings summary for the embedded artwork checkbox-->
-    <string name="pref_summary_prefer_lastfm">Маркирай ако предпочиташ Shuttle да търси корици първо в Last.fm преди да търси в Itunes сървъри. (Само корици на албуми)</string>
+    <string name="pref_summary_prefer_lastfm">Маркирай ако предпочиташ Wavevine да търси корици първо в Last.fm преди да търси в Itunes сървъри. (Само корици на албуми)</string>
     <!-- Settings title for Artwork settings heading -->
     <string name="pref_string_title_artwork">Обложка</string>
     <!-- Settings title for the download artwork button -->
@@ -326,7 +326,7 @@
     <!-- Settings summary for the download artwork button-->
     <string name="pref_summary_download_artwork">Изтегли липсващи изображения на изпълнителя и на обложките на албумите</string>
     <!-- Settings warning for the download artwork button -->
-    <string name="pref_warning_download_artwork">Shuttle ще изтегля обложки без значение от това към каква мрежа сте свързани. Може да бъде свързано с разходи за данни.</string>
+    <string name="pref_warning_download_artwork">Wavevine ще изтегля обложки без значение от това към каква мрежа сте свързани. Може да бъде свързано с разходи за данни.</string>
     <!-- Settings title for the delete artwork button-->
     <string name="pref_title_delete_artwork">Изтриване на обложката</string>
     <!-- Settings summary for the delete artwork button -->
@@ -347,7 +347,7 @@
     <string name="pref_title_placeholders">Използване на \"Gmail\" стил на иконите</string>
     <!-- Settings summary for gmail style placeholders checkbox-->
     <string name="pref_summary_placeholders">Използване на стила \"Gmail\" по подразбиране
- Ако опцията не е активна, иконата на Shuttle ще се показва като placeholder</string>
+ Ако опцията не е активна, иконата на Wavevine ще се показва като placeholder</string>
     <!-- Settings title for the enable lockscreen controls checkbox -->
     <string name="pref_title_lockscreen">Активирай контроли когато екранът е заключен</string>
     <!-- Settings summary for the enable lockscreen controls checkbox -->
@@ -456,11 +456,11 @@
     <string name="save">Запази</string>
     <!-- Message displayed when tag editing fails -->
     <string name="tag_edit_error">Грешка при редактирането на таговете.</string>
-    <string name="tag_error_lollipop">Грешка при записването на атрибутите. Ако файлът е записан в SD картата, възможно е Shuttle да няма разрешение за достъп до него.</string>
+    <string name="tag_error_lollipop">Грешка при записването на атрибутите. Ако файлът е записан в SD картата, възможно е Wavevine да няма разрешение за достъп до него.</string>
     <string name="tag_error_kitkat">Греша при редактирането на таговете. Файлът да не би да е на SD картата? В такъв случай Google не позволява редактиране на таговете.</string>
-    <string name="tag_editor_document_tree_message">Поради промени в Android 5.0, Google вече изисква да се определят папките на SD картата, които приложението може да редактира.\n\nShuttle ще отвори меню, в което можете да изберете кои папки да позволите да бъдат редактирани.</string>
+    <string name="tag_editor_document_tree_message">Поради промени в Android 5.0, Google вече изисква да се определят папките на SD картата, които приложението може да редактира.\n\Wavevine ще отвори меню, в което можете да изберете кои папки да позволите да бъдат редактирани.</string>
     <string name="tag_editor_check_permission">Проверявам дали имам разрешение за това. Може да отнеме малко време...\n\nОт Google са виновни!</string>
-    <string name="tag_editor_document_tree_permission_failed">Изглежда Shuttle не разполага с разрешение да редактира файловете. Проверете отново папката в менюто за избор на папки.</string>
+    <string name="tag_editor_document_tree_permission_failed">Изглежда Wavevine не разполага с разрешение да редактира файловете. Проверете отново папката в менюто за избор на папки.</string>
     <string name="tag_retrieve_error">Грешка при извличането на таговете.</string>
     <!-- ## Folder browsing ## -->
     <!-- -->
@@ -584,7 +584,7 @@
     <string name="weekpicker_title">Задаване на часа</string>
     <!-- ## Notification bar text ## -->
     <!-- Message in notification bar when downloading -->
-    <string name="notif_downloading_art">Shuttle - Изтегляне</string>
+    <string name="notif_downloading_art">Wavevine - Изтегляне</string>
     <!-- ## SD card error messages ##-->
     <!-- Title of screen when no sd card is present -->
     <string name="sdcard_missing_title">Няма SD карта</string>

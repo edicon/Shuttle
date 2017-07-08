@@ -100,7 +100,7 @@
     <!-- -->
     <string name="get_pro_title">Обновить до Shuttle+</string>
     <!-- -->
-    <string name="get_pro_message">Если вам нравится Shuttle Music Player, пожалуйста, подумайте об обновлении до Shuttle+
+    <string name="get_pro_message">Если вам нравится Wavevine Music Player, пожалуйста, подумайте об обновлении до Shuttle+
 \n\nОсобенности:
 \n\Куча дополнительных тем
 \n\Редактирование тегов (в Android 4.4 Kitkat функциональность ограничена)
@@ -288,7 +288,7 @@
     <!-- Settings title for embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_embedded_art">Предпочитать встроенные изображения</string>
     <!-- Settings summary for the ignore embedded artwork checkbox-->
-    <string name="pref_summary_prefer_embedded_art">Отметьте галочкой, если Вы предпочитаете, что бы Shuttle просматривал обложки сначала в самих файлах, а после уже в папке</string>
+    <string name="pref_summary_prefer_embedded_art">Отметьте галочкой, если Вы предпочитаете, что бы Wavevine просматривал обложки сначала в самих файлах, а после уже в папке</string>
     <!-- Settings title for ignore embedded artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_ignore_embedded_art">Игнорировать встроенную обложку</string>
     <!-- Settings summary for the ignore folder artwork checkbox-->
@@ -304,7 +304,7 @@
     <!-- Settings title for ignore folder artwork checkbox (whether the app can use local artwork for the album art -->
     <string name="pref_title_prefer_lastfm">Предпочитать обложку с Last.fm</string>
     <!-- Settings summary for the embedded artwork checkbox-->
-    <string name="pref_summary_prefer_lastfm">Поставьте галочку, если Вы хотите, что бы Shuttle сначала искал обложку на Last.fm, а потом — на iTunes (только для обложек альбомов)</string>
+    <string name="pref_summary_prefer_lastfm">Поставьте галочку, если Вы хотите, что бы Wavevine сначала искал обложку на Last.fm, а потом — на iTunes (только для обложек альбомов)</string>
     <!-- Settings title for Artwork settings heading -->
     <string name="pref_string_title_artwork">Изображения</string>
     <!-- Settings title for the download artwork button -->
@@ -312,7 +312,7 @@
     <!-- Settings summary for the download artwork button-->
     <string name="pref_summary_download_artwork">Загрузить отсутствующие изображения альбомов и исполнителей</string>
     <!-- Settings warning for the download artwork button -->
-    <string name="pref_warning_download_artwork">Shuttle загрузит все обложки, несмотря на Вашу сеть. Может взиматься плата за использование трафика.</string>
+    <string name="pref_warning_download_artwork">Wavevine загрузит все обложки, несмотря на Вашу сеть. Может взиматься плата за использование трафика.</string>
     <!-- Settings title for the delete artwork button-->
     <string name="pref_title_delete_artwork">Удалить изображения</string>
     <!-- Settings summary for the delete artwork button -->
@@ -429,11 +429,11 @@
     <!-- Button text for saving tags  -->
     <string name="save">Сохранить</string>
     <!-- Message displayed when tag editing fails -->
-    <string name="tag_error_lollipop">Случилась ошибка при редактировании тегов. Если файл расположен на SD карте, Shuttle может не иметь разрешения на доступ к нему.</string>
+    <string name="tag_error_lollipop">Случилась ошибка при редактировании тегов. Если файл расположен на SD карте, Wavevine может не иметь разрешения на доступ к нему.</string>
     <string name="tag_error_kitkat">Случилась ошибка при редактировании тегов. Файл расположен на SD карте? Если так, то Google сделал невозможным редактирование тегов этого файла.</string>
-    <string name="tag_editor_document_tree_message">Вследствие изменений в Android 5.0 Вам необходимо установить, какие папки на SD карте приложению можно модифицировать.\n\nСейчас Shuttle откроет окно проводника. Пожалуйста, выберите начальную директорию, содержащую файлы, какие Вы хотите модифицировать.</string>
+    <string name="tag_editor_document_tree_message">Вследствие изменений в Android 5.0 Вам необходимо установить, какие папки на SD карте приложению можно модифицировать.\n\nСейчас Wavevine откроет окно проводника. Пожалуйста, выберите начальную директорию, содержащую файлы, какие Вы хотите модифицировать.</string>
     <string name="tag_editor_check_permission">Проверка разрешений. Это может отнять некоторое время...\n\nБлагодарите Google!</string>
-    <string name="tag_editor_document_tree_permission_failed">Похоже, Shuttle всё ещё не имеет разрешения модифицировать файлы. Проверьте директорию в окне проводника.</string>
+    <string name="tag_editor_document_tree_permission_failed">Похоже, Wavevine всё ещё не имеет разрешения модифицировать файлы. Проверьте директорию в окне проводника.</string>
     <!-- ## Folder browsing ## -->
     <!-- -->
     <string name="rename_folder">Переименовать папку</string>
@@ -662,7 +662,7 @@
     <string name="song_info_sample_rate_suffix">" кГц"</string>
     <string name="iab_purchase_restored">Покупка восстановлена. Пожалуйста, перезапустите Shuttle</string>
     <string name="iab_purchase_not_found">Прошлая покупка не найдена.</string>
-    <string name="iab_already_upgraded">Shuttle уже куплен. Попробуйте перезапустить приложение.</string>
+    <string name="iab_already_upgraded">Wavevine уже куплен. Попробуйте перезапустить приложение.</string>
     <string name="iab_purchase_failed">Что-то пошло не так. Пожалуйста, попробуйте позже...</string>
     <string name="snackbar_rate_text">Нравится Shuttle?</string>
     <string name="snackbar_rate_action">Оцени его!</string>

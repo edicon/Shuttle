@@ -367,14 +367,14 @@ public class SettingsFragment extends PreferenceFragment {
 
         final Preference versionPreference = findPreference("pref_version");
         if (versionPreference != null) {
-            versionPreference.setSummary("Shuttle Music Player " + BuildConfig.VERSION_NAME + (ShuttleUtils.isUpgraded() ? " (Upgraded)" : " (Free)"));
+            versionPreference.setSummary("Wavevine Music Player " + BuildConfig.VERSION_NAME + (ShuttleUtils.isUpgraded() ? " (Upgraded)" : " (Free)"));
         }
 
         final Preference faqPreference = findPreference("pref_faq");
         if (faqPreference != null) {
             faqPreference.setOnPreferenceClickListener(preference -> {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("http://www.shuttlemusicplayer.com/#faq"));
+                intent.setData(Uri.parse("http://www.wavevine.com/#faq"));
                 startActivity(intent);
                 return true;
             });
