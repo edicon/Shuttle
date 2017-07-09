@@ -209,7 +209,8 @@ public class FileHelper {
      */
     public static Observable<List<Song>> getSongList(final File file, final boolean recursive, final boolean inSameDir) {
 
-        return Observable.fromCallable(() -> walk(file, new ArrayList<>(), recursive, inSameDir)).flatMap(filePaths -> DataManager.getInstance().getSongsRelay()
+        return Observable.fromCallable(() -> walk(file, new ArrayList<>(), recursive, inSameDir))
+                .flatMap(filePaths -> DataManager.getInstance().getSongsRelay()
                 .map(songs -> Stream.of(songs)
                         .filter(song -> filePaths.contains(song.path))
                         .collect(Collectors.toList()))
@@ -334,7 +335,9 @@ public class FileHelper {
             "aac", "ts", "flac", "mid",
             "xmf", "mxmf", "midi", "rtttl",
             "rtx", "ota", "imy", "ogg",
-            "mkv", "wav"
+            "mkv", "wav",
+            // ToDo: Add file extension for wavevine
+            "dsd", "dff", "cue"
     };
 
     /**

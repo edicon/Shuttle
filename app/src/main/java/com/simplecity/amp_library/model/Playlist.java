@@ -13,6 +13,7 @@ import com.annimon.stream.Stream;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.ShuttleApplication;
+import com.simplecity.amp_library.model.cue.Track;
 import com.simplecity.amp_library.sql.SqlUtils;
 import com.simplecity.amp_library.sql.providers.PlayCountTable;
 import com.simplecity.amp_library.sql.sqlbrite.SqlBriteUtils;
@@ -40,6 +41,7 @@ public class Playlist implements Serializable {
         int RECENTLY_PLAYED = 3;
         int FAVORITES       = 4;
         int USER_CREATED    = 5;
+        int IS_CUE          = 6;
     }
 
     @Type
@@ -153,7 +155,36 @@ public class Playlist implements Serializable {
         return playlist;
     }
 
-    // HI_RES
+    // HI_RES: ToDo: cuePlaylit
+    public static Playlist cuePlaylist( List<Track> tracks ) {
+
+        Query query = new Query.Builder()
+                .uri(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI)
+                .projection(new String[]{BaseColumns._ID})
+                .selection(MediaStore.Audio.PlaylistsColumns.NAME + "='" + ShuttleApplication.getInstance().getResources().getString(R.string.cue_title) + "'")
+                .build();
+
+        Playlist playlist = SqlUtils.createSingleQuery(ShuttleApplication.getInstance(), cursor -> new Playlist(
+                        Type.IS_CUE, cursor.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID)),
+                        ShuttleApplication.getInstance().getString(R.string.cue_title),
+                        true, true, false, false, true),
+                query);
+
+        if (playlist == null) {
+            playlist = PlaylistUtils.createPlaylist(ShuttleApplication.getInstance(), ShuttleApplication.getInstance().getString(R.string.cue_title));
+            if (playlist != null) {
+                playlist.canDelete = true;
+                playlist.canRename = true;
+            }
+        }
+
+        if (playlist == null) {
+            CrashlyticsCore.getInstance().log("cuePlaylist() returned null..");
+        }
+
+        return playlist;
+    }
+
     public static Query getFavQuery() {
         Query query = new Query.Builder()
                 .uri(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI)
@@ -286,8 +317,9 @@ public class Playlist implements Serializable {
             projection.add(MediaStore.Audio.Playlists.Members.AUDIO_ID);
             projection.add(MediaStore.Audio.Playlists.Members.PLAY_ORDER);
             query.projection = projection.toArray(new String[projection.size()]);
-            return SqlBriteUtils.createQuery(context, Playlist::createSongFromPlaylistCursor, query).map(songs -> {
-                Collections.sort(songs, (a, b) -> ComparisonUtils.compareLong(a.playlistSongPlayOrder, b.playlistSongPlayOrder));
+            return SqlBriteUtils.createQuery(context, Playlist::createSongFromPlaylistCursor, query)
+                    .map(songs -> {
+                        Collections.sort(songs, (a, b) -> ComparisonUtils.compareLong(a.playlistSongPlayOrder, b.playlistSongPlayOrder));
                 return songs;
             });
         }

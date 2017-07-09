@@ -21,8 +21,8 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.facebook.stetho.Stetho;
 import com.google.android.libraries.cast.companionlibrary.cast.CastConfiguration;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -77,7 +77,8 @@ public class ShuttleApplication extends Application {
     private static Logger jaudioTaggerLogger1 = Logger.getLogger("org.jaudiotagger.audio");
     private static Logger jaudioTaggerLogger2 = Logger.getLogger("org.jaudiotagger");
 
-    public static boolean HI_RES = true;
+    public static boolean HI_RES    = true;
+    public static boolean HIRES_CUE = true;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -98,6 +99,8 @@ public class ShuttleApplication extends Application {
         if (BuildConfig.DEBUG) {
             Log.w(TAG, "**Debug mode is ON**");
             enableStrictMode();
+
+            Stetho.initializeWithDefaults(this);
         }
 
         if( HI_RES ) {

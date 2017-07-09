@@ -230,6 +230,7 @@
     <string name="settings">Settings</string>
     <!-- Playing screen, menu item -->
     <string name="fav_title">Favorites</string>
+    <string name="cue_title">Cues</string>
     <!-- -->
     <string name="library_title">Library</string>
     <!-- -->

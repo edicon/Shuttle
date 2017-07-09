@@ -299,8 +299,8 @@ public class NavigationDrawerFragment extends BaseFragment implements
                                 .flatMap(playlist -> playlist.getSongsObservable(getContext())
                                         .flatMap(songs -> {
                                             if (playlist.type == Playlist.Type.USER_CREATED
-                                                    || playlist.type == Playlist.Type.RECENTLY_ADDED
-                                                    || !songs.isEmpty()) {
+                                             || playlist.type == Playlist.Type.RECENTLY_ADDED
+                                             || !songs.isEmpty()) {
                                                 return Observable.just(playlist);
                                             } else {
                                                 return Observable.empty();

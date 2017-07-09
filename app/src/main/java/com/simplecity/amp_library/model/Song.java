@@ -15,6 +15,7 @@ import com.simplecity.amp_library.ShuttleApplication;
 import com.simplecity.amp_library.http.HttpClient;
 import com.simplecity.amp_library.lastfm.ItunesResult;
 import com.simplecity.amp_library.lastfm.LastFmResult;
+import com.simplecity.amp_library.model.cue.Track;
 import com.simplecity.amp_library.sql.SqlUtils;
 import com.simplecity.amp_library.sql.providers.PlayCountTable;
 import com.simplecity.amp_library.sql.sqlbrite.SqlBriteUtils;
@@ -64,6 +65,8 @@ public class Song implements
     public String albumArtistName;
 
     private TagInfo tagInfo;
+    // ToDo: for cueInfo or cueSheet
+    public boolean isCue;
 
     private String durationLabel;
     private String bitrateLabel;
@@ -103,6 +106,17 @@ public class Song implements
                 .args(null)
                 .sort(MediaStore.Audio.Media.TRACK)
                 .build();
+    }
+
+    public Song( Track track ) {
+        id = track.getId().getMostSignificantBits() & Long.MAX_VALUE; // track
+        name = track.getTitle();
+        artistName =track.getArtist();
+        albumName = track.getAlbum();
+        duration = track.getDuration();
+        startTime = track.getStartPosition();   // Save to bookmark
+        path = track.getFile();
+        isCue = true; // track.isCue();         // MUST BB after startTime --> isMusic
     }
 
     public Song(Cursor cursor) {
@@ -228,6 +242,7 @@ public class Song implements
     }
 
     public TagInfo getTagInfo() {
+        // ToDo: if( isCue ) cue: CueInfo or CueSheet: cueInfo --> tagInfo
         if (tagInfo == null) {
             tagInfo = new TagInfo(path);
         }

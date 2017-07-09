@@ -531,6 +531,7 @@ public class DetailFragment extends BaseFragment implements
                                     case Playlist.Type.USER_CREATED:
                                     case Playlist.Type.FAVORITES:
                                     case Playlist.Type.PODCAST:
+                                    case Playlist.Type.IS_CUE:
                                         Collections.sort(albums, (a, b) -> ComparisonUtils.compare(a.name, b.name));
                                         break;
                                 }

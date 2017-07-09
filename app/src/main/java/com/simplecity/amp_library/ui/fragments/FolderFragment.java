@@ -5,12 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.os.EnvironmentCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +14,6 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Config;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -46,11 +41,12 @@ import com.simplecity.amp_library.interfaces.BreadcrumbListener;
 import com.simplecity.amp_library.interfaces.FileType;
 import com.simplecity.amp_library.model.AdaptableItem;
 import com.simplecity.amp_library.model.BaseFileObject;
-import com.simplecity.amp_library.model.DrawerGroupItem;
 import com.simplecity.amp_library.model.FileObject;
 import com.simplecity.amp_library.model.FolderObject;
 import com.simplecity.amp_library.model.Playlist;
 import com.simplecity.amp_library.model.Song;
+import com.simplecity.amp_library.model.cue.CueParse;
+import com.simplecity.amp_library.model.cue.Track;
 import com.simplecity.amp_library.sql.databases.WhitelistHelper;
 import com.simplecity.amp_library.tagger.TaggerDialog;
 import com.simplecity.amp_library.ui.activities.MainActivity;
@@ -84,10 +80,11 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
-import static com.simplecity.amp_library.R.styleable.Android;
+import static com.simplecity.amp_library.ShuttleApplication.HIRES_CUE;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
 import static com.simplecity.amp_library.utils.ColorUtils.fetchAttrColor;
 import static com.simplecity.amp_library.utils.MenuUtils.changeActionModeBackground;
+import static com.simplecity.amp_library.utils.PlaylistUtils.createCuePlaylistDialog;
 
 public class FolderFragment extends BaseFragment implements
         MusicUtils.Defs,
@@ -142,6 +139,7 @@ public class FolderFragment extends BaseFragment implements
     // HI_RES
     boolean inActionMode = false;
     MultiSelector multiSelector = new MultiSelector();
+    private CueParse mCueParse;
 
     private CompositeSubscription subscriptions;
 
@@ -196,6 +194,9 @@ public class FolderFragment extends BaseFragment implements
         if (savedInstanceState != null) {
             currentDir = savedInstanceState.getString(ARG_CURRENT_DIR);
         }
+
+        if( HIRES_CUE )
+            mCueParse = new CueParse();
     }
 
     @Override
@@ -652,7 +653,25 @@ public class FolderFragment extends BaseFragment implements
         // END HI_RES
         } else {
             if (fileObject.fileType == FileType.FILE) {
-                FileHelper.getSongList(new File(fileObject.path), false, true)
+                File file = new File(fileObject.path);
+                if( HIRES_CUE ) {
+                    if( BuildConfig.DEBUG )
+                        Log.d(TAG, "cue path: " + file.getAbsolutePath());
+                    if (mCueParse.isCueFile(file.getPath())) {
+                        try {
+                            mCueParse.parseCueFile( file );
+                            List<Track> tracks = mCueParse.getTracks();
+                            if(tracks.size() > 0){
+                                List<Song> songs = getPlayListSong( tracks );
+                                createCuePlaylistDialog( getActivity(), tracks );
+                            }
+                        } catch( Exception e ) {
+                            e.printStackTrace();
+                        }
+                        return;
+                    }
+                }
+                FileHelper.getSongList( file, false, true)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(songs -> {
                             int index = -1;
@@ -679,12 +698,15 @@ public class FolderFragment extends BaseFragment implements
     @Override
     public void onOverflowClick(View v, int position, BaseFileObject fileObject) {
 
-        PopupMenu menu = new PopupMenu(getActivity(), v);
+        boolean isCue = (mCueParse.isCueFile( fileObject.path ));
+
+            PopupMenu menu = new PopupMenu(getActivity(), v);
 
         if (fileObject.fileType == FileType.FILE) {
 
             //Play this song next
-            menu.getMenu().add(FRAGMENT_GROUPID, PLAY_NEXT, 4, R.string.play_next);
+            if( !isCue )
+                menu.getMenu().add(FRAGMENT_GROUPID, PLAY_NEXT, 4, R.string.play_next);
 
             //Tag editor
             if (ShuttleUtils.isUpgraded()) {
@@ -699,7 +721,8 @@ public class FolderFragment extends BaseFragment implements
 
             if (FileHelper.canReadWrite(new File(fileObject.path))) {
                 //Rename File
-                menu.getMenu().add(FRAGMENT_GROUPID, RENAME, 7, R.string.rename_file);
+                if( !isCue )
+                    menu.getMenu().add(FRAGMENT_GROUPID, RENAME, 7, R.string.rename_file);
                 //Delete File
                 menu.getMenu().add(FRAGMENT_GROUPID, DELETE_ITEM, 8, R.string.delete_item);
             }
@@ -727,9 +750,10 @@ public class FolderFragment extends BaseFragment implements
         PlaylistUtils.makePlaylistMenu(getActivity(), sub, FRAGMENT_GROUPID);
 
         //Add to queue
-        menu.getMenu().add(FRAGMENT_GROUPID, QUEUE, 3, R.string.add_to_queue);
-
-        menu.getMenu().add(FRAGMENT_GROUPID, RESCAN, 4, R.string.scan_file);
+        if( !isCue ) {
+            menu.getMenu().add(FRAGMENT_GROUPID, QUEUE, 3, R.string.add_to_queue);
+            menu.getMenu().add(FRAGMENT_GROUPID, RESCAN, 4, R.string.scan_file);
+        }
 
         menu.setOnMenuItemClickListener(item -> {
 
@@ -1210,6 +1234,13 @@ public class FolderFragment extends BaseFragment implements
         if (holder.getAdapterPosition() != -1) {
             adapter.items.get(holder.getAdapterPosition()).recycle(holder);
         }
+    }
+
+    private List<Song> getPlayListSong( List<Track> tracks ) {
+       if( BuildConfig.DEBUG )  {
+           Log.d(TAG, "Cue Size: " + tracks.size());
+       }
+       return null;
     }
     // END HI_RES
 

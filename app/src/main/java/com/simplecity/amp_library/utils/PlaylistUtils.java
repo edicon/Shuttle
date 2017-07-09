@@ -42,6 +42,8 @@ import com.simplecity.amp_library.model.BaseFileObject;
 import com.simplecity.amp_library.model.Playlist;
 import com.simplecity.amp_library.model.Query;
 import com.simplecity.amp_library.model.Song;
+import com.simplecity.amp_library.model.cue.CueParse;
+import com.simplecity.amp_library.model.cue.Track;
 import com.simplecity.amp_library.playback.MusicService;
 import com.simplecity.amp_library.sql.SqlUtils;
 import com.simplecity.amp_library.sql.providers.PlayCountTable;
@@ -57,6 +59,8 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+
+import static com.simplecity.amp_library.ShuttleApplication.HIRES_CUE;
 
 public class PlaylistUtils {
 
@@ -272,6 +276,29 @@ public class PlaylistUtils {
                 });
     }
 
+
+    public static void addCueTrackToPlaylist(Context context, Playlist playlist, List<Track> tracks) {
+        if( tracks == null )
+            return;
+
+        ProgressDialog progressDialog = ProgressDialog.show(context, "", context.getString(R.string.gathering_songs), false);
+
+        long trackCount = tracks.size();
+        if (trackCount > 0) {
+            progressDialog.show();
+        }
+
+        CueParse.getSongsForCueTrack(tracks)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(songs -> {
+                    if (progressDialog != null && progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+                    addToPlaylist(context, playlist, songs);
+                });
+    }
+
     /**
      * Method addToPlaylist.
      *
@@ -370,6 +397,9 @@ public class PlaylistUtils {
             contentValues[i] = new ContentValues();
             contentValues[i].put(MediaStore.Audio.Playlists.Members.PLAY_ORDER, songCount + i);
             contentValues[i].put(MediaStore.Audio.Playlists.Members.AUDIO_ID, songs.get(i).id);
+            // ToDo: Check IS_MUSIC
+            if( HIRES_CUE && songs.get(i).isCue )
+                contentValues[i].put(MediaStore.Audio.Playlists.Members.IS_MUSIC, 1);
         }
 
         Uri uri = MediaStore.Audio.Playlists.Members.getContentUri("external", playlist.id);
@@ -542,13 +572,24 @@ public class PlaylistUtils {
     }
 
     public static void createPlaylistDialog(final Context context, List<Song> songs) {
+        isCue = false;
         createPlaylistDialog(context, playlistId ->
                 addToPlaylist(context, playlistId, songs));
     }
 
     public static void createFileObjectPlaylistDialog(final Context context, List<BaseFileObject> fileObjects) {
+        isCue = false;
         createPlaylistDialog(context, playlistId ->
                 addFileObjectsToPlaylist(context, playlistId, fileObjects));
+    }
+
+    private static boolean isCue = false;
+    public static void createCuePlaylistDialog(final Context context, List<Track> tracks) {
+        // ToDo: make track --> song
+        isCue = true;
+        List<Song> songs = null;
+        createPlaylistDialog(context, playlistId ->
+                addCueTrackToPlaylist(context, playlistId, tracks));
     }
 
     private static void createPlaylistDialog(final Context context, final OnSavePlaylistListener listener) {
@@ -592,7 +633,10 @@ public class PlaylistUtils {
                                     }
 
                                     if (uri != null) {
-                                        listener.onSave(new Playlist(Playlist.Type.USER_CREATED, Long.valueOf(uri.getLastPathSegment()), name, true, false, true, true, true));
+                                        if( isCue )
+                                            listener.onSave(new Playlist(Playlist.Type.IS_CUE, Long.valueOf(uri.getLastPathSegment()), name, true, false, true, true, true));
+                                        else
+                                            listener.onSave(new Playlist(Playlist.Type.USER_CREATED, Long.valueOf(uri.getLastPathSegment()), name, true, false, true, true, true));
                                     }
                                 });
                     }
