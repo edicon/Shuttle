@@ -677,7 +677,7 @@
     <string name="song_info_sample_Rate">Taux d\'échantillonnage</string>
     <string name="song_info_play_count">Nombre de lecture</string>
     <string name="song_info_bitrate_suffix">" kbps"</string>
-    <string name="song_info_sample_rate_suffix">"kHz"</string>
+    <string name="song_info_sample_rate_suffix">"KHz"</string>
     <string name="iab_purchase_restored">Achat restauré. Veuillez redémarrer Shuttle</string>
     <string name="iab_purchase_not_found">Aucun ancien achat trouvé.</string>
     <string name="iab_already_upgraded">Wavevine a déjà été upgradé. Essayez de redémarrer l\'application.</string>

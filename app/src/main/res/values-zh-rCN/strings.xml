@@ -697,7 +697,7 @@ www.shuttlemusicplayer.com</string>
     <string name="song_info_sample_Rate">采样率</string>
     <string name="song_info_play_count">播放统计</string>
     <string name="song_info_bitrate_suffix">"kbps"</string>
-    <string name="song_info_sample_rate_suffix">"kHz"</string>
+    <string name="song_info_sample_rate_suffix">"KHz"</string>
     <string name="iab_purchase_restored">已恢复购买,请重新启动Shuttle</string>
     <string name="iab_purchase_not_found">未找到之前的购买记录</string>
     <string name="iab_already_upgraded">Shuttle已升级,请尝试重新启动程序</string>

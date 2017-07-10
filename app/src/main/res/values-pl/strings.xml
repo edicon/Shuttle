@@ -717,7 +717,7 @@ Po wyłączeniu, jako obraz zastępczy będzie używana ikona programu.</string>
     <string name="song_info_sample_Rate">Częstotliwość próbkowania</string>
     <string name="song_info_play_count">Ilość odtworzeń</string>
     <string name="song_info_bitrate_suffix">"kb/s"</string>
-    <string name="song_info_sample_rate_suffix">"kHz"</string>
+    <string name="song_info_sample_rate_suffix">"KHz"</string>
     <string name="iab_purchase_restored">Przywrócono zakupy. Proszę uruchomić program ponownie.</string>
     <string name="iab_purchase_not_found">Nie odnaleziono poprzednich zakupów.</string>
     <string name="iab_already_upgraded">Program Wavevine jest już uaktualniony. Proszę spróbować uruchomić program ponownie.</string>

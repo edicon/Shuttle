@@ -696,7 +696,7 @@
     <string name="song_info_sample_Rate">Скорост на предаване</string>
     <string name="song_info_play_count">Брой изпълнения</string>
     <string name="song_info_bitrate_suffix">"kbps"</string>
-    <string name="song_info_sample_rate_suffix">"kHz"</string>
+    <string name="song_info_sample_rate_suffix">"KHz"</string>
     <string name="iab_purchase_restored">Покупката е възстановена. Моля, рестартирайте Shuttle</string>
     <string name="iab_purchase_not_found">Не е намерена предходна покупка.</string>
     <string name="iab_already_upgraded">Вече сте надстроили Shuttle. Опитайте да рестартирате приложението.</string>

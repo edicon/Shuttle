@@ -84,7 +84,7 @@
                             android:layout_marginEnd="5dp"
                             android:gravity="center_vertical|center"
                             android:textColor="@color/white"
-                            tools:text="24bit/192khz"
+                            tools:text="24bit/192KHz"
                             android:maxLines="1" />
 
                         <TextView

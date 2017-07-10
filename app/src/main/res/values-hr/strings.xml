@@ -706,7 +706,7 @@ mapa</item>
     <string name="song_info_sample_Rate">Stopa uzorkovanja</string>
     <string name="song_info_play_count">Broj reprodukcije</string>
     <string name="song_info_bitrate_suffix">"kbps"</string>
-    <string name="song_info_sample_rate_suffix">"kHz"</string>
+    <string name="song_info_sample_rate_suffix">"KHz"</string>
     <string name="iab_purchase_restored">Kupnja je vraćena. Molimo ponovno pokrenite Shuttle</string>
     <string name="iab_purchase_not_found">Nisu pronađene prošle kupnje</string>
     <string name="iab_already_upgraded">Wavevine je već nadograđen. Pokušajte ponovno pokrenuti aplikaciju.</string>

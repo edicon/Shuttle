@@ -709,7 +709,7 @@ dosyalar</item>
     <string name="song_info_sample_Rate">Örnekleme Hızı</string>
     <string name="song_info_play_count">Çalma Sayısı</string>
     <string name="song_info_bitrate_suffix">"kbps"</string>
-    <string name="song_info_sample_rate_suffix">"kHz"</string>
+    <string name="song_info_sample_rate_suffix">"KHz"</string>
     <string name="iab_purchase_restored">Satın alma yenilendi. Lütfen Shuttle\'ı yeniden başlatın</string>
     <string name="iab_purchase_not_found">Geçmiş satın alma bulunamadı.</string>
     <string name="iab_already_upgraded">Wavevine zaten geliştirilmiş. Uygulamayı yeniden başlatmayı deneyin.</string>
