@@ -34,6 +34,7 @@
         android:minEms="1"
         android:visibility="gone"
         tools:text="1"
+        android:textSize="16sp"
         tools:visibility="visible"/>
 
     <LinearLayout
@@ -82,7 +83,7 @@
         android:minHeight="28dp"
         android:minWidth="28dp"
         android:textColor="@color/default_text_color_holo_dark"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:visibility="gone"
         tools:background="@color/pink_a200"
         tools:text="3"
@@ -97,7 +98,7 @@
         android:gravity="center"
         android:maxLines="1"
         android:minEms="3"
-        android:textSize="14sp"
+        android:textSize="16sp"
         tools:text="3:20"
         android:visibility="gone" />
 
