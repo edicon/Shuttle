@@ -129,8 +129,6 @@ import static android.os.Environment.MEDIA_UNMOUNTED;
 import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
-import static com.simplecity.amp_library.ui.fragments.PlayerFragment.showDummyToolbar;
-import static com.simplecity.amp_library.utils.ArtworkUtils.downloadArtwork;
 
 @SuppressWarnings("ResourceAsColor")
 public class MainActivity extends BaseCastActivity implements
@@ -178,7 +176,6 @@ public class MainActivity extends BaseCastActivity implements
     CharSequence mTitle;
 
     private Toolbar mToolbar;
-
     private FrameLayout mDummyStatusBar;
 
     private boolean mIsSlidingEnabled;
@@ -1724,5 +1721,10 @@ public class MainActivity extends BaseCastActivity implements
             actionBar.show();
             showDummyToolbar();
         }
+    }
+
+    public void showDummyToolbar() {
+        if( mToolbar != null )
+            mToolbar.setVisibility(View.VISIBLE);
     }
 }

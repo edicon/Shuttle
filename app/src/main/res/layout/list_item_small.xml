@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.simplecity.amp_library.ui.views.ForegroundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="96dp"
     android:descendantFocusability="blocksDescendants"
     android:foreground="?attr/list_selector"
     android:paddingBottom="4dp"
@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:layout_centerVertical="true"
         android:scaleType="centerCrop" />
 
@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:ellipsize="marquee"
             android:gravity="center_vertical"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:maxLines="1" />
 
         <TextView
@@ -44,7 +44,7 @@
             android:layout_weight="1"
             android:ellipsize="marquee"
             android:gravity="center_vertical"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:maxLines="1" />
     </LinearLayout>
 

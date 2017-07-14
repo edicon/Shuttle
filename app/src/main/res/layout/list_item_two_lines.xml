@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
+    android:layout_height="96dp"
     android:descendantFocusability="blocksDescendants"
     android:foreground="?attr/list_selector"
     android:gravity="center"
@@ -15,8 +15,8 @@
     <!-- HI_RES -->
     <ImageView
         android:id="@+id/image"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:scaleType="centerCrop"
         tools:src="@drawable/artists_icon"
         android:visibility="gone"
@@ -40,6 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginLeft="0dp"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:gravity="center_vertical"
@@ -54,7 +55,7 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:textSize="16sp"
+            android:textSize="24sp"
             tools:text="Feeling Kind Of Anxious"/>
 
         <TextView
@@ -67,7 +68,7 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
-            android:textSize="14sp"
+            android:textSize="16sp"
             tools:text="Franz Ferdinand - Tonight"/>
 
     </LinearLayout>
@@ -97,7 +98,8 @@
         android:maxLines="1"
         android:minEms="3"
         android:textSize="14sp"
-        tools:text="3:20"/>
+        tools:text="3:20"
+        android:visibility="gone" />
 
     <com.simplecity.amp_library.ui.views.NonScrollImageButton
         android:id="@+id/btn_overflow"

@@ -124,7 +124,8 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
     // HI_RES
     private Toolbar toolbar;
-    private static View dummyToolbar;
+    private View dummyToolbar;
+    private View indiBar;
     private View dummyStatusBar;
     private RequestManager requestManager;
     private LinearLayout subMenuContainer;
@@ -178,6 +179,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("");
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         dummyToolbar = rootView.findViewById(R.id.dummyToolbar);
+        indiBar = getActivity().findViewById(R.id.dummyStatusBar);      // MainActivity
         dummyStatusBar = rootView.findViewById(R.id.dummyStatusBar);
         subMenuContainer  = (LinearLayout)rootView.findViewById(R.id.subMenuContainer);
 
@@ -828,24 +830,32 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
             if( !useToggleAnimation ) {
                 actionBar.hide();
                 dummyToolbar.setVisibility(View.INVISIBLE);
+                indiBar.setVisibility(View.INVISIBLE);
+                dummyStatusBar.setVisibility(View.INVISIBLE);
                 subMenuContainer.setVisibility( View.INVISIBLE );
             } else {
                 slideDownTop(dummyToolbar);
+                slideDownTop(indiBar);
+                slideDownTop(dummyStatusBar);
                 slideDownBottom(subMenuContainer);
             }
         } else {
             if( !useToggleAnimation ) {
                 actionBar.show();
                 dummyToolbar.setVisibility(View.VISIBLE);
+                indiBar.setVisibility(View.VISIBLE);
+                dummyStatusBar.setVisibility(View.VISIBLE);
                 subMenuContainer.setVisibility( View.VISIBLE );
             } else {
                 slideUpTop(dummyToolbar);
+                slideUpTop(indiBar);
+                slideUpTop(dummyStatusBar);
                 slideUpBottom(subMenuContainer);
             }
         }
     }
 
-    public static void showDummyToolbar() {
+    public void showDummyToolbar() {
         if( dummyToolbar != null )
             dummyToolbar.setVisibility(View.VISIBLE);
     }

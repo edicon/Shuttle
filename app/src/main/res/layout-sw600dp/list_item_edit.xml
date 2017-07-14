@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.simplecity.amp_library.ui.views.ForegroundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="96dp"
     android:descendantFocusability="blocksDescendants"
     android:foreground="?attr/list_selector">
 
     <ImageView
         android:id="@+id/drag_handle"
-        android:layout_width="32dp"
+        android:layout_width="72dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -25,7 +25,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="4dp"
         android:paddingRight="8dp"
-        android:textSize="14sp"
+        android:textSize="24sp"
         android:maxLines="1" />
 
     <TextView
@@ -37,7 +37,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:textSize="14sp"
+        android:textSize="24sp"
         android:maxLines="1" />
 
     <TextView
@@ -47,7 +47,7 @@
         android:ellipsize="marquee"
         android:fadingEdge="horizontal"
         android:gravity="center"
-        android:textSize="12sp"
+        android:textSize="16sp"
         android:maxLines="1" />
 
     <com.simplecity.amp_library.ui.views.NonScrollImageButton
