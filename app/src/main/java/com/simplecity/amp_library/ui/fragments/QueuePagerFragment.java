@@ -20,6 +20,7 @@ import com.simplecity.amp_library.BuildConfig;
 import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.model.Song;
 import com.simplecity.amp_library.playback.MusicService;
+import com.simplecity.amp_library.utils.IndiUtils;
 import com.simplecity.amp_library.utils.MusicServiceConnectionUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.PermissionUtils;
@@ -92,6 +93,8 @@ public class QueuePagerFragment extends BaseFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        // IndiUtils.hideIndiBar(getActivity());
         if (mRootView == null) {
             mRootView = inflater.inflate(R.layout.fragment_queue_pager, container, false);
             mPager = (ViewPager) mRootView.findViewById(R.id.pager);

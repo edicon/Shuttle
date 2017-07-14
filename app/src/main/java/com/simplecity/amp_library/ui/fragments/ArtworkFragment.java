@@ -25,6 +25,7 @@ import com.simplecity.amp_library.R;
 import com.simplecity.amp_library.glide.utils.GlideUtils;
 import com.simplecity.amp_library.model.Song;
 import com.simplecity.amp_library.ui.activities.PlayerActivity;
+import com.simplecity.amp_library.utils.IndiUtils;
 import com.simplecity.amp_library.utils.SettingsManager;
 
 import java.lang.ref.WeakReference;
@@ -68,6 +69,7 @@ public class ArtworkFragment extends BaseFragment {
 
         imageView = (ImageView) rootView.findViewById(R.id.image);
         imageView.setOnTouchListener((view, motionEvent) -> gestureDetector.onTouchEvent(motionEvent));
+        // IndiUtils.hideIndiBar(getActivity(), null );
 
         updateArtwork();
 

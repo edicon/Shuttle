@@ -50,6 +50,7 @@ import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.DataManager;
 import com.simplecity.amp_library.utils.DialogUtils;
+import com.simplecity.amp_library.utils.IndiUtils;
 import com.simplecity.amp_library.utils.MenuUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.PermissionUtils;
@@ -159,27 +160,7 @@ public class SongFragment extends BaseFragment implements
                 requestManager = Glide.with(this);
             }
             // ((AppCompatActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0xff123456));
-
         }
-    }
-
-    private void themeUIComponents( ) {
-
-        if( HI_RES )
-            dummyStatusBar.setVisibility(View.VISIBLE);
-
-        ThemeUtils.themeRecyclerView(mRecyclerView);
-        mRecyclerView.setThumbColor(ColorUtils.getAccentColor());
-        mRecyclerView.setPopupBgColor(ColorUtils.getAccentColor());
-        mRecyclerView.setPopupTextColor(ColorUtils.getAccentColorSensitiveTextColor(getContext()));
-
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                ThemeUtils.themeRecyclerView(recyclerView);
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
     }
 
     @Override
@@ -230,6 +211,27 @@ public class SongFragment extends BaseFragment implements
         if( HI_RES )
             return rootView;
         return mRecyclerView;
+    }
+
+    private void themeUIComponents( ) {
+
+        if( HI_RES ) {
+            dummyStatusBar.setVisibility(View.VISIBLE);
+            IndiUtils.hideIndiBar(getActivity(), dummyStatusBar);
+        }
+
+        ThemeUtils.themeRecyclerView(mRecyclerView);
+        mRecyclerView.setThumbColor(ColorUtils.getAccentColor());
+        mRecyclerView.setPopupBgColor(ColorUtils.getAccentColor());
+        mRecyclerView.setPopupTextColor(ColorUtils.getAccentColorSensitiveTextColor(getContext()));
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                ThemeUtils.themeRecyclerView(recyclerView);
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
     }
 
     @Override

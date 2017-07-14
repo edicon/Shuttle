@@ -74,6 +74,7 @@ import com.simplecity.amp_library.utils.ComparisonUtils;
 import com.simplecity.amp_library.utils.DataManager;
 import com.simplecity.amp_library.utils.DialogUtils;
 import com.simplecity.amp_library.utils.DrawableUtils;
+import com.simplecity.amp_library.utils.IndiUtils;
 import com.simplecity.amp_library.utils.MenuUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.Operators;
@@ -455,6 +456,11 @@ public class DetailFragment extends BaseFragment implements
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
+
+        if( HI_RES ) {
+            // dummyStatusBar.setVisibility(View.VISIBLE);
+            IndiUtils.hideIndiBar(getActivity(), null);
+        }
     }
 
     @Override

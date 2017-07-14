@@ -62,6 +62,7 @@ import com.simplecity.amp_library.utils.DialogUtils;
 import com.simplecity.amp_library.utils.DrawableUtils;
 import com.simplecity.amp_library.utils.FileBrowser;
 import com.simplecity.amp_library.utils.FileHelper;
+import com.simplecity.amp_library.utils.IndiUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.PlaylistUtils;
 import com.simplecity.amp_library.utils.SettingsManager;
@@ -362,8 +363,10 @@ public class FolderFragment extends BaseFragment implements
                 }
             }
         }
-        if( HI_RES )
+        if( HI_RES ) {
             dummyStatusBar.setVisibility(View.VISIBLE);
+            IndiUtils.hideIndiBar(getActivity(), dummyStatusBar);
+        }
 
         adapter.notifyItemRangeChanged(0, adapter.getItemCount());
 

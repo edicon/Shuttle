@@ -17,7 +17,7 @@
             android:orientation="vertical">
 
             <FrameLayout
-                android:id="@+id/dummyStatusBar"
+                android:id="@+id/dummyIndiStatusBar"
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
                 android:background="?attr/colorPrimaryDark"

@@ -179,7 +179,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("");
         toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         dummyToolbar = rootView.findViewById(R.id.dummyToolbar);
-        indiBar = getActivity().findViewById(R.id.dummyStatusBar);      // MainActivity
+        indiBar = getActivity().findViewById(R.id.dummyIndiStatusBar);      // MainActivity
         dummyStatusBar = rootView.findViewById(R.id.dummyStatusBar);
         subMenuContainer  = (LinearLayout)rootView.findViewById(R.id.subMenuContainer);
 
@@ -816,9 +816,14 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
     long toggleTime;
     public void toggleMenu() {
-        toggleTime = System.currentTimeMillis();
-        toggleActionbar();
-        toggleSubMenu();
+        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentById(R.id.main_container);
+        if (fragment instanceof PlayerFragment) {
+            toggleTime = System.currentTimeMillis();
+            toggleActionbar();
+            toggleSubMenu();
+        } else {
+            IndiUtils.hideIndiBar(getActivity(), null );
+        }
     }
     public void toggleSubMenu() {
     }

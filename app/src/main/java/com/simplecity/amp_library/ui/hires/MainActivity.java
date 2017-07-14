@@ -28,6 +28,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -192,6 +193,7 @@ public class MainActivity extends BaseCastActivity implements
     private ContentObserver contextObserver;
     private SdCardReceiver sdcardReceiver;
     private BtReceiver btReceiver;
+    private AppCompatActivity mainActivity;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -259,6 +261,7 @@ public class MainActivity extends BaseCastActivity implements
         }
 
         ThemeUtils.setTheme(this);
+        mainActivity = this;
 
         if ( Build.VERSION.SDK_INT < 16) {                              // Android 4.0
             getWindow().setFlags(
@@ -321,7 +324,7 @@ public class MainActivity extends BaseCastActivity implements
         mIsSlidingEnabled = getResources().getBoolean(R.bool.isSlidingEnabled);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mDummyStatusBar = (FrameLayout) findViewById(R.id.dummyStatusBar);
+        mDummyStatusBar = (FrameLayout) findViewById(R.id.dummyIndiStatusBar);
 
         if( ShuttleUtils.hasKitKat()) {
             // HI_RES: Add IndiBar for all fragment
@@ -1665,6 +1668,7 @@ public class MainActivity extends BaseCastActivity implements
                             try {
                                 mToolbar.setTitle("");
                                 getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                                IndiUtils.showIndiBar( mainActivity, null );
                             } catch (IllegalStateException e) {
                                 Log.e(TAG, "Error popping backstack: " + e);
                                 CrashlyticsCore.getInstance().logException(e);
@@ -1719,7 +1723,12 @@ public class MainActivity extends BaseCastActivity implements
         ActionBar actionBar = getSupportActionBar();
         if( !actionBar.isShowing()) {
             actionBar.show();
-            showDummyToolbar();
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);
+            if ( fragment instanceof PlayerFragment) {
+                ;
+            } else {
+                showDummyToolbar();
+            }
         }
     }
 

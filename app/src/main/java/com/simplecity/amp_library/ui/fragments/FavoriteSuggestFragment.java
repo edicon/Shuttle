@@ -45,6 +45,7 @@ import com.simplecity.amp_library.ui.views.FavoriteDividerDecoration;
 import com.simplecity.amp_library.ui.modelviews.ViewType;
 import com.simplecity.amp_library.utils.ActionBarUtils;
 import com.simplecity.amp_library.utils.ComparisonUtils;
+import com.simplecity.amp_library.utils.IndiUtils;
 import com.simplecity.amp_library.utils.MenuUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.Operators;
@@ -254,6 +255,10 @@ public class FavoriteSuggestFragment extends BaseFragment implements
                     super.onScrollStateChanged(recyclerView, newState);
                 }
             });
+        }
+        if( HI_RES ) {
+            dummyStatusBar.setVisibility(View.VISIBLE);
+            IndiUtils.hideIndiBar(getActivity(), dummyStatusBar);
         }
     }
 

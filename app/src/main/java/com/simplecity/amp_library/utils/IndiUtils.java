@@ -1,5 +1,6 @@
 package com.simplecity.amp_library.utils;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothHeadset;
 import android.content.Context;
@@ -259,5 +260,23 @@ public class IndiUtils {
         float batteryPct = level / (float) scale;
 
         return (int) (batteryPct * 100);
+    }
+
+    public static void showIndiBar( Activity a, View v ) {
+        View indiBar = a.findViewById(R.id.dummyIndiStatusBar);      // MainActivity
+        if( indiBar != null )
+            indiBar.setVisibility(View.VISIBLE);
+
+    }
+    public static void hideIndiBar( Activity a, View v ) {
+        // if( a != null )
+        //     return;
+
+        View indiBar = a.findViewById(R.id.dummyIndiStatusBar);      // MainActivity
+        if( indiBar != null )
+            indiBar.setVisibility(View.GONE);
+
+        if( v != null )
+            v.setVisibility(View.GONE);
     }
 }

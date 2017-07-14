@@ -41,6 +41,7 @@ import com.simplecity.amp_library.utils.ColorUtils;
 import com.simplecity.amp_library.utils.ComparisonUtils;
 import com.simplecity.amp_library.utils.DataManager;
 import com.simplecity.amp_library.utils.DialogUtils;
+import com.simplecity.amp_library.utils.IndiUtils;
 import com.simplecity.amp_library.utils.MenuUtils;
 import com.simplecity.amp_library.utils.MusicUtils;
 import com.simplecity.amp_library.utils.PermissionUtils;
@@ -334,8 +335,10 @@ public class PlaylistFragment extends BaseFragment implements
 
     private void themeUIComponents() {
 
-        if( HI_RES )
+        if( HI_RES ) {
             dummyStatusBar.setVisibility(View.VISIBLE);
+            IndiUtils.hideIndiBar(getActivity(), dummyStatusBar);
+        }
 
         ThemeUtils.themeRecyclerView(mRecyclerView);
         mRecyclerView.setThumbColor(ColorUtils.getAccentColor());
