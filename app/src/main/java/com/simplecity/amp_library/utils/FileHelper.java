@@ -337,6 +337,7 @@ public class FileHelper {
             "rtx", "ota", "imy", "ogg",
             "mkv", "wav",
             // ToDo: Add file extension for wavevine
+            "ape",
             "dsd", "dff", "cue"
     };
 
