@@ -99,12 +99,15 @@ public class FolderView extends BaseAdaptableItem<BaseFileObject, FolderView.Vie
             case FileType.FILE:
                 holder.overflow.setVisibility(View.VISIBLE);
                 holder.imageView.setImageDrawable(holder.itemView.getContext().getResources().getDrawable(R.drawable.ic_headphones_white));
-                holder.lineThree.setVisibility(View.VISIBLE);
                 holder.lineOne.setText(((FileObject) baseFileObject).tagInfo.trackName);
                 holder.lineTwo.setText(String.format("%s - %s", ((FileObject) baseFileObject).tagInfo.artistName, ((FileObject) baseFileObject).tagInfo.albumName));
 
-                DurationTask durationTask = new DurationTask(holder.lineThree, (FileObject) baseFileObject);
-                durationTask.execute();
+                holder.lineThree.setVisibility(View.GONE);
+                if( !HI_RES ) {
+                    holder.lineThree.setVisibility(View.VISIBLE);
+                    DurationTask durationTask = new DurationTask(holder.lineThree, (FileObject) baseFileObject);
+                    durationTask.execute();
+                }
                 break;
         }
 

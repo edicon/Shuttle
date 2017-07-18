@@ -77,7 +77,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:textSize="24sp"
+                android:textSize="16sp"
                 tools:text="Franz Ferdinand - Tonight"
                 android:maxLines="1" />
         </LinearLayout>
