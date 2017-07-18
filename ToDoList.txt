@@ -49,3 +49,13 @@ ReactiveX
 
 
 6. Disable EQ of Android MediaPlayer using AudioSessionId
+
+7. ape scan 관련
+ -ape 파일을 스캔하면, DB에 파일로 등록합니다.
+ -flac 파일을 스캔하면, DB에 audio로 등록합니다.
+  따라서, 시스템의 미디어 스캐너 관련 부분을 ape일때 오디오로 등록하게 수정하는게 맞는것 같습니다.
+  참고로, 아래는 ape/flac을 스캔하고 등록한 후 DB의 URI 입니다.
+  ape: content://media/external/file/125
+  flac: content://media/external/audio/media/102
+ -아니면 file을 스캔하며 처리
+  https://stackoverflow.com/questions/10384080/mediastore-uri-to-query-all-types-of-files-media-and-non-media

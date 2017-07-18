@@ -50,7 +50,7 @@ public class CustomMediaScanner implements MediaScannerConnection.MediaScannerCo
     @Override
     public void onScanCompleted(String path, Uri uri) {
 
-        Log.d(TAG, "Scan complete. Path: " + path);
+        Log.d(TAG, "Scan complete. Path: " + path + ", uri: " + uri.toString());
 
         scanNextPath();
     }

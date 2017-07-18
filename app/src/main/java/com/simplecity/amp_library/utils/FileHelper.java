@@ -364,6 +364,7 @@ public class FileHelper {
         };
     }
 
+    // HI_RES: Add
     public static String getPathFromUri(Service cx, Uri _uri ) {
 
         if( BuildConfig.DEBUG )
