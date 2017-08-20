@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.simplecity.amp_library.playback.mediaplayers.PrefUtils.PreferenceUtils;
+import com.simplecity.amp_library.playback.mediaplayers.VLCMediaPlayer;
 import com.simplecity.amp_library.services.EqualizerService;
 
 public class EqUtils {
@@ -83,5 +85,12 @@ public class EqUtils {
         mPrefs.edit().putString("audiofx.eq.bandlevels.custom", builder.toString()).apply();
 
         // ToDo: UpdateEQService()
+    }
+
+    public static void setVLCeq( boolean on, float[] eq ) {
+        PreferenceUtils.setBoolean(PreferenceUtils.EQUALIZER_ENABLED, on);
+        PreferenceUtils.putFloatArray(PreferenceUtils.edit(), PreferenceUtils.EQUALIZER_VALUES, eq);
+
+        VLCMediaPlayer.setEqualizer(VLCMediaPlayer.getMediaPlayerInstance());
     }
 }

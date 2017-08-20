@@ -28,11 +28,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -43,7 +42,6 @@ import android.transition.Fade;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -123,7 +121,6 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static android.R.attr.fragment;
 import static android.os.Environment.MEDIA_BAD_REMOVAL;
 import static android.os.Environment.MEDIA_REMOVED;
 import static android.os.Environment.MEDIA_UNMOUNTED;
@@ -592,6 +589,7 @@ public class MainActivity extends BaseCastActivity implements
     }
     @Override
     protected void onStop() {
+        unregisterReceiver(settingReceiver);
         unregisterReceiver(batReceiver);
         getContentResolver().unregisterContentObserver(contextObserver);
         super.onStop();
@@ -614,6 +612,7 @@ public class MainActivity extends BaseCastActivity implements
         super.onResume();
 
         IndiUtils.startTimer();
+        IndiUtils.initIndiView(this);
         IndiUtils.updateIndiBar(this);
 
         IntentFilter btFilter = new IntentFilter();
@@ -640,6 +639,10 @@ public class MainActivity extends BaseCastActivity implements
         });
 
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter(MusicService.InternalIntents.FAVORITE_CHANGED));
+
+        // Setting Intent
+        IntentFilter settingIntentFilter = getSettingIntentFilter();
+        registerReceiver(settingReceiver, settingIntentFilter);
     }
 
     @Override
@@ -1001,6 +1004,7 @@ public class MainActivity extends BaseCastActivity implements
 
         togglePanelVisibility(!(MusicServiceConnectionUtils.sServiceBinder == null || MusicUtils.getSongId() == -1));
         if( HI_RES ) {
+            IndiUtils.initIndiView(this);
             IndiUtils.updateIndiBar(this);
         }
     }
@@ -1736,4 +1740,185 @@ public class MainActivity extends BaseCastActivity implements
         if( mToolbar != null )
             mToolbar.setVisibility(View.VISIBLE);
     }
+
+
+    private static final String ACTION_STREAMING_CHANGED = "android.intent.action.STREAMING";
+    private static final String STREAMING_ON = "streaming_on";
+    private static final String STREAMING_MODE = "streaming_mode";
+
+    private static final String ACTION_NETWORK_PLAY_CHANGED = "android.intent.action.NETWORK_PLAY";
+    private static final String NETWORK_PLAY_ON = "network_play_on";
+
+    private static final String ACTION_GAIN_MODE_CHANGED = "android.intent.action.GAIN_MODE";
+    private static final String GAIN_MODE = "gain_mode";
+
+    private static final String ACTION_SLEEP_MODE_CHANGED = "android.intent.action.SLEEP_MODE";
+    private static final String SLEEP_MODE_ON = "sleep_mode_on";
+    private static final String SLEEP_MODE_VALUE = "sleep_mode_value";
+
+    private static final String ACTION_BALANCED_OUT_CHANGED = "android.intent.action.BALANCED_OUT";
+    private static final String BALANCED_OUT_ON = "balanced_out_on";
+
+    private static final String ACTION_USB_DAC_CHANGED = "android.intent.action.USB_DAC";
+    private static final String USB_DAC_ON = "usb_dac_on";
+
+    private static final String ACTION_HOLD_CHANGED = "android.intent.action.HOLD";
+    private static final String HOLD_ON = "hold_on";
+
+    private static final String ACTION_EQUALIZER_CHANGED = "android.intent.action.EQUALIZER";
+    private static final String EQUALIZER_ON = "equalizer_on";
+    private static final String EQUALIZER_VALUE = "equalizer_value";
+
+    private static final String ACTION_GAPLESS_CHANGED = "android.intent.action.GAPLESS";
+    private static final String GAPLESS_ON = "gapless_on";
+
+    private static final String ACTION_LINEOUT_CHANGED = "android.intent.action.LINE_OUT";
+    private static final String LINEOUT_ON = "line_out_on";
+
+    private static final String ACTION_SCREEN_OFF_CHANGED = "android.intent.action.SCREEN_OFF";
+    private static final String SCREEN_OFF_TIME_OUT = "screen_off_timeout";
+
+    private static final String ACTION_LED_CHANGED = "android.intent.action.LED";
+    private static final String LED_ON = "led_on";
+
+    private static final String ACTION_VOLUME_BALANCE_CHANGED = "android.intent.action.VOLUME_BALANCE";
+    private static final String VOLUME_BALANCE = "volume_balance";
+
+    private static IntentFilter getSettingIntentFilter() {
+
+        final IntentFilter filter = new IntentFilter();
+
+        filter.addAction(ACTION_STREAMING_CHANGED);
+        filter.addAction(ACTION_NETWORK_PLAY_CHANGED);
+        filter.addAction(ACTION_GAIN_MODE_CHANGED);
+        filter.addAction(ACTION_SLEEP_MODE_CHANGED);
+        filter.addAction(ACTION_BALANCED_OUT_CHANGED);
+        filter.addAction(ACTION_USB_DAC_CHANGED);
+        filter.addAction(ACTION_HOLD_CHANGED);
+        filter.addAction(ACTION_EQUALIZER_CHANGED);
+        filter.addAction(ACTION_GAPLESS_CHANGED);
+        filter.addAction(ACTION_LINEOUT_CHANGED);
+        filter.addAction(ACTION_SCREEN_OFF_CHANGED);
+        filter.addAction(ACTION_LED_CHANGED);
+        filter.addAction(VOLUME_BALANCE);
+
+        return filter;
+    }
+
+    private final BroadcastReceiver settingReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if(intent.getAction().equals(ACTION_STREAMING_CHANGED)) {
+
+                //0: off , 1: on
+                //mode: 0 - none, 1 - tidal, 2 - spotify, 3 - moov
+                Toast.makeText(MainActivity.this, "ACTION_STREAMING_CHANGED : " +
+                        Settings.Global.getInt(getContentResolver(), STREAMING_ON, 0) + "  mode: " +
+                        Settings.Global.getInt(getContentResolver(), STREAMING_MODE, 0), Toast.LENGTH_SHORT).show();
+
+            }
+            else if(intent.getAction().equals(ACTION_NETWORK_PLAY_CHANGED)) {
+
+                //0: off
+                Toast.makeText(MainActivity.this, "ACTION_NETWORK_PLAY_CHANGED : " +
+                        Settings.Global.getInt(getContentResolver(), NETWORK_PLAY_ON, 0), Toast.LENGTH_LONG).show();
+
+            }
+            else if(intent.getAction().equals(ACTION_GAIN_MODE_CHANGED)) {
+
+                //0: High, 1: middel, 2: Low
+                Toast.makeText(MainActivity.this, "ACTION_GAIN_MODE_CHANGED : " +
+                        Settings.Global.getInt(getContentResolver(), GAIN_MODE, 0), Toast.LENGTH_SHORT).show();
+
+            }
+            else if(intent.getAction().equals(ACTION_SLEEP_MODE_CHANGED)) {
+
+                //0: off
+                //value: msec
+                Toast.makeText(MainActivity.this, "ACTION_SLEEP_MODE_CHANGED : " +
+                        Settings.Global.getInt(getContentResolver(), SLEEP_MODE_ON, 0) + "  value: " +
+                        Settings.Global.getInt(getContentResolver(), SLEEP_MODE_VALUE, 0), Toast.LENGTH_SHORT).show();
+
+                boolean onOff = (Settings.Global.getInt(getContentResolver(), SLEEP_MODE_ON, 0) == 0) ? false : true;
+                IndiUtils.updateSleep(MainActivity.this, onOff);
+
+            }
+            else if(intent.getAction().equals(ACTION_BALANCED_OUT_CHANGED)) {
+
+                //0: off
+                Toast.makeText(MainActivity.this, "ACTION_BALANCED_OUT_CHANGED : " +
+                        Settings.Global.getInt(getContentResolver(), BALANCED_OUT_ON, 0), Toast.LENGTH_SHORT).show();
+
+                boolean onOff = (Settings.Global.getInt(getContentResolver(), BALANCED_OUT_ON, 0) == 0) ? false : true;
+                IndiUtils.updateBo(MainActivity.this, onOff);
+
+            }
+            else if(intent.getAction().equals(ACTION_USB_DAC_CHANGED)) {
+
+                //0: mtp, 1:usb dac
+                Toast.makeText(MainActivity.this, "ACTION_USB_DAC_CHANGED : " +
+                        Settings.Global.getInt(getContentResolver(), USB_DAC_ON, 0), Toast.LENGTH_SHORT).show();
+
+            }
+            else if(intent.getAction().equals(ACTION_HOLD_CHANGED)) {
+
+                //0: Hold Off,
+                Toast.makeText(MainActivity.this, "ACTION_HOLD_CHANGED : " +
+                        Settings.Global.getInt(getContentResolver(), HOLD_ON, 0), Toast.LENGTH_SHORT).show();
+
+            }
+            else if(intent.getAction().equals(ACTION_EQUALIZER_CHANGED)) {
+
+                //0: off
+                //value: 1,2,3,4,5,6,7,8,9,10
+                Toast.makeText(MainActivity.this, "ACTION_EQUALIZER_CHANGED: " +
+                        Settings.Global.getInt(getContentResolver(), EQUALIZER_ON, 0) + "value: " +
+                        Settings.Global.getString(getContentResolver(), EQUALIZER_VALUE), Toast.LENGTH_SHORT).show();
+
+                float[] eq = new float[10];
+                boolean onOff = (Settings.Global.getInt(getContentResolver(), EQUALIZER_ON, 0) == 0) ? false : true;
+                String eqString = Settings.Global.getString(getContentResolver(), EQUALIZER_VALUE);
+                if( eqString != null ) {
+                    String[] eqs = eqString.split(",");
+                    if( eqs.length != 10 )
+                        return;
+                    for ( int i = 0; i < 10; i++ ) {
+                        eq[i]  = Float.parseFloat(eqs[i]);
+                    }
+                }
+
+                IndiUtils.updateEQ(MainActivity.this, onOff, eq);
+            }
+
+            else if(intent.getAction().equals(ACTION_GAPLESS_CHANGED)) {
+
+                //0: off
+                Toast.makeText(MainActivity.this, "ACTION_GAPLESS_CHANGED: " +
+                        Settings.Global.getInt(getContentResolver(), GAPLESS_ON, 0), Toast.LENGTH_SHORT).show();
+            }
+            else if(intent.getAction().equals(ACTION_LINEOUT_CHANGED)) {
+
+                //0: off
+                Toast.makeText(MainActivity.this, "ACTION_LINEOUT_CHANGED: " +
+                        Settings.Global.getInt(getContentResolver(), LINEOUT_ON, 0), Toast.LENGTH_SHORT).show();
+            }
+            else if(intent.getAction().equals(ACTION_SCREEN_OFF_CHANGED)) {
+                //
+                Toast.makeText(MainActivity.this, "ACTION_SCREEN_OFF_CHANGED: " +
+                        Settings.System.getInt(getContentResolver(), SCREEN_OFF_TIME_OUT, 0), Toast.LENGTH_SHORT).show();
+            }
+            else if(intent.getAction().equals(ACTION_LED_CHANGED)) {
+                //
+                Toast.makeText(MainActivity.this, "ACTION_LED_CHANGED: " +
+                        Settings.Global.getInt(getContentResolver(), LED_ON, 0), Toast.LENGTH_SHORT).show();
+            }
+            else if(intent.getAction().equals(ACTION_VOLUME_BALANCE_CHANGED)) {
+                //value: left,right default: 50,50
+                Toast.makeText(MainActivity.this, "ACTION_VOLUME_BALANCE_CHANGED: " +
+                        Settings.Global.getString(getContentResolver(), VOLUME_BALANCE), Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 }

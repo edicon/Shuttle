@@ -78,7 +78,7 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
             Log.d(TAG, "VLCMediaPlayer: Static: ver: " +  sLibVLC.version());
     }
 
-    private static void setEqualizer( MediaPlayer mediaPlayer ) {
+    public static void setEqualizer( MediaPlayer mediaPlayer ) {
         if (PreferenceUtils.getBoolean(PreferenceUtils.EQUALIZER_ENABLED)) {
             MediaPlayer.Equalizer equalizer = MediaPlayer.Equalizer.create();
             float[] bands = PreferenceUtils.getFloatArray(PreferenceUtils.EQUALIZER_VALUES);

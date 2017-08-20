@@ -12,8 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -50,9 +48,6 @@ import rx.subscriptions.CompositeSubscription;
 import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
 import static com.simplecity.amp_library.ShuttleApplication.HI_RES;
-import static com.simplecity.amp_library.utils.ColorUtils.fetchAttrColor;
-import static com.simplecity.amp_library.utils.MenuUtils.changeActionModeBackground;
-import static com.simplecity.amp_library.utils.MenuUtils.changeSearchModeBackground;
 
 public class SearchActivity extends BaseActivity implements
         com.simplecity.amp_library.search.SearchView {
@@ -133,6 +128,7 @@ public class SearchActivity extends BaseActivity implements
         });
         if( HI_RES ) {
             setSupportActionBar(toolbar);
+            IndiUtils.initIndiView(this);
             IndiUtils.updateIndiBar(this);
         }
 

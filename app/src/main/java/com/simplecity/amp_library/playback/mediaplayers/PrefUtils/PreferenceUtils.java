@@ -142,6 +142,11 @@ public class PreferenceUtils {
         return mPreferences.getBoolean(key, getBooleanDefault(key));
     }
 
+    public static void setBoolean(String key, boolean on ) {
+        edit().putBoolean( key, on );
+        edit().commit();
+    }
+
     public static String getString(String key) {
         return mPreferences.getString(key, getStringDefault(key));
     }

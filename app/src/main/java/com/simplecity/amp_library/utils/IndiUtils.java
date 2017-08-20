@@ -31,7 +31,7 @@ public class IndiUtils {
     private static ImageView indiLoading,indiSleep, indiBT, indiWifi, indiBat;
     private static TextView volVal,batVal, indiTime;
 
-    public static void updateIndiBar(AppCompatActivity a) {
+    public static void initIndiView( AppCompatActivity a) {
         indiPlay = (ImageView) a.findViewById(R.id.indi_play);
         indiVol = (ImageView) a.findViewById(R.id.indi_vol);
         volVal = (TextView) a.findViewById(R.id.vol_val);
@@ -48,6 +48,9 @@ public class IndiUtils {
         indiBat = (ImageView) a.findViewById(R.id.indi_bat);
         batVal = (TextView) a.findViewById(R.id.bat_val);
         indiTime = (TextView) a.findViewById(R.id.indi_time);
+    }
+
+    public static void updateIndiBar(AppCompatActivity a) {
 
         AudioManager audio = (AudioManager) a.getSystemService(Context.AUDIO_SERVICE);
         int currentVolume = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
@@ -60,10 +63,10 @@ public class IndiUtils {
         updateShuffle(MusicUtils.getShuffleMode());
         updateSdCard( false );
         // ToDo: Check
-        updateBo(a, false);
-        updateEQ(a, EqUtils.getEqualizerEnabled(a)); // ToDo: Call EqUgils.updateEq(); to get eq level from system
+        // updateBo(a, false);
+        // updateEQ(a, EqUtils.getEqualizerEnabled(a), null ); // ToDo: Call EqUgils.updateEq(); to get eq level from system
         updateLoading(a, false);
-        updateSleep(a, false);
+        // updateSleep(a, false);
         // ToDo: END
         updateBT(isBluetoothHeadsetConnected());
         updateWifi(mWifi.isConnected());
@@ -123,9 +126,12 @@ public class IndiUtils {
             indiSd2.setImageResource(R.drawable.indi_sd2_off);
     }
 
-    public static void updateEQ( Context cx, boolean on ) {
+    public static void updateEQ( Context cx, boolean on, float[] eq ) {
         if( indiEq == null )
             return;
+
+        EqUtils.setVLCeq( on, eq );
+
         if( on )
             indiEq.setImageResource(R.drawable.indi_eq_on);
         else
