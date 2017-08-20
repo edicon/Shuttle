@@ -1814,7 +1814,8 @@ public class MainActivity extends BaseCastActivity implements
 
                 //0: off , 1: on
                 //mode: 0 - none, 1 - tidal, 2 - spotify, 3 - moov
-                Toast.makeText(MainActivity.this, "ACTION_STREAMING_CHANGED : " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_STREAMING_CHANGED : " +
                         Settings.Global.getInt(getContentResolver(), STREAMING_ON, 0) + "  mode: " +
                         Settings.Global.getInt(getContentResolver(), STREAMING_MODE, 0), Toast.LENGTH_SHORT).show();
 
@@ -1822,14 +1823,16 @@ public class MainActivity extends BaseCastActivity implements
             else if(intent.getAction().equals(ACTION_NETWORK_PLAY_CHANGED)) {
 
                 //0: off
-                Toast.makeText(MainActivity.this, "ACTION_NETWORK_PLAY_CHANGED : " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_NETWORK_PLAY_CHANGED : " +
                         Settings.Global.getInt(getContentResolver(), NETWORK_PLAY_ON, 0), Toast.LENGTH_LONG).show();
 
             }
             else if(intent.getAction().equals(ACTION_GAIN_MODE_CHANGED)) {
 
                 //0: High, 1: middel, 2: Low
-                Toast.makeText(MainActivity.this, "ACTION_GAIN_MODE_CHANGED : " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_GAIN_MODE_CHANGED : " +
                         Settings.Global.getInt(getContentResolver(), GAIN_MODE, 0), Toast.LENGTH_SHORT).show();
 
             }
@@ -1837,7 +1840,8 @@ public class MainActivity extends BaseCastActivity implements
 
                 //0: off
                 //value: msec
-                Toast.makeText(MainActivity.this, "ACTION_SLEEP_MODE_CHANGED : " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_SLEEP_MODE_CHANGED : " +
                         Settings.Global.getInt(getContentResolver(), SLEEP_MODE_ON, 0) + "  value: " +
                         Settings.Global.getInt(getContentResolver(), SLEEP_MODE_VALUE, 0), Toast.LENGTH_SHORT).show();
 
@@ -1848,7 +1852,8 @@ public class MainActivity extends BaseCastActivity implements
             else if(intent.getAction().equals(ACTION_BALANCED_OUT_CHANGED)) {
 
                 //0: off
-                Toast.makeText(MainActivity.this, "ACTION_BALANCED_OUT_CHANGED : " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_BALANCED_OUT_CHANGED : " +
                         Settings.Global.getInt(getContentResolver(), BALANCED_OUT_ON, 0), Toast.LENGTH_SHORT).show();
 
                 boolean onOff = (Settings.Global.getInt(getContentResolver(), BALANCED_OUT_ON, 0) == 0) ? false : true;
@@ -1858,14 +1863,16 @@ public class MainActivity extends BaseCastActivity implements
             else if(intent.getAction().equals(ACTION_USB_DAC_CHANGED)) {
 
                 //0: mtp, 1:usb dac
-                Toast.makeText(MainActivity.this, "ACTION_USB_DAC_CHANGED : " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_USB_DAC_CHANGED : " +
                         Settings.Global.getInt(getContentResolver(), USB_DAC_ON, 0), Toast.LENGTH_SHORT).show();
 
             }
             else if(intent.getAction().equals(ACTION_HOLD_CHANGED)) {
 
                 //0: Hold Off,
-                Toast.makeText(MainActivity.this, "ACTION_HOLD_CHANGED : " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_HOLD_CHANGED : " +
                         Settings.Global.getInt(getContentResolver(), HOLD_ON, 0), Toast.LENGTH_SHORT).show();
 
             }
@@ -1873,7 +1880,8 @@ public class MainActivity extends BaseCastActivity implements
 
                 //0: off
                 //value: 1,2,3,4,5,6,7,8,9,10
-                Toast.makeText(MainActivity.this, "ACTION_EQUALIZER_CHANGED: " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_EQUALIZER_CHANGED: " +
                         Settings.Global.getInt(getContentResolver(), EQUALIZER_ON, 0) + "value: " +
                         Settings.Global.getString(getContentResolver(), EQUALIZER_VALUE), Toast.LENGTH_SHORT).show();
 
@@ -1891,32 +1899,36 @@ public class MainActivity extends BaseCastActivity implements
 
                 IndiUtils.updateEQ(MainActivity.this, onOff, eq);
             }
-
             else if(intent.getAction().equals(ACTION_GAPLESS_CHANGED)) {
 
                 //0: off
-                Toast.makeText(MainActivity.this, "ACTION_GAPLESS_CHANGED: " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_GAPLESS_CHANGED: " +
                         Settings.Global.getInt(getContentResolver(), GAPLESS_ON, 0), Toast.LENGTH_SHORT).show();
             }
             else if(intent.getAction().equals(ACTION_LINEOUT_CHANGED)) {
 
                 //0: off
-                Toast.makeText(MainActivity.this, "ACTION_LINEOUT_CHANGED: " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_LINEOUT_CHANGED: " +
                         Settings.Global.getInt(getContentResolver(), LINEOUT_ON, 0), Toast.LENGTH_SHORT).show();
             }
             else if(intent.getAction().equals(ACTION_SCREEN_OFF_CHANGED)) {
                 //
-                Toast.makeText(MainActivity.this, "ACTION_SCREEN_OFF_CHANGED: " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_SCREEN_OFF_CHANGED: " +
                         Settings.System.getInt(getContentResolver(), SCREEN_OFF_TIME_OUT, 0), Toast.LENGTH_SHORT).show();
             }
             else if(intent.getAction().equals(ACTION_LED_CHANGED)) {
                 //
-                Toast.makeText(MainActivity.this, "ACTION_LED_CHANGED: " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_LED_CHANGED: " +
                         Settings.Global.getInt(getContentResolver(), LED_ON, 0), Toast.LENGTH_SHORT).show();
             }
             else if(intent.getAction().equals(ACTION_VOLUME_BALANCE_CHANGED)) {
                 //value: left,right default: 50,50
-                Toast.makeText(MainActivity.this, "ACTION_VOLUME_BALANCE_CHANGED: " +
+                if( BuildConfig.DEBUG )
+                    Toast.makeText(MainActivity.this, "ACTION_VOLUME_BALANCE_CHANGED: " +
                         Settings.Global.getString(getContentResolver(), VOLUME_BALANCE), Toast.LENGTH_SHORT).show();
             }
         }
