@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.simplecity.amp_library.playback.mediaplayers.SaviPlayer" >
+	
+	<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tvSelectedFile"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:ellipsize="middle"
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:text="@string/tvSelectedFile"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/tvPlayTime"
+            android:id="@+id/tvPlayTime"
+            android:gravity="left"
+            android:layout_gravity="left"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/tvRemainTime"
+            android:id="@+id/tvRemainTime"
+            android:gravity="right"
+            android:layout_above="@+id/seekBar"
+            android:layout_alignParentEnd="true" />
+
+		<SeekBar
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar"
+            android:layout_below="@+id/tvPlayTime"
+            android:layout_alignParentStart="true"
+			android:layout_centerHorizontal="true" />
+			
+		<Button
+            android:id="@+id/btPrv"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/seekBar"
+            android:layout_alignTop="@+id/btFB"
+            android:layout_toStartOf="@+id/btFB"
+            android:text="@string/btPrv" />
+
+        <Button
+            android:id="@+id/btFB"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/seekBar"
+            android:layout_alignTop="@+id/btPlay"
+            android:layout_toStartOf="@+id/btPlay"
+            android:text="@string/btFB" />
+
+        <Button
+            android:id="@+id/btPlay"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/seekBar"
+			android:layout_centerHorizontal="true"
+            android:text="@string/btPause" />
+
+        <Button
+            android:id="@+id/btFF"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/seekBar"
+            android:layout_alignTop="@+id/btPlay"
+            android:layout_toEndOf="@+id/btPlay"
+			android:text="@string/btFF"/>
+
+        <Button
+            android:id="@+id/btNxt"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/seekBar"
+            android:layout_alignTop="@+id/btFF"
+            android:layout_toEndOf="@+id/btFF"
+            android:text="@string/btNxt" />	
+	</RelativeLayout>
+	
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+			android:gravity="center">
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

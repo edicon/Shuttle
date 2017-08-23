@@ -212,6 +212,10 @@ android {
     }
 
     sourceSets {
+        // https://stackoverflow.com/questions/27421134/system-loadlibrary-couldnt-find-native-library-in-my-case
+        main.jni.srcDirs = []
+        main.jniLibs.srcDirs = ['libs']
+
         main.aidl.srcDirs = ['src/main/java']
 
         dev.res.srcDirs = ['src/paid/res']

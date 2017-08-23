@@ -510,6 +510,8 @@ public class MainActivity extends BaseCastActivity implements
             ThemeUtils.themeStatusBar(this, mTintManager);
             // downloadArtwork( this );
         }
+
+        toggleNavigation( false );
     }
 
     private void showChangelogDialog() {
