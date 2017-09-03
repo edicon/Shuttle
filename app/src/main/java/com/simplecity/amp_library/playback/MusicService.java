@@ -738,11 +738,19 @@ public class MusicService extends Service {
                 if (intent.hasExtra("state")) {
                     if (intent.getIntExtra("state", 0) == 0) {
                         if (mPrefs.getBoolean("pref_headset_disconnect", true)) {
+
                             pause();
+
+                            if( BuildConfig.DEBUG )
+                                Log.d(TAG, "registerHeadsetPlugReceiveri: " + "headset_disconnect");
                         }
                     } else if (intent.getIntExtra("state", 0) == 1) {
                         if (mPrefs.getBoolean("pref_headset_connect", false)) {
+
                             play();
+
+                            if( BuildConfig.DEBUG )
+                                Log.d(TAG, "registerHeadsetPlugReceiveri: " + "headset_connect");
                         }
                     }
                 }
