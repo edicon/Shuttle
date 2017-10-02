@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+
+    <string name="drawer_song">曲</string>
+    <string name="drawer_albums">アルバム</string>
+    <string name="drawer_artists">アーティスト</string>
+    <string name="drawer_genres">ジャンル</string>
+    <string name="drawer_folders">フォルダ</string>
+    <string name="drawer_playlist">プレイリスト</string>
+    <string name="drawer_favorites">お気に入り</string>
+
+</resources>

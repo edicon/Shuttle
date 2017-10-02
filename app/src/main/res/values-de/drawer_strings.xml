@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+
+    <string name="drawer_song">TITEL</string>
+    <string name="drawer_albums">ALBUM</string>
+    <string name="drawer_artists">kÜNSTLER</string>
+    <string name="drawer_genres">GENRE</string>
+    <string name="drawer_folders">ORDNER</string>
+    <string name="drawer_playlist">WIEDERGABELISTEN</string>
+    <string name="drawer_favorites">FAVORITEN</string>
+
+</resources>

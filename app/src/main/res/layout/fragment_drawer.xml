@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparent"
@@ -58,92 +58,202 @@
             android:visibility="visible"
             android:background="@color/grey_900"
             android:src="@drawable/ic_arrow_back_white_24dp"/>
-        <ImageButton
-            android:id="@+id/btn_drawer_song"
+
+        <FrameLayout
+            android:id="@+id/frame_btn_drawer_song"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_margin="0dp"
-            android:background="@drawable/btn_side_menu_selector"
-            android:src="@drawable/btn_song_selector"/>
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/btn_drawer_song"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:background="@drawable/btn_side_menu_selector"
+                android:src="@drawable/btn_song_selector" />
+
+            <TextView
+                android:id="@+id/txt_drawer_song"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:paddingBottom="16dp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textSize="10sp"
+                android:text="@string/drawer_song" />
+        </FrameLayout>
+
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:background="@drawable/leaterh_hi_light"
         />
-        <ImageButton
-            android:id="@+id/btn_drawer_albums"
+        <FrameLayout
+            android:id="@+id/frame_btn_drawer_albums"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_margin="0dp"
-            android:background="@drawable/btn_side_menu_selector"
-            android:src="@drawable/btn_albums_selector"/>
+            android:layout_weight="1" >
+            <ImageButton
+                android:id="@+id/btn_drawer_albums"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:background="@drawable/btn_side_menu_selector"
+                android:src="@drawable/btn_albums_selector"/>
+            <TextView
+                android:id="@+id/txt_drawer_albums"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:paddingBottom="16dp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textSize="10sp"
+                android:text="@string/drawer_albums" />
+        </FrameLayout>
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:background="@drawable/leaterh_hi_light"
         />
-        <ImageButton
-            android:id="@+id/btn_drawer_artist"
+        <FrameLayout
+            android:id="@+id/frame_btn_drawer_artist"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_margin="0dp"
-            android:background="@drawable/btn_side_menu_selector"
-            android:src="@drawable/btn_artists_selector"/>
+            android:layout_weight="1" >
+            <ImageButton
+                android:id="@+id/btn_drawer_artist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:background="@drawable/btn_side_menu_selector"
+                android:src="@drawable/btn_artists_selector"/>
+            <TextView
+                android:id="@+id/txt_drawer_artist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:paddingBottom="16dp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textSize="10sp"
+                android:text="@string/drawer_artists" />
+        </FrameLayout>
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:background="@drawable/leaterh_hi_light"
         />
+        <FrameLayout
+            android:id="@+id/frame_btn_drawer_genres"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
         <ImageButton
             android:id="@+id/btn_drawer_genres"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_margin="0dp"
             android:background="@drawable/btn_side_menu_selector"
             android:src="@drawable/btn_genres_selector"/>
+            <TextView
+                android:id="@+id/txt_drawer_genres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:paddingBottom="16dp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textSize="10sp"
+                android:text="@string/drawer_genres" />
+        </FrameLayout>
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:background="@drawable/leaterh_hi_light"
         />
+        <FrameLayout
+            android:id="@+id/frame_btn_drawer_playlist"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
         <ImageButton
             android:id="@+id/btn_drawer_playlist"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_margin="0dp"
             android:background="@drawable/btn_side_menu_selector"
             android:src="@drawable/btn_playlist_selector"/>
+            <TextView
+                android:id="@+id/txt_drawer_playlist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:paddingBottom="16dp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textSize="10sp"
+                android:text="@string/drawer_playlist" />
+        </FrameLayout>
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:background="@drawable/leaterh_hi_light"
         />
+        <FrameLayout
+            android:id="@+id/frame_btn_drawer_folders"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
         <ImageButton
             android:id="@+id/btn_drawer_folders"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_margin="0dp"
             android:background="@drawable/btn_side_menu_selector"
             android:src="@drawable/btn_folders_selector"/>
+            <TextView
+                android:id="@+id/txt_drawer_folders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:paddingBottom="16dp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textSize="10sp"
+                android:text="@string/drawer_folders" />
+        </FrameLayout>
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:background="@drawable/leaterh_hi_light"
         />
+        <FrameLayout
+            android:id="@+id/frame_btn_drawer_favorites"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
         <ImageButton
             android:id="@+id/btn_drawer_favorites"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:layout_margin="0dp"
             android:background="@drawable/btn_side_menu_selector"
             android:src="@drawable/btn_favorites_selector"/>
+            <TextView
+                android:id="@+id/txt_drawer_favorites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:paddingBottom="16dp"
+                android:textColor="?android:attr/textColorPrimaryInverse"
+                android:textSize="10sp"
+                android:text="@string/drawer_favorites" />
+        </FrameLayout>
     </LinearLayout>
 
 
@@ -157,6 +267,7 @@
         android:dividerHeight="0dp"
         android:listSelector="@android:color/transparent"
         android:paddingTop="8dp"
-        tools:listitem="@layout/list_item_drawer"/>
+        />
+    <!--tools:listitem="@layout/list_item_drawer" -->
 
 </LinearLayout>

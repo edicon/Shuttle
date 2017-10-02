@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+
+    <string name="drawer_song">노래</string>
+    <string name="drawer_albums">앨범</string>
+    <string name="drawer_artists">아티스트</string>
+    <string name="drawer_genres">장르</string>
+    <string name="drawer_folders">폴더</string>
+    <string name="drawer_playlist">재생목록</string>
+    <string name="drawer_favorites">즐겨찾기</string>
+
+</resources>

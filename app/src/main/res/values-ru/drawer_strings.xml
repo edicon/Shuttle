@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+
+    <string name="drawer_song">КОМПОЗИЦИЯ</string>
+    <string name="drawer_albums">альбом</string>
+    <string name="drawer_artists">исполнитель</string>
+    <string name="drawer_genres">ЖАНР</string>
+    <string name="drawer_folders">папка</string>
+    <string name="drawer_playlist">ПЛЕЙЛИСТЫ</string>
+    <string name="drawer_favorites">ИЗБРАННОЕ</string>
+
+</resources>

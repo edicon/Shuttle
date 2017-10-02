@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources >
+
+    <string name="drawer_song">歌曲</string>
+    <string name="drawer_albums">專輯</string>
+    <string name="drawer_artists">歌手</string>
+    <string name="drawer_genres">曲風</string>
+    <string name="drawer_folders">資料夾</string>
+    <string name="drawer_playlist">播放清單</string>
+    <string name="drawer_favorites">喜愛的</string>
+
+</resources>
