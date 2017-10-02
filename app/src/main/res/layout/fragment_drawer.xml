@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!-- Comment Out 하면 Editor에서 보임 xmlns:tools="http://schemas.android.com/tools" -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparent"
@@ -267,7 +268,7 @@
         android:dividerHeight="0dp"
         android:listSelector="@android:color/transparent"
         android:paddingTop="8dp"
+        tools:listitem="@layout/list_item_drawer"
         />
-    <!--tools:listitem="@layout/list_item_drawer" -->
 
 </LinearLayout>
