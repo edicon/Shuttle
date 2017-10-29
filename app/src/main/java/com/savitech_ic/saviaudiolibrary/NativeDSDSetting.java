@@ -1,4 +1,4 @@
-package com.saviaudiolibrary;
+package com.savitech_ic.saviaudiolibrary;
 
 public class NativeDSDSetting {
 	static {

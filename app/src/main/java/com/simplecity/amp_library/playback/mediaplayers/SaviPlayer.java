@@ -21,7 +21,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.saviaudiolibrary.NativeDSDSetting;
+import com.savitech_ic.saviaudiolibrary.NativeDSDSetting;
 import com.simplecity.amp_library.R;
 
 import java.io.File;
@@ -33,7 +33,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-// import savitech.savimuicplayer.R;
+import savitech.savitechlibrary.SavitechMediaPlayer;
 
 public class SaviPlayer extends Activity implements View.OnClickListener {
     private NativeDSDSetting ndsd;
@@ -112,7 +112,7 @@ public class SaviPlayer extends Activity implements View.OnClickListener {
 			// ToDo: Settings.System.putInt(getContentResolver(), Settings.System.LOCKSCREEN_SOUNDS_ENABLED, 0);
 		}
 
-        setContentView(R.layout.savi_player);
+     setContentView(R.layout.savi_player);
 
 		tvSelectedFile = (TextView) findViewById(R.id.tvSelectedFile);
 		tvPlayTime = (TextView) findViewById(R.id.tvPlayTime);
@@ -170,7 +170,7 @@ public class SaviPlayer extends Activity implements View.OnClickListener {
 					
 						final Future longRunningPlayMusicTaskFuture = threadPoolExecutor.submit(playMusic);
 						
-						// btPlay.setText(getResources().getString(R.string.btPause));
+						btPlay.setText(getResources().getString(R.string.btPause));
 						sb.setMax(svPlr.getDuration());
 						updatePosition();
 					}else{
@@ -184,7 +184,7 @@ public class SaviPlayer extends Activity implements View.OnClickListener {
 							if(svPlr.seekTo(seekBar.getProgress())){
 								final Future longRunningPlayMusicTaskFuture = threadPoolExecutor.submit(playMusic);
 								isPaused = false;
-								// btPlay.setText(getResources().getString(R.string.btPause));
+								btPlay.setText(getResources().getString(R.string.btPause));
 								updatePosition();
 							}
 						}else{

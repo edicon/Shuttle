@@ -1,4 +1,4 @@
-package com.simplecity.amp_library.playback.mediaplayers;
+package savitech.savitechlibrary;
 
 /**
  * Created by http://www.savitech-ic.com/ on 2016/10/3.

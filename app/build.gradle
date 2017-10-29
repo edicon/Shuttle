@@ -93,6 +93,15 @@ android {
     }
 
     signingConfigs {
+        debug {
+            storeFile file('../key/build_platform.jks')
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storePassword 'android'
+        }
+        /*
+        */
+
         release {
             Properties properties = getProperties('../keystore.properties')
             storeFile file(getProperty(properties, 'store'))
@@ -186,7 +195,8 @@ android {
     productFlavors {
 
         dev {
-            applicationId "com.simplecity.amp_pro"
+            applicationId "com.simplecity.amp_savi"
+            // applicationId "com.simplecity.amp_pro"
 
             //Enable multiDex for debug builds, since they don't use proguard
             multiDexEnabled true
@@ -194,7 +204,8 @@ android {
         }
 
         devPre21 {
-            applicationId "com.simplecity.amp_pro"
+            applicationId "com.simplecity.amp_savi"
+            // applicationId "com.simplecity.amp_pro"
 
             //Enable multiDex for debug builds, since they don't use proguard
             multiDexEnabled true

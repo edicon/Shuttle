@@ -3,7 +3,9 @@
 android:sharedUserId="android.uid.system"
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.simplecity.amp_library" >
+    package="com.simplecity.amp_library"
+    android:sharedUserId="android.uid.system"
+    >
 
     <!-- ## 'Protection-Normal' permissions ## -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -213,7 +215,9 @@ android:sharedUserId="android.uid.system"
                 android:resource="@xml/shortcuts" />
 
             <intent-filter>
+                <!--
                 <action android:name="android.intent.action.MAIN" />
+                -->
                 <action android:name="android.intent.action.MUSIC_PLAYER" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -302,7 +306,7 @@ android:sharedUserId="android.uid.system"
         <!-- For Savi -->
         <activity
             android:name=".ui.hires.SaviMainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_savi" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
