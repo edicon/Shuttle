@@ -165,8 +165,9 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
     public void setVolume(float vol) {
         try {
             // ToDo: Skip seting of Vol
-            Log.e(TAG, "setVolumeL: SKIPPED  " + vol );
-            // mCurrentMediaPlayer.setVolume((int) vol );  // .setVolume(vol, vol);
+            if(BuildConfig.DEBUG)
+                Log.e(TAG, "setVolumeL: SKIPPED  " + vol );
+
         } catch (IllegalStateException e) {
             Log.e(TAG, "Error setting MultiPlayer volume: " + e.getLocalizedMessage());
         }

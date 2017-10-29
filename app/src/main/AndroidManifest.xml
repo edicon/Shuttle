@@ -216,8 +216,8 @@ android:sharedUserId="android.uid.system"
 
             <intent-filter>
                 <!--
-                <action android:name="android.intent.action.MAIN" />
                 -->
+                <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.MUSIC_PLAYER" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -308,7 +308,9 @@ android:sharedUserId="android.uid.system"
             android:name=".ui.hires.SaviMainActivity"
             android:label="@string/app_savi" >
             <intent-filter>
+                <!--
                 <action android:name="android.intent.action.MAIN" />
+                -->
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

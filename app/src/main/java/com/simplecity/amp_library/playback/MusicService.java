@@ -23,6 +23,9 @@ import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbDeviceConnection;
+import android.hardware.usb.UsbManager;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
 import android.media.RemoteControlClient;
@@ -89,6 +92,8 @@ import com.simplecity.amp_library.utils.ShuttleUtils;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -619,7 +624,8 @@ public class MusicService extends Service {
         registerExternalStorageListener();
         registerA2dpServiceListener();
 
-        // ToDo: EDC
+        // ToDo: for Savi USB Receiver
+        USBDevicesCheck();
         // player = new MultiPlayer(this);
         player = new WavevinePlayer(this);
         player.setHandler(playerHandler);
@@ -892,6 +898,9 @@ public class MusicService extends Service {
             unregisterReceiver(mUnmountReceiver);
             mUnmountReceiver = null;
         }
+        // ToDo
+        if( mUsbReceiver != null )
+            unregisterReceiver(mUsbReceiver);
 
         mWakeLock.release();
 
@@ -2938,6 +2947,82 @@ public class MusicService extends Service {
             mNotificationStateHandler.sendEmptyMessageDelayed(NotificationStateHandler.STOP_FOREGROUND, 1500);
         } else {
             stopForeground(removeNotification);
+        }
+    }
+
+
+    // For Savi
+    private String usb_path;
+    public static UsbManager mUsbManager;
+    public static UsbDevice /*device,*/ mUsbDevice;
+    public static UsbDeviceConnection mDeviceConnection;
+    public PendingIntent mPermissionIntent;
+    public IntentFilter filterAttached_and_Detached = null;
+    public BroadcastReceiver mUsbReceiver = null;
+    private void USBDevicesCheck() {
+
+        mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent("com.android.recipes.USB_PERMISSION"), 0);
+        filterAttached_and_Detached = new IntentFilter();
+        filterAttached_and_Detached.addAction("android.hardware.usb.action.USB_DEVICE_DETACHED");
+        filterAttached_and_Detached.addAction("android.hardware.usb.action.USB_DEVICE_ATTACHED");
+        filterAttached_and_Detached.addAction("com.android.recipes.USB_PERMISSION");
+
+        mUsbReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent){
+                String action = intent.getAction();
+                if(UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)){
+                    UsbDevice device =(UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                    if(device !=null){
+                        Log.e("SaviPlayer","onRecever.. ACTION_USB_DEVICE_DETACHED");
+                        if( !isPlaying() /*mCurrentMediaPlayer.pause()*/) {
+                            // isPaused = true;
+                            // btPlay.setText(getResources().getString(R.string.btPlay));
+                        }
+                        if (mDeviceConnection != null) {
+                            mDeviceConnection.close();
+                        }
+                        mDeviceConnection = null;
+                    }
+                }
+                else if(UsbManager.ACTION_USB_ACCESSORY_ATTACHED.equals(action)){
+                    UsbDevice device =(UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                    if(device !=null){
+                        Log.e("SaviPlayer","onRecever.. USB_DEVICE_ATTACHED");
+                    }
+                }
+
+            }
+        };
+
+        registerReceiver(mUsbReceiver, filterAttached_and_Detached);
+
+        mUsbManager = ((UsbManager)getSystemService(Context.USB_SERVICE));
+        if( mUsbManager != null) {
+            HashMap<String, UsbDevice> localHashMap = mUsbManager.getDeviceList();
+            Iterator<UsbDevice> deviter = localHashMap.values().iterator();
+
+            recheck:
+            while ( deviter.hasNext() ) {
+                UsbDevice localUsbDevice = (UsbDevice)deviter.next();
+                int i = localUsbDevice.getVendorId();
+                int j = localUsbDevice.getProductId();
+
+                if ((i != 0x262a) || ((j != 0x17F8) && (j != 0x17F9))) {
+                    mUsbDevice = null;
+                }
+                else {
+                    mUsbDevice = localUsbDevice;
+                    int k = mUsbDevice.getVendorId();
+                    int m = mUsbDevice.getProductId();
+                    usb_path = mUsbDevice.getDeviceName();
+                    break;
+                }
+            }
+        }
+
+        if( mUsbDevice == null ) {
+            Log.e("SaviPlayer","mUsbManager.openDevice failed!");
         }
     }
 }

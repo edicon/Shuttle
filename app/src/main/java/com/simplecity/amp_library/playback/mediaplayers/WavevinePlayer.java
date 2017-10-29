@@ -17,6 +17,7 @@ public class WavevinePlayer {
     // private MediaPlayer mNextMediaPlayer;
     // private Handler mHandler;
     // private boolean mIsInitialized = false;
+
     private UniformMediaPlayer mCurrentMediaPlayer; //  = AndroidMediaPlayer(); // new MediaPlayer();
     private UniformMediaPlayer mCurrentVlcPlayer;
 
