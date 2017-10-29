@@ -1,7 +1,9 @@
 package com.simplecity.amp_library.playback.mediaplayers;
 
 import android.os.Handler;
+import android.util.Log;
 
+import com.simplecity.amp_library.BuildConfig;
 import com.simplecity.amp_library.playback.MusicService;
 
 /**
@@ -18,19 +20,26 @@ public class WavevinePlayer {
     // private Handler mHandler;
     // private boolean mIsInitialized = false;
 
-    private UniformMediaPlayer mCurrentMediaPlayer; //  = AndroidMediaPlayer(); // new MediaPlayer();
-    private UniformMediaPlayer mCurrentVlcPlayer;
+    private UniformMediaPlayer mCurrentMediaPlayer, mPrevMediaPlayer, mNextMediaPlayer;
+    private UniformMediaPlayer mVlcPlayer; //
+    private UniformMediaPlayer mSaviPlayer; //
+    private UniformMediaPlayer mAndroidPlayer; //
 
-    public WavevinePlayer(final MusicService service) {
+    public WavevinePlayer(final MusicService service ) {
         // mService = new WeakReference<>(service);
         // mCurrentMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
-        // ToDo:
-        boolean RUN_VLC = true;
-        if( RUN_VLC )
-            mCurrentMediaPlayer = new VLCMediaPlayer( service );
-        else
-            mCurrentMediaPlayer = new AndroidMediaPlayer( service );
-        // mCurrentVlcPlayer = new VLCMediaPlayer( service );
+        mVlcPlayer = new VLCMediaPlayer(service);
+        mSaviPlayer = new SaviMediaPlayer(service);
+        // mAndroidPlayer = new AndroidMediaPlayer(service);
+        mCurrentMediaPlayer = mVlcPlayer;
+    }
+
+    private void swapPlayer() {
+        if( mPrevMediaPlayer != null && mPrevMediaPlayer != mCurrentMediaPlayer ) {
+            mPrevMediaPlayer.pause(); // .release();
+            mPrevMediaPlayer = mCurrentMediaPlayer;
+        } else
+            mPrevMediaPlayer = mCurrentMediaPlayer;
     }
 
     public Class getPlayerInstance() {
@@ -38,11 +47,25 @@ public class WavevinePlayer {
     }
 
     public void setDataSource(final String path) {
+        if(BuildConfig.DEBUG)
+            Log.d(TAG, "Path: " + path);
+
+        if( path != null && (path.endsWith(".dff") || path.endsWith(".dsf")))
+            mCurrentMediaPlayer = mSaviPlayer;
+        else
+            mCurrentMediaPlayer = mVlcPlayer;
+
+        swapPlayer();
         mCurrentMediaPlayer.setDataSource( path );
     }
 
     public void setNextDataSource(final String path) {
-        mCurrentMediaPlayer.setNextDataSource( path );
+        if( path != null && (path.endsWith(".dff") || path.endsWith(".dsf")))
+            mNextMediaPlayer = mSaviPlayer;
+        else
+            mNextMediaPlayer = mVlcPlayer;
+
+        mNextMediaPlayer.setNextDataSource( path );
     }
 
     public boolean isInitialized() {
@@ -67,6 +90,9 @@ public class WavevinePlayer {
 
     public void setHandler(Handler handler) {
         mCurrentMediaPlayer.setHandler(handler);
+        mVlcPlayer.setHandler(handler);
+        mSaviPlayer.setHandler(handler);
+        // mAndroidPlayer.setHandler(handler);
     }
 
     public long getDuration() {

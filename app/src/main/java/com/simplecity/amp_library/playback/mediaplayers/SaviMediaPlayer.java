@@ -27,6 +27,7 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 
 	private static final String TAG = SaviMediaPlayer.class.getSimpleName();
 
+	private Handler mHandler;
 	private final WeakReference<MusicService> mService;
 	private static SavitechMediaPlayer mCurrentMediaPlayer;
 	private SavitechMediaPlayer mNextMediaPlayer;
@@ -65,7 +66,7 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 	private boolean isTouchSoundsEnabled;
 	private boolean isVibrateOnTouchEnabled;
 
-	private final Handler handler = new Handler();
+	private final Handler seekEndHandler = new Handler();
 	
 	public SaviMediaPlayer( final MusicService service ) {
 
@@ -156,7 +157,7 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 			mCurrentMediaPlayer.playFile();
 		}
 		isPaused = false;
-		handler.postDelayed(checkPositionRunnable, 500);
+		seekEndHandler.postDelayed(checkPositionRunnable, 500);
 	}
 
 
@@ -310,9 +311,14 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 		// Ref: AndroidMediaPlayer.java
 		try {
 
-			stop();
-			if( stopped ) {
-				setDsdCmdClosed();
+			if( mIsInitialized ) {
+				if( mCurrentMediaPlayer.isPlaying() )
+					pause();
+
+				stop();
+				if( stopped ) {
+					setDsdCmdClosed();
+				}
 			}
 
 			// get file path from uri
@@ -349,35 +355,33 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 		return true;
 	}
 
+	private boolean nextInitialized;
 	@Override
 	public void setNextDataSource(String path) {
-
-		stop();
-
-		if( stopped ){
-			setDsdCmdClosed();
-			setDataSource( path );
-		}
 
 		if( BuildConfig.DEBUG ) {
 			Log.e(TAG, "setNextDataSource: path: " + path );
 		}
 
-		if (mNextMediaPlayer != null) {
-			mNextMediaPlayer.stopMusic();
-			// ToDo: Check setDsdCmdClosed();
-			mNextMediaPlayer = null;
-		}
 		if (TextUtils.isEmpty(path)) {
 			return;
 		}
+
+		if ( nextInitialized && mNextMediaPlayer != null) {
+			mNextMediaPlayer.stopMusic();
+            setDsdCmdClosed();
+			// ToDo: Check setDsdCmdClosed();
+			mNextMediaPlayer = null;
+			nextInitialized = false;
+		}
+
 		mNextMediaPlayer = new SavitechMediaPlayer();
 		powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
 		// ToDo:
 		// mNextMediaPlayer.setAudioSessionId(getAudioSessionId());
 		if (setDataSourceImpl(mNextMediaPlayer, path)) {
 			try {
-				// mCurrentMediaPlayer.setNextMediaPlayer(mNextMediaPlayer);
+				nextInitialized = true;
 			} catch (Exception e) {
 				Log.e(TAG, "setNextDataSource failed - failed to call setNextMediaPlayer on mCurrentMediaPlayer. Error: " + e.getLocalizedMessage());
 				CrashlyticsCore.getInstance().log("setNextDataSource failed - failed to call setNextMediaPlayer on mCurrentMediaPlayer. Error: " + e.getLocalizedMessage());
@@ -385,6 +389,7 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 					mNextMediaPlayer.stopMusic();
 					mNextMediaPlayer = null;
 				}
+				nextInitialized = false;
 			}
 		} else {
 			Log.e(TAG, "setDataSourceImpl failed for path: [" + path + "]. Setting next media player to null");
@@ -393,6 +398,7 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 				mNextMediaPlayer.stopMusic();
 				mNextMediaPlayer = null;
 			}
+			nextInitialized = false;
 		}
 	}
 
@@ -401,6 +407,7 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 		// if(svPlr.isFinished()) {
 			// ToDo: finish여부 구현
 		// }
+        mHandler = handler;
 	}
 
 	public void delayHalfSec(){

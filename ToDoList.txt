@@ -59,3 +59,5 @@ ReactiveX
   flac: content://media/external/audio/media/102
  -아니면 file을 스캔하며 처리
   https://stackoverflow.com/questions/10384080/mediastore-uri-to-query-all-types-of-files-media-and-non-media
+
+  -Savi Player 이후 리스타크하면 VLC Player가 기본

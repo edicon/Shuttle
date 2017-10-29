@@ -299,23 +299,16 @@ public class VLCMediaPlayer extends UniformMediaPlayer {
         if( BuildConfig.DEBUG ) {
             Log.e(TAG, "setNextDataSource: path: " + path );
         }
-        try {
-            // ToDo: MediaListPlayer
-            // mCurrentMediaPlayer.setNextMediaPlayer(null);
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, "Next media player is current one, continuing");
-        } catch (IllegalStateException e) {
-            Log.e(TAG, "Media player not initialized!");
-            CrashlyticsCore.getInstance().log("setNextDataSource failed for. Media player not intitialized.");
+
+        if (TextUtils.isEmpty(path)) {
             return;
         }
+
         if (mNextMediaPlayer != null) {
             mNextMediaPlayer.release(); // ToDo: Check release or stop
             mNextMediaPlayer = null;
         }
-        if (TextUtils.isEmpty(path)) {
-            return;
-        }
+
         mNextMediaPlayer = new MediaPlayer(sLibVLC);
         powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
         // ToDo:
