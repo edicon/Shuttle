@@ -120,26 +120,38 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 		}
 	};
 	private void checkSeekPosition() {
+		seekEndHandler.removeCallbacks(seekEndRunnable);
 		if( mCurrentMediaPlayer != null && mCurrentMediaPlayer.isPlaying()) {
-			int dur = mCurrentMediaPlayer.getDuration();
-			int pos = mCurrentMediaPlayer.getCurrentPosition();
-			if( dur <= pos + 200 ) {
-				Log.e("checkPosition", dur + "/" + pos);
-			}
 			if(mCurrentMediaPlayer.isFinished()) {
+                if( BuildConfig.DEBUG ) {
+					int dur = mCurrentMediaPlayer.getDuration();
+					int pos = mCurrentMediaPlayer.getCurrentPosition();
+					Log.e(TAG, "checkPosition --> isFinished: " + dur + "/" + pos);
+					// return;
+				}
+				setDsdCmdClosed();
+				seekEndHandler.removeCallbacks(seekEndRunnable);
+
 				if (mCurrentMediaPlayer != null && mNextMediaPlayer != null) {
-					setDsdCmdClosed();
 					// mCurrentMediaPlayer.release();
 					mCurrentMediaPlayer = mNextMediaPlayer;
 					mNextMediaPlayer = null;
 					mHandler.sendEmptyMessage(MusicService.PlayerHandler.TRACK_WENT_TO_NEXT);
 				} else {
+					if (mCurrentMediaPlayer.openMusicFile(currFileName)) {
+						fileType = mCurrentMediaPlayer.getFileType();
+						setDsdCmdOpen();
+					} else {
+                        goError("checkPosition");
+					}
+
 					mService.get().mWakeLock.acquire(30000);
 					mHandler.sendEmptyMessage(MusicService.PlayerHandler.TRACK_ENDED);
 					mHandler.sendEmptyMessage(MusicService.PlayerHandler.RELEASE_WAKELOCK);
 				}
 			}
 		}
+		seekEndHandler.postDelayed(seekEndRunnable, 500);
 	}
 
 	private void checkSystemSetting() {
@@ -203,13 +215,18 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 				mCurrentMediaPlayer.playFile();
 		}
 		isPaused = false;
-		// seekEndHandler.postDelayed(seekEndRunnable, 500);
+		seekEndHandler.postDelayed(seekEndRunnable, 500);
 	}
 
 	@Override
 	public void pause() {
 		if( BuildConfig.DEBUG )
 			Log.d(TAG, "pause");
+
+		if( mCurrentMediaPlayer.isFinished()) {
+			Log.d(TAG, "pause: isFinished");
+			// return;
+		}
 
         if( mCurrentMediaPlayer.isPlaying()) {
 			mCurrentMediaPlayer.pause();
@@ -286,7 +303,7 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 				if( stopped ) {
 					setDsdCmdClosed();
 				}
-                // seekEndHandler.removeCallbacks(seekEndRunnable);
+                seekEndHandler.removeCallbacks(seekEndRunnable);
 			}
 			// File Reset?
 			isPaused = false;
@@ -479,9 +496,6 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 
 	@Override
 	public void setHandler(Handler handler) {
-		// if(svPlr.isFinished()) {
-			// ToDo: finish여부 구현
-		// }
         mHandler = handler;
 	}
 
@@ -575,14 +589,12 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 	private void goError( String tag ) {
 		Log.e(TAG, tag + "svPlr.openMusicFile() failed");
 
-		/*
 		release();
 		mIsInitialized = false;
 
 		mCurrentMediaPlayer = new SavitechMediaPlayer();
 		mCurrentMediaPlayer.acceptSavitechCopyright();
 		mHandler.sendMessageDelayed(mHandler.obtainMessage(MusicService.PlayerHandler.SERVER_DIED), 2000);
-		*/
 	}
 
     /*

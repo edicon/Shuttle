@@ -2611,6 +2611,12 @@ public class MusicService extends Service {
             if (currentSong == null) {
                 return 0;
             }
+            // HiRes
+            if( currentSong.duration == 0 ) {
+                if( player.isInitialized() )
+                    currentSong.duration = player.getDuration();
+                    // return player.getDuration();
+            }
             return currentSong.duration;
         }
     }
