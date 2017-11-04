@@ -674,7 +674,12 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
         if (song == null) return;
 
-        String totalTime = StringUtils.makeTimeString(this.getActivity(), song.duration / 1000);
+        long duration;
+        if( song.duration == 0 ) {
+            duration = MusicUtils.getDuration();
+        } else
+            duration = song.duration;
+        String totalTime = StringUtils.makeTimeString(this.getActivity(), duration / 1000);
         if (!TextUtils.isEmpty(totalTime)) {
             if( HI_RES ) {
                 String bitRate = song.getBitrateLabel();

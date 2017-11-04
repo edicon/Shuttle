@@ -62,6 +62,11 @@ ReactiveX
 
   -Savi Player 이후 리스타크하면 VLC Player가 기본
 
+- String totalTime = StringUtils.makeTimeString(this.getActivity(), song.duration / 1000);
+ + Songjava: duration = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
+ --> media scan에서 넣어 주어야
+
+
   Savi Log Message
   09-01 00:19:38.185 11978-16642/com.simplecity.amp_savi.debug V/FA: Using local app measurement service
   09-01 00:19:38.186 11978-16642/com.simplecity.amp_savi.debug V/FA: Connection attempt already in progress
