@@ -17,6 +17,9 @@ import com.simplecity.amp_library.playback.MusicService;
 import org.videolan.libvlc.util.AndroidUtil;
 
 import java.lang.ref.WeakReference;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import savitech.savitechlibrary.SavitechMediaPlayer;
@@ -66,8 +69,30 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 	private boolean isTouchSoundsEnabled;
 	private boolean isVibrateOnTouchEnabled;
 
-	private final Handler seekEndHandler = new Handler();
-	
+	private boolean isRunnablePlayer = false;
+	final ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
+	final ExecutorService nextThreadPoolExecutor = Executors.newSingleThreadExecutor();
+	final Runnable playCurrMusic = new Runnable() {
+		@Override
+		public void run() {
+			if( BuildConfig.DEBUG ) {
+				Log.d(TAG, "playCurrMusic: run");
+			}
+			mCurrentMediaPlayer.playFile();
+		}
+	};
+	// ToDo: playCurrMusic으로만 할지 검토
+	final Runnable playNextMusic = new Runnable() {
+		@Override
+		public void run() {
+			if( BuildConfig.DEBUG ) {
+				Log.d(TAG, "playNextMusic: run");
+			}
+			mNextMediaPlayer.playFile();
+		}
+	};
+
+
 	public SaviMediaPlayer( final MusicService service ) {
 
 		mService = new WeakReference<>(service);
@@ -83,22 +108,36 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 		checkSystemSetting();
 		setEqualizer(mCurrentMediaPlayer);
 
-
 		if (BuildConfig.DEBUG)
 			Log.d(TAG, "SavitechMediaPlayer: Created");
 	}
 
-	private final Runnable checkPositionRunnable = new Runnable() {
+	private final Handler seekEndHandler = new Handler();
+	private final Runnable seekEndRunnable = new Runnable() {
 		public void run() {
-			checkPosition();
+			checkSeekPosition();
 		}
 	};
-	private void checkPosition() {
+	private void checkSeekPosition() {
 		if( mCurrentMediaPlayer != null && mCurrentMediaPlayer.isPlaying()) {
 			int dur = mCurrentMediaPlayer.getDuration();
 			int pos = mCurrentMediaPlayer.getCurrentPosition();
-			if( dur <= pos + 200 )
+			if( dur <= pos + 200 ) {
 				Log.e("checkPosition", dur + "/" + pos);
+			}
+			if(mCurrentMediaPlayer.isFinished()) {
+				if (mCurrentMediaPlayer != null && mNextMediaPlayer != null) {
+					setDsdCmdClosed();
+					// mCurrentMediaPlayer.release();
+					mCurrentMediaPlayer = mNextMediaPlayer;
+					mNextMediaPlayer = null;
+					mHandler.sendEmptyMessage(MusicService.PlayerHandler.TRACK_WENT_TO_NEXT);
+				} else {
+					mService.get().mWakeLock.acquire(30000);
+					mHandler.sendEmptyMessage(MusicService.PlayerHandler.TRACK_ENDED);
+					mHandler.sendEmptyMessage(MusicService.PlayerHandler.RELEASE_WAKELOCK);
+				}
+			}
 		}
 	}
 
@@ -148,64 +187,22 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 		if( isPaused ) {
 			if (mCurrentMediaPlayer.openMusicFile(currFileName)) {
 				if (mCurrentMediaPlayer.resumeMusicPosition()) {
-					mCurrentMediaPlayer.playFile();
+					if( isRunnablePlayer ) {
+						final Future longRunningPlayMusicTaskFuture = threadPoolExecutor.submit(playCurrMusic);
+					} else
+                        mCurrentMediaPlayer.playFile();
 				}
 			} else {
-				Log.e("SaviPlayer", "svPlr.openMusicFile() failed");
+                goError("start");
 			}
 		} else {
-			mCurrentMediaPlayer.playFile();
+			if( isRunnablePlayer ) {
+				final Future longRunningPlayMusicTaskFuture = threadPoolExecutor.submit(playCurrMusic);
+			} else
+				mCurrentMediaPlayer.playFile();
 		}
 		isPaused = false;
-		seekEndHandler.postDelayed(checkPositionRunnable, 500);
-	}
-
-
-	private boolean stopped;
-	@Override
-	public void stop() {
-		if( BuildConfig.DEBUG )
-			Log.d(TAG, "stop");
-
-		stopped = mCurrentMediaPlayer.stopMusic();
-
-		mIsInitialized = false;
-	}
-
-	@Override
-	public void release() {
-		if( BuildConfig.DEBUG )
-			Log.d(TAG, "release");
-
-        stop();
-
-		if(stopped){
-			//delayHalfSec();
-			if(!( fileType < 3 )) {
-				if (sendDSDCommand(fileType, false) < 0) {
-					Log.e("SaviPlayer", "sendDSDCommand close Failed");
-				}
-
-				delayHalfSec();
-
-				//unregisterReceiver(mUsbReceiver);
-
-				if (mDeviceConnection != null) {
-					mDeviceConnection.close();
-				}
-				mDeviceConnection = null;
-			}
-			// if(mUsbReceiver != null) {
-				// ToDo:
-				// unregisterReceiver(mUsbReceiver);
-			// }
-		}
-		if(isTouchSoundsEnabled) {
-			// Settings.System.putInt(getContentResolver(), Settings.System.SOUND_EFFECTS_ENABLED, 1);
-		}
-		if(isVibrateOnTouchEnabled) {
-			// ToDo: Settings.System.putInt(getContentResolver(), Settings.System.LOCKSCREEN_SOUNDS_ENABLED, 1);
-		}
+		// seekEndHandler.postDelayed(seekEndRunnable, 500);
 	}
 
 	@Override
@@ -217,6 +214,168 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 			mCurrentMediaPlayer.pause();
 		}
 		isPaused = true;
+	}
+
+	// Ref.: btFF, btFB
+	@Override
+	public long seekTo(long whereto) { // msec
+		if( BuildConfig.DEBUG )
+			Log.d(TAG, "seekTo");
+
+        if( isPaused ) {
+			if(mCurrentMediaPlayer.openMusicFile(currFileName)) {
+				if(mCurrentMediaPlayer.resumeMusicPosition()) {
+					// ToDo: check long --> int
+					if(mCurrentMediaPlayer.openMusicFile(currFileName)) {
+						if (mCurrentMediaPlayer.seekTo((int) whereto)) {
+							if( isRunnablePlayer ) {
+								final Future longRunningPlayMusicTaskFuture = threadPoolExecutor.submit(playCurrMusic);
+							} else
+								mCurrentMediaPlayer.playFile();
+							isPaused = false;
+						}
+					}
+				}
+			} else {
+				goError("seekTo");
+			}
+		} else if(mCurrentMediaPlayer.pause()){
+			//delayHalfSec();
+			if(mCurrentMediaPlayer.openMusicFile(currFileName)) {
+				if(mCurrentMediaPlayer.seekTo((int)whereto)) {
+					if( isRunnablePlayer ) {
+						final Future longRunningPlayMusicTaskFuture = threadPoolExecutor.submit(playCurrMusic);
+					} else
+						mCurrentMediaPlayer.playFile();
+				}
+			}else{
+				goError("seekTo");
+			}
+		}
+		return whereto;
+	}
+
+	@Override
+	public void setDataSource(String path) {
+		if( BuildConfig.DEBUG ) {
+			Log.e(TAG, "setDataSource: path: " + path );
+		}
+
+		mIsInitialized = setDataSourceImpl(mCurrentMediaPlayer, path);
+		if (mIsInitialized) {
+			setNextDataSource(null);
+		}
+	}
+
+	public boolean setDataSourceImpl(final SavitechMediaPlayer mediaPlayer, final String path) {
+		if (TextUtils.isEmpty(path) || mediaPlayer == null) {
+			return false;
+		}
+		// Ref: AndroidMediaPlayer.java
+		try {
+			if( mIsInitialized ) {
+                pause();
+
+				stop();
+				if( stopped ) {
+					setDsdCmdClosed();
+				}
+                // seekEndHandler.removeCallbacks(seekEndRunnable);
+			}
+			// File Reset?
+			isPaused = false;
+
+			// get file path from uri
+			//  -https://stackoverflow.com/questions/5657411/android-getting-a-file-uri-from-a-content-uri
+			String filePath = path;
+			if (path.startsWith("content://")) {
+				filePath = getPathFromUri( mService.get(), Uri.parse(path ));
+			}
+
+			Uri uri = AndroidUtil.PathToUri(filePath);
+
+			currFileName = path;
+			if(mediaPlayer.openMusicFile(path)) {
+				fileType = mediaPlayer.getFileType();
+				setDsdCmdOpen();
+				// seekEndHandler.postDelayed(seekEndRunnable, 500);
+
+				// if( isRunnablePlayer ) {
+				// 	final Future longRunningPlayMusicTaskFuture = threadPoolExecutor.submit(playCurrMusic);
+				// } else
+				// 	mCurrentMediaPlayer.playFile();
+			} else {
+				Log.e("SaviPlayer", "svPlr.openMusicFile() failed");
+			}
+
+			// Initial Play or Not --> NOT
+			//  -Comment out: cause of setNextDataSource and setDataSource가 동시 실행됨
+			// mediaPlayer.play();
+
+			if (BuildConfig.DEBUG) {
+				Log.d(TAG, "setDataSourceImpl: filePath: " + filePath + "\n Uri: " + uri.toString());
+			}
+
+		} catch( Exception e ) {
+			Log.e(TAG, "setDataSource failed: " + e.getLocalizedMessage());
+			CrashlyticsCore.getInstance().log("setDataSourceImpl failed. Path: [" + path + "] error: " + e.getLocalizedMessage());
+			return false;
+		}
+
+		// return mIsInitialized
+		return true;
+	}
+
+	private boolean nextInitialized;
+	@Override
+	public void setNextDataSource(String path) {
+
+		if( BuildConfig.DEBUG ) {
+			Log.e(TAG, "setNextDataSource: path: " + path );
+		}
+
+		if (TextUtils.isEmpty(path)) {
+			Log.e(TAG, "setNextDataSource: isEmpty: " + path );
+			return;
+		}
+
+		if ( nextInitialized && mNextMediaPlayer != null) {
+			mNextMediaPlayer.stopMusic();
+			setDsdCmdClosed();
+			// ToDo: Check setDsdCmdClosed();
+			mNextMediaPlayer = null;
+			nextInitialized = false;
+		}
+
+		mNextMediaPlayer = new SavitechMediaPlayer();
+		// ToDo: Check CopyRight
+		// mNextMediaPlayer.acceptSavitechCopyright();
+		powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
+		// ToDo:
+		// mNextMediaPlayer.setAudioSessionId(getAudioSessionId());
+		if (setDataSourceImpl(mNextMediaPlayer, path)) {
+			try {
+				nextInitialized = true;
+			} catch (Exception e) {
+				Log.e(TAG, "setNextDataSource failed - failed to call setNextMediaPlayer on mCurrentMediaPlayer. Error: " + e.getLocalizedMessage());
+				CrashlyticsCore.getInstance().log("setNextDataSource failed - failed to call setNextMediaPlayer on mCurrentMediaPlayer. Error: " + e.getLocalizedMessage());
+				if (mNextMediaPlayer != null) {
+					mNextMediaPlayer.stopMusic();
+					// ToDo: Check setDsdCmdClosed()
+					mNextMediaPlayer = null;
+				}
+				nextInitialized = false;
+			}
+		} else {
+			Log.e(TAG, "setDataSourceImpl failed for path: [" + path + "]. Setting next media player to null");
+			CrashlyticsCore.getInstance().log("setDataSourceImpl failed for path: [" + path + "]. Setting next media player to null");
+			if (mNextMediaPlayer != null) {
+				mNextMediaPlayer.stopMusic();
+				// ToDo: Check setDsdCmdClosed()
+				mNextMediaPlayer = null;
+			}
+			nextInitialized = false;
+		}
 	}
 
 	@Override
@@ -237,7 +396,7 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 	public long getCurrentPosition() {
         try {
 			int pos = mCurrentMediaPlayer.getCurrentPosition();
-			if( BuildConfig.DEBUG )
+			if( false && BuildConfig.DEBUG )
 				Log.d(TAG, "getCurrentPosition: " + pos );
 			return pos;
 		} catch( Exception e ) {
@@ -246,31 +405,51 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 		}
 	}
 
+	private boolean stopped;
 	@Override
-	public long seekTo(long whereto) { // msec
+	public void stop() {
 		if( BuildConfig.DEBUG )
-			Log.d(TAG, "seekTo");
+			Log.d(TAG, "stop");
 
-		if(!mCurrentMediaPlayer.isPlaying()){
-			if(mCurrentMediaPlayer.openMusicFile(currFileName)) {
-				// ToDo: check long --> int
-				if(mCurrentMediaPlayer.seekTo((int)whereto)) {
-					start();
-				}
-			} else {
-				Log.e("SaviPlayer", "svPlr.openMusicFile() failed");
-			}
-		} else if(mCurrentMediaPlayer.pause()){
+		stopped = mCurrentMediaPlayer.stopMusic();
+
+		mIsInitialized = false;
+	}
+
+	@Override
+	public void release() {
+		if( BuildConfig.DEBUG )
+			Log.d(TAG, "release");
+
+		stop();
+
+		if(stopped){
 			//delayHalfSec();
-			if(mCurrentMediaPlayer.openMusicFile(currFileName)) {
-				if(mCurrentMediaPlayer.seekTo((int)whereto)) {
-					start();
+			if(!( fileType < 3 )) {
+				if (sendDSDCommand(fileType, false) < 0) {
+					Log.e("SaviPlayer", "sendDSDCommand close Failed");
 				}
-			}else{
-				Log.e("SaviPlayer", "svPlr.openMusicFile() failed");
+
+				delayHalfSec();
+
+				//unregisterReceiver(mUsbReceiver);
+
+				if (mDeviceConnection != null) {
+					mDeviceConnection.close();
+				}
+				mDeviceConnection = null;
 			}
+			// if(mUsbReceiver != null) {
+			// ToDo:
+			// unregisterReceiver(mUsbReceiver);
+			// }
 		}
-		return whereto;
+		if(isTouchSoundsEnabled) {
+			// Settings.System.putInt(getContentResolver(), Settings.System.SOUND_EFFECTS_ENABLED, 1);
+		}
+		if(isVibrateOnTouchEnabled) {
+			// ToDo: Settings.System.putInt(getContentResolver(), Settings.System.LOCKSCREEN_SOUNDS_ENABLED, 1);
+		}
 	}
 
 	@Override
@@ -292,115 +471,6 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 			Log.d(TAG, "setBitrate: Dummy Function");
 	}
 
-	@Override
-	public void setDataSource(String path) {
-		if( BuildConfig.DEBUG ) {
-			Log.e(TAG, "setDataSource: path: " + path );
-		}
-
-		mIsInitialized = setDataSourceImpl(mCurrentMediaPlayer, path);
-		if (mIsInitialized) {
-			setNextDataSource(null);
-		}
-	}
-
-	public boolean setDataSourceImpl(final SavitechMediaPlayer mediaPlayer, final String path) {
-		if (TextUtils.isEmpty(path) || mediaPlayer == null) {
-			return false;
-		}
-		// Ref: AndroidMediaPlayer.java
-		try {
-
-			if( mIsInitialized ) {
-				if( mCurrentMediaPlayer.isPlaying() )
-					pause();
-
-				stop();
-				if( stopped ) {
-					setDsdCmdClosed();
-				}
-			}
-
-			// get file path from uri
-			//  -https://stackoverflow.com/questions/5657411/android-getting-a-file-uri-from-a-content-uri
-			String filePath = path;
-			if (path.startsWith("content://")) {
-				filePath = getPathFromUri( mService.get(), Uri.parse(path ));
-			}
-
-			Uri uri = AndroidUtil.PathToUri(filePath);
-
-			currFileName = path;
-			if(mCurrentMediaPlayer.openMusicFile(path)) {
-				fileType = mCurrentMediaPlayer.getFileType();
-				setDsdCmdOpen();
-				// final Future longRunningPlayMusicTaskFuture = threadPoolExecutor.submit(playMusic);
-			} else {
-				Log.e("SaviPlayer", "svPlr.openMusicFile() failed");
-			}
-
-			// Initial Play or Not --> NOT
-			//  -Comment out: cause of setNextDataSource and setDataSource가 동시 실행됨
-			// mediaPlayer.play();
-
-			if (BuildConfig.DEBUG) {
-				Log.d(TAG, "setDataSourceImpl: filePath: " + filePath + "\n Uri: " + uri.toString());
-			}
-		} catch( Exception e ) {
-			Log.e(TAG, "setDataSource failed: " + e.getLocalizedMessage());
-			CrashlyticsCore.getInstance().log("setDataSourceImpl failed. Path: [" + path + "] error: " + e.getLocalizedMessage());
-			return false;
-		}
-
-		return true;
-	}
-
-	private boolean nextInitialized;
-	@Override
-	public void setNextDataSource(String path) {
-
-		if( BuildConfig.DEBUG ) {
-			Log.e(TAG, "setNextDataSource: path: " + path );
-		}
-
-		if (TextUtils.isEmpty(path)) {
-			return;
-		}
-
-		if ( nextInitialized && mNextMediaPlayer != null) {
-			mNextMediaPlayer.stopMusic();
-            setDsdCmdClosed();
-			// ToDo: Check setDsdCmdClosed();
-			mNextMediaPlayer = null;
-			nextInitialized = false;
-		}
-
-		mNextMediaPlayer = new SavitechMediaPlayer();
-		powerMediaPlayer.setWakeMode(mService.get(), PowerManager.PARTIAL_WAKE_LOCK);
-		// ToDo:
-		// mNextMediaPlayer.setAudioSessionId(getAudioSessionId());
-		if (setDataSourceImpl(mNextMediaPlayer, path)) {
-			try {
-				nextInitialized = true;
-			} catch (Exception e) {
-				Log.e(TAG, "setNextDataSource failed - failed to call setNextMediaPlayer on mCurrentMediaPlayer. Error: " + e.getLocalizedMessage());
-				CrashlyticsCore.getInstance().log("setNextDataSource failed - failed to call setNextMediaPlayer on mCurrentMediaPlayer. Error: " + e.getLocalizedMessage());
-				if (mNextMediaPlayer != null) {
-					mNextMediaPlayer.stopMusic();
-					mNextMediaPlayer = null;
-				}
-				nextInitialized = false;
-			}
-		} else {
-			Log.e(TAG, "setDataSourceImpl failed for path: [" + path + "]. Setting next media player to null");
-			CrashlyticsCore.getInstance().log("setDataSourceImpl failed for path: [" + path + "]. Setting next media player to null");
-			if (mNextMediaPlayer != null) {
-				mNextMediaPlayer.stopMusic();
-				mNextMediaPlayer = null;
-			}
-			nextInitialized = false;
-		}
-	}
 
 	@Override
 	public void setHandler(Handler handler) {
@@ -436,75 +506,6 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 			}
 		}
 	}
-
-	/*
-    private void USBDevicesCheck() {
-
-        mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent("com.android.recipes.USB_PERMISSION"), 0);
-        filterAttached_and_Detached = new IntentFilter();
-        filterAttached_and_Detached.addAction("android.hardware.usb.action.USB_DEVICE_DETACHED");
-        filterAttached_and_Detached.addAction("android.hardware.usb.action.USB_DEVICE_ATTACHED");
-        filterAttached_and_Detached.addAction("com.android.recipes.USB_PERMISSION");
-
-        mUsbReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent){
-                String action = intent.getAction();
-                if(UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)){
-                    UsbDevice device =(UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-                    if(device !=null){
-                        Log.e("SaviPlayer","onRecever.. ACTION_USB_DEVICE_DETACHED");
-						if( mCurrentMediaPlayer.pause()) {
-							isPaused = true;
-							// btPlay.setText(getResources().getString(R.string.btPlay));
-						}
-						if (mDeviceConnection != null) {
-							mDeviceConnection.close();
-						}
-						mDeviceConnection = null;
-                    }
-                }
-                else if(UsbManager.ACTION_USB_ACCESSORY_ATTACHED.equals(action)){
-                    UsbDevice device =(UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-                    if(device !=null){
-                        Log.e("SaviPlayer","onRecever.. USB_DEVICE_ATTACHED");
-                    }
-                }
-
-            }
-        };
-
-        registerReceiver(mUsbReceiver, filterAttached_and_Detached);
-
-        mUsbManager = ((UsbManager)getSystemService(Context.USB_SERVICE));
-        if( mUsbManager != null) {
-            HashMap<String, UsbDevice> localHashMap = mUsbManager.getDeviceList();
-            Iterator<UsbDevice> deviter = localHashMap.values().iterator();
-
-            recheck:
-            while ( deviter.hasNext() ) {
-                UsbDevice localUsbDevice = (UsbDevice)deviter.next();
-                int i = localUsbDevice.getVendorId();
-                int j = localUsbDevice.getProductId();
-                
-                if ((i != 0x262a) || ((j != 0x17F8) && (j != 0x17F9))) {
-                    mUsbDevice = null;
-                }
-                else {
-                    mUsbDevice = localUsbDevice;
-                    int k = mUsbDevice.getVendorId();
-                    int m = mUsbDevice.getProductId();
-                    usb_path = mUsbDevice.getDeviceName();
-                    break;
-                }
-            }
-        }
-
-        if( mUsbDevice == null ) {
-			Log.e("SaviPlayer","mUsbManager.openDevice failed!");
-        }
-    }
-    */
 
     private int sendDSDCommand(int dsdType, boolean open) {
         if(mIsDSDOpen && open){
@@ -565,4 +566,86 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 
         return result;
     }
+
+	private void goError( String tag ) {
+		Log.e(TAG, tag + "svPlr.openMusicFile() failed");
+
+		/*
+		release();
+		mIsInitialized = false;
+
+		mCurrentMediaPlayer = new SavitechMediaPlayer();
+		mCurrentMediaPlayer.acceptSavitechCopyright();
+		mHandler.sendMessageDelayed(mHandler.obtainMessage(MusicService.PlayerHandler.SERVER_DIED), 2000);
+		*/
+	}
+
+    /*
+    private void USBDevicesCheck() {
+
+        mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent("com.android.recipes.USB_PERMISSION"), 0);
+        filterAttached_and_Detached = new IntentFilter();
+        filterAttached_and_Detached.addAction("android.hardware.usb.action.USB_DEVICE_DETACHED");
+        filterAttached_and_Detached.addAction("android.hardware.usb.action.USB_DEVICE_ATTACHED");
+        filterAttached_and_Detached.addAction("com.android.recipes.USB_PERMISSION");
+
+        mUsbReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent){
+                String action = intent.getAction();
+                if(UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)){
+                    UsbDevice device =(UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                    if(device !=null){
+                        Log.e("SaviPlayer","onRecever.. ACTION_USB_DEVICE_DETACHED");
+						if( mCurrentMediaPlayer.pause()) {
+							isPaused = true;
+							// btPlay.setText(getResources().getString(R.string.btPlay));
+						}
+						if (mDeviceConnection != null) {
+							mDeviceConnection.close();
+						}
+						mDeviceConnection = null;
+                    }
+                }
+                else if(UsbManager.ACTION_USB_ACCESSORY_ATTACHED.equals(action)){
+                    UsbDevice device =(UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                    if(device !=null){
+                        Log.e("SaviPlayer","onRecever.. USB_DEVICE_ATTACHED");
+                    }
+                }
+
+            }
+        };
+
+        registerReceiver(mUsbReceiver, filterAttached_and_Detached);
+
+        mUsbManager = ((UsbManager)getSystemService(Context.USB_SERVICE));
+        if( mUsbManager != null) {
+            HashMap<String, UsbDevice> localHashMap = mUsbManager.getDeviceList();
+            Iterator<UsbDevice> deviter = localHashMap.values().iterator();
+
+            recheck:
+            while ( deviter.hasNext() ) {
+                UsbDevice localUsbDevice = (UsbDevice)deviter.next();
+                int i = localUsbDevice.getVendorId();
+                int j = localUsbDevice.getProductId();
+
+                if ((i != 0x262a) || ((j != 0x17F8) && (j != 0x17F9))) {
+                    mUsbDevice = null;
+                }
+                else {
+                    mUsbDevice = localUsbDevice;
+                    int k = mUsbDevice.getVendorId();
+                    int m = mUsbDevice.getProductId();
+                    usb_path = mUsbDevice.getDeviceName();
+                    break;
+                }
+            }
+        }
+
+        if( mUsbDevice == null ) {
+			Log.e("SaviPlayer","mUsbManager.openDevice failed!");
+        }
+    }
+    */
 }

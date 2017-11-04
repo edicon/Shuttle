@@ -61,3 +61,17 @@ ReactiveX
   https://stackoverflow.com/questions/10384080/mediastore-uri-to-query-all-types-of-files-media-and-non-media
 
   -Savi Player 이후 리스타크하면 VLC Player가 기본
+
+  Savi Log Message
+  09-01 00:19:38.185 11978-16642/com.simplecity.amp_savi.debug V/FA: Using local app measurement service
+  09-01 00:19:38.186 11978-16642/com.simplecity.amp_savi.debug V/FA: Connection attempt already in progress
+  09-01 00:19:38.248 11978-11978/com.simplecity.amp_savi.debug I/SAVITECH: © Copyright SAVITECH 2014-2017, LIB-savitech-media-player-VERSION 0.0.2(20161012) Only For PROMADIC 20170714
+  09-01 00:19:38.248 11978-11978/com.simplecity.amp_savi.debug I/SAVITECH: User Accept Savitech CopyRight
+  09-01 00:19:38.287 11978-11978/com.simplecity.amp_savi.debug W/SaviPlayer: usb device not connected
+  09-01 00:19:38.300 11978-11978/com.simplecity.amp_savi.debug I/SAVITECH: Copyright©2014-2017 SAVITECH CORP. All rights reserved
+  09-01 00:19:38.300 11978-11978/com.simplecity.amp_savi.debug I/SAVITECH: LIB-NativeDSDSetting-VERSION 1.5(9)(20170710 ONLY for Promadic)
+  09-01 00:19:38.300 11978-11978/com.simplecity.amp_savi.debug I/SAVITECH: User Accept Savitech CopyRight
+  09-01 00:19:38.304 11978-11978/com.simplecity.amp_savi.debug D/UsbDeviceConnectionJNI: close
+  09-01 00:19:38.330 11978-16642/com.simplecity.amp_savi.debug V/FA: Using local app measurement service
+  09-01 00:19:38.331 11978-16642/com.simplecity.amp_savi.debug V/FA: Connection attempt already in progress
+  09-01 00:19:3
