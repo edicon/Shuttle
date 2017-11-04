@@ -64,12 +64,12 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 
     int fileType;
     String currFileName = null;
-	private boolean isStarted = true;
+	private boolean isStarted = false;
 	private boolean isPaused = false;
 	private boolean isTouchSoundsEnabled;
 	private boolean isVibrateOnTouchEnabled;
 
-	private boolean isRunnablePlayer = false;
+	private boolean isRunnablePlayer = true;
 	final ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
 	final ExecutorService nextThreadPoolExecutor = Executors.newSingleThreadExecutor();
 	final Runnable playCurrMusic = new Runnable() {
@@ -78,6 +78,7 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 			if( BuildConfig.DEBUG ) {
 				Log.d(TAG, "playCurrMusic: run");
 			}
+			isStarted = true;
 			mCurrentMediaPlayer.playFile();
 		}
 	};
@@ -220,7 +221,12 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 	@Override
 	public long seekTo(long whereto) { // msec
 		if( BuildConfig.DEBUG )
-			Log.d(TAG, "seekTo");
+			Log.d(TAG, "seekTo: " + whereto);
+
+		if( !isStarted ) {
+			Log.e(TAG, "seekTo: !isStrted" + whereto);
+			return whereto;
+		}
 
         if( isPaused ) {
 			if(mCurrentMediaPlayer.openMusicFile(currFileName)) {
@@ -239,7 +245,7 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 			} else {
 				goError("seekTo");
 			}
-		} else if(mCurrentMediaPlayer.pause()){
+		} else if( mCurrentMediaPlayer.pause()){
 			//delayHalfSec();
 			if(mCurrentMediaPlayer.openMusicFile(currFileName)) {
 				if(mCurrentMediaPlayer.seekTo((int)whereto)) {
@@ -380,11 +386,10 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 
 	@Override
 	public long getDuration() {
-		if( BuildConfig.DEBUG )
-			Log.d(TAG, "getDuration");
-
         try {
 			int dur = mCurrentMediaPlayer.getDuration();
+			if( BuildConfig.DEBUG )
+				Log.d(TAG, "getDuration: " + dur);
 			return dur;
 		} catch ( Exception e ) {
 			e.printStackTrace();
