@@ -66,6 +66,8 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
     String currFileName = null;
 	private boolean isStarted = false;
 	private boolean isPaused = false;
+	private boolean isFinished = false;
+
 	private boolean isTouchSoundsEnabled;
 	private boolean isVibrateOnTouchEnabled;
 
@@ -123,12 +125,14 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 		seekEndHandler.removeCallbacks(seekEndRunnable);
 		if( mCurrentMediaPlayer != null && mCurrentMediaPlayer.isPlaying()) {
 			if(mCurrentMediaPlayer.isFinished()) {
+				isFinished = true;
                 if( BuildConfig.DEBUG ) {
 					int dur = mCurrentMediaPlayer.getDuration();
 					int pos = mCurrentMediaPlayer.getCurrentPosition();
 					Log.e(TAG, "checkPosition --> isFinished: " + dur + "/" + pos);
 					// return;
 				}
+				// MusicService --> stop --> if(isFinished) skip stopMusic
 				setDsdCmdClosed();
 				seekEndHandler.removeCallbacks(seekEndRunnable);
 
@@ -138,12 +142,14 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 					mNextMediaPlayer = null;
 					mHandler.sendEmptyMessage(MusicService.PlayerHandler.TRACK_WENT_TO_NEXT);
 				} else {
+                    /*
 					if (mCurrentMediaPlayer.openMusicFile(currFileName)) {
 						fileType = mCurrentMediaPlayer.getFileType();
 						setDsdCmdOpen();
 					} else {
                         goError("checkPosition");
 					}
+					*/
 
 					mService.get().mWakeLock.acquire(30000);
 					mHandler.sendEmptyMessage(MusicService.PlayerHandler.TRACK_ENDED);
@@ -303,7 +309,6 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 				if( stopped ) {
 					setDsdCmdClosed();
 				}
-                seekEndHandler.removeCallbacks(seekEndRunnable);
 			}
 			// File Reset?
 			isPaused = false;
@@ -433,8 +438,26 @@ public class SaviMediaPlayer extends UniformMediaPlayer {
 		if( BuildConfig.DEBUG )
 			Log.d(TAG, "stop");
 
-		stopped = mCurrentMediaPlayer.stopMusic();
+		if( isFinished ) {
+			if( BuildConfig.DEBUG )
+                Log.d(TAG, "stop: isFinished");
+            // isFinished() --> setDsdCmdClosed --> mIsInitialized = false
+			mIsInitialized = false;
+			return;
+		}
+		if( !isStarted ) {
+			if( BuildConfig.DEBUG )
+				Log.d(TAG, "stop: isStarted: false");
+			mIsInitialized = false;
+			return;
+		}
 
+		stopped = mCurrentMediaPlayer.stopMusic();
+		if( stopped ) {
+			setDsdCmdClosed();
+		}
+
+		seekEndHandler.removeCallbacks(seekEndRunnable);
 		mIsInitialized = false;
 	}
 

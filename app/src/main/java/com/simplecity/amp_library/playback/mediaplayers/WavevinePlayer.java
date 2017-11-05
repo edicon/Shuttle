@@ -36,7 +36,8 @@ public class WavevinePlayer {
 
     private void swapPlayer() {
         if( mPrevMediaPlayer != null && mPrevMediaPlayer != mCurrentMediaPlayer ) {
-            mPrevMediaPlayer.pause(); // .release();
+            if( mPrevMediaPlayer == mSaviPlayer )
+                ; // mPrevMediaPlayer.pause(); // .release();
             mPrevMediaPlayer = mCurrentMediaPlayer;
         } else
             mPrevMediaPlayer = mCurrentMediaPlayer;

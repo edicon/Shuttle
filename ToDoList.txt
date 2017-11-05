@@ -65,6 +65,7 @@ ReactiveX
 - String totalTime = StringUtils.makeTimeString(this.getActivity(), song.duration / 1000);
  + Songjava: duration = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
  --> media scan에서 넣어 주어야
+ +seek 범위가 크면 error
 
 
   Savi Log Message
