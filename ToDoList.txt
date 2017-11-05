@@ -66,6 +66,7 @@ ReactiveX
  + Songjava: duration = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
  --> media scan에서 넣어 주어야
  +seek 범위가 크면 error
+ -Screen Off시 연속 Play
 
 
   Savi Log Message
