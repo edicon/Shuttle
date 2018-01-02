@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-android:sharedUserId="android.uid.system"
+    android:sharedUserId="android.uid.system"
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.simplecity.amp_library"

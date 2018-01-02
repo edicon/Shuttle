@@ -188,9 +188,11 @@ public class SearchActivity extends BaseActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search_activity, menu);
-        menu.findItem(R.id.search_fuzzy).setVisible(false);
-        invalidateOptionsMenu();
+        if( !HI_RES ) {
+            getMenuInflater().inflate(R.menu.menu_search_activity, menu);
+            menu.findItem(R.id.search_fuzzy).setVisible(false);
+            invalidateOptionsMenu();
+        }
 
         return super.onCreateOptionsMenu(menu);
     }

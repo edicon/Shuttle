@@ -307,6 +307,7 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
 
         return rootView;
     }
+
     private void togglePlayButton() {
         if( MusicUtils.isPlaying() )
             playPauseButton.setImageResource(R.drawable.btn_player_play);
@@ -638,10 +639,18 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
             case MusicService.ShuffleMode.OFF:
                 shuffleButton.setImageDrawable(DrawableUtils.getWhiteDrawable(getActivity(), R.drawable.ic_shuffle_white));
                 shuffleButton.setContentDescription(getString(R.string.btn_shuffle_off));
+                if( HI_RES ) {
+                    subSuffleBtn.setImageDrawable(DrawableUtils.getWhiteDrawable(getActivity(), R.drawable.ic_shuffle_white));
+                    subSuffleBtn.setContentDescription(getString(R.string.btn_shuffle_off));
+                }
                 break;
             case MusicService.ShuffleMode.ON:
                 shuffleButton.setImageDrawable(DrawableUtils.getColoredAccentDrawableNonWhite(getActivity(), getResources().getDrawable(R.drawable.ic_shuffle_white)));
                 shuffleButton.setContentDescription(getString(R.string.btn_shuffle_on));
+                if( HI_RES ) {
+                    subSuffleBtn.setImageDrawable(DrawableUtils.getColoredAccentDrawableNonWhite(getActivity(), getResources().getDrawable(R.drawable.ic_shuffle_white)));
+                    subSuffleBtn.setContentDescription(getString(R.string.btn_shuffle_on));
+                }
                 break;
         }
     }
@@ -652,14 +661,26 @@ public class PlayerFragment extends BaseFragment implements PlayerView {
             case MusicService.RepeatMode.ALL:
                 repeatButton.setImageDrawable(DrawableUtils.getColoredAccentDrawableNonWhite(getActivity(), getResources().getDrawable(R.drawable.ic_repeat_white)));
                 repeatButton.setContentDescription(getResources().getString(R.string.btn_repeat_all));
+                if( HI_RES ) {
+                    subRepeatBtn.setImageDrawable(DrawableUtils.getColoredAccentDrawableNonWhite(getActivity(), getResources().getDrawable(R.drawable.ic_repeat_white)));
+                    subRepeatBtn.setContentDescription(getResources().getString(R.string.btn_repeat_all));
+                }
                 break;
             case MusicService.RepeatMode.ONE:
                 repeatButton.setImageDrawable(DrawableUtils.getColoredAccentDrawableNonWhite(getActivity(), getResources().getDrawable(R.drawable.ic_repeat_one_white)));
                 repeatButton.setContentDescription(getResources().getString(R.string.btn_repeat_current));
+                if( HI_RES ) {
+                    subRepeatBtn.setImageDrawable(DrawableUtils.getColoredAccentDrawableNonWhite(getActivity(), getResources().getDrawable(R.drawable.ic_repeat_one_white)));
+                    subRepeatBtn.setContentDescription(getResources().getString(R.string.btn_repeat_current));
+                }
                 break;
             case MusicService.RepeatMode.OFF:
                 repeatButton.setImageDrawable(DrawableUtils.getWhiteDrawable(getActivity(), R.drawable.ic_repeat_white));
                 repeatButton.setContentDescription(getResources().getString(R.string.btn_repeat_off));
+                if( HI_RES ) {
+                    subRepeatBtn.setImageDrawable(DrawableUtils.getWhiteDrawable(getActivity(), R.drawable.ic_repeat_white));
+                    subRepeatBtn.setContentDescription(getResources().getString(R.string.btn_repeat_off));
+                }
                 break;
         }
     }

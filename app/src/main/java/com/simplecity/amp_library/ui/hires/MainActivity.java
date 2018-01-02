@@ -647,6 +647,7 @@ public class MainActivity extends BaseCastActivity implements
         registerReceiver(settingReceiver, settingIntentFilter);
     }
 
+    private boolean fromSearch = false;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -659,6 +660,7 @@ public class MainActivity extends BaseCastActivity implements
                     }
                     return;
                 case REQUEST_SEARCH:
+                    fromSearch = true;
                     swapFragments(DetailFragment.newInstance(data.getSerializableExtra(ARG_MODEL)), true);
                     return;
                 case TaggerDialog.DOCUMENT_TREE_REQUEST_CODE:
@@ -1099,6 +1101,11 @@ public class MainActivity extends BaseCastActivity implements
         fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
         // MainContainer:PlayerFragment는 항상 있고, 나머지 Fragment만 Push/Pop
         // MainContainer:PlayFragment -> swapwith:songFragment --> playSong --> PopStack하면 플레이중이므로 Error
+        // Fragment addToBackStack 시 중복으로 Fragment가 쌓이는 동작 해결법
+        //  -http://blog.naver.com/PostView.nhn?blogId=hwani6736&logNo=220420662368
+        if( !fromSearch )
+            getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        fromSearch = false;
         // fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.add(R.id.main_container, fragment);
         if (addToBackStack) {

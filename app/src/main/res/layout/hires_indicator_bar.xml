@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="24dp"
+    android:layout_height="32dp"
     android:orientation="horizontal"
     android:background="@color/grey_900"
     android:gravity="center">
@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/indi_dummy_start"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="0.25"
         android:visibility="invisible"
         app:srcCompat="@drawable/indi_sleep_on" />
@@ -18,21 +18,21 @@
     <ImageView
         android:id="@+id/indi_play"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_play_on" />
 
     <ImageView
         android:id="@+id/indi_vol"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_vol_on" />
 
     <TextView
         android:id="@+id/vol_val"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
         android:textAppearance="@style/IndiBarText"
@@ -41,74 +41,74 @@
     <ImageView
         android:id="@+id/indi_replay"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_replay_on" />
     <ImageView
         android:id="@+id/indi_shuffle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_shuffle_on" />
     <ImageView
         android:id="@+id/indi_bo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_bo_on" />
     <ImageView
         android:id="@+id/indi_sd1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_sd1_on" />
     <ImageView
         android:id="@+id/indi_sd2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_sd2_on" />
     <ImageView
         android:id="@+id/indi_eq"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_eq_on" />
     <ImageView
         android:id="@+id/indi_loading"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_loading_on" />
     <ImageView
         android:id="@+id/indi_sleep"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_sleep_on" />
     <ImageView
         android:id="@+id/indi_bluetooth"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_bluetooth_on" />
     <ImageView
         android:id="@+id/indi_wifi"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         app:srcCompat="@drawable/indi_wifi_on" />
     <ImageView
         android:id="@+id/indi_dummy"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:visibility="invisible"
         app:srcCompat="@drawable/indi_sleep_on" />
     <TextView
         android:id="@+id/bat_val"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="@color/white"
@@ -127,7 +127,7 @@
         <ImageView
             android:id="@+id/indi_bat"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="start"
             android:layout_marginBottom="1dp"
             android:layout_marginEnd="1dp"
@@ -140,7 +140,7 @@
     <TextView
         android:id="@+id/indi_time"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="2"
         android:gravity="center"
         android:textColor="@color/white"
@@ -149,7 +149,7 @@
     <ImageView
         android:id="@+id/indi_dummy_end"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="0.25"
         android:visibility="invisible"
         app:srcCompat="@drawable/indi_sleep_on" />

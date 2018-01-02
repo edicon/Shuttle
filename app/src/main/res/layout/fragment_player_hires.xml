@@ -42,18 +42,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/bg_mainplayer"
-        android:clickable="true">
+        android:clickable="true"
+        android:paddingBottom="20px"
+        android:paddingTop="20px">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/seekBarContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="10px">
 
                 <LinearLayout
                     android:id="@+id/seek_info"
@@ -173,7 +176,8 @@
                 android:gravity="center_vertical"
                 android:paddingBottom="0dp"
                 android:paddingLeft="16dp"
-                android:paddingRight="0dp">
+                android:paddingRight="0dp"
+                android:paddingTop="10px">
 
                 <FrameLayout
                     android:layout_width="wrap_content"
@@ -394,7 +398,7 @@
                     android:background="?attr/circular_ripple"
                     android:contentDescription="@string/shuffle_all"
                     android:padding="12dp"
-                    android:src="@drawable/ic_action_lyrics_24dp"
+                    android:src="@drawable/btn_sub_lyric"
                     android:visibility="visible" />
             </FrameLayout>
 
